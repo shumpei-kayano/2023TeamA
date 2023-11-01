@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django_extensions', # 追加
     'django_cleanup', # 追加
     'user',
+    'accounts',
     # 'django.contrib.sites', # 追加
     # 'allauth', # 追加
     # 'allauth.account', # 追加
@@ -158,13 +159,11 @@ AUTHENTICATION_BACKENDS = (
     # ユーザー名とパスワードによる認証を行うバックエンド
     'django.contrib.auth.backends.ModelBackend',
     # Emailによる認証を行うバックエンドはAuthenticationBackendを使う
-    'allauth.account.auth_backends.AuthenticationBackend'
-    # ,  # 追加
+    'allauth.account.auth_backends.AuthenticationBackend',  # 追加
 )
-
-# ログイン/ログアウト後の遷移先を設定
-LOGIN_REDIRECT_URL = 'sdgs_diary:index'  # 追加
-ACCOUNT_LOGOUT_REDIRECT_URL = 'accounts:logout_success'  # 追加
-
-AUTH_USER_MODEL = 'accounts.User'  # 追加
 '''
+# ログイン/ログアウト後の遷移先を設定
+# LOGIN_REDIRECT_URL = 'user:index'  # 追加
+# ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'  # 追加
+
+AUTH_USER_MODEL = 'accounts.CustomUser'  # 追加
