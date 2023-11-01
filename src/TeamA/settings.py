@@ -60,7 +60,7 @@ ROOT_URLCONF = 'TeamA.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ BASE_DIR / 'accounts/templates'],
+        'DIRS': [ BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -164,7 +164,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 # ログイン/ログアウト後の遷移先を設定
-LOGIN_REDIRECT_URL = 'user:index'  # 追加
+# LOGIN_REDIRECT_URL = 'user:index'  # 追加
 ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'  # 追加
 
 AUTH_USER_MODEL = 'accounts.CustomUser'  # 追加
