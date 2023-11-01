@@ -4,7 +4,7 @@ RUN apt-get update && apt-get install -y nodejs npm
 
 # プロジェクト名を変更すること（testDjangoの部分）
 ENV PYTHONUNBUFFERED 1
-ENV DJANGO_SETTINGS_MODULE 2023TeamA.settings
+ENV DJANGO_SETTINGS_MODULE TeamA.settings
 
 # Set the working directory in the container
 WORKDIR /app
@@ -18,4 +18,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY ./src /app
 
 # Gunicornの起動 プロジェクト名を変更すること（testDjangoの部分）
-CMD ["gunicorn", "2023TeamA.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["gunicorn", "TeamA.wsgi:application", "--bind", "0.0.0.0:8000"]
