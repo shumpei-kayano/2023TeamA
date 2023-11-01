@@ -47,7 +47,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     # 作成日時
     date_joined = models.DateTimeField("date_joined", default=timezone.now)
     # 名前
-    name = models.CharField("名前（店舗名）", max_length=30, blank=True)
+    username = models.CharField("名前（店舗名）", max_length=30, blank=True)
     # 郵便番号
     postal_code = models.CharField("郵便番号", max_length=8, blank=True)
     # 都道府県
