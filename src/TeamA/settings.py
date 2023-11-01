@@ -32,7 +32,8 @@ INSTALLED_APPS = [
     'debug_toolbar', # 追加
     'sass_processor', # 追加
     'django_extensions', # 追加
-    'django_cleanup' # 追加
+    'django_cleanup', # 追加
+    'user',
     # 'django.contrib.sites', # 追加
     # 'allauth', # 追加
     # 'allauth.account', # 追加
