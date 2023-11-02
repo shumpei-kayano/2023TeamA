@@ -73,7 +73,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 class MelimitUser(CustomUser):
     
     def __str__(self):
-        return self.name
+        return self.username
 
 class MelimitStore(CustomUser):
     # 店舗画像
@@ -82,4 +82,4 @@ class MelimitStore(CustomUser):
     site_url = models.URLField("サイトURL", max_length=200, blank=True)
     
     def __str__(self):
-        return self.name
+        return self.username
