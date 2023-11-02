@@ -62,7 +62,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     # モデルのオブジェクトを操作するためのマネージャーを定義 このモデルのCRUDができるマネージャー
     objects = UserManager()
 
-    USERNAME_FIELD = "email"
+    USERNAME_FIELD = "username"
     EMAIL_FIELD = "email"
     REQUIRED_FIELDS = []
 
@@ -72,8 +72,17 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 class MelimitUser(CustomUser):
     
+    class Meta:
+        verbose_name = "お客さん"
+        verbose_name_plural = "お客さんたち"
+        # login_redirect_url = '/home/'
+    
     def __str__(self):
-        return self.name
+        return self.username
+    
+    
+
+
 
 class MelimitStore(CustomUser):
     # 店舗画像
@@ -81,5 +90,17 @@ class MelimitStore(CustomUser):
     # サイトURL
     site_url = models.URLField("サイトURL", max_length=200, blank=True)
     
+    class Meta:
+        verbose_name = "store"
+        verbose_name_plural = "stores"
+        # login_redirect_url = '/store/'
+        
+    
+        def __str__(self):
+            return 
+    
+        def __unicode__(self):
+            return 
+    
     def __str__(self):
-        return self.name
+        return self.username
