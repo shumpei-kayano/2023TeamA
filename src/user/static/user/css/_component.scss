@@ -1,18 +1,31 @@
 // 共通のコンポーネント
+
+// ボタン
 .btn {
-    padding: 10px 20px;
     border-radius: 5px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    color: #333;
-    font-size: 14px;
+    font-weight: bold;
     cursor: pointer;
     &:hover {
-        background-color: #333;
-        color: #fff;
+        opacity: 0.8;
+    }
+    &--beige {
+        background-color: $main_color;
+        color: $melimit_white;
+    }
+    &--blue {
+        background-color: $melimit_blue;
+        color: $melimit_white;
+        font-size:  1%;
     }
     &--pink {
-        background-color: pink;
-        color:white;
+        background-color: $melimit_pink;
+        color: $melimit_white;
+        font-size:  1%;
+    }
+    &--gray {
+        background-color: $melimit_gray;
+        color: $melimit_black;
     }
 }
+
+// フォーム
