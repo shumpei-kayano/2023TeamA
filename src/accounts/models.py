@@ -62,6 +62,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     # モデルのオブジェクトを操作するためのマネージャーを定義 このモデルのCRUDができるマネージャー
     objects = UserManager()
 
+    # USERNAME_FIELDはユーザーを一意に特定できるフィールドを指定する
+    # 今回はemailにunique=Trueを指定している
     USERNAME_FIELD = "email"
     EMAIL_FIELD = "email"
     REQUIRED_FIELDS = []
