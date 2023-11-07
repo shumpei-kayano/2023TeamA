@@ -26,3 +26,4 @@ class Store_login(LoginView):
 
     #     return super().form_valid(form)
     
+    
