@@ -8,3 +8,4 @@ from .forms import CustomLoginForm
 class StoreLoginView(LoginView):
     template_name = "account/anai.html"
     form_class = CustomLoginForm
+    
