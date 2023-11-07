@@ -31,17 +31,25 @@ for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
 
   <div class="login-or">{% trans 'or' %}</div>
 
+  
 </div>
 
 {% include "socialaccount/snippets/login_extra.html" %}
 
 {% else %}
+{% url 'store_login' as store_login_url %}
 <p>{% blocktrans %}If you have not created an account yet, then please
-<a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+<a href="{{ signup_url }}">sign up</a> first.
+<!--　"store_login_url"のリンク-->
+<!-- 改行　-->
+<br>
+<a href="{{ store_login_url }}">Store Login</a>
+{% endblocktrans %}</p>
+
 {% endif %}
 
 <form class="login" method="POST" action="{% url 'account_login' %}">
-
+  
   {% csrf_token %}
   <div class="well">
     
