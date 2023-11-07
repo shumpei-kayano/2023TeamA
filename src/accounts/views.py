@@ -10,3 +10,4 @@ class StoreLoginView(LoginView):
     form_class = CustomLoginForm
     
     
+    
