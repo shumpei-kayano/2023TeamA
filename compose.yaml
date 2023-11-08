@@ -1,18 +1,18 @@
 services:
   web:
     build: .
-    container_name: django_gunicorn
+    container_name: django_gunicorn_teamA
     volumes:
       - ./src:/app
       - static_volume:/usr/share/nginx/html/static/  # 追加
     ports:
-      - "8000:8000"
+      - "8001:8001"
     depends_on:
       - db
       - nginx
   db:
     image: mysql:8.0.28
-    container_name: mysql_db
+    container_name: mysql_db_teamA
     environment:
       MYSQL_ROOT_PASSWORD: root_password
       MYSQL_DATABASE: o-hara_db
@@ -22,7 +22,7 @@ services:
       - db_data:/var/lib/mysql
   nginx:
     image: nginx:1.21.1
-    container_name: nginx_server
+    container_name: nginx_server_teamA
     ports:
       - "80:80"
     volumes:
@@ -30,7 +30,7 @@ services:
       - static_volume:/usr/share/nginx/html/static  # 追加
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:5.2.0
-    container_name: phpmyadmin
+    container_name: phpmyadmin_teamA
     environment:
       PMA_HOST: db
       PMA_PORT: 3306
