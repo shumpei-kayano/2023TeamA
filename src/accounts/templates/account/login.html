@@ -38,6 +38,7 @@ for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
 
 {% else %}
 {% url 'store_login' as store_login_url %}
+{% url 'store_login' %}
 <p>{% blocktrans %}If you have not created an account yet, then please
 <a href="{{ signup_url }}">sign up</a> first.
 <!--　"store_login_url"のリンク-->

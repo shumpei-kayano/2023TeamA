@@ -8,9 +8,9 @@ from django.core.exceptions import ValidationError
 
 # Create your views here.
 
-class Store_login(LoginView):
-    template_name = "account/store_login.html"
-    form_class = LoginForm
+# class Store_login(LoginView):
+#     template_name = "account/store_login.html"
+#     form_class = LoginForm
     # def form_valid(self, form):
     #     # ユーザー名からユーザーを取得
     #     User = get_user_model()
@@ -25,5 +25,9 @@ class Store_login(LoginView):
     #         return self.form_invalid(form)
 
     #     return super().form_valid(form)
-    
-    
+
+class MelimitUserLoginView(LoginView):
+    template_name = 'account/login.html'  # allauthのデフォルトテンプレート
+
+class MelimitStoreLoginView(LoginView):
+    template_name = 'account/store_login.html'  # MelimitStore用のカスタムテンプレート

@@ -6,7 +6,10 @@ from accounts import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('user.urls')),
-    path('accounts/store_login/', views.Store_login.as_view(), name='store_login'),  # 追加
+    path('accounts/loginkkkk/', views.MelimitUserLoginView.as_view(), name='account_login_kkkk'),
+    # ここで指定したnameがallauth.urlsにあるnameと一致すると、そちらが優先される
+    # 独自のviewを指定する場合は、allauthと被らないようにし、さらに、allauth.urlよりも上に書く必要がある
+    path('accounts/store_login/', views.MelimitStoreLoginView.as_view(), name='store_login'),  # 追加
     path('accounts/', include('allauth.urls')),
 
 ]
