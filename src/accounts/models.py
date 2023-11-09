@@ -3,6 +3,20 @@ from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils import timezone
 from django.contrib.auth.base_user import BaseUserManager # 追加
+from django.contrib.auth.models import AbstractUser,PermissionsMixin,UserManager
+
+# 複数種類のユーザーを管理するためのUserType
+class UserType(models.Model):
+    """ ユーザ種別 """
+    typename = models.CharField(verbose_name='ユーザ種別',max_length=150)
+
+    def __str__(self):
+        return f'{self.id} - {self.typename}'
+
+USERTYPE_SUPPLIER = 100
+USERTYPE_BUYER = 200
+USERTYPE_DEFAULT = USERTYPE_BUYER
+
 
 class UserManager(BaseUserManager):
     """カスタムユーザーマネージャー"""
@@ -69,23 +83,38 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     EMAIL_FIELD = "email"
     REQUIRED_FIELDS = []
 
-
+    usertype = models.ForeignKey(UserType,verbose_name='ユーザ種別',null=True,blank=True,on_delete=models.PROTECT)
+    
+    
     class Meta:
         verbose_name = "user"
         verbose_name_plural = "users"
+        db_table = 'custom_user'
 
-class MelimitUser(CustomUser):
-    
-    class Meta:
-        verbose_name = "お客さん"
-        verbose_name_plural = "お客さんたち"
-        # login_redirect_url = '/home/'
-    
     def __str__(self):
         return self.username
+# class MelimitUser(CustomUser):
+    
+#     class Meta:
+#         verbose_name = "お客さん"
+#         verbose_name_plural = "お客さんたち"
+#         # login_redirect_url = '/home/'
+    
+#     def __str__(self):
+#         return self.username
     
     
+class MelimitUserDetail(models.Model):
+    user = models.OneToOneField(CustomUser, unique=True, db_index=True, related_name='detail_MelimitUser', on_delete=models.CASCADE)
+    # お客さん向けの項目(好み)
+    
+    class Meta:
+        verbose_name = "お客さんの詳細"
+        verbose_name_plural = "お客さんたちの詳細"
 
+    def __str__(self):
+        user = CustomUser.objects.get(pk=self.user_id)
+        return f'{user.id} - {user.username} - {user.email} - {self.id}'
 
 
 class MelimitStore(CustomUser):
@@ -108,3 +137,33 @@ class MelimitStore(CustomUser):
     
     def __str__(self):
         return self.username
+    
+class MelimitStoreDetail(models.Model):
+    user = models.OneToOneField(CustomUser, unique=True, db_index=True, related_name='detail_MelimitStore', on_delete=models.CASCADE)
+    # 店舗向けの項目(商品)
+    # # 商品名
+    # product_name = models.CharField("商品名", max_length=30, blank=True)
+    # # 商品画像
+    # product_image = models.ImageField(upload_to='product_image', blank=True)
+    # # 商品説明
+    # product_description = models.TextField("商品説明", blank=True)
+    # # 商品価格
+    # product_price = models.IntegerField("商品価格", blank=True)
+    # # 商品在庫数
+    # product_stock = models.IntegerField("商品在庫数", blank=True)
+    # # 商品カテゴリ
+    # product_category = models.CharField("商品カテゴリ", max_length=30, blank=True)
+    # # 商品タグ
+    # product_tag = models.CharField("商品タグ", max_length=30, blank=True)
+    # 店舗画像
+    store_image = models.ImageField(upload_to='store_image', blank=True)
+    # サイトURL
+    site_url = models.URLField("サイトURL", max_length=200, blank=True)
+    
+    class Meta:
+        verbose_name = "store"
+        verbose_name_plural = "stores"
+        
+    def __str__(self):
+        user = CustomUser.objects.get(pk=self.user_id)
+        return f'{user.id} - {user.username} - {user.email} - {self.id}'

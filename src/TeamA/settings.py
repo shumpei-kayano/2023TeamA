@@ -168,3 +168,5 @@ LOGIN_REDIRECT_URL = 'user:index'  # 追加
 ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'  # 追加
 
 AUTH_USER_MODEL = 'accounts.CustomUser'  # 追加
+# signupformからの情報をcustomusermodelに保存するためのアダプタを指定
+ACCOUNT_ADAPTER = 'accounts.adapter.AccountAdapter'
