@@ -58,7 +58,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     address = models.CharField("住所", max_length=100, blank=True)
     # 電話番号
     phone_number = models.CharField("電話番号", max_length=20, blank=True)
-    
+    # 顧客か店舗か判断するフィールド
+    is_store = models.BooleanField("is_store", default=False)
     # モデルのオブジェクトを操作するためのマネージャーを定義 このモデルのCRUDができるマネージャー
     objects = UserManager()
 

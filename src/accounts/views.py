@@ -1,11 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.views import View
 from django.http import HttpResponse
 from allauth.account.views import LoginView
 from allauth.account.forms import LoginForm
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model,login
 from django.core.exceptions import ValidationError
-
+from django.urls import reverse_lazy
 # Create your views here.
 
 class Store_login(LoginView):
@@ -27,3 +27,6 @@ class Store_login(LoginView):
     #     return super().form_valid(form)
     
     
+
+# class Customer_Login(LoginView):
+#     template_name = "account/login.html"
