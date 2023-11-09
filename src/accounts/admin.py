@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import UserChangeForm
-from .models import CustomUser, MelimitUser, MelimitStore
+from .models import CustomUser, MelimitUserDetail, MelimitStoreDetail
 
 # Register your models here.
 
@@ -21,7 +21,7 @@ class CustomUserAdmin(BaseUserAdmin):
 
     # ユーザー編集時に必要なフィールド(管理画面で入力するフィールド)
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
+        (None, {'fields': ('email', 'password','is_typename')}),
         ('Personal info', {'fields': ('username','postal_code','prefecture','city','address','phone_number')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser','groups', 'user_permissions')}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
@@ -36,5 +36,5 @@ class CustomUserAdmin(BaseUserAdmin):
     )
 
 admin.site.register(CustomUser, CustomUserAdmin)
-admin.site.register(MelimitUser)
-admin.site.register(MelimitStore)
+admin.site.register(MelimitUserDetail)
+admin.site.register(MelimitStoreDetail)
