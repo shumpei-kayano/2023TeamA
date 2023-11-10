@@ -1,13 +1,18 @@
 // 共通のコンポーネント
 
 // ボタン
-.btn {
+button{
     border-radius: 5px;
     font-weight: bold;
+    border: none;
     cursor: pointer;
     &:hover {
         opacity: 0.8;
     }
+}
+
+
+.btn {
     &--beige {
         background-color: $main_color;
         color: $melimit_white;
@@ -15,17 +20,33 @@
     &--blue {
         background-color: $melimit_blue;
         color: $melimit_white;
-        font-size:  1%;
     }
     &--pink {
         background-color: $melimit_pink;
         color: $melimit_white;
-        font-size:  1%;
     }
     &--gray {
         background-color: $melimit_gray;
         color: $melimit_black;
     }
+    &--middle {
+        padding: 0.5rem 5rem;
+        font-size: 1rem;
+    }
+    &--small {
+        padding: 0.5rem 2rem;
+        font-size: 0.8rem;
+    }
+    &--big {
+        padding: 0.5rem 10rem;
+        font-size: 1.5rem;
+    }
+    &--biggest {
+        padding: 1rem 15rem;
+        font-size: 2rem;
+    }
 }
-
 // フォーム
+input {
+    height: 2rem;
+  }
