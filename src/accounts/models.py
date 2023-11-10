@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils import timezone
+from django.contrib.contenttypes.models import ContentType # 追加
 from django.contrib.auth.models import Permission # 追加
 from django.contrib.auth.base_user import BaseUserManager # 追加
 
@@ -28,9 +29,17 @@ class UserManager(BaseUserManager):
         user = self._create_user(email, password, **extra_fields)
 
         # ユーザーにMelimitUserとMelimitStoreモデルの閲覧権限を付与
-        permission1 = Permission.objects.get(codename='view_melimituser')
-        permission2 = Permission.objects.get(codename='view_melimitstore')
-        user.user_permissions.add(permission1, permission2)
+        # permission1 = Permission.objects.get(codename='view_melimituser')
+        # permission2 = Permission.objects.get(codename='view_melimitstore')
+        # user.user_permissions.add(permission1, permission2)
+
+        # accountsアプリの全てのモデルの閲覧権限を取得
+        content_types = ContentType.objects.filter(app_label='accounts')
+        permissions = Permission.objects.filter(content_type__in=content_types, codename__startswith='view_')
+
+        # ユーザーに全ての閲覧権限を付与
+        for permission in permissions:
+            user.user_permissions.add(permission)
 
         return user
 
@@ -51,7 +60,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     # staffフィールドがTrueに設定されているユーザーは、Djangoの管理サイトにアクセスできる
     is_staff = models.BooleanField("is_staff", default=True)
     # 認証用のフィールド
-    is_active = models.BooleanField("is_active", default=True)
+    is_active = models.BooleanField("is_active", default=False)
     # 作成日時
     date_joined = models.DateTimeField("date_joined", default=timezone.now)
     # 名前
