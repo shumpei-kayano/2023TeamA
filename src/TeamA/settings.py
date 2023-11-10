@@ -161,7 +161,14 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     # Emailによる認証を行うバックエンドはAuthenticationBackendを使う
     'allauth.account.auth_backends.AuthenticationBackend',  # 追加
+    # MelimitUserModelBackendを使う
+    'accounts.backends.MelimitUserModelBackend',  # 追加
+    # MelimitStoreModelBackendを使う
+    'accounts.backends.MelimitStoreModelBackend',  # 追加
 )
+
+# MelimitAccountAdapterを使う
+ACCOUNT_ADAPTER = 'accounts.adapter.MelimitAccountAdapter'  # 追加
 
 # ログイン/ログアウト後の遷移先を設定
 LOGIN_REDIRECT_URL = 'user:index'  # 追加

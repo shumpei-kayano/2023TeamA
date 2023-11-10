@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils import timezone
+from django.contrib.auth.models import Permission # 追加
 from django.contrib.auth.base_user import BaseUserManager # 追加
 
 class UserManager(BaseUserManager):
@@ -22,9 +23,16 @@ class UserManager(BaseUserManager):
         return user
 
     def create_user(self, email, password=None, **extra_fields):
-        extra_fields.setdefault('is_staff', False)
+        extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', False)
-        return self._create_user(email, password, **extra_fields)
+        user = self._create_user(email, password, **extra_fields)
+
+        # ユーザーにMelimitUserとMelimitStoreモデルの閲覧権限を付与
+        permission1 = Permission.objects.get(codename='view_melimituser')
+        permission2 = Permission.objects.get(codename='view_melimitstore')
+        user.user_permissions.add(permission1, permission2)
+
+        return user
 
     def create_superuser(self, email, password, **extra_fields):
         extra_fields.setdefault('is_staff', True)
@@ -41,7 +49,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     # unique=Trueオプションを指定すると、メールアドレスフィールドは必須フィールドになる
     email = models.EmailField("メールアドレス", unique=True)
     # staffフィールドがTrueに設定されているユーザーは、Djangoの管理サイトにアクセスできる
-    is_staff = models.BooleanField("is_staff", default=False)
+    is_staff = models.BooleanField("is_staff", default=True)
     # 認証用のフィールド
     is_active = models.BooleanField("is_active", default=True)
     # 作成日時
