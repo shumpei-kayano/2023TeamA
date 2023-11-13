@@ -1,12 +1,20 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block title %}トップページ{% endblock %}
 {% block content %}
-    <div id="index-info">
-        <div id="index-info__side-btn">
-            <button class="btn--beige btn--big">ご利用ガイド</a>
-            <button class="btn--beige btn--big">MelimitとSDGs</a>
-            <button class="btn--beige btn--big">食品ロスとは</a>
-        </div>
-    </div>
+<table>
+<tr>
+<td><button class="btn--beige btn--big">ご利用ガイド</a></td>
+<td rowspan="3">
+    <img class ="slide"src="{% static 'assets/img/350x160.png' %}" alt="cart">
+</td>
+</tr>
+<tr>
+<td><button class="btn--beige btn--big">MelimitとSDGs</a></td>
+</tr>
+<tr>
+<td><button class="btn--beige btn--big">食品ロスとは</a></td>
+</tr>
+</table>
 
-    </div>
 {% endblock %}
