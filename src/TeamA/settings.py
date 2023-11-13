@@ -34,6 +34,10 @@ INSTALLED_APPS = [
     'django_extensions', # 追加
     'django_cleanup', # 追加
     'user',
+    'store',
+    # 'django.contrib.sites', # 追加
+    # 'allauth', # 追加
+    # 'allauth.account', # 追加
     'accounts',
     'django.contrib.sites', # 追加
     'allauth', # 追加
