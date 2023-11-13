@@ -57,7 +57,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware', # 追加
-    # 'allauth.account.middleware.AccountMiddleware',  # 追加
+    'allauth.account.middleware.AccountMiddleware',  # 追加
 ]
 
 INTERNAL_IPS = ['127.0.0.1', '::1', 'localhost', '0.0.0.0'] # 追加

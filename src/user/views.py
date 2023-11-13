@@ -5,4 +5,4 @@ def index(request):
     return render(request, 'index.html')
 
 
-    return render(request, 'user/index.html')
+    #return render(request, 'user/index.html')
