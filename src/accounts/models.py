@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import PermissionsMixin
+from django.contrib.auth.models import PermissionsMixin, Group, Permission
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils import timezone
 from django.contrib.auth.base_user import BaseUserManager # 追加
@@ -68,6 +68,24 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     EMAIL_FIELD = "email"
     REQUIRED_FIELDS = []
 
+    # groups = models.ManyToManyField(
+    #     Group,
+    #     verbose_name=_('groups'),
+    #     blank=True,
+    #     related_name="customuser_set",  # related_nameを変更
+    #     help_text=_(
+    #         'The groups this user belongs to. A user will get all permissions '
+    #         'granted to each of their groups.'
+    #     ),
+    # )
+
+    # user_permissions = models.ManyToManyField(
+    #     Permission,
+    #     verbose_name=_('user permissions'),
+    #     blank=True,
+    #     related_name="customuser_set",  # related_nameを変更
+    #     help_text=_('Specific permissions for this user.'),
+    # )
 
     class Meta:
         verbose_name = "user"

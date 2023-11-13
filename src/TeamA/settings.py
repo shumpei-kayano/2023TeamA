@@ -33,15 +33,9 @@ INSTALLED_APPS = [
     'sass_processor', # 追加
     'django_extensions', # 追加
     'django_cleanup', # 追加
-    'user',
-    # 'django.contrib.sites', # 追加
-    # 'allauth', # 追加
-    # 'allauth.account', # 追加
-    'store',
-    # 'django.contrib.sites', # 追加
-    # 'allauth', # 追加
-    # 'allauth.account', # 追加
     'accounts',
+    'store',
+    'user',
     'django.contrib.sites', # 追加
     'allauth', # 追加
     'allauth.account', # 追加
@@ -159,7 +153,7 @@ DEBUG_TOOLBAR_CONFIG = {
 # allauth用
 SITE_ID = 1
 
-'''
+
 # django-allauthの設定
 # AUTHENTICATION_BACKENDSとは、認証バックエンドを指定する設定
 # デフォルトでは、django.contrib.auth.backends.ModelBackendが指定されている
@@ -173,7 +167,6 @@ AUTHENTICATION_BACKENDS = (
 
 # ログイン/ログアウト後の遷移先を設定
 LOGIN_REDIRECT_URL = 'sdgs_diary:index'  # 追加
-ACCOUNT_LOGOUT_REDIRECT_URL = 'accounts:logout_success'  # 追加
+ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'  # 追加
 
-AUTH_USER_MODEL = 'accounts.User'  # 追加
-'''
+AUTH_USER_MODEL = 'accounts.CustomUser'# 追加
