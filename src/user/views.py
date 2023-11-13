@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 @login_required
 def index(request):
+    print('index_________')
     return render(request, 'user/index.html')
 
 def anai(request):

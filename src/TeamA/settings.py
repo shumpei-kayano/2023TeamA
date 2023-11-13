@@ -1,5 +1,8 @@
 from pathlib import Path
 import os
+
+from django.conf import settings  # 追加
+
 # debug_toolbarの設定
 import mimetypes
 mimetypes.add_type("application/javascript", ".js", True)
@@ -157,7 +160,7 @@ SITE_ID = 1
 # AUTHENTICATION_BACKENDSとは、認証バックエンドを指定する設定
 # デフォルトでは、django.contrib.auth.backends.ModelBackendが指定されている
 AUTHENTICATION_BACKENDS = (
-        # MelimitUserModelBackendを使う
+    # MelimitUserModelBackendを使う
     'accounts.backends.MelimitUserModelBackend',  # 追加
     # MelimitStoreModelBackendを使う
     'accounts.backends.MelimitStoreModelBackend',  # 追加
@@ -173,10 +176,14 @@ ACCOUNT_ADAPTER = 'accounts.adapter.MelimitAccountAdapter'  # 追加
 
 # ログイン/ログアウト後の遷移先を設定
 # LOGIN_REDIRECT_URL = 'user:index'
+# settings.LOGIN_REDIRECT_URL = settings.LOGIN_REDIRECT_URL.replace('#next', '')
 ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login_kkkk'  # 追加
 
 AUTH_USER_MODEL = 'accounts.CustomUser'  # 追加
 
 # ログインページのURLを設定(allauthのデフォルトを上書き)
+# ここからログインすると、なぜかadapterを経由しない
 # LOGIN_URL = 'account_login_kkkk'  # 追加
+
+# ここからログインすると、adapterを経由して遷移する
 LOGIN_URL = 'store_login'  # 追加
