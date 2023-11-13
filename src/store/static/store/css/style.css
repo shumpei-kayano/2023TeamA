@@ -1,0 +1,1082 @@
+body {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+}
+.btn:hover {
+  background-color: #333;
+  color: #fff;
+}
+.btn--pink {
+  background-color: pink;
+  color: white;
+}
+
+div {
+  width: 100px;
+}
+
+a {
+  color: red;
+}l browsers (opinionated).
+  * 2. Add vertical alignment inheritance in all browsers (opinionated).
+  */
+::before,
+::after {
+  text-decoration: inherit; /* 1 */
+  vertical-align: inherit; /* 2 */
+}
+
+/**
+  * 1. Use the default cursor in all browsers (opinionated).
+  * 2. Change the line height in all browsers (opinionated).
+  * 3. Breaks words to prevent overflow in all browsers (opinionated).
+  * 4. Use a 4-space tab width in all browsers (opinionated).
+  * 5. Remove the grey highlight on links in iOS (opinionated).
+  * 6. Prevent adjustments of font size after orientation changes in iOS.
+  */
+:where(:root) {
+  cursor: default; /* 1 */
+  line-height: 1.5; /* 2 */
+  overflow-wrap: break-word; /* 3 */
+  -moz-tab-size: 4; /* 4 */
+  -o-tab-size: 4;
+     tab-size: 4; /* 4 */
+  -webkit-tap-highlight-color: transparent; /* 5 */
+  -webkit-text-size-adjust: 100%; /* 6 */
+  -moz-text-size-adjust: 100%;
+       text-size-adjust: 100%; /* 6 */
+}
+
+/* Sections
+  * ========================================================================== */
+/**
+  * Remove the margin in all browsers (opinionated).
+  */
+:where(body) {
+  margin: 0;
+}
+
+/**
+  * Correct the font size and margin on `h1` elements within `section` and
+  * `article` contexts in Chrome, Edge, Firefox, and Safari.
+  */
+:where(h1) {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+/* Grouping content
+  * ========================================================================== */
+/**
+  * Remove the margin on nested lists in Chrome, Edge, and Safari.
+  */
+:where(dl, ol, ul) :where(dl, ol, ul) {
+  margin: 0;
+}
+
+/**
+  * 1. Correct the inheritance of border color in Firefox.
+  * 2. Add the correct box sizing in Firefox.
+  */
+:where(hr) {
+  color: inherit; /* 1 */
+  height: 0; /* 2 */
+}
+
+/**
+  * Remove the list style on navigation lists in all browsers (opinionated).
+  */
+:where(nav) :where(ol, ul) {
+  list-style-type: none;
+  padding: 0;
+}
+
+/**
+  * Prevent VoiceOver from ignoring list semantics in Safari (opinionated).
+  */
+:where(nav li)::before {
+  content: "​";
+  float: left;
+}
+
+/**
+  * 1. Correct the inheritance and scaling of font size in all browsers.
+  * 2. Correct the odd `em` font sizing in all browsers.
+  * 3. Prevent overflow of the container in all browsers (opinionated).
+  */
+:where(pre) {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+  overflow: auto; /* 3 */
+}
+
+/* Text-level semantics
+  * ========================================================================== */
+/**
+  * Add the correct text decoration in Safari.
+  */
+:where(abbr[title]) {
+  text-decoration: underline;
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted;
+}
+
+/**
+  * Add the correct font weight in Chrome, Edge, and Safari.
+  */
+:where(b, strong) {
+  font-weight: bolder;
+}
+
+/**
+  * 1. Correct the inheritance and scaling of font size in all browsers.
+  * 2. Correct the odd `em` font sizing in all browsers.
+  */
+:where(code, kbd, samp) {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/**
+  * Add the correct font size in all browsers.
+  */
+:where(small) {
+  font-size: 80%;
+}
+
+/* Embedded content
+  * ========================================================================== */
+/*
+  * Change the alignment on media elements in all browsers (opinionated).
+  */
+:where(audio, canvas, iframe, img, svg, video) {
+  vertical-align: middle;
+}
+
+/**
+  * Remove the border on iframes in all browsers (opinionated).
+  */
+:where(iframe) {
+  border-style: none;
+}
+
+/**
+  * Change the fill color to match the text color in all browsers (opinionated).
+  */
+:where(svg:not([fill])) {
+  fill: currentColor;
+}
+
+/* Tabular data
+  * ========================================================================== */
+/**
+  * 1. Collapse border spacing in all browsers (opinionated).
+  * 2. Correct table border color in Chrome, Edge, and Safari.
+  * 3. Remove text indentation from table contents in Chrome, Edge, and Safari.
+  */
+:where(table) {
+  border-collapse: collapse; /* 1 */
+  border-color: currentColor; /* 2 */
+  text-indent: 0; /* 3 */
+}
+
+/* Forms
+  * ========================================================================== */
+/**
+  * Remove the margin on controls in Safari.
+  */
+:where(button, input, select) {
+  margin: 0;
+}
+
+/**
+  * Correct the inability to style buttons in iOS and Safari.
+  */
+:where(button, [type=button i], [type=reset i], [type=submit i]) {
+  -webkit-appearance: button;
+}
+
+/**
+  * Change the inconsistent appearance in all browsers (opinionated).
+  */
+:where(fieldset) {
+  border: 1px solid #a0a0a0;
+}
+
+/**
+  * Add the correct vertical alignment in Chrome, Edge, and Firefox.
+  */
+:where(progress) {
+  vertical-align: baseline;
+}
+
+/**
+  * 1. Remove the margin in Firefox and Safari.
+  * 3. Change the resize direction in all browsers (opinionated).
+  */
+:where(textarea) {
+  margin: 0; /* 1 */
+  resize: vertical; /* 3 */
+}
+
+/**
+  * 1. Correct the odd appearance in Chrome, Edge, and Safari.
+  * 2. Correct the outline style in Safari.
+  */
+:where([type=search i]) {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+
+/**
+  * Correct the cursor style of increment and decrement buttons in Safari.
+  */
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/**
+  * Correct the text style of placeholders in Chrome, Edge, and Safari.
+  */
+::-webkit-input-placeholder {
+  color: inherit;
+  opacity: 0.54;
+}
+
+/**
+  * Remove the inner padding in Chrome, Edge, and Safari on macOS.
+  */
+::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+  * 1. Correct the inability to style upload buttons in iOS and Safari.
+  * 2. Change font properties to `inherit` in Safari.
+  */
+::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}
+
+/* Interactive
+  * ========================================================================== */
+/*
+  * Add the correct styles in Safari.
+  */
+:where(dialog) {
+  background-color: white;
+  border: solid;
+  color: black;
+  height: -moz-fit-content;
+  height: fit-content;
+  left: 0;
+  margin: auto;
+  padding: 1em;
+  position: absolute;
+  right: 0;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+:where(dialog:not([open])) {
+  display: none;
+}
+
+/*
+  * Add the correct display in Safari.
+  */
+:where(details > summary:first-of-type) {
+  display: list-item;
+}
+
+/* Accessibility
+  * ========================================================================== */
+/**
+  * Change the cursor on busy elements in all browsers (opinionated).
+  */
+:where([aria-busy=true i]) {
+  cursor: progress;
+}
+
+/*
+  * Change the cursor on disabled, not-editable, or otherwise
+  * inoperable elements in all browsers (opinionated).
+  */
+:where([aria-disabled=true i], [disabled]) {
+  cursor: not-allowed;
+}
+
+/*
+  * Change the display on visually hidden accessible elements
+  * in all browsers (opinionated).
+  */
+:where([aria-hidden=false i][hidden]) {
+  display: initial;
+}
+
+:where([aria-hidden=false i][hidden]:not(:focus)) {
+  clip: rect(0, 0, 0, 0);
+  position: absolute;
+}
+
+/* User interaction
+  * ========================================================================== */
+body {
+  margin: 0;
+  line-height: normal;
+}
+
+.popup-overlay {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  inset: 0;
+}
+
+:root {
+  /* fonts */
+  --font-noto-sans: "Noto Sans";
+  --components-chip: Roboto;
+  --font-cairo: Cairo;
+  --font-cagliostro: Cagliostro;
+  --bold-16: Inter;
+  --font-noto-sans-jp: "Noto Sans JP";
+  /* font sizes */
+  --typography-body1-size: 16px;
+  --font-size-mini: 15px;
+  --font-size-sm: 14px;
+  --typography-caption-size: 12px;
+  --font-size-xl: 20px;
+  --font-size-3xs: 10px;
+  --font-size-17xl: 36px;
+  --font-size-mid: 17px;
+  --components-chip-size: 13px;
+  --font-size-lg: 18px;
+  --font-size-5xl: 24px;
+  --font-size-3xl: 22px;
+  /* Colors */
+  --color: #fff;
+  --color4: #d485ba;
+  --color8: rgba(212, 133, 186, 0.2);
+  --color5: #85a8d4;
+  --color9: rgba(133, 168, 212, 0.2);
+  --grey-grey-300: #e0e0e0;
+  --color-gainsboro-100: #ddd;
+  --color-gainsboro-200: rgba(217, 217, 217, 0);
+  --color-black: #000;
+  --color-lightgray: #ccc;
+  --components-fieldcontrol-bordercolor: #aeb3b7;
+  --color3: #aaa;
+  --color6: #252525;
+  --color-gray-100: rgba(0, 0, 0, 0.6);
+  --text-primary: rgba(0, 0, 0, 0.87);
+  --color-whitesmoke-100: #f5f5f5;
+  --color-whitesmoke-200: #eef0f3;
+  --color1: #ebebeb;
+  --grey-black: #333;
+  --color-darkslategray-100: #323232;
+  --color2: #d4b985;
+  --color7: #f75050;
+  --color10: #f3f6fa;
+  --color-slategray: #6a717d;
+  --grey-grey-400: #bdbdbd;
+  --color-dimgray-100: #666;
+  --grey-grey-700: #616161;
+  /* Spacing */
+  --number-8: 8px;
+  /* Gaps */
+  --gap-base: 16px;
+  --gap-5xl: 24px;
+  --gap-21xl: 40px;
+  --gap-51xl: 70px;
+  --gap-5xs: 8px;
+  /* Paddings */
+  --padding-base: 16px;
+  --padding-5xs: 8px;
+  --padding-8xs: 5px;
+  --padding-7xs: 6px;
+  --padding-xs: 12px;
+  --padding-xl: 20px;
+  --padding-15xl: 34px;
+  --padding-16xl: 35px;
+  --padding-9xs: 4px;
+  --padding-10xs: 3px;
+  --padding-5xl: 24px;
+  /* Border radiuses */
+  --br-9xs: 4px;
+  --br-lgi: 19px;
+  --br-8xs: 5px;
+  --br-3xs: 10px;
+  --br-12xs: 1px;
+  --br-5xs: 8px;
+  --br-31xl: 50px;
+  --br-29xl: 48px;
+  --br-base: 16px;
+  --br-45xl: 64px;
+}
+
+.sidebar-child {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color);
+  border-right: 1px solid var(--color-gainsboro-100);
+  box-sizing: border-box;
+  width: 240px;
+  height: 720px;
+}
+
+.store-title {
+  position: absolute;
+  top: 20px;
+  left: 16px;
+  font-size: var(--font-size-xl);
+  letter-spacing: 1px;
+  line-height: 100%;
+  cursor: pointer;
+}
+
+.dropdown-text {
+  position: relative;
+  line-height: 150%;
+  text-transform: uppercase;
+}
+
+.keyboardarrowright-icon {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.dropdown-tyuumonkanri,
+.dropdown-syouhinkanri {
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  box-sizing: border-box;
+  width: 240px;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: var(--padding-base);
+  cursor: pointer;
+}
+
+.dropdown-menu,
+.dropdown-tenpo,
+.dropdown-tyuumonkanri,
+.dropdown-syouhinkanri {
+  display: flex;
+  align-items: flex-start;
+}
+
+.dropdown-tenpo {
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  box-sizing: border-box;
+  width: 240px;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: var(--padding-base);
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 56px;
+  left: 0;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.logout,
+.sidebar {
+  position: absolute;
+  left: 0;
+  width: 240px;
+}
+
+.logout {
+  top: 664px;
+  border-top: 1px solid var(--color-gainsboro-100);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: var(--padding-base);
+  cursor: pointer;
+}
+
+.sidebar {
+  top: 0;
+  height: 720px;
+}
+
+.user-icon {
+  position: absolute;
+  height: 75%;
+  width: 95%;
+  top: 12.5%;
+  right: 12.5%;
+  bottom: 12.5%;
+  left: 12.5%;
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+}
+
+.header-icon {
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
+
+.user-text {
+  position: relative;
+  font-size: var(--font-size-mini);
+  text-transform: capitalize;
+  font-family: var(--components-chip);
+  padding: 5px 0px 0px 0px;
+}
+
+.header-migiue {
+  justify-content: flex-start;
+  gap: var(--gap-base);
+}
+
+.header-frame,
+.header-migiue,
+.header-storekanri {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.header-frame {
+  justify-content: flex-start;
+  cursor: pointer;
+}
+
+.header-storekanri {
+  flex: 1;
+  justify-content: flex-end;
+  padding: 0px 20px 0px 0px;
+}
+
+.base-container,
+.header {
+  position: absolute;
+  top: 0;
+  background-color: var(--color);
+}
+
+.header {
+  left: 240px;
+  border-bottom: 1px solid rgba(221, 221, 221, 0.87);
+  box-sizing: border-box;
+  width: 1040px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--padding-5xs) var(--padding-base);
+}
+
+.base-container {
+  left: 0;
+  width: 1280px;
+  height: 720px;
+  overflow: hidden;
+}
+
+.base {
+  position: relative;
+  width: 100%;
+  height: 720px;
+  text-align: left;
+  font-size: var(--font-size-sm);
+  color: var(--color-black);
+  font-family: var(--font-noto-sans);
+}
+
+.component-3-child {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: var(--color-gainsboro-200);
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  box-sizing: border-box;
+}
+
+.div50 {
+  position: absolute;
+  height: 39.64%;
+  width: 62.5%;
+  top: 30.18%;
+  left: 34.17%;
+  letter-spacing: 1px;
+  line-height: 150%;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+.component-2,
+.component-3 {
+  position: absolute;
+  top: 56px;
+  left: 0;
+  background-color: var(--color-whitesmoke-200);
+  width: 240px;
+  height: 56px;
+  cursor: pointer;
+}
+
+.component-2 {
+  top: 0;
+}
+
+.div49 {
+  position: relative;
+  width: 240px;
+  height: 112px;
+  max-width: 90%;
+  max-height: 90%;
+  overflow: auto;
+  text-align: left;
+  font-size: var(--font-size-sm);
+  color: var(--color-black);
+  font-family: var(--font-noto-sans);
+}
+
+.component-4-child {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: var(--color-gainsboro-200);
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  box-sizing: border-box;
+}
+
+.div53 {
+  position: absolute;
+  height: 39.64%;
+  width: 62.5%;
+  top: 30.18%;
+  left: 34.17%;
+  letter-spacing: 1px;
+  line-height: 150%;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+.component-21,
+.component-31,
+.component-4 {
+  position: absolute;
+  height: 33.33%;
+  width: 100%;
+  top: 66.67%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+.component-21,
+.component-31 {
+  top: 33.33%;
+  bottom: 33.33%;
+}
+
+.component-21 {
+  top: 0;
+  bottom: 66.67%;
+}
+
+.div52 {
+  position: relative;
+  background-color: var(--color-whitesmoke-200);
+  width: 240px;
+  height: 168px;
+  max-width: 90%;
+  max-height: 90%;
+  overflow: auto;
+  text-align: left;
+  font-size: var(--font-size-sm);
+  color: var(--color-black);
+  font-family: var(--font-noto-sans);
+}
+
+h1 {
+  color: red;
+}
+
+/*
+html5doctor.com Reset Stylesheet
+v1.6.1
+Last Updated: 2010-09-17
+Author: Richard Clark - http://richclarkdesign.com
+Twitter: @rich_clark
+*/
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+
+body {
+  line-height: 1;
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+nav ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: "";
+  content: none;
+}
+
+a {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+
+/* change colours to suit your needs */
+ins {
+  background-color: #ff9;
+  color: #000;
+  text-decoration: none;
+}
+
+/* change colours to suit your needs */
+mark {
+  background-color: #ff9;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
+
+del {
+  text-decoration: line-through;
+}
+
+abbr[title], dfn[title] {
+  border-bottom: 1px dotted;
+  cursor: help;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* change border colour to suit your needs */
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #cccccc;
+  margin: 1em 0;
+  padding: 0;
+}
+
+input, select {
+  vertical-align: middle;
+}
+
+/* ↑リセットcss↑ */
+.table-order-history {
+  position: absolute;
+  top: 204px;
+  left: 264px;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 992px;
+  border-collapse: collapse;
+  display: flex;
+  justify-content: flex-start;
+}
+
+thead {
+  background-color: var(--color-whitesmoke-100);
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  box-sizing: border-box;
+  width: 992px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  font-weight: bold;
+}
+
+.head-order-number,
+.head-order-day,
+.head-product-name,
+.head-quantity,
+.head-price,
+.head-co2,
+.head-type {
+  position: relative;
+  line-height: 120%;
+  display: inline-block;
+  text-align: center;
+}
+
+.head-order-number,
+.head-order-day {
+  width: 140px;
+}
+
+.head-product-name {
+  width: 230px;
+}
+
+.head-quantity,
+.head-type {
+  width: 120px;
+}
+
+.head-price {
+  width: 120px;
+}
+
+.head-co2 {
+  width: 120px;
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  width: 992px;
+}
+
+tbody td {
+  padding: var(--padding-base);
+  gap: var(--gap-5xl);
+  cursor: pointer;
+}
+
+.order-number,
+.order-day,
+.product-name,
+.quantity,
+.price,
+.co2,
+.type {
+  position: relative;
+  line-height: 180%;
+  justify-content: center;
+  text-align: center;
+}
+
+.order-number,
+.order-day {
+  width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.product-name {
+  width: 230px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.quantity,
+.type {
+  width: 120px;
+}
+
+.price {
+  width: 120px;
+}
+
+.co2 {
+  width: 120px;
+}
+
+/* tdの共通のスタイル定義 */
+.table-order-history td {
+  position: relative;
+  justify-content: center;
+  text-align: center;
+  padding: var(--padding-base);
+  gap: var(--gap-5xl);
+  box-sizing: border-box;
+  flex-direction: row;
+  align-items: center;
+}
+
+.placeholder {
+  flex: 1;
+  position: relative;
+  line-height: 100%;
+}
+
+.searchfilled-icon {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.input {
+  align-self: stretch;
+  border-radius: var(--br-9xs);
+  background-color: var(--color);
+  border: 1px solid var(--color-lightgray);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-base);
+  gap: var(--gap-base);
+}
+
+.search-group {
+  position: absolute;
+  height: 6.67%;
+  width: 26.8%;
+  top: 13.89%;
+  right: 10%;
+  bottom: 79.44%;
+  left: 63.2%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  color: var(--color3);
+}
+
+.search {
+  position: relative;
+  line-height: 100%;
+}
+
+.button-search {
+  position: absolute;
+  top: 100px;
+  left: 1160px;
+  border-radius: var(--br-9xs);
+  background-color: var(--color);
+  border: 1px solid var(--color-lightgray);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-base);
+  text-align: center;
+  cursor: pointer;
+}
+
+.order-history-text {
+  position: absolute;
+  top: 0;
+  left: 36px;
+  line-height: 150%;
+}
+
+.fibermanualrecordfilled-icon {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+}
+
+.title-order-history {
+  position: absolute;
+  top: 109px;
+  left: 264px;
+  width: 196px;
+  height: 30px;
+  font-size: var(--font-size-xl);
+}
+
+.order-manage {
+  position: relative;
+  line-height: 100%;
+  text-transform: capitalize;
+}
+
+.order-history__container,
+.topic-path {
+  background-color: var(--color);
+}
+
+.topic-path {
+  position: absolute;
+  top: 56px;
+  left: 240px;
+  width: 1040px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-5xs);
+  box-sizing: border-box;
+  gap: var(--gap-5xs);
+  font-size: var(--typography-caption-size);
+}
+
+.order-history__container {
+  position: relative;
+  width: 100%;
+  height: 720px;
+  overflow: hidden;
+  text-align: left;
+  font-size: var(--typography-body1-size);
+  color: var(--color-black);
+  font-family: var(--font-noto-sans);
+}
