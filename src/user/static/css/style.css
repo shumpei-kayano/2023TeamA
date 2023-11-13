@@ -574,7 +574,7 @@ body {
 
 main {
   width: 90%;
-  margin: 0 auto;
+  margin: 2.5rem 5rem;
 }
 
 a {
@@ -613,26 +613,40 @@ button:hover {
   color: #252525;
 }
 .btn--middle {
-  padding: 0.5rem 5rem;
   font-size: 1rem;
+  width: 15rem;
+  height: 2rem;
 }
 .btn--small {
-  padding: 0.5rem 2rem;
   font-size: 0.8rem;
+  width: 10rem;
+  height: 1rem;
 }
 .btn--big {
-  padding: 0.5rem 10rem;
-  font-size: 1.5rem;
-}
-.btn--biggest {
-  padding: 1rem 15rem;
-  font-size: 2rem;
+  font-size: 1rem;
+  width: 15rem;
+  height: 5rem;
 }
 
 input {
   height: 2rem;
 }
 
-h1 {
-  color: blue;
+table {
+  border-collapse: collapse;
+  width: 80%;
+  margin-bottom: 1rem;
+  background-color: transparent;
+}
+
+td {
+  width: 50%;
+}
+
+.slide {
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  aspect-ratio: 2/1;
+  border-radius: 5px;
 }

@@ -1,3 +1,15 @@
-h1 {
-    color: blue;
+table {
+    border-collapse: collapse;
+    width: 80%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+}
+td {
+    width: 50%;
+}
+.slide{
+    width: 100%;
+    object-fit: cover;
+    aspect-ratio: 2 / 1;
+    border-radius: 5px;
 }

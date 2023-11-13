@@ -607,9 +607,6 @@ header {
     justify-content: space-between;
     align-items: center;
 }
-.header_down {
-
-} 
 footer {
     display: block;
     background-color: $melimit_gray;
@@ -637,7 +634,7 @@ body {
 
 main {
     width: 90%;
-    margin: 0 auto;
+    margin: 2.5rem 5rem;
 }
 
 a {
