@@ -157,21 +157,26 @@ SITE_ID = 1
 # AUTHENTICATION_BACKENDSとは、認証バックエンドを指定する設定
 # デフォルトでは、django.contrib.auth.backends.ModelBackendが指定されている
 AUTHENTICATION_BACKENDS = (
+        # MelimitUserModelBackendを使う
+    'accounts.backends.MelimitUserModelBackend',  # 追加
+    # MelimitStoreModelBackendを使う
+    'accounts.backends.MelimitStoreModelBackend',  # 追加
     # ユーザー名とパスワードによる認証を行うバックエンド
     'django.contrib.auth.backends.ModelBackend',
     # Emailによる認証を行うバックエンドはAuthenticationBackendを使う
     'allauth.account.auth_backends.AuthenticationBackend',  # 追加
-    # MelimitUserModelBackendを使う
-    'accounts.backends.MelimitUserModelBackend',  # 追加
-    # MelimitStoreModelBackendを使う
-    'accounts.backends.MelimitStoreModelBackend',  # 追加
+
 )
 
 # MelimitAccountAdapterを使う
 ACCOUNT_ADAPTER = 'accounts.adapter.MelimitAccountAdapter'  # 追加
 
 # ログイン/ログアウト後の遷移先を設定
-LOGIN_REDIRECT_URL = 'user:index'  # 追加
-ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'  # 追加
+# LOGIN_REDIRECT_URL = 'user:index'
+ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login_kkkk'  # 追加
 
 AUTH_USER_MODEL = 'accounts.CustomUser'  # 追加
+
+# ログインページのURLを設定(allauthのデフォルトを上書き)
+# LOGIN_URL = 'account_login_kkkk'  # 追加
+LOGIN_URL = 'store_login'  # 追加

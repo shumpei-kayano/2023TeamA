@@ -23,7 +23,7 @@ class CustomUserAdmin(BaseUserAdmin):
     # ユーザー編集時に必要なフィールド(管理画面で入力するフィールド)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('username','postal_code','prefecture','city','address','phone_number')}),
+        ('Personal info', {'fields': ('username','postal_code','prefecture','city','address','phone_number','user_type')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser','groups', 'user_permissions')}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
@@ -32,7 +32,7 @@ class CustomUserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'password1', 'password2', 'email'),
+            'fields': ('username', 'password1', 'password2', 'email', 'user_type'),
         }),
     )
 
@@ -45,7 +45,7 @@ class MelimitUserAdmin(BaseUserAdmin):
 
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('username','postal_code','prefecture','city','address','phone_number')}),
+        ('Personal info', {'fields': ('username','postal_code','prefecture','city','address','phone_number','user_type')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser','groups', 'user_permissions')}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
@@ -53,7 +53,7 @@ class MelimitUserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'password1', 'password2', 'email'),
+            'fields': ('username', 'password1', 'password2', 'email','user_type'),
         }),
     )
 
@@ -65,7 +65,7 @@ class MelimitStoreAdmin(BaseUserAdmin):
 
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('username','postal_code','prefecture','city','address','phone_number', 'store_image', 'site_url')}),
+        ('Personal info', {'fields': ('username','postal_code','prefecture','city','address','phone_number', 'store_image', 'site_url', 'user_type')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser','groups', 'user_permissions')}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
@@ -73,7 +73,7 @@ class MelimitStoreAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'password1', 'password2', 'email', 'store_image', 'site_url'),
+            'fields': ('username', 'password1', 'password2', 'email', 'store_image', 'site_url', 'user_type'),
         }),
     )
 

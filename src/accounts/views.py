@@ -5,6 +5,9 @@ from allauth.account.views import LoginView
 from allauth.account.forms import LoginForm
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
+from django.urls import reverse
+import logging
+from django.urls import reverse_lazy
 
 # Create your views here.
 
@@ -28,6 +31,10 @@ from django.core.exceptions import ValidationError
 
 class MelimitUserLoginView(LoginView):
     template_name = 'account/login.html'  # allauthのデフォルトテンプレート
+    # def get_success_url(self):
+    #     return reverse('user:ana_ana')  # ログイン成功後にリダイレクトするURL
+    # def get_success_url(self):
+    #     return reverse_lazy('user:ana_ana')  # ログイン後にリダイレクトするURL
 
 class MelimitStoreLoginView(LoginView):
     template_name = 'account/store_login.html'  # MelimitStore用のカスタムテンプレート

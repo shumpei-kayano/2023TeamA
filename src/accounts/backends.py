@@ -3,6 +3,7 @@ from .models import MelimitUser, MelimitStore
 
 class MelimitUserModelBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
+        print('MelimitUser_______')
         try:
             user = MelimitUser.objects.get(username=username)
             if user.check_password(password):
@@ -12,6 +13,7 @@ class MelimitUserModelBackend(ModelBackend):
 
 class MelimitStoreModelBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
+        print('MelimitStore_______')
         try:
             store = MelimitStore.objects.get(username=username)
             if store.check_password(password):

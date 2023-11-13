@@ -3,6 +3,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from accounts import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('user.urls')),
@@ -11,7 +12,6 @@ urlpatterns = [
     # 独自のviewを指定する場合は、allauthと被らないようにし、さらに、allauth.urlよりも上に書く必要がある
     path('accounts/store_login/', views.MelimitStoreLoginView.as_view(), name='store_login'),  # 追加
     path('accounts/', include('allauth.urls')),
-
 ]
 
 # 画像のURLを追加

@@ -55,12 +55,17 @@ class UserManager(BaseUserManager):
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     """カスタムユーザーモデル"""
+    USER_TYPE_CHOICES = (
+        ('melimit_user', 'MelimitUser'),
+        ('melimit_store', 'MelimitStore'),
+    )
+    user_type = models.CharField(max_length=20, choices=USER_TYPE_CHOICES, blank=True, null=True)
     # unique=Trueオプションを指定すると、メールアドレスフィールドは必須フィールドになる
     email = models.EmailField("メールアドレス", unique=True)
     # staffフィールドがTrueに設定されているユーザーは、Djangoの管理サイトにアクセスできる
     is_staff = models.BooleanField("is_staff", default=True)
     # 認証用のフィールド
-    is_active = models.BooleanField("is_active", default=False)
+    is_active = models.BooleanField("is_active", default=True)
     # 作成日時
     date_joined = models.DateTimeField("date_joined", default=timezone.now)
     # 名前
