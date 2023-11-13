@@ -9,6 +9,7 @@ urlpatterns = [
     path('accounts/store_login/', views.Store_login.as_view(), name='store_login'),  # 追加
     path('accounts/', include('allauth.urls')),
 
+    path('store/', include('store.urls')),
 ]
 
 # 画像のURLを追加
