@@ -1,0 +1,51 @@
+// 共通のコンポーネント
+
+// ボタン
+button{
+    border-radius: 5px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+
+.btn {
+    &--beige {
+        background-color: $main_color;
+        color: $melimit_white;
+    }
+    &--blue {
+        background-color: $melimit_blue;
+        color: $melimit_white;
+    }
+    &--pink {
+        background-color: $melimit_pink;
+        color: $melimit_white;
+    }
+    &--gray {
+        background-color: $melimit_gray;
+        color: $melimit_black;
+    }
+    &--middle {
+        font-size: 1rem;
+        width: 15rem;
+        height: 2rem;
+    }
+    &--small {
+        font-size: 0.8rem;
+        width: 10rem;
+        height: 1rem;
+    }
+    &--big {
+        font-size: 1rem;
+        width: 15rem;
+        height: 5rem;
+    }
+}
+// フォーム
+input {
+    height: 2rem;
+  }
