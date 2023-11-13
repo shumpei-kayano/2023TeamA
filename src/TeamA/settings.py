@@ -170,3 +170,21 @@ ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'  # 追加
 AUTH_USER_MODEL = 'accounts.CustomUser'  # 追加
 # signupformからの情報をcustomusermodelに保存するためのアダプタを指定
 ACCOUNT_ADAPTER = 'accounts.adapter.AccountAdapter'
+# django-allauthのフォームをカスタマイズするため カスタムフォームクラスのパスを指定
+ACCOUNT_FORMS ={
+    'signup' : 'accounts.forms.CustomSignupForm',
+}
+# ログを確認する
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
+}

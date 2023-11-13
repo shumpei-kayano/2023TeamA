@@ -1,0 +1,36 @@
+[2023-11-10 05:47:11 +0000] [20] [INFO] Starting gunicorn 20.1.0
+[2023-11-10 05:47:11 +0000] [20] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2023-11-10 05:47:11 +0000] [20] [ERROR] Retrying in 1 second.
+[2023-11-10 05:47:12 +0000] [20] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2023-11-10 05:47:12 +0000] [20] [ERROR] Retrying in 1 second.
+[2023-11-10 05:47:13 +0000] [20] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2023-11-10 05:47:13 +0000] [20] [ERROR] Retrying in 1 second.
+[2023-11-10 05:47:14 +0000] [20] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2023-11-10 05:47:14 +0000] [20] [ERROR] Retrying in 1 second.
+[2023-11-10 05:47:15 +0000] [20] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2023-11-10 05:47:15 +0000] [20] [ERROR] Retrying in 1 second.
+[2023-11-10 05:47:16 +0000] [20] [ERROR] Can't connect to ('127.0.0.1', 8000)
+[2023-11-10 05:47:39 +0000] [21] [INFO] Starting gunicorn 20.1.0
+[2023-11-10 05:47:39 +0000] [21] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2023-11-10 05:47:39 +0000] [21] [ERROR] Retrying in 1 second.
+[2023-11-10 05:47:40 +0000] [21] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2023-11-10 05:47:40 +0000] [21] [ERROR] Retrying in 1 second.
+[2023-11-10 05:47:41 +0000] [21] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2023-11-10 05:47:41 +0000] [21] [ERROR] Retrying in 1 second.
+[2023-11-10 05:47:42 +0000] [21] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2023-11-10 05:47:42 +0000] [21] [ERROR] Retrying in 1 second.
+[2023-11-10 05:47:43 +0000] [21] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2023-11-10 05:47:43 +0000] [21] [ERROR] Retrying in 1 second.
+[2023-11-10 05:47:44 +0000] [21] [ERROR] Can't connect to ('127.0.0.1', 8000)
+[2023-11-10 05:51:01 +0000] [16] [INFO] Starting gunicorn 20.1.0
+[2023-11-10 05:51:01 +0000] [16] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2023-11-10 05:51:01 +0000] [16] [ERROR] Retrying in 1 second.
+[2023-11-10 05:51:02 +0000] [16] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2023-11-10 05:51:02 +0000] [16] [ERROR] Retrying in 1 second.
+[2023-11-10 05:51:03 +0000] [16] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2023-11-10 05:51:03 +0000] [16] [ERROR] Retrying in 1 second.
+[2023-11-10 05:51:04 +0000] [16] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2023-11-10 05:51:04 +0000] [16] [ERROR] Retrying in 1 second.
+[2023-11-10 05:51:05 +0000] [16] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2023-11-10 05:51:05 +0000] [16] [ERROR] Retrying in 1 second.
+[2023-11-10 05:51:06 +0000] [16] [ERROR] Can't connect to ('127.0.0.1', 8000)
