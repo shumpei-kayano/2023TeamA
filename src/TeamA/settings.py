@@ -32,10 +32,13 @@ INSTALLED_APPS = [
     'debug_toolbar', # 追加
     'sass_processor', # 追加
     'django_extensions', # 追加
-    'django_cleanup' # 追加
-    # 'django.contrib.sites', # 追加
-    # 'allauth', # 追加
-    # 'allauth.account', # 追加
+    'django_cleanup', # 追加
+    'user',
+    'accounts',
+    'django.contrib.sites', # 追加
+    'allauth', # 追加
+    'allauth.account', # 追加
+    'allauth.socialaccount', # 追加
 ]
 
 MIDDLEWARE = [
@@ -47,7 +50,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware', # 追加
-    # 'allauth.account.middleware.AccountMiddleware',  # 追加
+    'allauth.account.middleware.AccountMiddleware',  # 追加
 ]
 
 INTERNAL_IPS = ['127.0.0.1', '::1', 'localhost', '0.0.0.0'] # 追加
@@ -57,7 +60,7 @@ ROOT_URLCONF = 'TeamA.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ BASE_DIR / 'accounts/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -149,7 +152,7 @@ DEBUG_TOOLBAR_CONFIG = {
 # allauth用
 SITE_ID = 1
 
-'''
+
 # django-allauthの設定
 # AUTHENTICATION_BACKENDSとは、認証バックエンドを指定する設定
 # デフォルトでは、django.contrib.auth.backends.ModelBackendが指定されている
@@ -157,13 +160,11 @@ AUTHENTICATION_BACKENDS = (
     # ユーザー名とパスワードによる認証を行うバックエンド
     'django.contrib.auth.backends.ModelBackend',
     # Emailによる認証を行うバックエンドはAuthenticationBackendを使う
-    'allauth.account.auth_backends.AuthenticationBackend'
-    # ,  # 追加
+    'allauth.account.auth_backends.AuthenticationBackend',  # 追加
 )
 
 # ログイン/ログアウト後の遷移先を設定
-LOGIN_REDIRECT_URL = 'sdgs_diary:index'  # 追加
-ACCOUNT_LOGOUT_REDIRECT_URL = 'accounts:logout_success'  # 追加
+LOGIN_REDIRECT_URL = 'user:index'  # 追加
+ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'  # 追加
 
-AUTH_USER_MODEL = 'accounts.User'  # 追加
-'''
+AUTH_USER_MODEL = 'accounts.CustomUser'  # 追加
