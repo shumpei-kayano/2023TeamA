@@ -1,3 +1,6 @@
+.index--contents{
+    margin: 1rem 0;
+}
 table {
     border-collapse: collapse;
     width: 80%;
@@ -5,11 +8,22 @@ table {
     background-color: transparent;
 }
 td {
-    width: 50%;
+    width: auto;
 }
-.slide{
+.index-slide{
     width: 100%;
     object-fit: cover;
     aspect-ratio: 2 / 1;
     border-radius: 5px;
+}
+.best-category{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem 0;
+}
+.best-category li{
+    margin: 1rem;
+    padding: 1rem;
 }
