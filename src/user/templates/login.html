@@ -1,2 +1,31 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block content %}
+
+<div class="form-wrapper">
+    <h2>ログイン</h2>
+    <form>
+      <div class="form-item">
+        <input type="email" name="email" required="required" placeholder="メールアドレスを入力してください"></input>
+      </div>
+      <div class="form-item">
+        <input type="password" name="password" required="required" placeholder="パスワードを入力してください"></input>
+      </div>
+      <div class="form-item"> <!-- Modified for centering the button -->
+        <button class="btn--beige btn--middle">ログイン</button>
+      </div>
+    </form>
+    <div class="login_underline">
+      <p><a href="#">パスワードを忘れた場合</a></p>
+    </div>
+      <div class="form-footer">
+      <p>売り手の方（店舗）はこちら</p>
+      <button class="btn--gray btn--middle">店舗ログインページへ</button>
+      <p>会員登録がまだの方はこちら</p>
+      <button class="btn--beige btn--middle">新規会員登録（無料）</button>
+      <p>まだ迷っている方はこちら</p>
+      <button class="btn--beige btn--middle">Melimitとは</button>
+    </div>
+</div>
+
+{% endblock %}
