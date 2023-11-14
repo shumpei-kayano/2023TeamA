@@ -9,32 +9,51 @@ from django.urls import reverse_lazy
 from django.http import HttpResponseForbidden
 import logging
 import pdb
+from django.shortcuts import render
+from django.urls import reverse
 # Create your views here.
 logger = logging.getLogger(__name__)
+
+class CustomLoginView(LoginView):
+    print('555')
+    form_class = LoginForm
+    def form_valid(self, form):
+        print('あああああああああ')
+        self.user = form.get_user()
+        return super().form_valid(form)
+    def get_success_url(self):
+        if self.user.is_staff:
+            return reverse('')
+        else:
+            return reverse('account/login')
+
 
 class Store_login(LoginView):
     template_name = "account/store_login.html"
     # print('ううううううう')
-    #form_class = LoginForm
+    form_class = LoginForm
     
     def form_valid(self, form):
         print('あああああああああ')
-        # User = get_user_model()
-        logger.info('form_valid method was うわああああああああああ')
+        User = get_user_model()
+        print('form_valid method was うわああああああああああ')
         
         pdb.set_trace()
         try:
-            user = form.user_cache
+            print('2222222222')
+            user = User.objects.get(username=form.cleaned_data['login'])
             # user = User.objects.get(username=form.cleaned_data['username'])
-            if not user.is_typename:
-                return HttpResponseForbidden("えええええええええええええええええ!")
+            if not user.is_staff:
+                print('333333')
+                # return HttpResponseForbidden("えええええええええええええええええ!")
         except ObjectDoesNotExist:
-            return HttpResponseForbidden("いいいいいいいいいいいいい")
+            print('44444444')
+            # return HttpResponseForbidden("いいいいいいいいいいいいい")
         return super().form_valid(form)
     # フォームのバリデーションが行われているか確認する
     def form_invalid(self, form):
-        pdb.set_trace()
-        logger.info('おおおおおおおおおおおおお')
+        # pdb.set_trace()
+        print('おおおおおおおおおおおおお')
         return super().form_invalid(form)
     
     
