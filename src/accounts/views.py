@@ -10,6 +10,8 @@ import logging
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login
 
+# def index(request):
+#     return render(request, 'account/index.html')
 # Create your views here.
 
 # class Store_login(LoginView):
@@ -74,19 +76,19 @@ class MelimitStoreLoginView(LoginView):
     # def authenticate(self, *args, **kwargs):
     #     kwargs['backend'] = 'accounts.backends.MelimitStoreModelBackend'
     #     return super().authenticate(*args, **kwargs)
-    def form_valid(self, form):
-        # フォームのデータを取得
-        username = form.cleaned_data.get('username')
-        password = form.cleaned_data.get('password')
+    # def form_valid(self, form):
+    #     # フォームのデータを取得
+    #     username = form.cleaned_data.get('username')
+    #     password = form.cleaned_data.get('password')
 
-        # authenticate関数にbackend引数を指定
-        user = authenticate(self.request, username=username, password=password, backend='accounts.backends.MelimitStoreModelBackend')
+    #     # authenticate関数にbackend引数を指定
+    #     user = authenticate(self.request, username=username, password=password, backend='accounts.backends.MelimitStoreModelBackend')
 
-        if user is not None:
-            login(self.request, user)
-            return super().form_valid(form)
-        else:
-            return self.form_invalid(form)
+    #     if user is not None:
+    #         login(self.request, user)
+    #         return super().form_valid(form)
+    #     else:
+    #         return self.form_invalid(form)
         
     def dispatch(self, request, *args, **kwargs):
         print('MelimitStoreLoginView')
