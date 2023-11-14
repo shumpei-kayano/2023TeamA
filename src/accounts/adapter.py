@@ -22,6 +22,8 @@ class MelimitAccountAdapter(DefaultAccountAdapter):
 
         user = request.user
         if user.is_authenticated:
+            # userのモデル名を出力してみる
+            print(f'user model: {user.__class__.__name__}')
             print(f'request.user type: {type(user)}')
             print(f'user type: {user.user_type}')
             if user.user_type == 'melimit_user':

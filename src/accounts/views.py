@@ -8,6 +8,7 @@ from django.core.exceptions import ValidationError
 from django.urls import reverse
 import logging
 from django.urls import reverse_lazy
+from django.contrib.auth import authenticate, login
 
 # Create your views here.
 
@@ -31,10 +32,38 @@ from django.urls import reverse_lazy
 
 class MelimitUserLoginView(LoginView):
     template_name = 'account/login.html'  # allauthのデフォルトテンプレート
-    # def get_success_url(self):
-    #     return reverse('user:ana_ana')  # ログイン成功後にリダイレクトするURL
-    # def get_success_url(self):
-    #     return reverse_lazy('user:ana_ana')  # ログイン後にリダイレクトするURL
+    # def form_valid(self, form):
+    #     print('MelimitUserLoginView')
+    #     auth = authenticate(self.request,
+    #                         username=form.cleaned_data['login'],
+    #                         password=form.cleaned_data['password'],
+    #                         backend='accounts.backends.MelimitUserModelBackend')
+    #     if auth is not None:
+    #         login(self.request, auth)
+    #     return super().form_valid(form)
+    def dispatch(self, request, *args, **kwargs):
+        print('MelimitUserLoginView')
+        # もしsessionにbackendが入っていたら、それを削除する
+        if 'backend' in request.session:
+            del request.session['backend']
+        # sessionを出力してみる
+        # print(f'session: {request.session}')
+        # print(f'session: {dict(request.session)}')
+        request.session['backend'] = 'accounts.backends.MelimitUserModelBackend'
+        print(f'session: {request.session}')
+        print(f'session: {dict(request.session)}')
+        return super().dispatch(request, *args, **kwargs)
 
 class MelimitStoreLoginView(LoginView):
     template_name = 'account/store_login.html'  # MelimitStore用のカスタムテンプレート
+    # def authenticate(self, *args, **kwargs):
+    #     kwargs['backend'] = 'accounts.backends.MelimitStoreModelBackend'
+    #     return super().authenticate(*args, **kwargs)
+    def dispatch(self, request, *args, **kwargs):
+        print('MelimitStoreLoginView')
+        if 'backend' in request.session:
+            del request.session['backend']
+        request.session['backend'] = 'accounts.backends.MelimitStoreModelBackend'
+        print(f'session: {request.session}')
+        print(f'session: {dict(request.session)}')
+        return super().dispatch(request, *args, **kwargs)

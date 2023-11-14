@@ -7,6 +7,9 @@ class MelimitUserModelBackend(ModelBackend):
         try:
             user = MelimitUser.objects.get(username=username)
             if user.check_password(password):
+                # userを出力してみる
+                print(f'Username: {user.username}')
+                print(f'Email: {user.email}')
                 return user
         except MelimitUser.DoesNotExist:
             return None
