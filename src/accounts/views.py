@@ -41,6 +41,21 @@ class MelimitUserLoginView(LoginView):
     #     if auth is not None:
     #         login(self.request, auth)
     #     return super().form_valid(form)
+    def form_valid(self, form):
+        # フォームのデータを取得
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password')
+
+        # authenticate関数にbackend引数を指定
+        user = authenticate(self.request, username=username, password=password, backend='accounts.backends.MelimitStoreModelBackend')
+
+        if user is not None:
+            login(self.request, user)
+            return super().form_valid(form)
+        else:
+            return self.form_invalid(form)
+        
+        
     def dispatch(self, request, *args, **kwargs):
         print('MelimitUserLoginView')
         # もしsessionにbackendが入っていたら、それを削除する
@@ -59,6 +74,20 @@ class MelimitStoreLoginView(LoginView):
     # def authenticate(self, *args, **kwargs):
     #     kwargs['backend'] = 'accounts.backends.MelimitStoreModelBackend'
     #     return super().authenticate(*args, **kwargs)
+    def form_valid(self, form):
+        # フォームのデータを取得
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password')
+
+        # authenticate関数にbackend引数を指定
+        user = authenticate(self.request, username=username, password=password, backend='accounts.backends.MelimitStoreModelBackend')
+
+        if user is not None:
+            login(self.request, user)
+            return super().form_valid(form)
+        else:
+            return self.form_invalid(form)
+        
     def dispatch(self, request, *args, **kwargs):
         print('MelimitStoreLoginView')
         if 'backend' in request.session:

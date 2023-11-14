@@ -6,6 +6,7 @@ class MelimitUserModelBackend(ModelBackend):
         print('MelimitUser_______')
         try:
             user = MelimitUser.objects.get(username=username)
+            print(user)
             if user.check_password(password):
                 # userを出力してみる
                 print(f'Username: {user.username}')
