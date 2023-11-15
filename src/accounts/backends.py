@@ -13,6 +13,7 @@ class MelimitUserModelBackend(ModelBackend):
                 print(f'Email: {user.email}')
                 return user
         except MelimitUser.DoesNotExist:
+            print('none!!!!')
             return None
 
 class MelimitStoreModelBackend(ModelBackend):
@@ -21,6 +22,8 @@ class MelimitStoreModelBackend(ModelBackend):
         try:
             store = MelimitStore.objects.get(username=username)
             if store.check_password(password):
+                print('passcheck')
                 return store
         except MelimitStore.DoesNotExist:
+            print('none')
             return None

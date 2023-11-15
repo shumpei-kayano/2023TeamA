@@ -43,19 +43,21 @@ class MelimitUserLoginView(LoginView):
     #     if auth is not None:
     #         login(self.request, auth)
     #     return super().form_valid(form)
-    def form_valid(self, form):
-        # フォームのデータを取得
-        username = form.cleaned_data.get('username')
-        password = form.cleaned_data.get('password')
+    # form_class = LoginForm
+    # def form_valid(self, form):
+    #     print('form_____')
+    #     # フォームのデータを取得
+    #     username = form.cleaned_data.get('username')
+    #     password = form.cleaned_data.get('password')
+    #     print('form_valid_____')
+    #     # authenticate関数にbackend引数を指定
+    #     user = authenticate(self.request, username=username, password=password, backend='accounts.backends.MelimitStoreModelBackend')
 
-        # authenticate関数にbackend引数を指定
-        user = authenticate(self.request, username=username, password=password, backend='accounts.backends.MelimitStoreModelBackend')
-
-        if user is not None:
-            login(self.request, user)
-            return super().form_valid(form)
-        else:
-            return self.form_invalid(form)
+    #     if user is not None:
+    #         login(self.request, user)
+    #         return super().form_valid(form)
+    #     else:
+    #         return self.form_invalid(form)
         
         
     def dispatch(self, request, *args, **kwargs):
@@ -66,9 +68,11 @@ class MelimitUserLoginView(LoginView):
         # sessionを出力してみる
         # print(f'session: {request.session}')
         # print(f'session: {dict(request.session)}')
+        # ここで追加するセッションをもとにどのログインページからログインしようとしたか判断する(アダプターにて)
         request.session['backend'] = 'accounts.backends.MelimitUserModelBackend'
         print(f'session: {request.session}')
         print(f'session: {dict(request.session)}')
+        print(request.session['backend'])
         return super().dispatch(request, *args, **kwargs)
 
 class MelimitStoreLoginView(LoginView):
@@ -76,11 +80,13 @@ class MelimitStoreLoginView(LoginView):
     # def authenticate(self, *args, **kwargs):
     #     kwargs['backend'] = 'accounts.backends.MelimitStoreModelBackend'
     #     return super().authenticate(*args, **kwargs)
+    # form_class = LoginForm
     # def form_valid(self, form):
+    #     print('form_____')
     #     # フォームのデータを取得
     #     username = form.cleaned_data.get('username')
     #     password = form.cleaned_data.get('password')
-
+    #     print('form_valid_____')
     #     # authenticate関数にbackend引数を指定
     #     user = authenticate(self.request, username=username, password=password, backend='accounts.backends.MelimitStoreModelBackend')
 

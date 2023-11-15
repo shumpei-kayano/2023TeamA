@@ -164,7 +164,7 @@ AUTHENTICATION_BACKENDS = (
     'accounts.backends.MelimitUserModelBackend',  # 追加
     # MelimitStoreModelBackendを使う
     'accounts.backends.MelimitStoreModelBackend',  # 追加
-    # ユーザー名とパスワードによる認証を行うバックエンド
+    # ユーザー名とパスワードによる認証を行うバックエンド 
     'django.contrib.auth.backends.ModelBackend',
     # Emailによる認証を行うバックエンドはAuthenticationBackendを使う
     'allauth.account.auth_backends.AuthenticationBackend',  # 追加

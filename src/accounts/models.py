@@ -93,13 +93,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         verbose_name = "user"
-        verbose_name_plural = "users"
+        verbose_name_plural = "CustomUser"
 
 class MelimitUser(CustomUser):
     
     class Meta:
         verbose_name = "お客さん"
-        verbose_name_plural = "お客さんたち"
+        verbose_name_plural = "MelimitUser"
         # login_redirect_url = '/home/'
     
     def __str__(self):
@@ -117,7 +117,7 @@ class MelimitStore(CustomUser):
     
     class Meta:
         verbose_name = "store"
-        verbose_name_plural = "stores"
+        verbose_name_plural = "MelimitStore"
         # login_redirect_url = '/store/'
         
     

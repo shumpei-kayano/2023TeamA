@@ -40,16 +40,17 @@ class MelimitAccountAdapter(DefaultAccountAdapter):
             #         return '/yoshi_yoshi/'
             #     else:
             #         return '/ana_ana/'
-            # ユーザー側からログイン
-            if user.__class__.__name__ == 'MelimitUser':
+            # ユーザー側からログイン (改修後)
+            if request.session['backend'] == 'accounts.backends.MelimitUserModelBackend':
+            # if user.__class__.__name__ == 'MelimitUser':
                 # ログインしたのがユーザー?
                 if user.user_type == 'melimit_user':
                     print('___melimit_user')
                     return '/ana_ana/'
                 else:
                     print('___melimit_user')
-                    return '/yoshi_yoshi/'
-            # 店舗側からログイン
+                    return '/omae_store_kokoha_useryou/'
+            # 店舗側からログイン (改修前)
             elif user.__class__.__name__ == 'MelimitStore':
                 # ログインしたのが店舗?
                 if user.user_type == 'melimit_store':
