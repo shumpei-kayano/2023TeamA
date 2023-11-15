@@ -59,7 +59,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         ('melimit_user', 'MelimitUser'),
         ('melimit_store', 'MelimitStore'),
     )
-    user_type = models.CharField(max_length=20, choices=USER_TYPE_CHOICES, blank=True, null=True)
+    user_type = models.CharField(max_length=20, blank=True, null=True,)
     # unique=Trueオプションを指定すると、メールアドレスフィールドは必須フィールドになる
     email = models.EmailField("メールアドレス", unique=True)
     # staffフィールドがTrueに設定されているユーザーは、Djangoの管理サイトにアクセスできる
@@ -96,7 +96,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = "users"
 
 class MelimitUser(CustomUser):
-    
+    def save(self, *args, **kwargs):
+        self.user_type = 'melimit_user'
+        super().save(*args, **kwargs)
     class Meta:
         verbose_name = "お客さん"
         verbose_name_plural = "お客さんたち"
@@ -115,6 +117,9 @@ class MelimitStore(CustomUser):
     # サイトURL
     site_url = models.URLField("サイトURL", max_length=200, blank=True)
     
+    def save(self, *args, **kwargs):
+        self.user_type = 'melimit_store'
+        super().save(*args, **kwargs)
     class Meta:
         verbose_name = "store"
         verbose_name_plural = "stores"
