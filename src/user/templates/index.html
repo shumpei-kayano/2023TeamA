@@ -2,11 +2,11 @@
 {% load static %}
 {% block title %}トップページ{% endblock %}
 {% block content %}
-<table>
+<table class="index--contents">
 <tr>
 <td><button class="btn--beige btn--big">ご利用ガイド</a></td>
 <td rowspan="3">
-    <img class ="slide"src="{% static 'assets/img/350x160.png' %}" alt="cart">
+    <img class ="index-slide" src="{% static 'assets/img/350x160.png' %}" alt="cart">
 </td>
 </tr>
 <tr>
@@ -16,5 +16,32 @@
 <td><button class="btn--beige btn--big">食品ロスとは</a></td>
 </tr>
 </table>
-
+<div class="index--contents">
+    <h2><p>おすすめ商品</p></h2>
+    <ul class="best-category">
+        <li>すべて</li>
+        <li>肉</li>
+        <li>野菜</li>
+        <li>果物</li>
+        <li>海鮮</li>
+    </ul>
+    <div class="item--list">
+        <div class="item--card card--blue">
+            <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+            <p class="discount">00%OFF</p>
+            <div class="card--content">
+                <h3 class="card--title">Card Title</h3>
+                <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+            </div>
+        </div>
+        <div class="item--card card--pink">
+            <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+            <p class="discount">MAX00%OFF</p>
+            <div class="card--content">
+                <h3 class="card--title">Card Title</h3>
+                <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
