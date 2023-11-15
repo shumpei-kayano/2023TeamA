@@ -501,16 +501,13 @@ textarea,
   position: absolute;
 }
 
-header {
-  display: block;
-  background-image: linear-gradient(180deg, #D4B985 0%, #FFFFFF 100%);
-  padding: 1rem 5rem;
-  font-weight: bold;
-  position: fixed;
-  top: 0px;
-  left: 0;
+header, footer {
   width: 100%;
-  border-bottom: inset;
+}
+
+header {
+  background-image: linear-gradient(180deg, #D4B985 0%, #FFFFFF 100%);
+  padding: 0 5rem;
 }
 
 .header_logo, .footer_logo {
@@ -554,8 +551,11 @@ header {
   align-items: center;
 }
 
+.search-form {
+  height: 2rem;
+}
+
 footer {
-  display: block;
   background-color: #EBEBEB;
   padding: 1rem;
   text-align: center;
@@ -566,8 +566,9 @@ footer {
 html {
   height: -webkit-fill-available;
   font-size: 100%;
-  font-weight: 400;
+  font-weight: 500;
   font-style: normal;
+  font-weight: bold;
   scroll-behavior: smooth;
 }
 
@@ -575,12 +576,12 @@ body {
   font-family: "Noto Sans JP", sans-serif;
   color: #252525;
   background-color: #FFFFFF;
+  margin: 0 auto;
 }
 
 main {
-  width: 90%;
-  margin: 2.5rem 5rem;
-  padding-top: 5rem;
+  max-width: 1200px;
+  margin: 3rem auto;
 }
 
 a {
@@ -591,17 +592,22 @@ a {
 a:hover {
   opacity: 1;
 }
+a.underline {
+  text-decoration: underline;
+}
 
-p {
-  text-align: center;
+input {
+  height: 50px;
+  border: solid 1px #EBEBEB;
+}
+
+input:focus {
+  border-bottom: 2px solid;
+  outline: none;
 }
 
 li {
   list-style: none;
-}
-
-input {
-  height: 2rem;
 }
 
 button {
@@ -611,7 +617,7 @@ button {
   cursor: pointer;
 }
 button:hover {
-  opacity: 0.8;
+  opacity: 1;
 }
 
 .btn--beige {
@@ -687,6 +693,33 @@ button:hover {
   justify-content: center;
   align-items: center;
   margin: 1rem 0;
+}
+
+.center {
+  text-align: center;
+}
+
+.fw--middle {
+  font-weight: 100;
+}
+
+/* Form Layout */
+.form-wrapper {
+  margin: 3rem auto;
+  max-width: 30%;
+}
+
+.btn-wrapper {
+  margin-top: 2em;
+}
+
+.form-item {
+  margin-bottom: 2rem;
+  width: 100%;
+  text-align: left;
+}
+.form-item input {
+  width: 100%;
 }
 
 .index--contents {
