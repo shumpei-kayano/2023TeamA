@@ -568,11 +568,12 @@
 
 
 // へッダー・フッターの共通CSSを記述
+header , footer {
+    width: 100%;
+}
 header {
-    display: block;
     background-image: linear-gradient(180deg, $main_color 0%, $melimit_white 100%);
     padding: 0 5rem;
-    font-weight: bold;
 }
 .header_logo,.footer_logo {
     width: 7.5rem;
@@ -607,8 +608,10 @@ header {
     justify-content: space-between;
     align-items: center;
 }
+.search-form {
+  height: 2rem;
+}
 footer {
-    display: block;
     background-color: $melimit_gray;
     padding: 1rem;
     text-align: center;
@@ -622,21 +625,21 @@ footer {
 html {
     height: -webkit-fill-available;
     font-size: 100%;
-    font-weight: 400;
+    font-weight: 500;
     font-style: normal;
+    font-weight: bold;
     scroll-behavior: smooth;
 }
 body {
     font-family: "Noto Sans JP", sans-serif;
     color: $melimit_black;
     background-color: $melimit_white;
+    margin: 0 auto;
 }
-
-main {
-    width: 90%;
-    margin: 2.5rem 5rem;
+main{
+  max-width: 1200px;
+  margin: 3rem auto;
 }
-
 a {
     text-decoration: none;
     color: $melimit_black;
@@ -644,4 +647,27 @@ a {
     &:hover {
         opacity: 1;
     }
+    &.underline{
+        text-decoration: underline;
+    }
+}
+input {
+  height: 50px;
+  border: solid 1px $melimit_gray;
+}
+input:focus {
+  border-bottom: 2px solid ;
+  outline: none;
+}
+li{
+  list-style: none;
+}
+button{
+  border-radius: 5px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  &:hover {
+      opacity: 1;
+  }
 }

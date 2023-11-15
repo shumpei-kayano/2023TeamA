@@ -1,17 +1,6 @@
 // 共通のコンポーネント
 
 // ボタン
-button{
-    border-radius: 5px;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-    &:hover {
-        opacity: 0.8;
-    }
-}
-
-
 .btn {
     &--beige {
         background-color: $main_color;
@@ -31,18 +20,17 @@ button{
     }
     &--middle {
         padding: 0.5rem 5rem;
-        font-size: 1rem;
     }
     &--small {
         padding: 0.5rem 2rem;
-        font-size: 0.8rem;
     }
     &--big {
         padding: 1rem 5rem;
-        font-size: 1rem;
     }
 }
-// フォーム
-input {
-    height: 2rem;
-  }
+.center {
+    text-align: center;
+}
+.fw--middle {
+    font-weight:100;
+}
