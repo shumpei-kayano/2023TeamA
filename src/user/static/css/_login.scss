@@ -1,51 +1,18 @@
 /* Form Layout */
 .form-wrapper {
-  margin: 3em auto;
-  padding: 0 1em;
-  max-width: 370px;
+  margin: 3rem auto;
+  max-width: 30%;
 }
 
-.form-wrapper h2 {
-  text-align: center;
-  padding: 1em 0;
-}
-
-form {
-  padding: 0 1.5em;
+.btn-wrapper{
+  margin-top: 2em;
 }
 
 .form-item {
-  margin-bottom: 0.75em;
+  margin-bottom: 2rem;
   width: 100%;
-  text-align: center;
-}
-
-.form-item input {
-  font-size: 1em;
-  height: 50px;
-  width: 100%;
-}
-
-.form-item input:focus {
-  border-bottom: 2px solid ;
-  outline: none;
-}
-
-.login_underline{
-  font-size: 1em;
-  text-align: center;
-}
-
-.login_underline a{
-  text-decoration: underline;
-}
-
-
-.form-footer {
-  font-size: 1em;
-  text-align: center;
-}
-
-.form-footer p {
-  margin-top: 3em;
+  text-align: left;
+  input{
+    width: 100%;
+  }
 }
