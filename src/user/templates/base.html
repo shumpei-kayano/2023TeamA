@@ -1,14 +1,22 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="ja">
-<head>
+    <head prefix="og: http://ogp.me/ns#">
+    <meta property="og:title" content="Melimit">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="#">
+    <meta property="og:image" content="#">
+    <meta property="og:site_name" content="Melimit">
+    <meta property="og:description" content="Melimitは、食品の売買で社会のフードロスを削減できるサービスです。">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock title %}</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <header>
         <div class="header_upper">
+            <h1>Melimit</h1>
             <a href="#"><img src="{% static 'assets/img/Melimit.png' %}" alt="Melimit" class="header_logo"/></a>
             <nav>
                 <ul class="header_upper--menu">
@@ -24,9 +32,9 @@
             </div>
         </div>
         <div class="header_down">
-            <button class="btn--beige btn--middle" type="button">カテゴリー▼</button>
-            <button class="btn--blue btn--middle" type="button">一般購入商品</button>
-            <button class="btn--pink btn--middle" type="button">共同購入商品</button>
+            <a class="btn--beige btn--middle">カテゴリー▼</a>
+            <a class="btn--blue btn--middle">一般購入商品</a>
+            <a class="btn--pink btn--middle">共同購入商品</a>
             <form method="get" action="#" class="header_search">
                 <label>
                     <input class="search-form" type="text" name="search" placeholder="キーワードを入力">
@@ -42,7 +50,7 @@
         <div class="footer_upper">
             <div class="footer_upper-left">
                 <a href="#"><img src="{% static 'assets/img/Melimit.png' %}" alt="Melimit" class="footer_logo"/>
-                <p>© 2023 Melimit</p>
+                <p>©<script>document.write(new Date().getFullYear());</script>Melimit</p>
             </div>
             <div class="footer_upper-right">
                 <ul class="footer_main-menu">
