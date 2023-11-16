@@ -96,7 +96,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = "CustomUser"
 
 class MelimitUser(CustomUser):
-    
+    def save(self, *args, **kwargs):
+        self.user_type = 'melimit_user'
+        super().save(*args, **kwargs)
     class Meta:
         verbose_name = "お客さん"
         verbose_name_plural = "MelimitUser"
@@ -115,6 +117,9 @@ class MelimitStore(CustomUser):
     # サイトURL
     site_url = models.URLField("サイトURL", max_length=200, blank=True)
     
+    def save(self, *args, **kwargs):
+        self.user_type = 'melimit_store'
+        super().save(*args, **kwargs)
     class Meta:
         verbose_name = "store"
         verbose_name_plural = "MelimitStore"

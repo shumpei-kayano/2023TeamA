@@ -119,8 +119,10 @@ def StoreCreateView(request):
         form = MelimitStoreRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
+            # backendを指定してログインさせる
+            user.backend = 'accounts.backends.MelimitStoreModelBackend'
             login(request, user)
-            return redirect('home')
+            return redirect('user:index')
     else:
         form = MelimitStoreRegistrationForm()
     return render(request, 'account/store_touroku.html', {'form': form})
