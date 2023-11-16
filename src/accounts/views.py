@@ -9,6 +9,9 @@ from django.urls import reverse
 import logging
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login
+from django.shortcuts import redirect
+from .forms import MelimitStoreRegistrationForm
+
 from django.views.generic.edit import CreateView
 from .forms import CustomUserCreationForm
 # def index(request):
@@ -111,6 +114,20 @@ class MelimitStoreLoginView(LoginView):
 #     return render(request, 'account/user_touroku.html')
 
 def StoreCreateView(request):
+    # return render(request, 'account/store_touroku.html')
+
+# def register(request):
+    if request.method == 'POST':
+        form = MelimitStoreRegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            # backendを指定してログインさせる
+            user.backend = 'accounts.backends.MelimitStoreModelBackend'
+            login(request, user)
+            return redirect('user:index')
+    else:
+        form = MelimitStoreRegistrationForm()
+    return render(request, 'account/store_touroku.html', {'form': form})
     return render(request, 'account/store_touroku.html')
 
 class UserCreateView(CreateView):

@@ -18,12 +18,12 @@ class CustomUserAdmin(BaseUserAdmin):
     add_form = BaseUserAdmin.add_form
     # 一覧画面で表示する項目
     model = CustomUser
-    list_display = ('username','email','city')
+    list_display = ('username', 'email', 'user_type')
 
     # ユーザー編集時に必要なフィールド(管理画面で入力するフィールド)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('username','postal_code','prefecture','city','address','phone_number','user_type')}),
+        ('Personal info', {'fields': ('username','postal_code','prefecture','city','address','phone_number',)}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser','groups', 'user_permissions')}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
@@ -32,7 +32,7 @@ class CustomUserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'password1', 'password2', 'email', 'user_type'),
+            'fields': ('username', 'password1', 'password2', 'email',),
         }),
     )
 
@@ -41,11 +41,11 @@ class MelimitUserAdmin(BaseUserAdmin):
     form = CustomUserChangeForm
     add_form = BaseUserAdmin.add_form
     model = MelimitUser
-    list_display = ('username','city')
+    list_display = ('username', 'email', 'user_type')
 
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('username','postal_code','prefecture','city','address','phone_number','user_type')}),
+        ('Personal info', {'fields': ('username','postal_code','prefecture','city','address','phone_number',)}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser','groups', 'user_permissions')}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
@@ -53,7 +53,7 @@ class MelimitUserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'password1', 'password2', 'email','user_type'),
+            'fields': ('username', 'password1', 'password2', 'email',),
         }),
     )
 
@@ -61,11 +61,11 @@ class MelimitStoreAdmin(BaseUserAdmin):
     form = CustomUserChangeForm
     add_form = BaseUserAdmin.add_form
     model = MelimitStore
-    list_display = ('username','city')
+    list_display = ('username', 'email', 'user_type')
 
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('username','postal_code','prefecture','city','address','phone_number', 'store_image', 'site_url', 'user_type')}),
+        ('Personal info', {'fields': ('username','postal_code','prefecture','city','address','phone_number', 'store_image', 'site_url', )}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser','groups', 'user_permissions')}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
@@ -73,7 +73,7 @@ class MelimitStoreAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'password1', 'password2', 'email', 'store_image', 'site_url', 'user_type'),
+            'fields': ('username', 'password1', 'password2', 'email', 'store_image', 'site_url', ),
         }),
     )
 
