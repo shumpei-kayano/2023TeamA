@@ -51,14 +51,15 @@ class MelimitAccountAdapter(DefaultAccountAdapter):
                     print('___melimit_user')
                     return '/omae_store_kokoha_useryou/'
             # 店舗側からログイン (改修前)
-            elif user.__class__.__name__ == 'MelimitStore':
+            elif request.session['backend'] == 'accounts.backends.MelimitStoreModelBackend':
+            # elif user.__class__.__name__ == 'MelimitStore':
                 # ログインしたのが店舗?
                 if user.user_type == 'melimit_store':
                     print('___melimit_store')
                     return '/yoshi_yoshi/'
                 else:
                     print('___melimit_store')
-                    return '/ana_ana/'
+                    return '/omae_user_kokoha_storeyou/'
             # else:
             #     return super().get_login_redirect_url(request)
         return super().get_login_redirect_url(request)
