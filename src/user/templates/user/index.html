@@ -12,5 +12,6 @@
     <p>こんにちは、{{ user.username }}さん</p>
     {% comment %} <p>モデル名：{{ user.__class__.__name__ }}</p> {% endcomment %}
     <p>ユーザータイプ：{{ user.user_type }}</p>
+    <a href="{% url 'user:sinki' %}">新規登録</a>
 </body>
 </html>

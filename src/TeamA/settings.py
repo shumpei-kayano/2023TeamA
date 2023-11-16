@@ -186,4 +186,4 @@ AUTH_USER_MODEL = 'accounts.CustomUser'  # 追加
 # LOGIN_URL = 'account_login_kkkk'  # 追加
 
 # ここからログインすると、adapterを経由して遷移する
-LOGIN_URL = 'store_login'  # 追加
+# LOGIN_URL = 'store_login'  # 追加

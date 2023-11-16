@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 
 # Create your views here.
-@login_required
+# @login_required
 def index(request):
     print('index_________')
     return render(request, 'user/index.html')
@@ -29,3 +29,7 @@ def omae_store(request):
 def omae_user(request):
     logout(request)
     return render(request, 'account/storelogin_usererror.html')
+
+def sinki(request):
+    print('sinki_________')
+    return render(request, 'user/sinki.html')

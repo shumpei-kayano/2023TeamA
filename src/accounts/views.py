@@ -104,3 +104,10 @@ class MelimitStoreLoginView(LoginView):
         print(f'session: {request.session}')
         print(f'session: {dict(request.session)}')
         return super().dispatch(request, *args, **kwargs)
+    
+
+def UserCreateView(request):
+    return render(request, 'account/user_touroku.html')
+
+def StoreCreateView(request):
+    return render(request, 'account/store_touroku.html')
