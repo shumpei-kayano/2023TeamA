@@ -3,17 +3,17 @@ from django.views import View
 from django.http import HttpResponse
 from allauth.account.views import LoginView
 from allauth.account.forms import LoginForm
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate, login
 from django.core.exceptions import ValidationError
 from django.urls import reverse
 import logging
 from django.urls import reverse_lazy
-from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect
-from .forms import MelimitStoreRegistrationForm
+from .forms import MelimitStoreRegistrationForm, CustomUserCreationForm
+from django.views.generic.edit import CreateView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .models import MelimitStore
 
-from django.views.generic.edit import CreateView
-from .forms import CustomUserCreationForm
 # def index(request):
 #     return render(request, 'account/index.html')
 # Create your views here.
@@ -124,11 +124,20 @@ def StoreCreateView(request):
             # backendを指定してログインさせる
             user.backend = 'accounts.backends.MelimitStoreModelBackend'
             login(request, user)
-            return redirect('user:index')
+            # return redirect('user:index')
+            return render(request, 'account/store_top.html')
     else:
         form = MelimitStoreRegistrationForm()
     return render(request, 'account/store_touroku.html', {'form': form})
-    return render(request, 'account/store_touroku.html')
+
+class StoreUpdateView(LoginRequiredMixin, UpdateView):
+    model = MelimitStore
+    form_class = MelimitStoreRegistrationForm
+    template_name = 'account/store_edit.html'
+    success_url = reverse_lazy('user:index')
+
+    def get_object(self, queryset=None):
+        return self.request.user
 
 class UserCreateView(CreateView):
     form_class = CustomUserCreationForm

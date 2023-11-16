@@ -21,7 +21,6 @@ class MelimitStoreRegistrationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
-        fields = ('email', 'password', )  # 必要なフィールドを指定
 
 # ユーザーが新規登録するフォーム
 class CustomUserCreationForm(UserCreationForm):
