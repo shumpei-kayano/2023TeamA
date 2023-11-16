@@ -58,15 +58,21 @@ header {
     display: none;
   }
   &__menu {
-    width: 60%;
+    width: 65%;
     padding-left: 0;
     display: flex;
     justify-content: space-between;
+  }
+  &__category {
+    padding-left: 0;
   }
   &__menu-container {
     padding-left: 0;
     display: flex;
     justify-content: space-between;
+    li:first-child {
+      margin-right: 30px;
+    }
   }
   li {
     // display: inline-block;

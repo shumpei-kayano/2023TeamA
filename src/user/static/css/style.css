@@ -570,15 +570,21 @@ header {
   display: none;
 }
 .header_down__menu {
-  width: 60%;
+  width: 65%;
   padding-left: 0;
   display: flex;
   justify-content: space-between;
+}
+.header_down__category {
+  padding-left: 0;
 }
 .header_down__menu-container {
   padding-left: 0;
   display: flex;
   justify-content: space-between;
+}
+.header_down__menu-container li:first-child {
+  margin-right: 30px;
 }
 .header_down li {
   color: #252525;
