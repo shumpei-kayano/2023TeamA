@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 
 # Create your views here.
 @login_required
@@ -22,7 +23,9 @@ def yoshi(request):
     return render(request, 'user/yoshi_yoshi.html', {'model_name': model_name, 'instance_name': instance_name})
 # ユーザー側から店舗がログインしようとしたときのビュー
 def omae_store(request):
+    logout(request)
     return render(request, 'account/userlogin_storeerror.html')
 # 店舗側からユーザーがログインしようとしたときのビュー
 def omae_user(request):
+    logout(request)
     return render(request, 'account/storelogin_usererror.html')
