@@ -9,6 +9,8 @@ from django.urls import reverse
 import logging
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login
+from django.shortcuts import redirect
+from .forms import MelimitStoreRegistrationForm
 
 # def index(request):
 #     return render(request, 'account/index.html')
@@ -110,4 +112,15 @@ def UserCreateView(request):
     return render(request, 'account/user_touroku.html')
 
 def StoreCreateView(request):
-    return render(request, 'account/store_touroku.html')
+    # return render(request, 'account/store_touroku.html')
+
+# def register(request):
+    if request.method == 'POST':
+        form = MelimitStoreRegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = MelimitStoreRegistrationForm()
+    return render(request, 'account/store_touroku.html', {'form': form})
