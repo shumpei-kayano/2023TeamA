@@ -14,60 +14,60 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <header>
-        <div class="header_upper">
-            <h1>Melimit</h1>
-            <a href="{% url 'user:index' %}"><img src="{% static 'assets/img/Melimit.png' %}" alt="Melimit" class="header_logo"/></a>
-            <nav>
-                <ul class="header_upper--menu">
-                    <li><a href="#">Melimitとは</a></li>
-                    <li><a href="{% url 'user:login' %}">ログイン</a></li>
-                    <li><a href="#">新規登録</a></li>
-                    <li><a href="#">お問い合わせ</a></li>
-                </ul>
-            </nav>
-            <div class="header_icon--menu">
-                <a href="#"><img class ="header_icon"src="{% static 'assets/img/love.png' %}" alt="love"></a>
-                <a href="#"><img class ="header_icon"src="{% static 'assets/img/cart.png' %}" alt="cart"></a>
-            </div>
-        </div>
-        <div class="header_down">
-            <a class="btn--beige btn--middle">カテゴリー▼</a>
-            <a class="btn--blue btn--middle">一般購入商品</a>
-            <a class="btn--pink btn--middle">共同購入商品</a>
-            <form method="get" action="#" class="header_search">
-                <label>
-                    <input class="search-form" type="text" name="search" placeholder="キーワードを入力">
-                </label>
-                    <button class="btn--beige" type="submit" value="検索">検索</button>
-            </form>
-        </div>
-    </header>
-    <main>
-        {% block content %}{% endblock content %}
-    </main>
-    <footer>
-        <div class="footer_upper">
-            <div class="footer_upper-left">
-                <a href="#"><img src="{% static 'assets/img/Melimit.png' %}" alt="Melimit" class="footer_logo"/>
-                <p>©<script>document.write(new Date().getFullYear());</script>Melimit</p>
-            </div>
-            <div class="footer_upper-right">
-                <ul class="footer_main-menu">
-                    <li><a href="#">サイトマップ</a></li>
-                    <li><a href="#">プライバシーポリシー</a></li>
-                    <li><a href="#">利用規約</a></li>
-                    <li><a href="#">特定商取引法に基づく表記</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer_down">
-            <ul class="footer_sub-menu">
+<header>
+    <div class="header_upper">
+        <h1>Melimit</h1>
+        <a href="{% url 'user:index' %}"><img src="{% static 'assets/img/Melimit.png' %}" alt="Melimit" class="header_logo"/></a>
+        <nav>
+            <ul class="header_upper--menu">
+                <li><a href="#">Melimitとは</a></li>
+                <li><a href="{% url 'user:login' %}">ログイン</a></li>
+                <li><a href="#">新規登録</a></li>
                 <li><a href="#">お問い合わせ</a></li>
-                <li><a href="#">運営会社</a></li>
-                <li><a href="#">運営者</a></li>
+            </ul>
+        </nav>
+        <div class="header_icon--menu">
+            <a href="#"><img class ="header_icon"src="{% static 'assets/img/love.png' %}" alt="love"></a>
+            <a href="#"><img class ="header_icon"src="{% static 'assets/img/cart.png' %}" alt="cart"></a>
+        </div>
+    </div>
+    <div class="header_down">
+        <ul class="header_down--menu">
+            <li><a class="btn--beige btn--middle">カテゴリー▼</a></li>
+            <li><a class="btn--blue btn--middle">一般購入商品</a></li>
+            <li><a class="btn--pink btn--middle">共同購入商品</a></li>
+            <li><form method="get" action="#" class="header_search">
+            <li><input class="search-form" type="text" name="search" placeholder="キーワードを入力">
+                <button class="btn--beige" type="submit" value="検索">検索</button></li>
+        </form>
+    </div>
+</header>
+<main>
+    {% block content %}{% endblock content %}
+</main>
+<footer>
+    <a href="#"><img src="{% static 'assets/img/Melimit.png' %}" alt="Melimit" class="footer_logo"/></a>
+    <div class="footer_upper">
+        <div class="footer_upper__left">
+            <ul class="footer_upper__info">
+                <li><a href="#">サイトマップ</a></li>
+                <li><a href="#">プライバシーポリシー</a></li>
+                <li><a href="#">利用規約</a></li>
+                <li><a href="#">特定商取引法に基づく表記</a></li>
             </ul>
         </div>
-    </footer>
+        <div class="footer_upper__right">
+            <ul class="footer_upper__sub-menu">
+                <li><a href="#">melimitとは</a></li>
+                <li><a href="#">ご利用ガイド</a></li>
+                <li><a href="#">プライバシーポリシー</a></li>
+                <li><a href="#">お問い合わせ</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer_down">
+        <p>&copy;<script>document.write(new Date().getFullYear());</script>Melimit</p>
+    </div>
+</footer>
 </body>
 </html>

@@ -542,13 +542,21 @@ header {
   }
 }
 
-.header_upper li, .header_down li {
+.header_upper li {
   display: inline-block;
   margin: 0 1rem;
   color: #252525;
 }
-.header_upper li:hover, .header_down li:hover {
-  opacity: 1;
+.header_upper li:hover {
+  opacity: 0.7;
+}
+
+.header_down li {
+  display: inline-block;
+  color: #252525;
+}
+.header_down li:hover {
+  opacity: 0.7;
 }
 
 .header_icon--menu {
@@ -576,10 +584,21 @@ header {
 
 footer {
   background-color: #EBEBEB;
-  padding: 1rem;
-  text-align: center;
+  padding: 2rem;
   font-size: 0.8rem;
   color: #FFFFFF;
+}
+
+.footer_upper {
+  display: flex;
+  justify-content: left;
+}
+.footer_upper__info {
+  padding-left: 0;
+}
+
+.footer_down {
+  text-align: center;
 }
 
 html {
