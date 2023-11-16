@@ -1,65 +1,95 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="ja">
-<head>
+    <head prefix="og: http://ogp.me/ns#">
+    <meta property="og:title" content="Melimit">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="#">
+    <meta property="og:image" content="#">
+    <meta property="og:site_name" content="Melimit">
+    <meta property="og:description" content="Melimitは、食品の売買で社会のフードロスを削減できるサービスです。">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock title %}</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <header>
-        <div class="header_upper">
-            <a href="#"><img src="{% static 'assets/img/Melimit.png' %}" alt="Melimit" class="header_logo"/></a>
-            <nav>
-                <ul class="header_upper--menu">
-                    <li><a href="#">Melimitとは</a></li>
-                    <li><a href="#">ログイン</a></li>
-                    <li><a href="#">新規登録</a></li>
-                    <li><a href="#">お問い合わせ</a></li>
-                </ul>
-            </nav>
-            <div class="header_icon--menu">
-                <a href="#"><img class ="header_icon"src="{% static 'assets/img/love.png' %}" alt="love"></a>
-                <a href="#"><img class ="header_icon"src="{% static 'assets/img/cart.png' %}" alt="cart"></a>
-            </div>
-        </div>
-        <div class="header_down">
-            <button class="btn--beige btn--middle" type="button">カテゴリー▼</button>
-            <button class="btn--blue btn--middle" type="button">共同購入商品</button>
-            <button class="btn--pink btn--middle" type="button">一般購入商品</button>
-            <form method="get" action="#" class="header_search">
-                <label>
-                    <input type="text" name="search" placeholder="キーワードを入力">
-                </label>
-                    <button class="btn--beige btn--small" type="submit" value="検索">検索</button>
-            </form>
-        </div>
-    </header>
-    <main>
-        {% block content %}{% endblock content %}
-    </main>
-    <footer>
-        <div class="footer_upper">
-            <div class="footer_upper-left">
-                <a href="#"><img src="{% static 'assets/img/Melimit.png' %}" alt="Melimit" class="footer_logo"/>
-                <p>© 2023 Melimit</p>
-            </div>
-            <div class="footer_upper-right">
-                <ul class="footer_main-menu">
-                    <li><a href="#">サイトマップ</a></li>
-                    <li><a href="#">プライバシーポリシー</a></li>
-                    <li><a href="#">利用規約</a></li>
-                    <li><a href="#">特定商取引法に基づく表記</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer_down">
-            <ul class="footer_sub-menu">
+<header>
+    <div class="header_upper">
+        <h1>Melimit</h1>
+        <a href="{% url 'user:index' %}"><img src="{% static 'assets/img/Melimit.png' %}" alt="Melimit" class="header_logo"/></a>
+        <nav class="header_upper__nav">
+            <ul class="header_upper__menu">
+                <li><a href="#">Melimitとは</a></li>
+                <li><a href="{% url 'user:login' %}">ログイン</a></li>
+                <li><a href="#">新規登録</a></li>
                 <li><a href="#">お問い合わせ</a></li>
-                <li><a href="#">運営会社</a></li>
-                <li><a href="#">運営者</a></li>
+            </ul>
+        </nav>
+        <div class="header_upper__icon">
+            <a href="#"><img class ="header_icon"src="{% static 'assets/img/love.png' %}" alt="love"></a>
+            <a href="#"><img class ="header_icon"src="{% static 'assets/img/cart.png' %}" alt="cart"></a>
+        </div>
+    </div>
+    <div class="header_down">
+        <div class="header_down__menu">
+            <div class="">
+                <ul class="header_down__category">
+                    <li><a class="btn--beige header_down__menu-btn" onclick="toggleCategory()">カテゴリー▼</a></li>
+                    <li class="hidden"><a class="btn--beige header_down__menu-btn">肉</a></li>
+                    <li class="hidden"><a class="btn--beige header_down__menu-btn">野菜</a></li>
+                    <li class="hidden"><a class="btn--beige header_down__menu-btn">果物</a></li>
+                    <li class="hidden"><a class="btn--beige header_down__menu-btn">海産</a></li>
+                </ul>
+            </div>
+            <ul class="header_down__menu-container">
+                <li><a class="btn--blue header_down__menu-btn">一般購入商品を見る</a></li>
+                <li><a class="btn--pink header_down__menu-btn">共同購入商品を見る</a></li>
             </ul>
         </div>
-    </footer>
+        <div class="header_down__search">
+           <form method="get" action="#" class="header_search">
+                <input class="header_down__search-input" type="text" name="search" placeholder="キーワードを入力">
+                <button class="btn--beige" type="submit" value="検索">検索</button></li>
+            </form>
+        </div>
+    </div>
+</header>
+<main>
+    {% block content %}{% endblock content %}
+</main>
+<footer>
+    <a href="#"><img src="{% static 'assets/img/Melimit.png' %}" alt="Melimit" class="footer_logo"/></a>
+    <div class="footer_upper">
+        <div class="footer_upper__left">
+            <ul class="footer_upper__info">
+                <li><a href="#">サイトマップ</a></li>
+                <li><a href="#">プライバシーポリシー</a></li>
+                <li><a href="#">利用規約</a></li>
+                <li><a href="#">特定商取引法に基づく表記</a></li>
+            </ul>
+        </div>
+        <div class="footer_upper__right">
+            <ul class="footer_upper__sub-menu">
+                <li><a href="#">melimitとは</a></li>
+                <li><a href="#">ご利用ガイド</a></li>
+                <li><a href="#">プライバシーポリシー</a></li>
+                <li><a href="#">お問い合わせ</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer_down">
+        <p>&copy;<script>document.write(new Date().getFullYear());</script>Melimit</p>
+    </div>
+</footer>
+<script>
+    function toggleCategory() {
+        var categoryItems = document.querySelectorAll('.header_down__category li:not(:first-child)');
+        
+        categoryItems.forEach(function(item) {
+            item.classList.toggle('hidden');
+        });
+    }
+</script>
 </body>
 </html>

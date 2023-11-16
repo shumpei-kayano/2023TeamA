@@ -501,16 +501,22 @@ textarea,
   position: absolute;
 }
 
-header {
-  display: block;
-  background-image: linear-gradient(180deg, #D4B985 0%, #FFFFFF 100%);
-  padding: 1rem 5rem;
-  font-weight: bold;
-  position: fixed;
-  top: 0px;
-  left: 0;
+h1 {
+  display: none;
+}
+
+header, footer {
   width: 100%;
-  border-bottom: inset;
+}
+
+header {
+  background-image: linear-gradient(180deg, #D4B985 0%, #FFFFFF 100%);
+  padding: 0 5rem;
+}
+@media (max-width: 768px) {
+  header {
+    padding: 0 2rem;
+  }
 }
 
 .header_logo, .footer_logo {
@@ -518,30 +524,37 @@ header {
   -o-object-fit: cover;
      object-fit: cover;
 }
+@media (max-width: 768px) {
+  .header_logo, .footer_logo {
+    width: 5rem;
+  }
+}
 
 .header_upper {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 4rem;
+  margin: 0 1rem;
 }
-
-.header_upper li, .header_down li {
+@media (max-width: 768px) {
+  .header_upper {
+    margin: 0 2rem;
+  }
+}
+.header_upper li {
   display: inline-block;
   margin: 0 1rem;
   color: #252525;
 }
-.header_upper li:hover, .header_down li:hover {
-  opacity: 1;
+.header_upper li:hover {
+  opacity: 0.7;
 }
-
-.header_icon--menu {
+.header_upper__icon {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
 }
-
-.header_icon {
+.header_upper__icon .header_icon {
   width: 2rem;
   -o-object-fit: cover;
      object-fit: cover;
@@ -553,21 +566,78 @@ header {
   justify-content: space-between;
   align-items: center;
 }
+.header_down .hidden {
+  display: none;
+}
+.header_down__menu {
+  width: 65%;
+  padding-left: 0;
+  display: flex;
+  justify-content: space-between;
+}
+.header_down__category {
+  padding-left: 0;
+}
+.header_down__menu-container {
+  padding-left: 0;
+  display: flex;
+  justify-content: space-between;
+}
+.header_down__menu-container li:first-child {
+  margin-right: 30px;
+}
+.header_down li {
+  color: #252525;
+}
+.header_down li:hover {
+  opacity: 0.7;
+}
+.header_down__menu-btn {
+  line-height: 2rem;
+  font-size: 0.8rem;
+  border-radius: 5px;
+  text-align: center;
+  display: inline-block;
+  padding: 0.3rem 3rem;
+}
+.header_down__serch {
+  width: 40%;
+}
+.header_down__search-input {
+  height: 2.2rem;
+  padding: 0.5rem 0 0.5rem 1rem;
+  border-radius: 5px;
+}
+.header_down button {
+  height: 2rem;
+  padding: 0.3rem 1rem;
+}
 
 footer {
-  display: block;
   background-color: #EBEBEB;
-  padding: 1rem;
-  text-align: center;
+  padding: 2rem;
   font-size: 0.8rem;
   color: #FFFFFF;
+}
+
+.footer_upper {
+  display: flex;
+  justify-content: left;
+}
+.footer_upper__info {
+  padding-left: 0;
+}
+
+.footer_down {
+  text-align: center;
 }
 
 html {
   height: -webkit-fill-available;
   font-size: 100%;
-  font-weight: 400;
+  font-weight: 500;
   font-style: normal;
+  font-weight: bold;
   scroll-behavior: smooth;
 }
 
@@ -575,12 +645,18 @@ body {
   font-family: "Noto Sans JP", sans-serif;
   color: #252525;
   background-color: #FFFFFF;
+  margin: 0 auto;
 }
 
 main {
-  width: 90%;
-  margin: 2.5rem 5rem;
-  padding-top: 5rem;
+  max-width: 1200px;
+  margin: 3rem 4rem;
+}
+@media (max-width: 768px) {
+  main {
+    max-width: 100%;
+    margin: 1rem auto;
+  }
 }
 
 a {
@@ -589,19 +665,25 @@ a {
   display: inline-block;
 }
 a:hover {
-  opacity: 1;
+  opacity: 0.7;
+  cursor: pointer;
+}
+a.underline {
+  text-decoration: underline;
 }
 
-p {
-  text-align: center;
+input {
+  height: 50px;
+  border: solid 1px #EBEBEB;
+}
+
+input:focus {
+  border-bottom: 2px solid;
+  outline: none;
 }
 
 li {
   list-style: none;
-}
-
-input {
-  height: 2rem;
 }
 
 button {
@@ -609,9 +691,10 @@ button {
   font-weight: bold;
   border: none;
   cursor: pointer;
+  font-size: 100%;
 }
 button:hover {
-  opacity: 0.8;
+  opacity: 0.7;
 }
 
 .btn--beige {
@@ -631,19 +714,26 @@ button:hover {
   color: #252525;
 }
 .btn--middle {
-  font-size: 1rem;
-  width: 15rem;
-  height: 2rem;
+  width: 15em;
+  height: 2em;
+  font-size: 100%;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 2rem;
 }
 .btn--small {
-  font-size: 1rem;
-  width: 5rem;
-  height: 2rem;
+  font-size: 80%;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 1.5rem;
 }
 .btn--big {
-  font-size: 1rem;
-  width: 15rem;
-  height: 5rem;
+  width: 100%;
+  height: 5em;
+  font-size: 100%;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 2rem;
 }
 
 .card--img {
@@ -687,6 +777,33 @@ button:hover {
   justify-content: center;
   align-items: center;
   margin: 1rem 0;
+}
+
+.center {
+  text-align: center;
+}
+
+.fw--middle {
+  font-weight: 100;
+}
+
+/* Form Layout */
+.form-wrapper {
+  margin: 3rem auto;
+  max-width: 30%;
+}
+
+.btn-wrapper {
+  margin-top: 2em;
+}
+
+.form-item {
+  margin-bottom: 2rem;
+  width: 100%;
+  text-align: left;
+}
+.form-item input {
+  width: 100%;
 }
 
 .index--contents {
