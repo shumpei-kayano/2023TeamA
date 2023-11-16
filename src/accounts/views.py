@@ -9,7 +9,8 @@ from django.urls import reverse
 import logging
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login
-
+from django.views.generic.edit import CreateView
+from .forms import CustomUserCreationForm
 # def index(request):
 #     return render(request, 'account/index.html')
 # Create your views here.
@@ -106,8 +107,16 @@ class MelimitStoreLoginView(LoginView):
         return super().dispatch(request, *args, **kwargs)
     
 
-def UserCreateView(request):
-    return render(request, 'account/user_touroku.html')
+# def UserCreateView(request):
+#     return render(request, 'account/user_touroku.html')
 
 def StoreCreateView(request):
     return render(request, 'account/store_touroku.html')
+
+class UserCreateView(CreateView):
+    form_class = CustomUserCreationForm
+    template_name = 'account/user_touroku.html'
+    success_url = '/touroku/touroku_success/'
+    
+def UserTourokuSuccess(request):
+    return render(request, 'account/user_after_touroku.html')
