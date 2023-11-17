@@ -37,6 +37,11 @@ INSTALLED_APPS = [
     'django_extensions', # 追加
     'django_cleanup', # 追加
     'user',
+    'accounts',
+    'django.contrib.sites', # 追加
+    'allauth', # 追加
+    'allauth.account', # 追加
+    'allauth.socialaccount', # 追加
     # 'django.contrib.sites', # 追加
     # 'allauth', # 追加
     # 'allauth.account', # 追加
@@ -52,6 +57,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware', # 追加
     # 'allauth.account.middleware.AccountMiddleware',  # 追加
+    'allauth.account.middleware.AccountMiddleware',  # 追加
 ]
 
 INTERNAL_IPS = ['127.0.0.1', '::1', 'localhost', '0.0.0.0'] # 追加
@@ -61,7 +67,7 @@ ROOT_URLCONF = 'TeamA.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ BASE_DIR / 'accounts/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
