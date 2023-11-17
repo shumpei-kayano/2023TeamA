@@ -130,7 +130,7 @@ def StoreCreateView(request):
             user.backend = 'accounts.backends.MelimitStoreModelBackend'
             login(request, user)
             # return redirect('user:index')
-            return render(request, 'account/store_top.html')
+            return render(request, 'user/index.html')
     else:
         form = MelimitStoreRegistrationForm()
     return render(request, 'account/store_touroku.html', {'form': form})
