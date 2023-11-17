@@ -2,6 +2,7 @@
 {% load static %}
 {% block title %}トップページ{% endblock %}
 {% block content %}
+<div class="index-container">
 <section class="section1 mgt-10">
     <div class="section1__left">
         <a class="btn--beige btn--big">ご利用ガイド</a>
@@ -19,9 +20,9 @@
         </div>
     </div>
 </section>
-<div class="index--contents">
-    <h2><p>おすすめ商品</p></h2>
-    <ul class="best-category">
+<section class="section section2">
+    <h2 class="section__title">おすすめ商品</h2>
+    <ul class="section2__best-category">
         <li>すべて</li>
         <li>肉</li>
         <li>野菜</li>
@@ -46,7 +47,13 @@
             </div>
         </div>
     </div>
+</section>
+<section class="section section3">
+    <h2 class="section__title">お知らせ</h2>
+    
+</section>
 </div>
+    
 <script>
     window.onload = function(){
         //画像を配列に格納

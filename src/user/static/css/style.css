@@ -724,8 +724,8 @@ button:hover {
   line-height: 2rem;
 }
 .btn--small {
-  padding: 0 2.5%;
-  width: 20%;
+  padding: 1%;
+  width: 50%;
   font-size: 80%;
   border-radius: 5px;
   text-align: center;
@@ -816,6 +816,17 @@ button:hover {
 }
 .form-item input {
   width: 100%;
+}
+
+.section {
+  scroll-snap-align: start;
+  height: 100vh;
+  margin-top: 15px;
+}
+.section__title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 0;
 }
 
 .section1 {
@@ -925,27 +936,16 @@ button:hover {
   }
 }
 
-.index--contents {
-  margin: 1rem 0;
-}
-
-.index-slide {
-  width: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-  aspect-ratio: 2/1;
-  border-radius: 5px;
-}
-
-.best-category {
+.section2__best-category {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  margin: 1rem 0;
+  margin: 5px 0;
+  padding-left: 0;
 }
-
-.best-category li {
-  margin: 1rem;
-  padding: 1rem;
+.section2__best-category li {
+  text-align: center;
+  width: 7%;
+  margin: 5px;
 }
