@@ -10,10 +10,12 @@ import logging
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect
-from .forms import MelimitStoreRegistrationForm
+from .forms import MelimitStoreRegistrationForm, MelimitUserEditForm
 
 from django.views.generic.edit import CreateView
 from .forms import CustomUserCreationForm
+from django.contrib.auth.decorators import login_required
+from .backends import MelimitUserModelBackend
 # def index(request):
 #     return render(request, 'account/index.html')
 # Create your views here.
@@ -128,12 +130,45 @@ def StoreCreateView(request):
     else:
         form = MelimitStoreRegistrationForm()
     return render(request, 'account/store_touroku.html', {'form': form})
-    return render(request, 'account/store_touroku.html')
 
+# ユーザーを新規登録する際のビュー
 class UserCreateView(CreateView):
     form_class = CustomUserCreationForm
     template_name = 'account/user_touroku.html'
     success_url = '/touroku/touroku_success/'
     
+    # def form_valid(self, form):
+    #     response = super().form_valid(form)
+    #     login(self.request, self.object)  # ユーザーをログインさせる
+    #     return response
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        backend = MelimitUserModelBackend()
+        user = get_user_model().objects.get(pk=self.object.pk)
+        # user.backend = 'accounts.backends.MelimitStoreModelBackend'
+        user.backend = f'{backend.__module__}.{backend.__class__.__name__}'
+        login(self.request, user)  # ユーザーをログインさせる
+        return response
 def UserTourokuSuccess(request):
     return render(request, 'account/user_after_touroku.html')
+
+# ユーザー情報を編集する際のビュー(ログインした状態で編集可能)
+# @login_required
+
+def edit_melimit_user(request):
+    user = request.user #現在のユーザーを取得
+    # 強制力の強い@login_requiredの代わりに下を使用。毎回書くのが手間。
+    if user.is_authenticated:
+        
+        if request.method == 'POST':
+            form = CustomUserCreationForm
+            form = MelimitUserEditForm(request.POST, instance=request.user)
+            if form.is_valid():
+                user = form.save()
+                backend = MelimitUserModelBackend()
+                user.backend = f'{backend.__module__}.{backend.__class__.__name__}'
+                login(request, user)
+                return redirect('accounts:touroku_success')
+        else:
+            form = MelimitUserEditForm(instance=request.user)
+        return render(request, 'account/edit_melimit_user.html', {'form': form})

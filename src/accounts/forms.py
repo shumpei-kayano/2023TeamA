@@ -21,7 +21,7 @@ class MelimitStoreRegistrationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
-        fields = ('email', 'password', )  # 必要なフィールドを指定
+# 必要なフィールドを指定
 
 # ユーザーが新規登録するフォーム
 class CustomUserCreationForm(UserCreationForm):
@@ -38,6 +38,24 @@ class CustomUserCreationForm(UserCreationForm):
         model = MelimitUser
         # fields = ("username", "email", "password1", "password2")
         fields = ("email", "password1", "password2","username","phone_number","postal_code","prefecture","city","address")
+    # def clean_username(self):
+    #     """Reject usernames that differ only in case."""
+    #     username = self.cleaned_data.get("username")
+    #     if (
+    #         username
+    #         and self._meta.model.objects.filter(username__iexact=username).exists()
+    #     ):
+    #         self._update_errors(
+    #             ValidationError(
+    #                 {
+    #                     "username": self.instance.unique_error_message(
+    #                         self._meta.model, ["username"]
+    #                     )
+    #                 }
+    #             )
+    #         )
+    #     else:
+    #         return username
     def save(self, commit=True):
         user = super().save(commit=False)
         user.email = self.cleaned_data["email"]
@@ -67,4 +85,14 @@ class CustomUserCreationForm(UserCreationForm):
     # address = models.CharField("住所", max_length=100, blank=True)
     # # 電話番号
     # phone_number = models.CharField("電話番号", max_length=20, blank=True)
-    
+class MelimitUserEditForm(UserCreationForm):
+    class Meta:
+        model = MelimitUser
+        fields = ('email',"password1", "password2", 'username', 'phone_number', 'postal_code', 'prefecture', 'city', 'address')
+        def save(self, commit=True):
+            user = super().save(commit=False)
+            user.email = self.cleaned_data["email"]
+            user.user_type = 'melimit_user'
+            if commit:
+                user.save()
+            return user
