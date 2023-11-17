@@ -20,7 +20,7 @@ class MelimitStoreModelBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
         print('MelimitStore_______')
         try:
-            store = MelimitStore.objects.get(username=username)
+            store = MelimitStore.objects.get(email=username)
             if store.check_password(password):
                 print('passcheck')
                 return store
