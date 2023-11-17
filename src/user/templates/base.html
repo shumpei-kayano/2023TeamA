@@ -17,11 +17,11 @@
 <header>
     <div class="header_upper">
         <h1>Melimit</h1>
-        <a href="{% url 'account_login' %}"><img src="{% static 'assets/img/Melimit.png' %}" alt="Melimit" class="header_logo"/></a>
+        <a href="{% url 'user:index' %}"><img src="{% static 'assets/img/Melimit.png' %}" alt="Melimit" class="header_logo"/></a>
         <nav class="header_upper__nav">
             <ul class="header_upper__menu">
                 <li><a href="#">Melimitとは</a></li>
-                <li><a href="{% url 'account:login' %}">ログイン</a></li>
+                <li><a href="{% url 'account_login' %}">ログイン</a></li>
                 <li><a href="#">新規登録</a></li>
                 <li><a href="#">お問い合わせ</a></li>
             </ul>
