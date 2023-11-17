@@ -1,0 +1,107 @@
+// 共通のコンポーネント
+
+// ボタン
+.btn {
+    &--beige {
+        background-color: $main_color;
+        color: $melimit_white;
+    }
+    &--blue {
+        background-color: $melimit_blue;
+        color: $melimit_white;
+    }
+    &--pink {
+        background-color: $melimit_pink;
+        color: $melimit_white;
+    }
+    &--gray {
+        background-color: $melimit_gray;
+        color: $melimit_black;
+    }
+    &--middle {
+        padding: 1% 5%;
+        width: 20%;
+        font-size: 100%;
+        border-radius: 5px;
+        text-align: center;
+        line-height: 2rem;
+    }
+    &--small {
+        padding: 1%;
+        width: 50%;
+        font-size: 80%;
+        border-radius: 5px;
+        text-align: center;
+        line-height: 1.5rem;
+    }
+    &--big {
+        display: block;
+        padding: 5%;
+        width: 90%;
+        font-size: 100%;
+        border-radius: 5px;
+        text-align: center;
+        line-height: 2rem;
+    }
+}
+
+// 商品カード
+.card {
+    &--img{
+        width: 100%;
+        object-fit: cover;
+    }
+    &--content{
+        padding: 15px;
+    }
+    &--title{
+        margin: 0;
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+    &--text{
+        margin: 10px 0;
+    }
+    &--pink{
+        background: $melimit_lightpink;
+    }
+    &--blue{
+        background: $melimit_lightblue;
+    }
+}
+.item {
+    &--card{
+        width: 300px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        overflow: hidden;
+        margin: 1rem;
+        .discount{
+            background-color: $melimit_red;
+            color: $melimit_white;
+            margin: 0;
+        }
+    }
+    &--list{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        margin: 1rem 0;
+    }
+}
+.center {
+    text-align: center;
+}
+.fw--middle {
+    font-weight:100;
+}
+
+.mgt {
+    &-5 {
+        margin-top: 5px;
+    }
+    &-10 {
+        margin-top: 10px;
+    }
+}

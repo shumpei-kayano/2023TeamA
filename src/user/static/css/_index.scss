@@ -1,0 +1,142 @@
+// .index-container {
+//     overflow: auto;
+//     scroll-snap-type:y mandatory;
+//     // height: 100vh;
+// }
+
+.section {
+    scroll-snap-align: start;
+    height: 100vh;
+    margin-top: 15px;
+    &__title {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 0;
+    }
+}
+.section1 {
+  display: flex;
+  width: 100%;
+  &__left {
+    width: 20%;
+  }
+  &__btn {
+    margin-top: 10px;
+  }
+  &__right {
+    width: 80%;
+  }
+
+  .slide-pic {
+    max-width: 100%;
+    height: 400px;
+    margin: auto;
+  }
+  /*画像配置*/
+  .slideshow {
+    max-width: 100%;
+    height: 100%;
+    background-image: url(https://drive.google.com/uc?export=view&id=1tLhP0imM-1kfL00b0wRFdX5gIII2dMaC); /*JSで切り替える画像*/
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0% 50%; /*左 中央のよせ*/
+  }
+  /*文字*/
+  .disc {
+    margin: auto;
+    text-align: center;
+    font-size: 3em;
+    color: #ffffff;
+    font-weight: 800;
+    padding-top: 5%;
+  }
+  /*>*/
+  .next {
+    float: right;
+    top: 0px;
+    right: 50px;
+  }
+  /*<*/
+  .back {
+    float: left;
+    bottom: 0px;
+    left: 30px;
+  }
+  /*矢印のデザイン*/
+  .arrow {
+    position: relative;
+    display: inline-block;
+    padding: 0 0 0 16px;
+    color: #000;
+    vertical-align: middle;
+    text-decoration: none;
+    font-size: 15px;
+  }
+  .arrow::before,
+  .arrow::after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    content: "";
+    vertical-align: middle;
+  }
+
+  .next::before {
+    left: 0px;
+    width: 30px;
+    height: 30px;
+    border-top: 5px solid rgb(255, 255, 255);
+    border-right: 5px solid rgb(255, 255, 255);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  .back::before {
+    left: 0px;
+    width: 30px;
+    height: 30px;
+    border-bottom: 5px solid rgb(255, 255, 255);
+    border-left: 5px solid rgb(255, 255, 255);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  /* CSSアニメーションの指定 */
+  .slideshow {
+    transition: background-image 1s ease-in;
+  }
+
+  @media screen and (max-width: 768px) {
+    .slide-pic {
+      height: 250px;
+    }
+    .disc {
+      padding-top: 5%;
+    }
+    /*>*/
+    .next {
+      top: 30px;
+    }
+    /*<*/
+    .back {
+      top: 30px;
+    }
+  }
+}
+
+
+.section2 {
+    &__best-category {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        margin: 5px 0;
+        padding-left: 0;
+        li {
+            text-align: center;
+            width: 7%;
+            margin: 5px;
+        }
+    }
+}

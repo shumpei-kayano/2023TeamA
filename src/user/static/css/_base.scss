@@ -1,0 +1,187 @@
+// へッダー・フッターの共通CSSを記述
+h1{
+  display: none;
+}
+header , footer {
+  width: 100%;
+}
+header {
+  background-image: linear-gradient(180deg, $main_color 0%, $melimit_white 100%);
+  padding: 0 5rem;
+
+  @media (max-width: 768px) {
+      padding: 0 2rem;
+  }
+}
+.header_logo,.footer_logo {
+  width: 7.5rem;
+  object-fit: cover;
+
+  @media (max-width: 768px) {
+      width: 5rem;
+  }
+}
+.header_upper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 1rem;
+
+  @media (max-width: 768px) {
+      margin: 0 2rem;
+  }
+  li {
+    display: inline-block;
+    margin: 0 1rem;
+    color: $melimit_black;
+    &:hover {
+        opacity: 0.7;
+    }
+  }
+  &__icon {
+    display: flex;
+    justify-content:space-evenly;
+    align-items: center;
+    .header_icon {
+      width: 2rem;
+      object-fit: cover;
+      margin: 0 1rem;
+    }
+  }
+}
+
+.header_down {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .hidden {
+    display: none;
+  }
+  &__menu {
+    width: 65%;
+    padding-left: 0;
+    display: flex;
+    justify-content: space-between;
+  }
+  &__category {
+    padding-left: 0;
+  }
+  &__menu-container {
+    padding-left: 0;
+    display: flex;
+    justify-content: space-between;
+    li:first-child {
+      margin-right: 30px;
+    }
+  }
+  li {
+    // display: inline-block;
+    // padding: 0.5rem, 1rem;
+    color: $melimit_black;
+    // width: 25%;
+    // height: 2rem;
+    &:hover {
+        opacity: 0.7;
+    }
+  }
+  &__menu-btn {
+    line-height: 2rem;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    text-align: center;
+    display: inline-block;
+    padding: 0.3rem 3rem;
+  }
+  &__serch {
+    width: 40%;
+  }
+  &__search-input {
+    height: 2.2rem;
+    padding: 0.5rem 0 0.5rem 1rem;
+    border-radius: 5px;
+  }
+  button {
+    height: 2rem;
+    padding: 0.3rem 1rem;
+  }
+}
+
+footer {
+  background-color: $melimit_gray;
+  padding: 2rem;
+  // text-align: left;
+  font-size: 0.8rem;
+  color: $melimit_white;
+}
+
+.footer_upper {
+  display: flex;
+  justify-content: left;
+  &__info {
+    padding-left: 0;
+  }
+}
+
+.footer_down {
+  text-align: center;
+}
+
+// 全体に共通のCSSを記述
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&display=swap");
+html {
+  height: -webkit-fill-available;
+  font-size: 100%;
+  font-weight: 500;
+  font-style: normal;
+  font-weight: bold;
+  scroll-behavior: smooth;
+}
+body {
+  font-family: "Noto Sans JP", sans-serif;
+  color: $melimit_black;
+  background-color: $melimit_white;
+  margin: 0 auto;
+}
+main{
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 87%;
+
+@media (max-width: 768px) {
+  max-width: 100%;
+  margin: 1rem auto;
+}
+}
+a {
+  text-decoration: none;
+  color: $melimit_black;
+  display: inline-block;
+  &:hover {
+      opacity: 0.7;
+      cursor: pointer;
+  }
+  &.underline{
+      text-decoration: underline;
+  }
+}
+input {
+height: 50px;
+border: solid 1px $melimit_gray;
+}
+input:focus {
+border-bottom: 2px solid ;
+outline: none;
+}
+li{
+list-style: none;
+}
+button{
+border-radius: 5px;
+font-weight: bold;
+border: none;
+cursor: pointer;
+font-size: 100%;
+&:hover {
+    opacity: 0.7;
+}
+}

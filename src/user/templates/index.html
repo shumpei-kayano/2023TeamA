@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}トップページ{% endblock %}
+{% block content %}
+<div class="index-container">
+<section class="section1 mgt-10">
+    <div class="section1__left">
+        <a class="btn--beige btn--big">ご利用ガイド</a>
+        <a class="btn--beige btn--big mgt-10">MelimitとSDGs</a>
+        <a class="btn--beige btn--big mgt-10">食品ロスとは</a>
+    </div>
+    <div class="section1__right">
+        {% comment %} <img class ="index-slide" src="{% static 'assets/img/350x160.png' %}" alt="cart"> {% endcomment %}
+        <div class ="slide-pic">
+            <div id ="slide" class="slideshow">
+                <p class="disc">sample</p>
+                <a class ="arrow next" id ="right" href ="#"></a>
+                <a class ="arrow back" id ="left" href ="#"></a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section section2">
+    <h2 class="section__title">おすすめ商品</h2>
+    <ul class="section2__best-category">
+        <li>すべて</li>
+        <li>肉</li>
+        <li>野菜</li>
+        <li>果物</li>
+        <li>海鮮</li>
+    </ul>
+    <div class="item--list">
+        <div class="item--card card--blue">
+            <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+            <p class="discount">00%OFF</p>
+            <div class="card--content">
+                <h3 class="card--title">Card Title</h3>
+                <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+            </div>
+        </div>
+        <div class="item--card card--pink">
+            <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+            <p class="discount">MAX00%OFF</p>
+            <div class="card--content">
+                <h3 class="card--title">Card Title</h3>
+                <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section section3">
+    <h2 class="section__title">お知らせ</h2>
+    
+</section>
+</div>
+    
+<script>
+    window.onload = function(){
+        //画像を配列に格納
+        var images =['url({% static 'assets/img/350x160.png' %})',
+                     'url({% static 'assets/img/350x160.png' %})',
+                     'url({% static 'assets/img/350x160.png' %})']
+        //要素をHTMLから取得
+        //画像
+        var target = document.getElementById('slide');
+        //>,<
+        var right = document.getElementById('right');
+        var left = document.getElementById('left');
+    
+        //クリックしたときに変わるようにカウント変数
+        var count = 0;
+    
+        //クリックしたら画像変更
+       function change(){
+           target.style.backgroundImage = images[count];
+        }
+   
+       //>をクリックしたらcountを+1する
+       function goNext(){
+           if(count == 2){
+               count = 0;
+           }else{
+               count++;
+           }
+           change();
+       }
+       
+       //<をクリックしたらcountを-1する
+       function goBack(){
+           if(count == 0){
+               count = 2;
+           }else{
+               count--;
+           }
+           change();
+       }
+   
+       //クリックイベント
+       right.addEventListener('click',goNext,false);
+       left.addEventListener('click',goBack,false);
+   };
+    </script>   
+{% endblock %}
