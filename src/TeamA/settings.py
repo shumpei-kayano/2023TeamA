@@ -67,7 +67,7 @@ ROOT_URLCONF = 'TeamA.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ BASE_DIR / 'accounts/templates'],
+        'DIRS': [ BASE_DIR / 'user/templates', BASE_DIR / 'accounts/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -92,7 +92,7 @@ DATABASES = {
         'NAME': 'o-hara_db',
         'USER': 'admin',
         'PASSWORD': 'o-hara',
-        'HOST': 'mysql_db', # dbのコンテナ名
+        'HOST': 'mysql_db_A', # dbのコンテナ名
         'PORT': '3306',
     }
 }
