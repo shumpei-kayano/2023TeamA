@@ -144,7 +144,8 @@ body {
 }
 main{
   max-width: 1200px;
-  margin: 3rem 4rem;
+  margin: 0 auto;
+  width: 87%;
 
 @media (max-width: 768px) {
   max-width: 100%;

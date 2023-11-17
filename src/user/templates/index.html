@@ -2,20 +2,23 @@
 {% load static %}
 {% block title %}トップページ{% endblock %}
 {% block content %}
-<table class="index--contents">
-<tr>
-<td><button class="btn--beige btn--big">ご利用ガイド</a></td>
-<td rowspan="3">
-    <img class ="index-slide" src="{% static 'assets/img/350x160.png' %}" alt="cart">
-</td>
-</tr>
-<tr>
-<td><button class="btn--beige btn--big">MelimitとSDGs</a></td>
-</tr>
-<tr>
-<td><button class="btn--beige btn--big">食品ロスとは</a></td>
-</tr>
-</table>
+<section class="section1 mgt-10">
+    <div class="section1__left">
+        <a class="btn--beige btn--big">ご利用ガイド</a>
+        <a class="btn--beige btn--big mgt-10">MelimitとSDGs</a>
+        <a class="btn--beige btn--big mgt-10">食品ロスとは</a>
+    </div>
+    <div class="section1__right">
+        {% comment %} <img class ="index-slide" src="{% static 'assets/img/350x160.png' %}" alt="cart"> {% endcomment %}
+        <div class ="slide-pic">
+            <div id ="slide" class="slideshow">
+                <p class="disc">sample</p>
+                <a class ="arrow next" id ="right" href ="#"></a>
+                <a class ="arrow back" id ="left" href ="#"></a>
+            </div>
+        </div>
+    </div>
+</section>
 <div class="index--contents">
     <h2><p>おすすめ商品</p></h2>
     <ul class="best-category">
@@ -44,4 +47,50 @@
         </div>
     </div>
 </div>
+<script>
+    window.onload = function(){
+        //画像を配列に格納
+        var images =['url({% static 'assets/img/350x160.png' %})',
+                     'url({% static 'assets/img/350x160.png' %})',
+                     'url({% static 'assets/img/350x160.png' %})']
+        //要素をHTMLから取得
+        //画像
+        var target = document.getElementById('slide');
+        //>,<
+        var right = document.getElementById('right');
+        var left = document.getElementById('left');
+    
+        //クリックしたときに変わるようにカウント変数
+        var count = 0;
+    
+        //クリックしたら画像変更
+       function change(){
+           target.style.backgroundImage = images[count];
+        }
+   
+       //>をクリックしたらcountを+1する
+       function goNext(){
+           if(count == 2){
+               count = 0;
+           }else{
+               count++;
+           }
+           change();
+       }
+       
+       //<をクリックしたらcountを-1する
+       function goBack(){
+           if(count == 0){
+               count = 2;
+           }else{
+               count--;
+           }
+           change();
+       }
+   
+       //クリックイベント
+       right.addEventListener('click',goNext,false);
+       left.addEventListener('click',goBack,false);
+   };
+    </script>   
 {% endblock %}

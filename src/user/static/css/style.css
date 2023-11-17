@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* Document
  * ========================================================================== */
 /**
@@ -650,7 +651,8 @@ body {
 
 main {
   max-width: 1200px;
-  margin: 3rem 4rem;
+  margin: 0 auto;
+  width: 87%;
 }
 @media (max-width: 768px) {
   main {
@@ -714,22 +716,25 @@ button:hover {
   color: #252525;
 }
 .btn--middle {
-  width: 15em;
-  height: 2em;
+  padding: 1% 5%;
+  width: 20%;
   font-size: 100%;
   border-radius: 5px;
   text-align: center;
   line-height: 2rem;
 }
 .btn--small {
+  padding: 0 2.5%;
+  width: 20%;
   font-size: 80%;
   border-radius: 5px;
   text-align: center;
   line-height: 1.5rem;
 }
 .btn--big {
-  width: 100%;
-  height: 5em;
+  display: block;
+  padding: 5%;
+  width: 90%;
   font-size: 100%;
   border-radius: 5px;
   text-align: center;
@@ -787,6 +792,13 @@ button:hover {
   font-weight: 100;
 }
 
+.mgt-5 {
+  margin-top: 5px;
+}
+.mgt-10 {
+  margin-top: 10px;
+}
+
 /* Form Layout */
 .form-wrapper {
   margin: 3rem auto;
@@ -806,19 +818,115 @@ button:hover {
   width: 100%;
 }
 
+.section1 {
+  display: flex;
+  width: 100%;
+  /*画像配置*/
+  /*文字*/
+  /*>*/
+  /*<*/
+  /*矢印のデザイン*/
+  /* CSSアニメーションの指定 */
+}
+.section1__left {
+  width: 20%;
+}
+.section1__btn {
+  margin-top: 10px;
+}
+.section1__right {
+  width: 80%;
+}
+.section1 .slide-pic {
+  max-width: 100%;
+  height: 400px;
+  margin: auto;
+}
+.section1 .slideshow {
+  max-width: 100%;
+  height: 100%;
+  background-image: url(https://drive.google.com/uc?export=view&id=1tLhP0imM-1kfL00b0wRFdX5gIII2dMaC); /*JSで切り替える画像*/
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 0% 50%; /*左 中央のよせ*/
+}
+.section1 .disc {
+  margin: auto;
+  text-align: center;
+  font-size: 3em;
+  color: #ffffff;
+  font-weight: 800;
+  padding-top: 5%;
+}
+.section1 .next {
+  float: right;
+  top: 0px;
+  right: 50px;
+}
+.section1 .back {
+  float: left;
+  bottom: 0px;
+  left: 30px;
+}
+.section1 .arrow {
+  position: relative;
+  display: inline-block;
+  padding: 0 0 0 16px;
+  color: #000;
+  vertical-align: middle;
+  text-decoration: none;
+  font-size: 15px;
+}
+.section1 .arrow::before,
+.section1 .arrow::after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  content: "";
+  vertical-align: middle;
+}
+.section1 .next::before {
+  left: 0px;
+  width: 30px;
+  height: 30px;
+  border-top: 5px solid rgb(255, 255, 255);
+  border-right: 5px solid rgb(255, 255, 255);
+  transform: rotate(45deg);
+}
+.section1 .back::before {
+  left: 0px;
+  width: 30px;
+  height: 30px;
+  border-bottom: 5px solid rgb(255, 255, 255);
+  border-left: 5px solid rgb(255, 255, 255);
+  transform: rotate(45deg);
+}
+.section1 .slideshow {
+  transition: background-image 1s ease-in;
+}
+@media screen and (max-width: 768px) {
+  .section1 {
+    /*>*/
+    /*<*/
+  }
+  .section1 .slide-pic {
+    height: 250px;
+  }
+  .section1 .disc {
+    padding-top: 5%;
+  }
+  .section1 .next {
+    top: 30px;
+  }
+  .section1 .back {
+    top: 30px;
+  }
+}
+
 .index--contents {
   margin: 1rem 0;
-}
-
-table {
-  border-collapse: collapse;
-  width: 80%;
-  margin-bottom: 1rem;
-  background-color: transparent;
-}
-
-td {
-  width: auto;
 }
 
 .index-slide {
