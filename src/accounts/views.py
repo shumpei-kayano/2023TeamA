@@ -24,7 +24,7 @@ from django.contrib.auth.views import LoginView
 
 class MelimitUserLoginView(LoginView):
     template_name = 'account/login.html'  # MelimitStore用のカスタムテンプレート
-    authentication_form = MelimitUserLoginForm
+    form_class = MelimitUserLoginForm
     
     def dispatch(self, request, *args, **kwargs):
         print('MelimitUserLoginView')
@@ -33,20 +33,56 @@ class MelimitUserLoginView(LoginView):
         request.session['backend'] = 'accounts.backends.MelimitUserModelBackend'
         print(f'session: {request.session}')
         print(f'session: {dict(request.session)}')
+        print(request.session['backend'])
         return super().dispatch(request, *args, **kwargs)
-    # def UserCreateView(request):
-    #     if request.method == 'POST':
-    #         form = MelimitUserRegistrationForm(request.POST)
-    #         if form.is_valid():
-    #             user = form.save()
-    #             # backendを指定してログインさせる
-    #             user.backend = 'accounts.backends.MelimitUserModelBackend'
-    #             login(request, user)
-    #             # return redirect('user:index')
-    #             return render(request, 'user/index.html')
+    # postリクエストが来るとログイン処理を行うview
+    def post(self, request, *args, **kwargs):# selfを追加
+        if request.method == 'POST':
+            form = self.form_class(request.POST)
+            if form.is_valid():
+                email = form.cleaned_data.get('email')
+                password = form.cleaned_data.get('password')
+                user = authenticate(request, email=email, password=password, backend='accounts.backends.MelimitUserModelBackend')
+                if user is not None:
+                    login(request, user)
+                    print('login')
+                    return render(request, 'user/index.html', {'form': form})
+                else:
+                    print('user is None 認証失敗')
+                    form.add_error(None, 'メールアドレスまたはパスワードが間違っています。')  # ユーザーが認証できない場合のエラーメッセージ
+            else:
+                print(form.errors)
+            print('ログイン失敗')
+            return render(request, 'account/login.html', {'form': form})  # ログイン後のリダイレクト先を指定
+            # else:
+        #     # 認証に失敗した場合の処理を書く
+        #     pass
+        # if request.method == 'POST':
+        #     form = MelimitUserRegistrationForm(request.POST)
+        #     if form.is_valid():
+        #         user = form.save()
+        #         # backendを指定してログインさせる
+        #         user.backend = 'accounts.backends.MelimitUserModelBackend'
+                # login(request, user)
+            # if user is not None:
+        #     login(self.request, user)
+        #     return super().form_valid(form)
+        # else:
+        #     return self.form_invalid(form)
+    # def form_valid(self, form):
+    #     # フォームのデータを取得
+    #     email = form.cleaned_data.get('username')
+    #     password = form.cleaned_data.get('password')
+    #     # authenticate関数にbackend引数を指定
+    #     user = authenticate(self.request, username=email, password=password, backend='accounts.backends.MelimitUserModelBackend')
+    #     user = authenticate(username=email, password=password, backend='django.contrib.auth.backends.ModelBackend
+    #     if user is not None:
+    #         login(self.request, user)
+    #         return super().form_valid(form)
     #     else:
-    #         form = MelimitUserRegistrationForm()
-    #     return render(request, 'account/user_touroku.html', {'form': form})
+    #         return self.form_invalid(form)
+    
+    
 
 def UserCreateView(request):
     if request.method == 'POST':

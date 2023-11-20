@@ -1,6 +1,6 @@
 # adapter.py
 from allauth.account.adapter import DefaultAccountAdapter
-from .models import CustomUser, MelimitUser, MelimitStore
+# from .models import CustomUser, MelimitUser, MelimitStore
 
 class MelimitAccountAdapter(DefaultAccountAdapter):
     # def login(self, request, user):
@@ -21,7 +21,7 @@ class MelimitAccountAdapter(DefaultAccountAdapter):
         # #     return "/user/"
 
         user = request.user
-        print(user)
+        # print(user)
         if user.is_authenticated:
             # userのモデル名を出力してみる
             print(f'user model: {user.__class__.__name__}')

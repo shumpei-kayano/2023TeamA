@@ -24,6 +24,11 @@
                 <li><a href="{% url 'account_login_kkkk' %}">ログイン</a></li>
                 <li><a href="#">新規登録</a></li>
                 <li><a href="#">お問い合わせ</a></li>
+                <li>{% if user.is_authenticated %}
+                    <p>ログインユーザーのメールアドレス：{{ user.email }}</p>
+                {% else %}
+                    <p>ログインしていません。</p>
+                {% endif %}
             </ul>
         </nav>
         <div class="header_upper__icon">

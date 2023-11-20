@@ -9,11 +9,42 @@ class MelimitStoreLoginForm(AuthenticationForm):
         model = MelimitStore
         fields = ['email', 'password']
         
-class MelimitUserLoginForm(AuthenticationForm):
+# class MelimitUserLoginForm(AuthenticationForm):
+#     class Meta:
+#         model = MelimitUser
+#         fields = ['email', 'password']
+
+# ModelFormだとmodelにpasswordフィールドが存在していないと使えない
+# class MelimitUserLoginForm(forms.ModelForm):
+#     email = forms.EmailField()
+#     password = forms.CharField(widget=forms.PasswordInput)
+#     def __init__(self, *args, **kwargs):
+#         self.request = kwargs.pop('request', None)
+#         super().__init__(*args, **kwargs)
+#     class Meta:
+#         model = MelimitUser
+#         fields = ('email', 'password', )  # 必要なフィールドを指定
+        
+# class MelimitUserLoginForm(forms.Form):
+#     email = forms.EmailField()
+#     password = forms.CharField(widget=forms.PasswordInput)
+    
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+# class MelimitUserLoginForm(AuthenticationForm):
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+class MelimitUserLoginForm(forms.Form):
+    email = forms.EmailField(required=True)
+    password = forms.CharField(widget=forms.PasswordInput)
+ 
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super(MelimitUserLoginForm, self).__init__(*args, **kwargs)
     class Meta:
         model = MelimitUser
         fields = ['email', 'password']
-
+        
 class MelimitStoreRegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
     password_confirm = forms.CharField(widget=forms.PasswordInput, label='Confirm password')

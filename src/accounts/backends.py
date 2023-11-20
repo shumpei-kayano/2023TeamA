@@ -2,14 +2,15 @@ from django.contrib.auth.backends import ModelBackend
 from .models import MelimitUser, MelimitStore
 
 class MelimitUserModelBackend(ModelBackend):
-    def authenticate(self, request, username=None, password=None, **kwargs):
+    print('aaaaa')
+    def authenticate(self, request, email=None, password=None, **kwargs):
         print('MelimitUser_______')
         try:
-            user = MelimitUser.objects.get(email=username)
+            user = MelimitUser.objects.get(email=email)
             print(user)
             if user.check_password(password):
                 # userを出力してみる
-                print(f'Username: {user.username}')
+                # print(f'Username: {user.email}')
                 print(f'Email: {user.email}')
                 return user
         except MelimitUser.DoesNotExist:
