@@ -16,9 +16,10 @@ from .models import MelimitStore
 # from .forms import MelimitStoreRegistrationForm, MelimitUserEditForm
 
 from django.views.generic.edit import CreateView
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, MelimitUserLoginForm
 from django.contrib.auth.decorators import login_required
 from .backends import MelimitUserModelBackend
+from django.contrib.auth.views import LoginView as DjangoLoginView
 # def index(request):
 #     return render(request, 'account/index.html')
 # Create your views here.
@@ -41,7 +42,7 @@ from .backends import MelimitUserModelBackend
 
     #     return super().form_valid(form)
 
-class MelimitUserLoginView(LoginView):
+class MelimitUserLoginView(DjangoLoginView):
     template_name = 'account/login.html'  # allauthのデフォルトテンプレート
     # def form_valid(self, form):
     #     print('MelimitUserLoginView')
@@ -67,7 +68,7 @@ class MelimitUserLoginView(LoginView):
     #         return super().form_valid(form)
     #     else:
     #         return self.form_invalid(form)
-        
+    form_class = MelimitUserLoginForm
         
     def dispatch(self, request, *args, **kwargs):
         print('MelimitUserLoginView')
