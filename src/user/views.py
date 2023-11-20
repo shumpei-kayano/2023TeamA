@@ -21,12 +21,12 @@ def anai(request):
     instance_name = type(user).__name__
     return render(request, 'user/ana_ana.html', {'model_name': model_name, 'instance_name': instance_name})
 
-def yoshi(request):
+def store_base_view(request):
     user = request.user
     username = user.username
     model_name = user.__class__.__name__
     instance_name = type(user).__name__
-    return render(request, 'user/yoshi_yoshi.html', {'model_name': model_name, 'instance_name': instance_name})
+    return render(request, 'store/base.html', {'model_name': model_name, 'instance_name': instance_name})
 # ユーザー側から店舗がログインしようとしたときのビュー
 def omae_store(request):
     logout(request)
