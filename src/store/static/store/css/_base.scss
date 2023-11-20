@@ -5,7 +5,9 @@
 * 1. Add border box sizing in all browsers (opinionated).
 * 2. Backgrounds do not repeat by default (opinionated).
 */
-
+body {
+  height: 100vh;
+}
 *,
 ::before,
 ::after {
@@ -359,8 +361,11 @@
   * ========================================================================== */
 
   body {
-    margin: 0;
-    line-height: normal;
+    // margin: 0;
+    // line-height: normal;
+    // min-height: 100vh;
+    margin: 0 auto;
+    max-width: 1280px; /* サイトの最大幅 */
   }
   
   .popup-overlay {
@@ -468,7 +473,7 @@
     border-right: 1px solid var(--color-gainsboro-100);
     box-sizing: border-box;
     width: 240px;
-    height: 720px;
+    height: 100%;
   }
   .store-title {
     position: absolute;
@@ -477,6 +482,7 @@
     font-size: var(--font-size-xl);
     letter-spacing: 1px;
     line-height: 100%;
+    font-weight: bold;
     cursor: pointer;
   }
   .dropdown-text {
@@ -524,14 +530,20 @@
     flex-direction: column;
     justify-content: flex-start;
   }
-  .logout,
+
   .sidebar {
     position: absolute;
     left: 0;
     width: 240px;
+    top: 0;
+    // height: 720px;
+    height: 100%;
+    border-right: 1px solid var(--color-gainsboro-100);
+    flex: 1;
   }
   .logout {
-    top: 664px;
+    position: absolute;
+    bottom: 0;
     border-top: 1px solid var(--color-gainsboro-100);
     box-sizing: border-box;
     display: flex;
@@ -539,39 +551,54 @@
     align-items: flex-start;
     justify-content: space-between;
     padding: var(--padding-base);
+    width: 240px;
     cursor: pointer;
   }
-  .sidebar {
-    top: 0;
-    height: 720px;
+  // .header-icon {
+  //   position: relative;
+  //   width: 36px;
+  //   height: 36px;
+  // }
+  // .user-icon {
+  //   position: absolute;
+  //   height: 100%;
+  //   width: 100%;
+  //   top: 12.5%;
+  //   right: 12.5%;
+  //   bottom: 12.5%;
+  //   left: 12.5%;
+  //   max-width: 100%;
+  //   overflow: hidden;
+  //   max-height: 100%;
+  // }
+
+  .header-icon {
+    position: relative;
+    width: 30px;
+    height: 30px;
   }
   .user-icon {
     position: absolute;
-    height: 75%;
-    width: 95%;
-    top: 12.5%;
-    right: 12.5%;
-    bottom: 12.5%;
-    left: 12.5%;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     max-width: 100%;
-    overflow: hidden;
     max-height: 100%;
-  }
-  .header-icon {
-    position: relative;
-    width: 40px;
-    height: 40px;
+    object-fit: contain; /* 追加：画像のアスペクト比を保ったまま表示 */
   }
   .user-text {
     position: relative;
     font-size: var(--font-size-mini);
     text-transform: capitalize;
-    font-family: var(--components-chip);
-    padding: 5px 0px 0px 0px;
+    margin: 5px;
+    font-weight: bold;
   }
   .header-migiue {
-    justify-content: flex-start;
-    gap: var(--gap-base);
+    display: flex;
+    align-items: center; /* 垂直方向の中央揃え */
   }
   .header-frame,
   .header-migiue,
@@ -587,7 +614,6 @@
   .header-storekanri {
     flex: 1;
     justify-content: flex-end;
-    padding: 0px 20px 0px 0px;
   }
   .base-container,
   .header {
@@ -597,25 +623,31 @@
   }
   .header {
     left: 240px;
-    border-bottom: 1px solid rgba(221, 221, 221, 0.87);
     box-sizing: border-box;
     width: 1040px;
+    height: 56px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     padding: var(--padding-5xs) var(--padding-base);
   }
+
+
+
   .base-container {
     left: 0;
     width: 1280px;
-    height: 720px;
+    // height: 720px;
+    height: 100%;
     overflow: hidden;
+    display: flex;
   }
   .base {
     position: relative;
     width: 100%;
-    height: 720px;
+    height: 100%;
+    // height: 720px;
     text-align: left;
     font-size: var(--font-size-sm);
     color: var(--color-black);
@@ -726,4 +758,4 @@
     color: var(--color-black);
     font-family: var(--font-noto-sans);
   }
-  
+

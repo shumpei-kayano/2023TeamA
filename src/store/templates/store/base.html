@@ -1,11 +1,12 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-    {% block title %}
-        タイトルが入ります
-    {% endblock %}
+    {% block title %}店舗管理画面{% endblock %}
     </title>
     <link rel="stylesheet" href="{% static 'store/css/style.css' %}" />
 </head>
@@ -13,18 +14,17 @@
     <div class="base">
         <div class="base-container">
             <div class="sidebar">
-                <div class="sidebar-child"></div>
-                <b class="store-title">店舗名が入ります</b>
+                <div class="store-title">店舗名が入ります</div>
                 <div class="dropdown-menu">
                     <div class="dropdown-tyuumonkanri" id="dropdownTyuumonkanriContainer">
                     <div class="dropdown-text">注文管理</div>
                     <img class="keyboardarrowright-icon" alt="" src="{% static 'store/img/keyboardarrowright.png' %}" />
-                    </div>
-                    <div class="dropdown-syouhinkanri" id="dropdownSyouhinkanriContainer">
+                </div>
+                <div class="dropdown-syouhinkanri" id="dropdownSyouhinkanriContainer">
                     <div class="dropdown-text">商品管理</div>
                     <img class="keyboardarrowright-icon" alt="" src="{% static 'store/img/keyboardarrowright.png' %}" />
-                    </div>
-                    <div class="dropdown-tenpo" id="dropdownTenpoContainer">
+                </div>
+                <div class="dropdown-tenpo" id="dropdownTenpoContainer">
                     <div class="dropdown-text">店舗情報設定</div>
                     <img class="keyboardarrowright-icon" alt="" src="{% static 'store/img/keyboardarrowright.png' %}" />
                     </div>
@@ -33,180 +33,182 @@
                     <div class="dropdown-text">ログアウト</div>
                     <img class="keyboardarrowright-icon" alt="" src="{% static 'store/img/keyboardarrowright.png' %}" />
                 </div>
-                </div>
+            </div>
+            <div class="right-content">
+                {% comment %} ヘッダー {% endcomment %}
                 <div class="header">
                     <div class="header-storekanri">
                         <div class="header-frame" id="headerFrameContainer">
                         <div class="header-migiue">
                             <div class="header-icon">
-                                <img class="user-icon" alt="" src="{% static 'store/img/user.png' %}" />
+                            <img class="user-icon" alt="" src="{% static 'store/img/user.png' %}" />
                             </div>
                             <div class="user-text">管理者様</div>
                         </div>
                     </div>
+                </div>
+                </div>
+                <div class="contents">
+                    {% block contents %}
+
+                    {% endblock %}
                 </div>
             </div>
         </div>
     </div>
 
     <div id="popup-container__tyuumon" class="popup-overlay" style="display: none">
-    <div class="div49">
-        <div class="component-3" id="popupcomponent3Container">
-        <div class="component-3-child"></div>
-        <div class="div50">・発送済み注文履歴</div>
+        <div class="div49">
+            <div class="component-3" id="popupcomponent3Container">
+            <div class="component-3-child"></div>
+            <div class="div50">・発送済み注文履歴</div>
+            </div>
+            <div class="component-2" id="popupcomponent2Container">
+            <div class="component-3-child"></div>
+            <div class="div50">・未発送注文一覧</div>
+            </div>
         </div>
-        <div class="component-2" id="popupcomponent2Container">
-        <div class="component-3-child"></div>
-        <div class="div50">・未発送注文一覧</div>
-        </div>
-    </div>
     </div>
 
     <div id="popup-container__syouhin" class="popup-overlay" style="display: none">
-    <div class="div52">
-        <div class="component-4" id="popupcomponent4Container">
-        <div class="component-4-child"></div>
-        <div class="div53">・新規登録（共同）</div>
-        </div>
-        <div class="component-31" id="popupcomponent3Container">
-        <div class="component-4-child"></div>
-        <div class="div53">・新規登録（一般）</div>
-        </div>
-        <div class="component-21" id="popupcomponent2Container">
-        <div class="component-4-child"></div>
-        <div class="div53">・商品管理一覧</div>
+        <div class="div52">
+            <div class="component-4" id="popupcomponent4Container">
+                <div class="component-4-child"></div>
+                <div class="div53">・新規登録（共同）</div>
+            </div>
+            <div class="component-31" id="popupcomponent3Container">
+                <div class="component-4-child"></div>
+                <div class="div53">・新規登録（一般）</div>
+            </div>
+            <div class="component-21" id="popupcomponent2Container">
+                <div class="component-4-child"></div>
+                <div class="div53">・商品管理一覧</div>
+            </div>
         </div>
     </div>
-    </div>
-
     <script>
-        // popupcomponent3Containerが存在するか確認
-        var popupcomponent3Container = document.getElementById('popupcomponent3Container')
-        if (popupcomponent3Container) {
-            // クリックイベントをリッスンし、./Component41.htmlにリダイレクト
-            popupcomponent3Container.addEventListener('click', function (e) {
-                window.location.href = './Component41.html'
-            })
+    // popupcomponent3Containerが存在するか確認
+    var popupcomponent3Container = document.getElementById('popupcomponent3Container')
+    if (popupcomponent3Container) {
+        // クリックイベントをリッスンし、./Component41.htmlにリダイレクト
+        popupcomponent3Container.addEventListener('click', function (e) {
+        window.location.href = './Component41.html'
+        })
+    }
+    
+    // 同様に、popupcomponent2Containerについても同じ処理を実行
+    var popupcomponent2Container = document.getElementById('popupcomponent2Container')
+    if (popupcomponent2Container) {
+        popupcomponent2Container.addEventListener('click', function (e) {
+        window.location.href = './Component40.html'
+        })
+    }
+    
+    // popupcomponent4Containerについても同じ処理を実行
+    var popupcomponent4Container = document.getElementById('popupcomponent4Container')
+    if (popupcomponent4Container) {
+        popupcomponent4Container.addEventListener('click', function (e) {
+        window.location.href = './Component35.html'
+        })
+    }
+    
+    // 同じく、popupcomponent3Containerについても異なるページにリダイレクト
+    var popupcomponent3Container = document.getElementById('popupcomponent3Container')
+    if (popupcomponent3Container) {
+        popupcomponent3Container.addEventListener('click', function (e) {
+        window.location.href = './Component22.html'
+        })
+    }
+    
+    // 同様に、popupcomponent2Containerについても別のページにリダイレクト
+    var popupcomponent2Container = document.getElementById('popupcomponent2Container')
+    if (popupcomponent2Container) {
+        popupcomponent2Container.addEventListener('click', function (e) {
+        window.location.href = './Frame.html'
+        })
+    }
+    
+    // dropdownTyuumonkanriContainerが存在するか確認
+    var dropdownTyuumonkanriContainer = document.getElementById('dropdownTyuumonkanriContainer')
+    if (dropdownTyuumonkanriContainer) {
+        // クリックイベントをリッスンし、ポップアップを表示
+        dropdownTyuumonkanriContainer.addEventListener('click', function () {
+        var popup = document.getElementById('popup-container__tyuumon')
+        if (!popup) return
+        var popupStyle = popup.style
+        if (popupStyle) {
+            // ポップアップのスタイル設定
+            popupStyle.display = 'flex'
+            popupStyle.zIndex = 100
+            popupStyle.backgroundColor = 'rgba(113, 113, 113, 0.3)'
+            popupStyle.alignItems = 'center'
+            popupStyle.justifyContent = 'center'
         }
-        
-        // 同様に、popupcomponent2Containerについても同じ処理を実行
-        var popupcomponent2Container = document.getElementById('popupcomponent2Container')
-        if (popupcomponent2Container) {
-            popupcomponent2Container.addEventListener('click', function (e) {
-                window.location.href = './Component40.html'
-            })
+        popup.setAttribute('closable', '')
+    
+        // ポップアップのクリックイベントを設定
+        var onClick =
+            popup.onClick ||
+            function (e) {
+            // ポップアップ外をクリックしていたら非表示にする
+            if (e.target === popup && popup.hasAttribute('closable')) {
+                popupStyle.display = 'none'
+            }
+            }
+        popup.addEventListener('click', onClick)
+        })
+    }
+    
+    // dropdownSyouhinkanriContainerが存在するか確認し、ポップアップ表示の処理を実行
+    var dropdownSyouhinkanriContainer = document.getElementById('dropdownSyouhinkanriContainer')
+    if (dropdownSyouhinkanriContainer) {
+        dropdownSyouhinkanriContainer.addEventListener('click', function () {
+        var popup = document.getElementById('popup-container__syouhin')
+        if (!popup) return
+        var popupStyle = popup.style
+        if (popupStyle) {
+            popupStyle.display = 'flex'
+            popupStyle.zIndex = 100
+            popupStyle.backgroundColor = 'rgba(113, 113, 113, 0.3)'
+            popupStyle.alignItems = 'center'
+            popupStyle.justifyContent = 'center'
         }
-        
-        // popupcomponent4Containerについても同じ処理を実行
-        var popupcomponent4Container = document.getElementById('popupcomponent4Container')
-        if (popupcomponent4Container) {
-            popupcomponent4Container.addEventListener('click', function (e) {
-                window.location.href = './Component35.html'
-            })
-        }
-        
-        // 同じく、popupcomponent3Containerについても異なるページにリダイレクト
-        var popupcomponent3Container = document.getElementById('popupcomponent3Container')
-        if (popupcomponent3Container) {
-            popupcomponent3Container.addEventListener('click', function (e) {
-                window.location.href = './Component22.html'
-            })
-        }
-        
-        // 同様に、popupcomponent2Containerについても別のページにリダイレクト
-        var popupcomponent2Container = document.getElementById('popupcomponent2Container')
-        if (popupcomponent2Container) {
-            popupcomponent2Container.addEventListener('click', function (e) {
-                window.location.href = './Frame.html'
-            })
-        }
-        
-        // dropdownTyuumonkanriContainerが存在するか確認
-        var dropdownTyuumonkanriContainer = document.getElementById('dropdownTyuumonkanriContainer')
-        if (dropdownTyuumonkanriContainer) {
-            // クリックイベントをリッスンし、ポップアップを表示
-            dropdownTyuumonkanriContainer.addEventListener('click', function () {
-                var popup = document.getElementById('popup-container__tyuumon')
-                if (!popup) return
-                var popupStyle = popup.style
-                if (popupStyle) {
-                    // ポップアップのスタイル設定
-                    popupStyle.display = 'flex'
-                    popupStyle.zIndex = 100
-                    popupStyle.backgroundColor = 'rgba(113, 113, 113, 0.3)'
-                    popupStyle.alignItems = 'center'
-                    popupStyle.justifyContent = 'center'
-                }
-                popup.setAttribute('closable', '')
-        
-                // ポップアップのクリックイベントを設定
-                var onClick =
-                    popup.onClick ||
-                    function (e) {
-                        // ポップアップ外をクリックしていたら非表示にする
-                        if (e.target === popup && popup.hasAttribute('closable')) {
-                            popupStyle.display = 'none'
-                        }
-                    }
-                popup.addEventListener('click', onClick)
-            })
-        }
-            
-        // dropdownSyouhinkanriContainerが存在するか確認し、ポップアップ表示の処理を実行
-        var dropdownSyouhinkanriContainer = document.getElementById('dropdownSyouhinkanriContainer');
-        if (dropdownSyouhinkanriContainer) {
-            dropdownSyouhinkanriContainer.addEventListener('click', function () {
-                var popup = document.getElementById('popup-container__syouhin');
-                if (!popup) return;
-                var popupStyle = popup.style;
-                if (popupStyle) {
-                    popupStyle.display = 'flex';
-                    popupStyle.zIndex = 100;
-                    popupStyle.backgroundColor = 'rgba(113, 113, 113, 0.3)';
-                    popupStyle.alignItems = 'center';
-                    popupStyle.justifyContent = 'center';
-                }
-                popup.setAttribute('closable', '');
-
-                var onClick =
-                    popup.onClick ||
-                    function (e) {
-                        if (e.target === popup && popup.hasAttribute('closable')) {
-                            popupStyle.display = 'none';
-                        }
-                    };
-                popup.addEventListener('click', onClick);
-            });
-        }
-
-        // dropdownTenpoContainerが存在するか確認し、クリック時に./Component6.htmlにリダイレクト
-        var dropdownTenpoContainer = document.getElementById('dropdownTenpoContainer')
-        if (dropdownTenpoContainer) {
-            dropdownTenpoContainer.addEventListener('click', function (e) {
-                window.location.href = './Component6.html'
-            })
-        }
-        
-        // logoutContainerが存在するか確認し、クリック時に./Component1.htmlにリダイレクト
-        var logoutContainer = document.getElementById('logoutContainer')
-        if (logoutContainer) {
-            logoutContainer.addEventListener('click', function (e) {
-                window.location.href = './Component1.html'
-            })
-        }
-        
-        // headerFrameContainerが存在するか確認し、クリック時に./Component6.htmlにリダイレクト
-        var headerFrameContainer = document.getElementById('headerFrameContainer')
-        if (headerFrameContainer) {
-            headerFrameContainer.addEventListener('click', function (e) {
-                window.location.href = './Component6.html'
-            })
-        }
-    </script>  
-
-    <div class="content">
-    {% block content %}
-    {% endblock %}
-    </div>
+        popup.setAttribute('closable', '')
+    
+        var onClick =
+            popup.onClick ||
+            function (e) {
+            if (e.target === popup && popup.hasAttribute('closable')) {
+                popupStyle.display = 'none'
+            }
+            }
+        popup.addEventListener('click', onClick)
+        })
+    }
+    
+    // dropdownTenpoContainerが存在するか確認し、クリック時に./Component6.htmlにリダイレクト
+    var dropdownTenpoContainer = document.getElementById('dropdownTenpoContainer')
+    if (dropdownTenpoContainer) {
+        dropdownTenpoContainer.addEventListener('click', function (e) {
+        window.location.href = './Component6.html'
+        })
+    }
+    
+    // logoutContainerが存在するか確認し、クリック時に./Component1.htmlにリダイレクト
+    var logoutContainer = document.getElementById('logoutContainer')
+    if (logoutContainer) {
+        logoutContainer.addEventListener('click', function (e) {
+        window.location.href = './Component1.html'
+        })
+    }
+    
+    // headerFrameContainerが存在するか確認し、クリック時に./Component6.htmlにリダイレクト
+    var headerFrameContainer = document.getElementById('headerFrameContainer')
+    if (headerFrameContainer) {
+        headerFrameContainer.addEventListener('click', function (e) {
+        window.location.href = './Component6.html'
+        })
+    }
+    </script>
 </body>
 </html>
