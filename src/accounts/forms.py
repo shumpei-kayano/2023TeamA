@@ -4,7 +4,13 @@ from .models import MelimitUser, MelimitStore
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
-class MelimitStoreLoginForm(AuthenticationForm):
+class MelimitStoreLoginForm(forms.Form):
+    email = forms.EmailField(required=True)
+    password = forms.CharField(widget=forms.PasswordInput)
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super(MelimitStoreLoginForm, self).__init__(*args, **kwargs)
     class Meta:
         model = MelimitStore
         fields = ['email', 'password']

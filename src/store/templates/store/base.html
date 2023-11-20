@@ -38,6 +38,10 @@
                 {% comment %} ヘッダー {% endcomment %}
                 <div class="header">
                     <div class="header-storekanri">
+                        <p>{{ user.username }}さんがログイン中</p>
+                        <p>ユーザータイプ：{{ user.user_type }}</p>
+                        <p>モデル名：{{ model_name }}</p>
+                        <p>インスタンス名：{{ instance_name }}</p>
                         <div class="header-frame" id="headerFrameContainer">
                         <div class="header-migiue">
                             <div class="header-icon">
