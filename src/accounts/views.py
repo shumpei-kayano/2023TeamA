@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views import View
 from django.http import HttpResponse
-from allauth.account.views import LoginView
+# from allauth.account.views import LoginView
 from allauth.account.forms import LoginForm
 from django.contrib.auth import get_user_model, authenticate, login
 from django.core.exceptions import ValidationError
@@ -9,7 +9,7 @@ from django.urls import reverse
 import logging
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
-from .forms import MelimitStoreRegistrationForm, CustomUserCreationForm, MelimitUserEditForm
+from .forms import MelimitStoreRegistrationForm, CustomUserCreationForm, MelimitUserEditForm ,MelimitStoreLoginForm
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import MelimitStore
@@ -19,6 +19,9 @@ from django.views.generic.edit import CreateView
 from .forms import CustomUserCreationForm
 from django.contrib.auth.decorators import login_required
 from .backends import MelimitUserModelBackend
+from django.contrib.auth.views import LoginView
+
+
 # def index(request):
 #     return render(request, 'account/index.html')
 # Create your views here.
@@ -86,42 +89,30 @@ class MelimitUserLoginView(LoginView):
 
 class MelimitStoreLoginView(LoginView):
     template_name = 'account/store_login.html'  # MelimitStore用のカスタムテンプレート
-    # def authenticate(self, *args, **kwargs):
-    #     kwargs['backend'] = 'accounts.backends.MelimitStoreModelBackend'
-    #     return super().authenticate(*args, **kwargs)
-    # form_class = LoginForm
+    authentication_form = MelimitStoreLoginForm  # ここを追加
+    
     # def form_valid(self, form):
-    #     print('form_____')
     #     # フォームのデータを取得
-    #     username = form.cleaned_data.get('username')
+    #     email = form.cleaned_data.get('username')
     #     password = form.cleaned_data.get('password')
-    #     print('form_valid_____')
     #     # authenticate関数にbackend引数を指定
-    #     user = authenticate(self.request, username=username, password=password, backend='accounts.backends.MelimitStoreModelBackend')
+    #     user = authenticate(self.request, username=email, password=password, backend='accounts.backends.MelimitStoreModelBackend')
 
     #     if user is not None:
     #         login(self.request, user)
     #         return super().form_valid(form)
     #     else:
     #         return self.form_invalid(form)
-        
-    def dispatch(self, request, *args, **kwargs):
-        print('MelimitStoreLoginView')
-        if 'backend' in request.session:
-            del request.session['backend']
-        request.session['backend'] = 'accounts.backends.MelimitStoreModelBackend'
-        print(f'session: {request.session}')
-        print(f'session: {dict(request.session)}')
-        return super().dispatch(request, *args, **kwargs)
-    
-
-# def UserCreateView(request):
-#     return render(request, 'account/user_touroku.html')
+    # def dispatch(self, request, *args, **kwargs):
+    #     print('MelimitStoreLoginView')
+    #     if 'backend' in request.session:
+    #         del request.session['backend']
+    #     request.session['backend'] = 'accounts.backends.MelimitStoreModelBackend'
+    #     print(f'session: {request.session}')
+    #     print(f'session: {dict(request.session)}')
+    #     return super().dispatch(request, *args, **kwargs)
 
 def StoreCreateView(request):
-    # return render(request, 'account/store_touroku.html')
-
-# def register(request):
     if request.method == 'POST':
         form = MelimitStoreRegistrationForm(request.POST)
         if form.is_valid():

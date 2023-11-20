@@ -1,7 +1,7 @@
 {% comment %} {% extends "account/base.html" %} {% endcomment %}
 {% load i18n %}
 <h1>店舗用ログイン画面</h1>
-<form class="login" method="POST" action="{% url 'account_login' %}">
+<form class="login" method="POST" action="{% url 'user:yoshi_yoshi' %}">
 {% csrf_token %}
 {{ form.as_p }}
 {% url 'account_login_kkkk' %}
