@@ -8,7 +8,7 @@ class MelimitAccountAdapter(DefaultAccountAdapter):
     #     # `next`パラメータを無視する
     #     request.session.pop('next', None)
     #     super().login(request, user)
-
+    print(1)
     def get_login_redirect_url(self, request):
         # # ログイン後のリダイレクト先をユーザーモデルによって変更する
         # if isinstance(request.user, MelimitUser):
@@ -21,6 +21,7 @@ class MelimitAccountAdapter(DefaultAccountAdapter):
         # #     return "/user/"
 
         user = request.user
+        print(user)
         if user.is_authenticated:
             # userのモデル名を出力してみる
             print(f'user model: {user.__class__.__name__}')
@@ -41,6 +42,7 @@ class MelimitAccountAdapter(DefaultAccountAdapter):
             #     else:
             #         return '/ana_ana/'
             # ユーザー側からログイン (改修後)
+            
             if request.session['backend'] == 'accounts.backends.MelimitUserModelBackend':
             # if user.__class__.__name__ == 'MelimitUser':
                 # ログインしたのがユーザー?

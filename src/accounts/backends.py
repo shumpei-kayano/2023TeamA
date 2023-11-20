@@ -5,7 +5,7 @@ class MelimitUserModelBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
         print('MelimitUser_______')
         try:
-            user = MelimitUser.objects.get(username=username)
+            user = MelimitUser.objects.get(email=username)
             print(user)
             if user.check_password(password):
                 # userを出力してみる
@@ -14,6 +14,7 @@ class MelimitUserModelBackend(ModelBackend):
                 return user
         except MelimitUser.DoesNotExist:
             print('none!!!!')
+            # print(user.user_type)
             return None
 
 class MelimitStoreModelBackend(ModelBackend):
