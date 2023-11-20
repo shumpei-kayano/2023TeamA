@@ -6,7 +6,7 @@ from django.contrib.auth import logout
 # @login_required
 def index(request):
     print('index_________')
-    return render(request, 'index.html')
+    return render(request, 'user/index.html')
 def login_view(request):
     return render(request, 'login.html')
 
