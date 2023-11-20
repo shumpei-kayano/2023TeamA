@@ -93,7 +93,7 @@ DATABASES = {
         'NAME': 'o-hara_db',
         'USER': 'admin',
         'PASSWORD': 'o-hara',
-        'HOST': 'mysql_db_A', # dbのコンテナ名
+        'HOST': 'mysql_db', # dbのコンテナ名
         'PORT': '3306',
     }
 }
