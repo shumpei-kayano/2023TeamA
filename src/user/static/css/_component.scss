@@ -46,29 +46,6 @@
 }
 
 // 商品カード
-.card {
-    &--img{
-        width: 100%;
-        object-fit: cover;
-    }
-    &--content{
-        padding: 15px;
-    }
-    &--title{
-        margin: 0;
-        font-size: 1.5em;
-        font-weight: bold;
-    }
-    &--text{
-        margin: 10px 0;
-    }
-    &--pink{
-        background: $melimit_lightpink;
-    }
-    &--blue{
-        background: $melimit_lightblue;
-    }
-}
 .item {
     &--card{
         width: 300px;
@@ -88,6 +65,39 @@
         justify-content: center;
         align-items: center;
         margin: 1rem 0;
+    }
+}
+.card {
+    &--img{
+        width: 100%;
+        object-fit: cover;
+    }
+    &--content{
+        padding: 15px;
+        meter{
+            width: 100%;
+        }
+        span{
+            font-size: 0.8rem;
+            color: $melimit_gray;
+        }
+    }
+    &--title{
+        margin: 0;
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+    &--text{
+        margin: 10px 0;
+    }
+    &--pink{
+        background: $melimit_lightpink;
+    }
+    &--blue{
+        background: $melimit_lightblue;
+    }
+    &--notice{
+        border:none;
     }
 }
 .center {
