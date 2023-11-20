@@ -25,7 +25,7 @@
                 <li><a href="#">新規登録</a></li>
                 <li><a href="#">お問い合わせ</a></li>
                 <li>{% if user.is_authenticated %}
-                    <p>ログインユーザーのメールアドレス：{{ user.email }}</p>
+                    <p>ログインユーザーの名前：{{ user.username }}</p>
                 {% else %}
                     <p>ログインしていません。</p>
                 {% endif %}
