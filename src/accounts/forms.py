@@ -101,3 +101,12 @@ class MelimitUserEditForm(UserCreationForm):
             if commit:
                 user.save()
             return user
+        
+class MelimitUserLoginForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super().__init__(*args, **kwargs)
+    class Meta:
+        model = MelimitUser
+        fields = ('email', 'password', )  # 必要なフィールドを指定
