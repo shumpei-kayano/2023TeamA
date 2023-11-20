@@ -1,0 +1,229 @@
+.table-order-history {
+  position: absolute;
+  top: 204px;
+  left: 264px;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 992px;
+  border-collapse: collapse;
+  display: flex;
+  justify-content: flex-start;
+}
+thead {
+  background-color: var(--color-whitesmoke-100);
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  box-sizing: border-box;
+  width: 992px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  font-weight: bold;
+}
+.head-order-number,
+.head-order-day,
+.head-product-name,
+.head-quantity,
+.head-price,
+.head-co2,
+.head-type {
+  position: relative;
+  line-height: 120%;
+  display: inline-block;
+  text-align: center;
+}
+.head-order-number,
+.head-order-day {
+  width: 140px;
+}
+.head-product-name {
+  width: 230px;
+}
+.head-quantity,
+.head-type {
+  width: 120px;
+}
+.head-price {
+  width: 120px;
+}
+.head-co2 {
+  width: 120px;
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  width: 992px;
+}
+tbody td {
+  padding: var(--padding-base);
+  gap: var(--gap-5xl);
+  cursor: pointer;
+
+}
+.order-number,
+.order-day,
+.product-name,
+.quantity,
+.price,
+.co2,
+.type {
+  position: relative;
+  line-height: 180%;
+  justify-content: center;
+  text-align: center;
+}
+.order-number,
+.order-day {
+  width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.product-name {
+  width: 230px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.quantity,
+.type {
+  width: 120px;
+}
+.price {
+  width: 120px;
+}
+.co2 {
+  width: 120px;
+}
+
+/* tdの共通のスタイル定義 */
+.table-order-history td {
+  position: relative;
+  justify-content: center;
+  text-align: center;
+  padding: var(--padding-base);
+  gap: var(--gap-5xl);  box-sizing: border-box;
+  flex-direction: row;
+  align-items: center;
+}
+
+
+
+
+.placeholder {
+  flex: 1;
+  position: relative;
+  line-height: 100%;
+}
+.searchfilled-icon {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.input {
+  align-self: stretch;
+  border-radius: var(--br-9xs);
+  background-color: var(--color);
+  border: 1px solid var(--color-lightgray);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-base);
+  gap: var(--gap-base);
+}
+.search-box {
+  position: absolute;
+  // height: 6.67%;
+  // width: 26.8%;
+  // top: 13.89%;
+  top: 100px;
+  right: 10%;
+  // bottom: 79.44%;
+  left: 63.2%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  color: var(--color3);
+}
+.search {
+  position: relative;
+  line-height: 100%;
+  font-weight: bold;
+}
+.button-search {
+  position: absolute;
+  top: 100px;
+  left: 1160px;
+  border-radius: var(--br-9xs);
+  background-color: var(--color);
+  border: 1px solid var(--color-lightgray);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-base);
+  text-align: center;
+  cursor: pointer;
+}
+
+.order-history-text {
+  position: absolute;
+  top: 0;
+  left: 36px;
+  line-height: 150%;
+  font-weight: bold;
+}
+.fibermanualrecordfilled-icon {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+}
+.title-order-history {
+  position: absolute;
+  top: 100px;
+  left: 264px;
+  width: 196px;
+  height: 30px;
+  font-size: var(--font-size-xl);
+}
+.order-manage {
+  position: relative;
+  line-height: 100%;
+  text-transform: capitalize;
+}
+.order-history__container,
+.topic-path {
+  background-color: var(--color);
+}
+.topic-path {
+  position: absolute;
+  border-top: 1px solid var(--color-gainsboro-100);
+  top: 56px;
+  left: 240px;
+  width: 1040px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-5xs);
+  box-sizing: border-box;
+  gap: var(--gap-5xs);
+  font-size: var(--typography-caption-size);
+}
+.order-history__container {
+  // position: relative;
+  width: 100%;
+  // height: 720px;
+  height: 100%;
+  overflow: hidden;
+  text-align: left;
+  font-size: var(--typography-body1-size);
+  color: var(--color-black);
+  font-family: var(--font-noto-sans);
+}
