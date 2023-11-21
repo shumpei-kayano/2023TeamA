@@ -85,3 +85,7 @@ def omae_user(request):
 def sinki(request):
     print('sinki_________')
     return render(request, 'user/sinki.html')
+
+# メリミットとは
+def what_melimit(request):
+    return render(request, 'user/explain.html')

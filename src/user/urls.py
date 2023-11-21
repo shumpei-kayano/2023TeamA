@@ -12,4 +12,5 @@ urlpatterns = [
     path('omae_store_kokoha_useryou/', views.omae_store, name='omae_store'),
     path('omae_user_kokoha_storeyou/', views.omae_user, name='omae_user'),
     path('sinki/', views.sinki, name='sinki'),
+    path('what-melimit/', views.what_melimit, name='what_melimit'),
 ]
