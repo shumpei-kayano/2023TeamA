@@ -26,7 +26,7 @@
                 </div>
                 <div class="dropdown-tenpo" id="dropdownTenpoContainer">
                     <div class="dropdown-text">店舗情報設定</div>
-                    <img class="keyboardarrowright-icon" alt="" src="{% static 'store/img/keyboardarrowright.png' %}" />
+                    <img class="keyboardarrowright-icon" alt="" src="{% static 'store/img/keyboardarrowright.png' %}" data-url="{% url 'accounts:store_edit' %}" />
                     </div>
                 </div>
                 <div class="logout" id="logoutContainer">
@@ -38,6 +38,10 @@
                 {% comment %} ヘッダー {% endcomment %}
                 <div class="header">
                     <div class="header-storekanri">
+                        <p>{{ user.username }}さんがログイン中</p>
+                        <p>ユーザータイプ：{{ user.user_type }}</p>
+                        <p>モデル名：{{ model_name }}</p>
+                        <p>インスタンス名：{{ instance_name }}</p>
                         <div class="header-frame" id="headerFrameContainer">
                         <div class="header-migiue">
                             <div class="header-icon">
@@ -50,6 +54,8 @@
                 </div>
                 <div class="contents">
                     {% block contents %}
+
+                    {% comment %} {% include 'store/yoshi_yoshi.html' %} {% endcomment %}
 
                     {% endblock %}
                 </div>
@@ -190,7 +196,10 @@
     var dropdownTenpoContainer = document.getElementById('dropdownTenpoContainer')
     if (dropdownTenpoContainer) {
         dropdownTenpoContainer.addEventListener('click', function (e) {
-        window.location.href = './Component6.html'
+        {% comment %} window.location.href = './Component6.html' {% endcomment %}
+        var imgElement = dropdownTenpoContainer.querySelector('.keyboardarrowright-icon');
+        var url = imgElement.getAttribute('data-url');
+        window.location.href = url;
         })
     }
     

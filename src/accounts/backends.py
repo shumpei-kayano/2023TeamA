@@ -19,12 +19,21 @@ class MelimitUserModelBackend(ModelBackend):
             return None
 
 class MelimitStoreModelBackend(ModelBackend):
-    def authenticate(self, request, username=None, password=None, **kwargs):
+    def authenticate(self, request, email=None, password=None, **kwargs):
         print('MelimitStore_______')
         try:
-            store = MelimitStore.objects.get(email=username)
+            store = MelimitStore.objects.get(email=email)
             if store.check_password(password):
                 print('passcheck')
+                # storeのmodel名を出力してみる
+                model_name = store.__class__.__name__
+                print(f'model: {model_name}')
+                # storeのインスタンス名を出力してみる
+                instance_name = type(store).__name__
+                print(f'instance: {instance_name}')
+                # セッションにモデル名とインスタンス名を保存
+                request.session['model_name'] = model_name
+                request.session['instance_name'] = instance_name
                 return store
         except MelimitStore.DoesNotExist:
             print('none')
