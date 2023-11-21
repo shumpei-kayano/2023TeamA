@@ -67,13 +67,20 @@ class MelimitStoreRegistrationForm(forms.ModelForm):
             self.fields.pop('password_confirm')
 
     def save(self, commit=True):
-        user = super().save(commit=False)
+        # user = super().save(commit=False)
+        # password = self.cleaned_data.get("password")
+        # # パスワードが入力されている場合(新規登録)はパスワードを設定
+        # if password:
+        #     user.set_password(password)
+        # if commit:
+        #     user.save()
+        # return user
+        user = super().save(commit=True)  # commit=Trueに変更
         password = self.cleaned_data.get("password")
         # パスワードが入力されている場合(新規登録)はパスワードを設定
         if password:
             user.set_password(password)
-        if commit:
-            user.save()
+            user.save()  # パスワードを設定した後に再度保存
         return user
 
 
