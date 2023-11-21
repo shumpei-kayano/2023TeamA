@@ -3,7 +3,7 @@ from django.views import View
 from django.http import HttpResponse
 # from allauth.account.views import LoginView
 # from allauth.account.forms import LoginForm
-from django.contrib.auth import get_user_model, authenticate, login, logout
+from django.contrib.auth import get_user_model, authenticate, login, logout, update_session_auth_hash
 from django.core.exceptions import ValidationError
 from django.urls import reverse
 import logging
@@ -120,7 +120,7 @@ class MelimitStoreLogoutView(View):
         logout(request)
         return redirect('store_login')
 
-# MelimitStore用の新規登録画面への遷移
+# MelimitStore用の新規登録
 def StoreCreateView(request):
     if request.method == 'POST':
         form = MelimitStoreRegistrationForm(request.POST)
@@ -128,9 +128,21 @@ def StoreCreateView(request):
             user = form.save()
             # backendを指定してログインさせる
             user.backend = 'accounts.backends.MelimitStoreModelBackend'
+            model_name = type(user).__name__
+            instance_name = type(user).__name__
+            # セッションにモデル名とインスタンス名を保存
+            request.session['model_name'] = model_name
+            request.session['instance_name'] = instance_name
             login(request, user)
-            # return redirect('user:index')
-            return render(request, 'user/index.html')
+            # セッション'model_name'と'instance_name'を出力してみる
+            print(f'model_name: {request.session["model_name"]}')
+            print(f'instance_name: {request.session["instance_name"]}')
+            # return render(request, 'store/base.html', {
+            #     'model_name': request.session['model_name'],
+            #     'instance_name': request.session['instance_name']
+            # })
+            return redirect('user:store_base')
+    # POSTでない場合は空のフォームを生成(最初のページ表示時)
     else:
         form = MelimitStoreRegistrationForm()
     return render(request, 'account/store_touroku.html', {'form': form})
