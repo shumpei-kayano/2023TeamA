@@ -3,7 +3,7 @@ from django.views import View
 from django.http import HttpResponse
 # from allauth.account.views import LoginView
 # from allauth.account.forms import LoginForm
-from django.contrib.auth import get_user_model, authenticate, login
+from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.core.exceptions import ValidationError
 from django.urls import reverse
 import logging
@@ -108,31 +108,19 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         return self.request.user
     
 
-class MelimitStoreLoginView(LoginView):
+# MelimitStore用のログイン画面への遷移
+class MelimitStoreLoginScreenView(LoginView):
     template_name = 'account/store_login.html'  # MelimitStore用のカスタムテンプレート
     authentication_form = MelimitStoreLoginForm  # ここを追加
-    
-    # def form_valid(self, form):
-    #     # フォームのデータを取得
-    #     email = form.cleaned_data.get('username')
-    #     password = form.cleaned_data.get('password')
-    #     # authenticate関数にbackend引数を指定
-    #     user = authenticate(self.request, username=email, password=password, backend='accounts.backends.MelimitStoreModelBackend')
 
-    #     if user is not None:
-    #         login(self.request, user)
-    #         return super().form_valid(form)
-    #     else:
-    #         return self.form_invalid(form)
-    # def dispatch(self, request, *args, **kwargs):
-    #     print('MelimitStoreLoginView')
-    #     if 'backend' in request.session:
-    #         del request.session['backend']
-    #     request.session['backend'] = 'accounts.backends.MelimitStoreModelBackend'
-    #     print(f'session: {request.session}')
-    #     print(f'session: {dict(request.session)}')
-    #     return super().dispatch(request, *args, **kwargs)
+# MelimitStore用のログアウト処理(クラスベースビュー)
+class MelimitStoreLogoutView(View):
+    def get(self, request, *args, **kwargs):
+        # ログアウト処理
+        logout(request)
+        return redirect('store_login')
 
+# MelimitStore用の新規登録画面への遷移
 def StoreCreateView(request):
     if request.method == 'POST':
         form = MelimitStoreRegistrationForm(request.POST)
@@ -147,11 +135,12 @@ def StoreCreateView(request):
         form = MelimitStoreRegistrationForm()
     return render(request, 'account/store_touroku.html', {'form': form})
 
+# MelimitStore用の会員情報編集
 class StoreUpdateView(LoginRequiredMixin, UpdateView):
     model = MelimitStore
     form_class = MelimitStoreRegistrationForm
     template_name = 'account/store_edit.html'
-    success_url = reverse_lazy('user:index')
+    success_url = reverse_lazy('user:store_base')
 
     def get_object(self, queryset=None):
         return self.request.user
