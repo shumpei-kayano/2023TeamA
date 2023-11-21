@@ -741,29 +741,6 @@ button:hover {
   line-height: 2rem;
 }
 
-.card--img {
-  width: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-}
-.card--content {
-  padding: 15px;
-}
-.card--title {
-  margin: 0;
-  font-size: 1.5em;
-  font-weight: bold;
-}
-.card--text {
-  margin: 10px 0;
-}
-.card--pink {
-  background: rgba(212, 133, 186, 0.2);
-}
-.card--blue {
-  background: rgba(133, 168, 212, 0.2);
-}
-
 .item--card {
   width: 300px;
   border: 1px solid #ccc;
@@ -782,6 +759,39 @@ button:hover {
   justify-content: center;
   align-items: center;
   margin: 1rem 0;
+}
+
+.card--img {
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.card--content {
+  padding: 15px;
+}
+.card--content meter {
+  width: 100%;
+}
+.card--content span {
+  font-size: 0.8rem;
+  color: #EBEBEB;
+}
+.card--title {
+  margin: 0;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+.card--text {
+  margin: 10px 0;
+}
+.card--pink {
+  background: rgba(212, 133, 186, 0.2);
+}
+.card--blue {
+  background: rgba(133, 168, 212, 0.2);
+}
+.card--notice {
+  border: none;
 }
 
 .center {
@@ -948,4 +958,40 @@ button:hover {
   text-align: center;
   width: 7%;
   margin: 5px;
+}
+
+.area {
+  margin: auto;
+  flex-wrap: wrap;
+  display: flex;
+}
+
+.tab_class {
+  width: 20%;
+  height: 50px;
+  line-height: 50px;
+  font-size: 15px;
+  text-align: center;
+  display: block;
+  float: left;
+  order: -1;
+}
+
+input[name=tab_name] {
+  display: none;
+}
+
+input:checked + .tab_class {
+  background-color: #EBEBEB;
+  color: #252525;
+  border-radius: 5px;
+}
+
+.content_class {
+  display: none;
+  width: 100%;
+}
+
+input:checked + .tab_class + .content_class {
+  display: block;
 }

@@ -25,11 +25,12 @@
         <input type="radio" name="tab_name" id="tab1" checked>
         <label class="tab_class" for="tab1">すべての商品</label>
         <div class="content_class">
+            <div class="item--list">
                 <div class="item--card card--blue">
                     <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
                     <p class="discount">00%OFF</p>
                     <div class="card--content">
-                        <h3 class="card--title">Card Title</h3>
+                        <h3 class="card--title">オオハラ水産</h3>
                         <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
                     </div>
                 </div>
@@ -37,15 +38,16 @@
                     <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
                     <p class="discount">MAX00%OFF</p>
                     <div class="card--content">
-                        <h3 class="card--title">Card Title</h3>
-                        <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+                        <h3 class="card--title">大原製菓</h3>
+                        <p class="card--text"><meter low="69" high="80" max="100" value="84">B</meter></p>
+                        <h4>あと何人</h4>
                     </div>
                 </div>
                 <div class="item--card card--blue">
                     <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
                     <p class="discount">00%OFF</p>
                     <div class="card--content">
-                        <h3 class="card--title">Card Title</h3>
+                        <h3 class="card--title">おおはら精肉店</h3>
                         <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
                     </div>
                 </div>
@@ -72,44 +74,35 @@
           <p>タブ5のコンテンツを表示します</p>
         </div>
       </div>
-
-    {% comment %} <ul class="section2__best-category">
-        <li>すべて</li>
-        <li>肉</li>
-        <li>野菜</li>
-        <li>果物</li>
-        <li>海鮮</li>
-    </ul>
-    <div class="item--list">
-        <div class="item--card card--blue">
-            <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-            <p class="discount">00%OFF</p>
-            <div class="card--content">
-                <h3 class="card--title">Card Title</h3>
-                <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
-            </div>
-        </div>
-        <div class="item--card card--pink">
-            <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-            <p class="discount">MAX00%OFF</p>
-            <div class="card--content">
-                <h3 class="card--title">Card Title</h3>
-                <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
-            </div>
-        </div>
-        <div class="item--card card--blue">
-            <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-            <p class="discount">00%OFF</p>
-            <div class="card--content">
-                <h3 class="card--title">Card Title</h3>
-                <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
-            </div>
-        </div>
-    </div> {% endcomment %}
 </section>
 <section class="section section3">
     <h2 class="section__title">お知らせ</h2>
-    
+    <div class="item--list">
+        <div class="item--card card--notice">
+            <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+            <div class="card--content">
+                <p><span>2020/00/00</span><span>カテゴリー</span></p>
+                <h3 class="card--title">開設から１か月</h3>
+                <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+            </div>
+        </div>
+        <div class="item--card card--notice">
+            <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+            <div class="card--content">
+                <p><span>2020/00/00</span><span>カテゴリー</span></p>
+                <h3 class="card--title">Card Title</h3>
+                <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+            </div>
+        </div>
+        <div class="item--card card--notice">
+            <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+            <div class="card--content">
+                <p><span>2020/00/00</span><span>カテゴリー</span></p>
+                <h3 class="card--title">Card Title</h3>
+                <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+            </div>
+        </div>
+    </div>
 </section>
 </div>
     
