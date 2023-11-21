@@ -1,9 +1,49 @@
-// .index-container {
-//     overflow: auto;
-//     scroll-snap-type:y mandatory;
-//     // height: 100vh;
-// }
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeOut 1.5s 2.5s forwards;
+}
 
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.loading__logo {
+  opacity: 0;
+  animation: logo_fade 2s 0.5s forwards;
+  width: 175px;
+}
+
+@keyframes logo_fade {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
 .section {
     scroll-snap-align: start;
     height: 100vh;
@@ -126,17 +166,37 @@
 
 
 .section2 {
-    &__best-category {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        margin: 5px 0;
-        padding-left: 0;
-        li {
-            text-align: center;
-            width: 7%;
-            margin: 5px;
-        }
-    }
+  .area {
+    margin: auto;
+    flex-wrap: wrap;
+    display: flex;
+  }
+  .tab_class {
+    width: calc(100%/5);
+    height: 50px;
+    line-height: 50px;
+    font-size: 15px;
+    text-align: center;
+    display: block;
+    float: left;
+    order: -1;
+  }
+  input[name="tab_name"] {
+    display: none;
+  }
+  input:checked + .tab_class {
+    background-color: $melimit_gray;
+    color: $melimit_black;
+    border-radius: 5px;
+  }
+  .content_class {
+    display: none;
+    width: 100%;
+    text-align: center;
+  }
+  input:checked + .tab_class + .content_class {
+    display: block;
+  }
 }
+
+

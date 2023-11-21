@@ -2,7 +2,9 @@
 {% load static %}
 {% block title %}トップページ{% endblock %}
 {% block content %}
-<div class="index-container">
+<div class="loading">
+    <img class="loading__logo" src="{% static 'assets/img/Melimit.png' %}" alt="VOOL">
+</div>
 <section class="section1 mgt-10">
     <div class="section1__left">
         <a class="btn--beige btn--big">ご利用ガイド</a>
@@ -29,24 +31,26 @@
                     <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
                     <p class="discount">00%OFF</p>
                     <div class="card--content">
-                        <h3 class="card--title">Card Title</h3>
-                        <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+                        <h3 class="card--title">オオハラ水産</h3>
+                        <span class="card--price">a</span><span class="card--arrow">→</span><span class="card--discount">b</span>
                     </div>
                 </div>
                 <div class="item--card card--pink">
                     <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
                     <p class="discount">MAX00%OFF</p>
                     <div class="card--content">
-                        <h3 class="card--title">Card Title</h3>
-                        <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+                        <h3 class="card--title">大原製菓</h3>
+                        <meter low="69" high="80" max="100" value="84">B</meter>
+                        <p class="card--text">あと00人達成で</p>
+                        <h4>￥100</h4>
                     </div>
                 </div>
                 <div class="item--card card--blue">
                     <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
                     <p class="discount">00%OFF</p>
                     <div class="card--content">
-                        <h3 class="card--title">Card Title</h3>
-                        <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+                        <h3 class="card--title">おおはら精肉店</h3>
+                        <h4>￥100</h4>
                     </div>
                 </div>
             </div>
