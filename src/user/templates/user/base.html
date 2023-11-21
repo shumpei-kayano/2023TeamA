@@ -22,10 +22,11 @@
             <ul class="header_upper__menu">
                 <li><a href="#">Melimitとは</a></li>
                 <li><a href="{% url 'account_login_kkkk' %}">ログイン</a></li>
-                <li><a href="#">新規登録</a></li>
+                <li><a href="{% url 'accounts:user_touroku' %}">新規登録</a></li>
+                {% comment %} <li><a href="{% url 'accounts:user_edit' %}">情報編集</a></li> {% endcomment %}
                 <li><a href="#">お問い合わせ</a></li>
                 <li>{% if user.is_authenticated %}
-                    <p>ログインユーザーの名前：{{ user.username }}</p>
+                    <a href="{% url 'accounts:user_edit' %}"><span>ログインユーザーの名前：{{ user.username }}</span></a>
                 {% else %}
                     <p>ログインしていません。</p>
                 {% endif %}

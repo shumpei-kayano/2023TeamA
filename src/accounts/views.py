@@ -20,7 +20,7 @@ from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import login_required
 from .backends import MelimitUserModelBackend
 from django.contrib.auth.views import LoginView
-
+from django.contrib.auth import update_session_auth_hash
 
 class MelimitUserLoginView(LoginView):
     template_name = 'account/login.html'  # MelimitStore用のカスタムテンプレート
@@ -107,6 +107,10 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     def get_object(self, queryset=None):
         return self.request.user
     
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        update_session_auth_hash(self.request, self.request.user)  # ここでセッションを更新
+        return response
 
 class MelimitStoreLoginView(LoginView):
     template_name = 'account/store_login.html'  # MelimitStore用のカスタムテンプレート
