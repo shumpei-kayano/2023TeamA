@@ -9,7 +9,7 @@ from django.urls import reverse
 import logging
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
-from .forms import MelimitStoreRegistrationForm, MelimitStoreLoginForm, MelimitUserLoginForm, MelimitUserRegistrationForm, MelimitUserUpdateForm
+from .forms import MelimitStoreRegistrationForm, MelimitStoreLoginForm, MelimitUserLoginForm, MelimitUserRegistrationForm
 from django.views.generic.edit import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import MelimitStore, MelimitUser
@@ -100,6 +100,7 @@ def UserCreateView(request):
         form = MelimitUserRegistrationForm()
     return render(request, 'account/user_touroku.html', {'form': form})
 
+
 class UserUpdateView(LoginRequiredMixin, UpdateView):
     model = MelimitUser
     form_class = MelimitUserRegistrationForm
@@ -111,18 +112,22 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         print(f'aaaaa :{self.request.session.get("user_id")}')
         # print(f'session: {request.session}')
         print(f'self: {self}')
-        user_id = self.request.session.get('user_id')
+        user_id = self.request.user.id
+        # user_id = self.request.session.get('user_id')
+        print(f'user_id: {user_id}')
         user = MelimitUser.objects.get(id=user_id)
+        print('zzzzzzzzzzzzzzz')
         return user
     
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        backend = 'accounts.backends.MelimitUserModelBackend'  # あなたのバックエンドに合わせて変更してください
-        self.object.backend = backend
-        user_id = self.request.session.get('user_id')
-        user = MelimitUser.objects.get(id=user_id)
-        login(self.request, user, backend=backend)
-        return response
+    # def form_valid(self, form):
+    #     response = super().form_valid(form)
+    #     backend = 'accounts.backends.MelimitUserModelBackend'  # あなたのバックエンドに合わせて変更してください
+    #     self.object.backend = backend
+    #     # user_id = self.request.session.get('user_id')
+    #     user_id = self.request.user.id
+    #     user = MelimitUser.objects.get(id=user_id)
+    #     # login(self.request, user, backend=backend)
+    #     return response
 
 # def register(request):
 #     if request.method == 'POST':

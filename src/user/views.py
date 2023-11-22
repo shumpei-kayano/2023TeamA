@@ -8,8 +8,9 @@ from accounts.mixins import MelimitModelMixin
 # Create your views here.
 # @login_required
 def index(request):
+    print(request.user)
     if request.user.is_authenticated:
-        if user.user_type == 'melimit_user' :
+        if request.user.user_type == 'melimit_user' :
             user_id = request.user.id
             # user_id = request.session.get('user_id')
             print(f'user_id: {user_id}')
