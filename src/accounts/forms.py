@@ -66,6 +66,7 @@ class MelimitStoreRegistrationForm(forms.ModelForm):
         return user
 # 必要なフィールドを指定
 
+# ユーザー登録フォーム
 class MelimitUserRegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
     password_confirm = forms.CharField(widget=forms.PasswordInput, label='Confirm password')
