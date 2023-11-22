@@ -10,6 +10,8 @@ def index(request):
     return render(request, 'user/index.html')
 def login_view(request):
     return render(request, 'user/login.html')
+def explain_view(request):
+    return render(request, 'user/explain.html')
 
 
     

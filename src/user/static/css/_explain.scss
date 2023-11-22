@@ -1,0 +1,74 @@
+.section1 {
+    display: flex;
+    flex-direction: row;
+}
+
+.section1_left, .section1_right {
+    flex: 1;
+}
+
+.section2 {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.section2_left, .section2_right {
+    flex: 1;
+}
+.section3 {
+    display: flex;
+    flex-direction: row;
+}
+
+.section3_left, .section3_right {
+    flex: 1;
+}
+
+.section1_left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.section1, .section2, .section3 {
+    margin: 50px 0;  // 上下にマージンを追加する
+}
+
+.section1_left {
+    font-size: 1em;  // 文字を大きくする
+    margin-top: 0px;  // 上にマージンを追加する
+    transform: translateX(-9px);  // 左に50px移動する
+}
+
+.section2_left {
+    font-size: 3em;  // 文字を大きくする
+    margin-top: 63px;  // 上にマージンを追加する
+    transform: translateX(82px);  // 左に50px移動する
+}
+
+.section3_left {
+    font-size: 3em;  // 文字を大きくする
+    margin-top: 13px;  // 上にマージンを追加する
+    transform: translateX(202px);  // 左に50px移動する
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;  // コンテナの高さをビューポートの高さに設定
+}
+
+.merit {
+    font-size: 2.4em;  // 文字を大きくする
+    margin-right: 35px;  // 右側にマージンを追加する
+}
+
+.limit {
+    font-size: 2.4em;  // 文字を大きくする
+    margin-left: 65px;  // 左側にマージンを追加する
+}
+
+.cross {
+    font-size: 1.5em;  // "✕"の文字サイズを調整する
+}
