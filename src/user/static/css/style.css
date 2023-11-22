@@ -740,29 +740,6 @@ button:hover {
   line-height: 2rem;
 }
 
-.card--img {
-  width: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-}
-.card--content {
-  padding: 15px;
-}
-.card--title {
-  margin: 0;
-  font-size: 1.5em;
-  font-weight: bold;
-}
-.card--text {
-  margin: 10px 0;
-}
-.card--pink {
-  background: rgba(212, 133, 186, 0.2);
-}
-.card--blue {
-  background: rgba(133, 168, 212, 0.2);
-}
-
 .item--card {
   width: 25%;
   border: 1px solid #ccc;
@@ -796,11 +773,7 @@ button:hover {
   padding: 10% 0;
 }
 .card--content meter {
-  width: 100%;
-}
-.card--content span {
-  font-size: 0.8rem;
-  color: #EBEBEB;
+  width: 80%;
 }
 .card--title {
   margin: 0;
@@ -820,18 +793,20 @@ button:hover {
   margin-bottom: 4rem;
 }
 .card--notice {
-  border: none;
+  border: 1px solid #D4B985;
 }
 .card--price {
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 0.8rem;
   margin: 0;
+  text-decoration: line-through;
 }
 .card--discount {
-  font-size: 1.5rem;
-  font-weight: bold;
   margin: 0;
   color: #F75050;
+}
+.card--date-category {
+  font-size: 0.8rem;
+  color: #D4B985;
 }
 
 .center {

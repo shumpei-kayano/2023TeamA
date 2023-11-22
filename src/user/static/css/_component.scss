@@ -45,30 +45,6 @@
     }
 }
 
-// 商品カード
-.card {
-    &--img{
-        width: 100%;
-        object-fit: cover;
-    }
-    &--content{
-        padding: 15px;
-    }
-    &--title{
-        margin: 0;
-        font-size: 1.5em;
-        font-weight: bold;
-    }
-    &--text{
-        margin: 10px 0;
-    }
-    &--pink{
-        background: $melimit_lightpink;
-    }
-    &--blue{
-        background: $melimit_lightblue;
-    }
-}
 .item {
     &--card{
         width: 25%;
@@ -102,11 +78,7 @@
         text-align: center;
         padding: 10% 0;
         meter{
-            width: 100%;
-        }
-        span{
-            font-size: 0.8rem;
-            color: $melimit_gray;
+            width: 80%;
         }
     }
     &--title{
@@ -127,18 +99,20 @@
         }
     }
     &--notice{
-        border:none;
+        border: 1px solid $main_color;
     }
     &--price{
-        font-size: 1.5rem;
-        font-weight: bold;
+        font-size: 0.8rem;
         margin: 0;
+        text-decoration: line-through;
     }
     &--discount{
-        font-size: 1.5rem;
-        font-weight: bold;
         margin: 0;
         color: $melimit_red;
+    }
+    &--date-category {
+        font-size: 0.8rem;
+        color: $main_color;
     }
 }
 .center {
