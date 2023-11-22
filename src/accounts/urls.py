@@ -13,4 +13,5 @@ urlpatterns = [
     path('store_edit/', views.StoreUpdateView.as_view(), name='store_edit'),
     path('user_logout/', auth_views.LogoutView.as_view(next_page='user:index'), name='user_logout'),
     # path('touroku_success/',views.UserTourokuSuccess,name='touroku_success'),
+    path('store_logout/', views.MelimitStoreLogoutView.as_view(), name='store_logout'),
 ]

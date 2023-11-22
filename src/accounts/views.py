@@ -3,7 +3,7 @@ from django.views import View
 from django.http import HttpResponse
 # from allauth.account.views import LoginView
 # from allauth.account.forms import LoginForm
-from django.contrib.auth import get_user_model, authenticate, login
+from django.contrib.auth import get_user_model, authenticate, login, logout, update_session_auth_hash
 from django.core.exceptions import ValidationError
 from django.urls import reverse
 import logging
@@ -20,6 +20,8 @@ from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import login_required
 from .backends import MelimitUserModelBackend
 from django.contrib.auth.views import LoginView
+from django.http import Http404
+from accounts.mixins import MelimitModelMixin
 from django.contrib.auth import update_session_auth_hash
 
 class MelimitUserLoginView(LoginView):
@@ -140,31 +142,19 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 # def UserLogoutView(request):
 #     return render(request, 'user/index.html')
 
-class MelimitStoreLoginView(LoginView):
+# MelimitStore用のログイン画面への遷移
+class MelimitStoreLoginScreenView(LoginView):
     template_name = 'account/store_login.html'  # MelimitStore用のカスタムテンプレート
     authentication_form = MelimitStoreLoginForm  # ここを追加
-    
-    # def form_valid(self, form):
-    #     # フォームのデータを取得
-    #     email = form.cleaned_data.get('username')
-    #     password = form.cleaned_data.get('password')
-    #     # authenticate関数にbackend引数を指定
-    #     user = authenticate(self.request, username=email, password=password, backend='accounts.backends.MelimitStoreModelBackend')
 
-    #     if user is not None:
-    #         login(self.request, user)
-    #         return super().form_valid(form)
-    #     else:
-    #         return self.form_invalid(form)
-    # def dispatch(self, request, *args, **kwargs):
-    #     print('MelimitStoreLoginView')
-    #     if 'backend' in request.session:
-    #         del request.session['backend']
-    #     request.session['backend'] = 'accounts.backends.MelimitStoreModelBackend'
-    #     print(f'session: {request.session}')
-    #     print(f'session: {dict(request.session)}')
-    #     return super().dispatch(request, *args, **kwargs)
+# MelimitStore用のログアウト処理(クラスベースビュー)
+class MelimitStoreLogoutView(View):
+    def get(self, request, *args, **kwargs):
+        # ログアウト処理
+        logout(request)
+        return redirect('store_login')
 
+# MelimitStore用の新規登録
 def StoreCreateView(request):
     if request.method == 'POST':
         form = MelimitStoreRegistrationForm(request.POST)
@@ -172,18 +162,56 @@ def StoreCreateView(request):
             user = form.save()
             # backendを指定してログインさせる
             user.backend = 'accounts.backends.MelimitStoreModelBackend'
+            model_name = type(user).__name__
+            instance_name = type(user).__name__
+            # セッションにモデル名とインスタンス名を保存
+            request.session['model_name'] = model_name
+            request.session['instance_name'] = instance_name
             login(request, user)
-            # return redirect('user:index')
-            return render(request, 'user/index.html')
+            # セッション'model_name'と'instance_name'を出力してみる
+            print(f'model_name: {request.session["model_name"]}')
+            print(f'instance_name: {request.session["instance_name"]}')
+            # return render(request, 'store/base.html', {
+            #     'model_name': request.session['model_name'],
+            #     'instance_name': request.session['instance_name']
+            # })
+            return redirect('user:store_base')
+    # POSTでない場合は空のフォームを生成(最初のページ表示時)
     else:
         form = MelimitStoreRegistrationForm()
     return render(request, 'account/store_touroku.html', {'form': form})
 
-class StoreUpdateView(LoginRequiredMixin, UpdateView):
+# MelimitStore用の会員情報編集
+class StoreUpdateView(LoginRequiredMixin, UpdateView, MelimitModelMixin):
     model = MelimitStore
     form_class = MelimitStoreRegistrationForm
     template_name = 'account/store_edit.html'
-    success_url = reverse_lazy('user:index')
+    success_url = reverse_lazy('user:store_base')
 
     def get_object(self, queryset=None):
-        return self.request.user
+        user = self.get_melimitmodel_user()
+        # セッション情報取得
+        # model_name = self.request.session.get('model_name')
+        # instance_name = self.request.session.get('instance_name')
+        # print(f'model: {model_name}')
+        # print(f'instance: {instance_name}')
+        # idからユーザー情報を取得
+        # store_id = self.request.session.get('store_id')
+        # print(f'store_id: {store_id}')
+        # user = MelimitStore.objects.get(id=store_id)
+        # userのインスタンス名は'user = self.request.user'で取得した場合は'CustomUser'になる
+        # idがらオブジェクトを取得した場合は'MelimitStore'になる
+        print(f'user.__class__.__name__: {user.__class__.__name__}')
+        # isinstanceでuserがMelimitStoreのインスタンスかどうかを判定
+        print(isinstance(user, MelimitStore))
+        # if isinstance(user, MelimitStore):
+        #     return user
+        # else:
+        #     raise Http404("User is not a MelimitStore instance")
+        return user
+    # なくても処理できる？？？
+    # def get_form_kwargs(self):
+    #     kwargs = super().get_form_kwargs()
+    #     # 編集時には既存のオブジェクトをフォームにセットする
+    #     kwargs['instance'] = self.get_object()
+    #     return kwargs

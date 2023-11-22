@@ -50,7 +50,8 @@ class MelimitUserLoginForm(forms.Form):
     class Meta:
         model = MelimitUser
         fields = ['email', 'password']
-        
+
+# MelimitStore用会員情報登録＆編集フォーム
 class MelimitStoreRegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
     password_confirm = forms.CharField(widget=forms.PasswordInput, label='Confirm password')
@@ -58,13 +59,30 @@ class MelimitStoreRegistrationForm(forms.ModelForm):
         model = MelimitStore
         fields = ['email', 'password', 'password_confirm', 'username', 'postal_code', 'prefecture', 'city', 'address', 'phone_number', 'store_image', 'site_url']
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance and self.instance.pk:
+            # 編集のときはパスワードフィールドを削除
+            self.fields.pop('password')
+            self.fields.pop('password_confirm')
+
     def save(self, commit=True):
-        user = super().save(commit=False)
-        user.set_password(self.cleaned_data["password"])
-        if commit:
-            user.save()
+        # user = super().save(commit=False)
+        # password = self.cleaned_data.get("password")
+        # # パスワードが入力されている場合(新規登録)はパスワードを設定
+        # if password:
+        #     user.set_password(password)
+        # if commit:
+        #     user.save()
+        # return user
+        user = super().save(commit=True)  # commit=Trueに変更
+        password = self.cleaned_data.get("password")
+        # パスワードが入力されている場合(新規登録)はパスワードを設定
+        if password:
+            user.set_password(password)
+            user.save()  # パスワードを設定した後に再度保存
         return user
-# 必要なフィールドを指定
+
 
 class MelimitUserRegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)

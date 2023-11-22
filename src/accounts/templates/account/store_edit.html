@@ -1,8 +1,6 @@
-{% extends "store/base.html" %}
-{% load static %}
 {% block content %}
     <h2>店舗編集画面</h2>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">編集ok</button>
