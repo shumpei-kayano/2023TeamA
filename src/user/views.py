@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, authenticate, login
 from accounts.forms import MelimitStoreLoginForm
+from accounts.models import MelimitStore
+from accounts.mixins import MelimitModelMixin
 
 # Create your views here.
 # @login_required
@@ -23,10 +25,27 @@ def anai(request):
     return render(request, 'user/ana_ana.html', {'model_name': model_name, 'instance_name': instance_name})
 
 def store_base_view(request):
-    model_name = request.session.get('model_name')
+    mixin = MelimitModelMixin()
+    mixin.request = request
+    user = mixin.get_melimitmodel_user()
+    if user.__class__.__name__ == 'MelimitUser':
+        return redirect('user:omae_user')
+    # user = request.user
+    # store_id = request.session.get('store_id')
+    # print(f'store_id: {store_id}')
+    # try:
+    #     user = MelimitStore.objects.get(id=store_id)
+    # except MelimitStore.DoesNotExist:
+    #     return redirect('user:omae_user')
+    # model_name = request.session.get('model_name')
     instance_name = request.session.get('instance_name')
-    # htmlを返すだけ
+    model_name = user.__class__.__name__
+    print(f'user.__class__.__name__: {user.__class__.__name__}')
+    # userのsite_urlを取得
+    site_url = user.site_url
+    print(f'site_url: {site_url}')
     return render(request, 'store/base.html', {
+        'user': user,
         'model_name': model_name,
         'instance_name': instance_name,
     })
@@ -39,7 +58,7 @@ def store_login_view(request):
     # return render(request, 'store/base.html', {'model_name': model_name, 'instance_name': instance_name})
     if request.method == 'POST':
         form = MelimitStoreLoginForm(request.POST)
-        print('store_base_view')
+        print('store_login_view')
         # フォームに入力された値を出力してみる
         print(f'Username: {form.data.get("username")}')
         print(f'email: {form.data.get("email")}')

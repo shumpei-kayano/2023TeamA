@@ -21,6 +21,7 @@ from django.contrib.auth.decorators import login_required
 from .backends import MelimitUserModelBackend
 from django.contrib.auth.views import LoginView
 from django.http import Http404
+from accounts.mixins import MelimitModelMixin
 
 
 class MelimitUserLoginView(LoginView):
@@ -149,31 +150,33 @@ def StoreCreateView(request):
     return render(request, 'account/store_touroku.html', {'form': form})
 
 # MelimitStore用の会員情報編集
-class StoreUpdateView(LoginRequiredMixin, UpdateView):
+class StoreUpdateView(LoginRequiredMixin, UpdateView, MelimitModelMixin):
     model = MelimitStore
     form_class = MelimitStoreRegistrationForm
     template_name = 'account/store_edit.html'
     success_url = reverse_lazy('user:store_base')
 
     def get_object(self, queryset=None):
+        user = self.get_melimitmodel_user()
         # セッション情報取得
-        model_name = self.request.session.get('model_name')
-        instance_name = self.request.session.get('instance_name')
-        print(f'model: {model_name}')
-        print(f'instance: {instance_name}')
+        # model_name = self.request.session.get('model_name')
+        # instance_name = self.request.session.get('instance_name')
+        # print(f'model: {model_name}')
+        # print(f'instance: {instance_name}')
         # idからユーザー情報を取得
-        store_id = self.request.session.get('store_id')
-        print(f'store_id: {store_id}')
-        user = MelimitStore.objects.get(id=store_id)
+        # store_id = self.request.session.get('store_id')
+        # print(f'store_id: {store_id}')
+        # user = MelimitStore.objects.get(id=store_id)
         # userのインスタンス名は'user = self.request.user'で取得した場合は'CustomUser'になる
         # idがらオブジェクトを取得した場合は'MelimitStore'になる
         print(f'user.__class__.__name__: {user.__class__.__name__}')
         # isinstanceでuserがMelimitStoreのインスタンスかどうかを判定
         print(isinstance(user, MelimitStore))
-        if isinstance(user, MelimitStore):
-            return user
-        else:
-            raise Http404("User is not a MelimitStore instance")
+        # if isinstance(user, MelimitStore):
+        #     return user
+        # else:
+        #     raise Http404("User is not a MelimitStore instance")
+        return user
     # なくても処理できる？？？
     # def get_form_kwargs(self):
     #     kwargs = super().get_form_kwargs()
