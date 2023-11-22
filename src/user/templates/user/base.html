@@ -23,8 +23,8 @@
             <ul class="header_upper__menu">
                 <li><a href="{% url "user:what_melimit" %}">Melimitとは</a></li>
                 <li><a href="{% url 'account_login_kkkk' %}">ログイン</a></li>
-                <li><a href="#">新規登録</a></li>
-                <li><a href="#">お問い合わせ</a></li>
+                <li><a href="{% url "account_signup" %}">新規登録</a></li>
+                <li><a href="{% url "user:contact" %}">お問い合わせ</a></li>
                 <li>{% if user.is_authenticated %}
                     <p>ログインユーザーの名前：{{ user.username }}</p>
                 {% else %}
@@ -49,8 +49,8 @@
                 </ul>
             </div>
             <ul class="header_down__menu-container">
-                <li><a class="btn--blue header_down__menu-btn">一般購入商品を見る</a></li>
-                <li><a class="btn--pink header_down__menu-btn">共同購入商品を見る</a></li>
+                <li><a class="btn--blue header_down__menu-btn" href="{% url "user:all_products_general" %}">一般購入商品を見る</a></li>
+                <li><a class="btn--pink header_down__menu-btn" href="{% url "user:all_products_joint" %}">共同購入商品を見る</a></li>
             </ul>
         </div>
         <div class="header_down__search">

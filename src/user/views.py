@@ -91,3 +91,15 @@ def sinki(request):
 # メリミットとは
 def what_melimit(request):
     return render(request, 'user/explain.html')
+
+# お問い合わせ
+def contact(request):
+    return render(request, 'user/contact.html')
+
+# 一般商品一覧
+def all_products_general(request):
+    return render(request, 'user/general-products.html')
+
+# 共同購入商品一覧
+def all_products_joint(request):
+    return render(request, 'user/joint-products.html')

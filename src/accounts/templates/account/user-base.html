@@ -15,64 +15,64 @@
     <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/style.css' %}">
 </head>
 <body>
-<header>
-    <div class="header_upper">
-        <h1>Melimit</h1>
-        <a href="{% url 'user:index' %}"><img src="{% static 'assets/img/Melimit.png' %}" alt="Melimit" class="header_logo"/></a>
-        <nav class="header_upper__nav">
-            <ul class="header_upper__menu">
-                <li><a href="{% url "user:what_melimit" %}">Melimitとは</a></li>
-                <li><a href="{% url 'account_login_kkkk' %}">ログイン</a></li>
-                <li><a href="#">新規登録</a></li>
-                <li><a href="#">お問い合わせ</a></li>
-                <li>{% if user.is_authenticated %}
-                    <p>ログインユーザーの名前：{{ user.username }}</p>
-                {% else %}
-                    <p>ログインしていません。</p>
-                {% endif %}
-            </ul>
-        </nav>
-        <div class="header_upper__icon">
-            <a href="#"><img class ="header_icon"src="{% static 'assets/img/love.png' %}" alt="love"></a>
-            <a href="#"><img class ="header_icon"src="{% static 'assets/img/cart.png' %}" alt="cart"></a>
+    <header>
+        <div class="header_upper">
+            <h1>Melimit</h1>
+            <a href="{% url 'user:index' %}"><img src="{% static 'assets/img/Melimit.png' %}" alt="Melimit" class="header_logo"/></a>
+            <nav class="header_upper__nav">
+                <ul class="header_upper__menu">
+                    <li><a href="{% url "user:what_melimit" %}">Melimitとは</a></li>
+                    <li><a href="{% url 'account_login_kkkk' %}">ログイン</a></li>
+                    <li><a href="{% url "account_signup" %}">新規登録</a></li>
+                    <li><a href="{% url "user:contact" %}">お問い合わせ</a></li>
+                    <li>{% if user.is_authenticated %}
+                        <p>ログインユーザーの名前：{{ user.username }}</p>
+                    {% else %}
+                        <p>ログインしていません。</p>
+                    {% endif %}
+                </ul>
+            </nav>
+            <div class="header_upper__icon">
+                <a href="#"><img class ="header_icon"src="{% static 'assets/img/love.png' %}" alt="love"></a>
+                <a href="#"><img class ="header_icon"src="{% static 'assets/img/cart.png' %}" alt="cart"></a>
+            </div>
         </div>
-    </div>
-    <div class="header_down">
-        <div class="header_down__menu">
-            <div class="">
-                <ul class="header_down__category">
-                    <li><a class="btn--beige header_down__menu-btn" onclick="toggleCategory()">カテゴリー▼</a></li>
-                    <li class="hidden"><a class="btn--beige header_down__menu-btn">肉</a></li>
-                    <li class="hidden"><a class="btn--beige header_down__menu-btn">野菜</a></li>
-                    <li class="hidden"><a class="btn--beige header_down__menu-btn">果物</a></li>
-                    <li class="hidden"><a class="btn--beige header_down__menu-btn">海産</a></li>
+        <div class="header_down">
+            <div class="header_down__menu">
+                <div class="">
+                    <ul class="header_down__category">
+                        <li><a class="btn--beige header_down__menu-btn" onclick="toggleCategory()">カテゴリー▼</a></li>
+                        <li class="hidden"><a class="btn--beige header_down__menu-btn">肉</a></li>
+                        <li class="hidden"><a class="btn--beige header_down__menu-btn">野菜</a></li>
+                        <li class="hidden"><a class="btn--beige header_down__menu-btn">果物</a></li>
+                        <li class="hidden"><a class="btn--beige header_down__menu-btn">海産</a></li>
+                    </ul>
+                </div>
+                <ul class="header_down__menu-container">
+                    <li><a class="btn--blue header_down__menu-btn" href="{% url "user:all_products_general" %}">一般購入商品を見る</a></li>
+                    <li><a class="btn--pink header_down__menu-btn" href="{% url "user:all_products_joint" %}">共同購入商品を見る</a></li>
                 </ul>
             </div>
-            <ul class="header_down__menu-container">
-                <li><a class="btn--blue header_down__menu-btn">一般購入商品を見る</a></li>
-                <li><a class="btn--pink header_down__menu-btn">共同購入商品を見る</a></li>
-            </ul>
+            <div class="header_down__search">
+               <form method="get" action="#" class="header_search">
+                    <input class="header_down__search-input" type="text" name="search" placeholder="キーワードを入力">
+                    <button class="btn--beige" type="submit" value="検索">検索</button></li>
+                </form>
+            </div>
         </div>
-        <div class="header_down__search">
-           <form method="get" action="#" class="header_search">
-                <input class="header_down__search-input" type="text" name="search" placeholder="キーワードを入力">
-                <button class="btn--beige" type="submit" value="検索">検索</button></li>
-            </form>
-        </div>
-    </div>
-</header>
-<main>
-    {% block content %}{% endblock content %}
-</main>
-{% include "user/footer.html" %}
-<script>
-    function toggleCategory() {
-        var categoryItems = document.querySelectorAll('.header_down__category li:not(:first-child)');
-        
-        categoryItems.forEach(function(item) {
-            item.classList.toggle('hidden');
-        });
-    }
-</script>
-</body>
-</html>
+    </header>
+    <main>
+        {% block content %}{% endblock content %}
+    </main>
+    {% include "user/footer.html" %}
+    <script>
+        function toggleCategory() {
+            var categoryItems = document.querySelectorAll('.header_down__category li:not(:first-child)');
+            
+            categoryItems.forEach(function(item) {
+                item.classList.toggle('hidden');
+            });
+        }
+    </script>
+    </body>
+    </html>
