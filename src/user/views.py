@@ -2,12 +2,25 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, authenticate, login
 from accounts.forms import MelimitStoreLoginForm
-
+from accounts.models import MelimitUser
 # Create your views here.
 # @login_required
 def index(request):
-    print('index_________')
-    return render(request, 'user/index.html')
+    if request.user.is_authenticated:
+        if user.user_type == 'melimit_user' :
+            user_id = request.user.id
+            # user_id = request.session.get('user_id')
+            print(f'user_id: {user_id}')
+            user = MelimitUser.objects.get(id=user_id)
+            print(f'user: {user}')
+            return render(request, 'user/index.html', {'user': user})
+        else:
+            return redirect('user:omae_store')
+    else:
+        return render(request, 'user/index.html')
+    # print('index_________')
+    # print(request.user.user_id)
+    # return render(request, 'user/index.html')
 def login_view(request):
     return render(request, 'user/login.html')
 

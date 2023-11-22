@@ -21,13 +21,19 @@
         <nav class="header_upper__nav">
             <ul class="header_upper__menu">
                 <li><a href="#">Melimitとは</a></li>
-                <li><a href="{% url 'account_login_kkkk' %}">ログイン</a></li>
-                <li><a href="{% url 'accounts:user_touroku' %}">新規登録</a></li>
+                {% comment %} <li><a href="{% url 'account_login_kkkk' %}">ログイン</a></li>
+                <li><a href="{% url 'accounts:user_touroku' %}">新規登録</a></li> {% endcomment %}
                 {% comment %} <li><a href="{% url 'accounts:user_edit' %}">情報編集</a></li> {% endcomment %}
                 <li><a href="#">お問い合わせ</a></li>
-                <li>{% if user.is_authenticated %}
-                    <a href="{% url 'accounts:user_edit' %}"><span>ログインユーザーの名前：{{ user.username }}</span></a>
+                <!-- ログイン状態によって表示を変更-->
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'accounts:user_logout' %}">ログアウト</a></li>
+                    <li><a href="{% url 'accounts:user_edit' %}"><span>ログインユーザーの名前：{{ user.username }}
+                        taste: {{ user.taste }}
+                        email:{{ user.email }}</span></a></li>
                 {% else %}
+                    <li><a href="{% url 'account_login_kkkk' %}">ログイン</a></li>
+                    <li><a href="{% url 'accounts:user_touroku' %}">新規登録</a></li>
                     <p>ログインしていません。</p>
                 {% endif %}
             </ul>

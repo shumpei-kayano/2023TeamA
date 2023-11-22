@@ -7,11 +7,15 @@ class MelimitUserModelBackend(ModelBackend):
         print('MelimitUser_______')
         try:
             user = MelimitUser.objects.get(email=email)
-            print(user)
+            # print(user.taste)
+            print(f'user.taste: {user.taste}')
             if user.check_password(password):
                 # userを出力してみる
                 # print(f'Username: {user.email}')
                 print(f'Email: {user.email}')
+                request.session['user_id'] = user.id
+                print(f'request.session[user_id]: {request.session["user_id"]}')
+                # print(request.session['user_id'])
                 return user
         except MelimitUser.DoesNotExist:
             print('none!!!!')

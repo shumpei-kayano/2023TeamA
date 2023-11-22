@@ -96,9 +96,24 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = "CustomUser"
 
 class MelimitUser(CustomUser):
+    # 好みというフィールド。選択肢から選ぶ
+    TASTE_CHOICES = (
+        ('meat', 'meat'),
+    ('vegetables', 'vegetables'),
+    ('fruit', 'fruit'),
+    ('fish', 'fish'),
+        # ('other', 'その他'),
+    )
+    taste = models.CharField("好み", max_length=20, choices=TASTE_CHOICES, blank=True)
+    
     def save(self, *args, **kwargs):
+        print(self.user_type)
         self.user_type = 'melimit_user'
+        print("Before super().save()")
+        print(self.user_type)
         super().save(*args, **kwargs)
+        print("After super().save()")
+        print(self.user_type)
     class Meta:
         verbose_name = "お客さん"
         verbose_name_plural = "MelimitUser"

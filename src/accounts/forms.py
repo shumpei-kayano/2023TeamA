@@ -71,12 +71,33 @@ class MelimitUserRegistrationForm(forms.ModelForm):
     password_confirm = forms.CharField(widget=forms.PasswordInput, label='Confirm password')
     class Meta:
         model = MelimitUser
-        fields = ['email', 'password', 'password_confirm', 'username', 'postal_code', 'prefecture', 'city', 'address', 'phone_number']
+        fields = ['email', 'password', 'password_confirm', 'username', 'taste','postal_code', 'prefecture', 'city', 'address', 'phone_number']
 
     def save(self, commit=True):
-        user = super().save(commit=False)
+        print('saveされているか確認！')
+        print(f'self.cleaned_data: {self.cleaned_data}')
+        user = super().save(commit=True)
         user.set_password(self.cleaned_data["password"])
+        print(f'self.cleaned_data[taste]: {self.cleaned_data["taste"]}')
+        # print(self.cleaned_data["taste"])
+        user.taste = self.cleaned_data["taste"]
+        print(f'user: {user}')
+        # print(user)
+        print(f'user.taste1: {user.taste}')
+        # print(user.taste)
         if commit:
-            user.save()
+            print('saveされてます～？')
+            print(f'user.taste2: {user.taste}')
+            try:
+                print(f'user.taste3: {user.taste}')
+                user.save()
+                print(f'user.taste4: {user.taste}')
+            except Exception as e:
+                print(f"Error occurred: {e}")
+            # user.save()
         return user
 
+class MelimitUserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = MelimitUser
+        fields = ['email', 'username', 'taste', 'postal_code', 'prefecture', 'city', 'address', 'phone_number']
