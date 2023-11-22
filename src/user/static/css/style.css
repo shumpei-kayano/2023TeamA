@@ -1094,3 +1094,19 @@ button:hover {
 .section2 input:checked + .tab_class + .content_class {
   display: block;
 }
+
+.product-sort {
+  text-align: center;
+  padding: 1%;
+  border: none;
+  border-radius: 5px;
+  background: #EBEBEB;
+  color: #252525;
+  font-size: 1rem;
+  font-family: "Noto Sans JP", sans-serif;
+}
+.product-sort option {
+  text-align: center;
+  background: #FFFFFF;
+  color: #252525;
+}
