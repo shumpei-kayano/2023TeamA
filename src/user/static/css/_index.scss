@@ -1,15 +1,202 @@
-table {
-    border-collapse: collapse;
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeOut 1.5s 2.5s forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.loading__logo {
+  opacity: 0;
+  animation: logo_fade 2s 0.5s forwards;
+  width: 175px;
+}
+
+@keyframes logo_fade {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+.section {
+    scroll-snap-align: start;
+    height: 100vh;
+    margin-top: 15px;
+    &__title {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 0;
+    }
+}
+.section1 {
+  display: flex;
+  width: 100%;
+  &__left {
+    width: 20%;
+  }
+  &__btn {
+    margin-top: 10px;
+  }
+  &__right {
     width: 80%;
-    margin-bottom: 1rem;
-    background-color: transparent;
+  }
+
+  .slide-pic {
+    max-width: 100%;
+    height: 400px;
+    margin: auto;
+  }
+  /*画像配置*/
+  .slideshow {
+    max-width: 100%;
+    height: 100%;
+    background-image: url(https://drive.google.com/uc?export=view&id=1tLhP0imM-1kfL00b0wRFdX5gIII2dMaC); /*JSで切り替える画像*/
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0% 50%; /*左 中央のよせ*/
+  }
+  /*文字*/
+  .disc {
+    margin: auto;
+    text-align: center;
+    font-size: 3em;
+    color: #ffffff;
+    font-weight: 800;
+    padding-top: 5%;
+  }
+  /*>*/
+  .next {
+    float: right;
+    top: 0px;
+    right: 50px;
+  }
+  /*<*/
+  .back {
+    float: left;
+    bottom: 0px;
+    left: 30px;
+  }
+  /*矢印のデザイン*/
+  .arrow {
+    position: relative;
+    display: inline-block;
+    padding: 0 0 0 16px;
+    color: #000;
+    vertical-align: middle;
+    text-decoration: none;
+    font-size: 15px;
+  }
+  .arrow::before,
+  .arrow::after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    content: "";
+    vertical-align: middle;
+  }
+
+  .next::before {
+    left: 0px;
+    width: 30px;
+    height: 30px;
+    border-top: 5px solid rgb(255, 255, 255);
+    border-right: 5px solid rgb(255, 255, 255);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  .back::before {
+    left: 0px;
+    width: 30px;
+    height: 30px;
+    border-bottom: 5px solid rgb(255, 255, 255);
+    border-left: 5px solid rgb(255, 255, 255);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  /* CSSアニメーションの指定 */
+  .slideshow {
+    transition: background-image 1s ease-in;
+  }
+
+  @media screen and (max-width: 768px) {
+    .slide-pic {
+      height: 250px;
+    }
+    .disc {
+      padding-top: 5%;
+    }
+    /*>*/
+    .next {
+      top: 30px;
+    }
+    /*<*/
+    .back {
+      top: 30px;
+    }
+  }
 }
-td {
-    width: 50%;
-}
-.slide{
-    width: 100%;
-    object-fit: cover;
-    aspect-ratio: 2 / 1;
+
+
+.section2 {
+  .area {
+    margin: auto;
+    flex-wrap: wrap;
+    display: flex;
+  }
+  .tab_class {
+    width: calc(100%/5);
+    height: 50px;
+    line-height: 50px;
+    font-size: 15px;
+    text-align: center;
+    display: block;
+    float: left;
+    order: -1;
+  }
+  input[name="tab_name"] {
+    display: none;
+  }
+  input:checked + .tab_class {
+    background-color: $melimit_gray;
+    color: $melimit_black;
     border-radius: 5px;
+  }
+  .content_class {
+    display: none;
+    width: 100%;
+    text-align: center;
+  }
+  input:checked + .tab_class + .content_class {
+    display: block;
+  }
 }
+
+

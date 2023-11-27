@@ -1,5 +1,8 @@
 from pathlib import Path
 import os
+
+from django.conf import settings  # 追加
+
 # debug_toolbarの設定
 import mimetypes
 mimetypes.add_type("application/javascript", ".js", True)
@@ -33,7 +36,12 @@ INSTALLED_APPS = [
     'sass_processor', # 追加
     'django_extensions', # 追加
     'django_cleanup', # 追加
+    'user',
     'accounts',
+    'django.contrib.sites', # 追加
+    'allauth', # 追加
+    'allauth.account', # 追加
+    'allauth.socialaccount', # 追加
     'store',
     'user',
     'django.contrib.sites', # 追加
@@ -51,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware', # 追加
+    # 'allauth.account.middleware.AccountMiddleware',  # 追加
     'allauth.account.middleware.AccountMiddleware',  # 追加
 ]
 
@@ -61,7 +70,7 @@ ROOT_URLCONF = 'TeamA.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ BASE_DIR / 'user/templates', BASE_DIR / 'accounts/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -158,15 +167,29 @@ SITE_ID = 1
 # AUTHENTICATION_BACKENDSとは、認証バックエンドを指定する設定
 # デフォルトでは、django.contrib.auth.backends.ModelBackendが指定されている
 AUTHENTICATION_BACKENDS = (
-    # ユーザー名とパスワードによる認証を行うバックエンド
+    # MelimitUserModelBackendを使う
+    'accounts.backends.MelimitUserModelBackend',  # 追加
+    # MelimitStoreModelBackendを使う
+    'accounts.backends.MelimitStoreModelBackend',  # 追加
+    # ユーザー名とパスワードによる認証を行うバックエンド 
     'django.contrib.auth.backends.ModelBackend',
     # Emailによる認証を行うバックエンドはAuthenticationBackendを使う
-    'allauth.account.auth_backends.AuthenticationBackend'
-    # ,  # 追加
+    'allauth.account.auth_backends.AuthenticationBackend',  # 追加
 )
 
-# ログイン/ログアウト後の遷移先を設定
-LOGIN_REDIRECT_URL = 'sdgs_diary:index'  # 追加
-ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'  # 追加
+# MelimitAccountAdapterを使う
+ACCOUNT_ADAPTER = 'accounts.adapter.MelimitAccountAdapter'  # 追加
 
-AUTH_USER_MODEL = 'accounts.CustomUser'# 追加
+# ログイン/ログアウト後の遷移先を設定
+# LOGIN_REDIRECT_URL = 'user:index'
+# settings.LOGIN_REDIRECT_URL = settings.LOGIN_REDIRECT_URL.replace('#next', '')
+ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login_kkkk'  # 追加
+
+AUTH_USER_MODEL = 'accounts.CustomUser'  # 追加
+
+# ログインページのURLを設定(allauthのデフォルトを上書き)
+# ここからログインすると、なぜかadapterを経由しない
+# LOGIN_URL = 'account_login_kkkk'  # 追加
+
+# ここからログインすると、adapterを経由して遷移する
+# LOGIN_URL = 'store_login'  # 追加

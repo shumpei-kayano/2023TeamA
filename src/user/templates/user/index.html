@@ -1,0 +1,172 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% block title %}トップページ{% endblock %}
+{% block content %}
+<div class="loading">
+    <img class="loading__logo" src="{% static 'assets/img/Melimit.png' %}" alt="VOOL">
+</div>
+<section class="section1 mgt-10">
+    <div class="section1__left">
+        <a class="btn--beige btn--big">ご利用ガイド</a>
+        <a class="btn--beige btn--big mgt-10">MelimitとSDGs</a>
+        <a class="btn--beige btn--big mgt-10">食品ロスとは</a>
+    </div>
+    <div class="section1__right">
+        <div class ="slide-pic">
+            <div id ="slide" class="slideshow">
+                <p class="disc">Melimit</p>
+                <a class ="arrow next" id ="right" href ="#"></a>
+                <a class ="arrow back" id ="left" href ="#"></a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section section2">
+    <h2 class="section__title">おすすめ商品</h2>
+    <div class="area">
+        <input type="radio" name="tab_name" id="tab1" checked>
+        <label class="tab_class" for="tab1">すべての商品</label>
+        <div class="content_class">
+            <div class="item--list">
+                {% comment %} if {% endcomment %}
+                <div class="item--card card--blue">
+                    <a href="#">
+                        <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+                        <p class="discount">00%OFF</p>
+                        <div class="card--content">
+                            <h3 class="card--title">オオハラ水産</h3>
+                            <h4 class="card--discount">￥100,000（税込）</h4>
+                        </div>
+                    </a>
+                </div>
+                <div class="item--card card--pink">
+                    <a href="#">
+                        <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+                        <p class="discount">MAX00%OFF</p>
+                        <div class="card--content">
+                            <h3 class="card--title">大原製菓</h3>
+                            <meter low="69" high="80" max="100" value="84">B</meter>
+                            <p class="card--text">あと00人達成で</p>
+                            <p class="card--price">￥100,000（税込）</p>
+                            <h4 class="card--discount">￥100,000（税込）</h4>
+                        </div>
+                    </a>
+                </div>
+                <div class="item--card card--blue">
+                    <a href="#">
+                        <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+                        <p class="discount">00%OFF</p>
+                        <div class="card--content">
+                            <h3 class="card--title">おおはら精肉店</h3>
+                            <h4 class="card--discount">￥100,000（税込）</h4>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <a class="btn--beige btn--middle mgt-10">すべての商品を見る</a>
+        </div>
+        <input type="radio" name="tab_name" id="tab2" >
+        <label class="tab_class" for="tab2">肉</label>
+        <div class="content_class">
+          <p>タブ2のコンテンツを表示します</p>
+        </div>
+        <input type="radio" name="tab_name" id="tab3" >
+        <label class="tab_class" for="tab3">野菜</label>
+        <div class="content_class">
+          <p>タブ3のコンテンツを表示します</p>
+        </div>
+        <input type="radio" name="tab_name" id="tab4" >
+        <label class="tab_class" for="tab4">果物</label>
+        <div class="content_class">
+          <p>タブ4のコンテンツを表示します</p>
+        </div>
+        <input type="radio" name="tab_name" id="tab5" >
+        <label class="tab_class" for="tab5">海鮮</label>
+        <div class="content_class">
+          <p>タブ5のコンテンツを表示します</p>
+        </div>
+      </div>
+</section>
+<section class="section section3">
+    <h2 class="section__title">お知らせ</h2>
+    <div class="item--list">
+        <div class="item--card card--notice">
+            <a href="#">
+                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+                <div class="card--content">
+                    <p><span class="card--date-category">2020/00/00</span><span class="card--date-category">カテゴリー</span></p>
+                    <h3 class="card--title">Card Title</h3>
+                    <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+                </div>
+            </a>
+        </div>
+        <div class="item--card card--notice">
+            <a href="#">
+                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+                <div class="card--content">
+                    <p><span class="card--date-category">2020/00/00</span><span class="card--date-category">カテゴリー</span></p>
+                    <h3 class="card--title">Card Title</h3>
+                    <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+                </div>
+            </a>
+        </div>
+        <div class="item--card card--notice">
+            <a href="#">
+                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+                <div class="card--content">
+                    <p><span class="card--date-category">2020/00/00</span><span class="card--date-category">カテゴリー</span></p>
+                    <h3 class="card--title">Card Title</h3>
+                    <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+                </div>
+            </a>
+        </div>
+        <a class="btn--beige btn--middle mgt-10">お知らせ一覧</a>
+</section>
+</div>
+    
+<script>
+    window.onload = function(){
+        //画像を配列に格納
+        var images =['url({% static 'assets/img/350x160.png' %})',
+                     'url({% static 'assets/img/350x160.png' %})',
+                     'url({% static 'assets/img/350x160.png' %})']
+        //要素をHTMLから取得
+        //画像
+        var target = document.getElementById('slide');
+        //>,<
+        var right = document.getElementById('right');
+        var left = document.getElementById('left');
+    
+        //クリックしたときに変わるようにカウント変数
+        var count = 0;
+    
+        //クリックしたら画像変更
+       function change(){
+           target.style.backgroundImage = images[count];
+        }
+       //>をクリックしたらcountを+1する
+       function goNext(){
+           if(count == 2){
+               count = 0;
+           }else{
+               count++;
+           }
+           change();
+       }
+       
+       //<をクリックしたらcountを-1する
+       function goBack(){
+           if(count == 0){
+               count = 2;
+           }else{
+               count--;
+           }
+           change();
+       }
+   
+       //クリックイベント
+       right.addEventListener('click',goNext,false);
+       left.addEventListener('click',goBack,false);
+   };
+    </script>   
+{% endblock %}

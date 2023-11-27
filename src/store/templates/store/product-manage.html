@@ -1,0 +1,126 @@
+{% extends "store/base.html" %}
+
+{% load static %}
+
+{% block title %}商品管理一覧{% endblock %}
+
+{% block contents %}
+
+    <div class="product-manage__container">
+      <div class="topic-path">
+        <div class="product-manage">商品管理</div>
+        <img class="searchfilled-icon" alt="" src="{% static 'store/img/keyboardarrowright_mini.png' %}" />
+        <div class="product-manage">商品管理一覧</div>
+      </div>
+
+      <div class="search-group">
+        <div class="search-box">
+          <div class="input">
+            <div class="placeholder">検索キーワード</div>
+            <img class="searchfilled-icon" alt="" src="{% static 'store/img/search.png' %}" />
+          </div>
+        </div>
+        <div class="button-search">
+          <div class="search">絞り込み</div>
+        </div>
+      </div>
+
+      <div class="title-product-manage">
+        <div class="product-manage-text">商品管理一覧</div>
+        <img class="fibermanualrecordfilled-icon" alt="" src="{% static 'store/img/maru.png' %}" />
+      </div>
+
+      {% comment %} <a href="{% url 'store:product_manage' %}" class="create__btn create-btn--blue"> {% endcomment %}
+      <a href="#" class="create-btn-blue">
+        <img class="create-btn-icon" alt="" src="{% static 'store/img/new.png' %}" />
+        <span class="create-btn-text">一般購入商品新規登録</span>
+      </a>
+      <a href="#" class="create-btn-pink">
+        <img class="create-btn-icon" alt="" src="{% static 'store/img/new.png' %}" />
+        <span class="create-btn-text">共同購入商品新規登録</span>
+      </a>
+
+      <div class="bulk-deletion">
+        <button type="submit" class="custom-button">
+          <img class="dustbox-icon" alt="" src="{% static 'store/img/dustbox.png' %}" />
+          <span class="button-text">削除</span>
+        </button>
+      </div>
+
+
+      <table class="table-product-manage">
+        <thead>
+          <tr>
+            {% comment %} <td class="head-order-number">注文番号</td>
+            <td class="head-order-day">注文日</td>
+            <td class="head-product-name">商品名</td>
+            <td class="head-quantity">数量</td>
+            <td class="head-price">販売価格</td>
+            <td class="head-co2">CO2</td>
+            <td class="head-type">販売種別</td> {% endcomment %}
+            <td class="head-product-number">商品コード</td>
+            <td class="head-product-name">商品名</td>
+            <td class="head-price">販売価格</td>
+            <td class="head-inventory">在庫数</td>
+            <td class="head-period">表示期間</td>
+            <td class="head-category">カテゴリ</td>
+            <td class="head-type">販売種別</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            {% comment %} <td class="order-number">20230130-01</td>
+            <td class="order-day">2023/02/05</td>
+            <td class="product-name">商品名が入ります</td>
+            <td class="quantity">100</td>
+            <td class="price">1,000円</td>
+            <td class="co2">100g</td>
+            <td class="type">共同</td> {% endcomment %}
+            <td class="product-number"><input type="checkbox" id="checkbox">20230130-01</td>
+            <td class="product-name">商品名が入ります</td>
+            <td class="price">1,000円</td>
+            <td class="inventory">123</td>
+            <td class="period">2024/03/31</td>
+            <td class="category">海産</td>
+            <td class="type">共同</td>
+          </tr>
+          <tr>
+            <td class="product-number"><input type="checkbox" id="checkbox">20230130-01</td>
+            <td class="product-name">商品名が入ります</td>
+            <td class="price">1,000円</td>
+            <td class="inventory">123</td>
+            <td class="period">2024/03/31</td>
+            <td class="category">海産</td>
+            <td class="type">共同</td>
+          </tr>
+          <tr>
+            <td class="product-number"><input type="checkbox" id="checkbox">20230130-01</td>
+            <td class="product-name">商品名が入ります</td>
+            <td class="price">1,000円</td>
+            <td class="inventory">123</td>
+            <td class="period">2024/03/31</td>
+            <td class="category">海産</td>
+            <td class="type">共同</td>
+          </tr>
+          <tr>
+            <td class="product-number"><input type="checkbox" id="checkbox">20230130-01</td>
+            <td class="product-name">商品名が入ります</td>
+            <td class="price">1,000円</td>
+            <td class="inventory">123</td>
+            <td class="period">2024/03/31</td>
+            <td class="category">海産</td>
+            <td class="type">共同</td>
+          </tr>
+          <tr>
+            <td class="product-number"><input type="checkbox" id="checkbox">20230130-01</td>
+            <td class="product-name">商品名が入ります</td>
+            <td class="price">1,000円</td>
+            <td class="inventory">123</td>
+            <td class="period">2024/03/31</td>
+            <td class="category">海産</td>
+            <td class="type">共同</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+{% endblock %}

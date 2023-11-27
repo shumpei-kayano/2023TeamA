@@ -1,0 +1,325 @@
+.table-product-manage {
+    position: absolute;
+    top: 204px;
+    left: 264px;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 992px;
+    border-collapse: collapse;
+    display: flex;
+    justify-content: flex-start;
+  }
+  thead {
+    background-color: var(--color-whitesmoke-100);
+    border-bottom: 1px solid var(--color-gainsboro-100);
+    box-sizing: border-box;
+    width: 992px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    font-weight: bold;
+  }
+  .head-product-number,
+  .head-product-name,
+  .head-price,
+  .head-inventory,
+  .head-period,
+  .head-category,
+  .head-type {
+    position: relative;
+    line-height: 120%;
+    display: inline-block;
+    text-align: center;
+  }
+  .head-product-number,
+  .head-period {
+    width: 140px;
+  }
+  .head-product-name {
+    width: 230px;
+  }
+  .head-inventory,
+  .head-type {
+    width: 120px;
+  }
+  .head-price {
+    width: 120px;
+  }
+  .head-category {
+    width: 120px;
+  }
+  
+  tbody tr {
+    border-bottom: 1px solid var(--color-gainsboro-100);
+    width: 992px;
+  }
+  tbody td {
+    padding: var(--padding-base);
+    gap: var(--gap-5xl);
+    cursor: pointer;
+  }
+
+  #checkbox {
+    margin: 5px;
+  }
+
+  .product-number,
+  .product-name,
+  .price,
+  .inventory,
+  .period,
+  .category,
+  .type {
+    position: relative;
+    line-height: 180%;
+    justify-content: center;
+    text-align: center;
+  }
+  .product-number,
+  .period {
+    width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .product-name {
+    width: 230px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .inventory,
+  .type {
+    width: 120px;
+  }
+  .price {
+    width: 120px;
+  }
+  .category {
+    width: 120px;
+  }
+ 
+
+  /* tdの共通のスタイル定義 */
+  .table-product-manage td {
+    position: relative;
+    justify-content: center;
+    text-align: center;
+    padding: var(--padding-base);
+    gap: var(--gap-5xl);  box-sizing: border-box;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  
+  
+
+  .placeholder {
+    flex: 1;
+    position: relative;
+    line-height: 100%;
+  }
+  .searchfilled-icon {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .input {
+    align-self: stretch;
+    border-radius: var(--br-9xs);
+    background-color: var(--color);
+    border: 1px solid var(--color-lightgray);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-base);
+    gap: var(--gap-base);
+  }
+  .search-box {
+    position: absolute;
+    // height: 6.67%;
+    // width: 26.8%;
+    // top: 13.89%;
+    top: 100px;
+    right: 10%;
+    // bottom: 79.44%;
+    left: 63.2%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    color: var(--color3);
+  }
+  .search {
+    position: relative;
+    line-height: 100%;
+    font-weight: bold;
+  }
+  .button-search {
+    position: absolute;
+    top: 100px;
+    left: 1160px;
+    border-radius: var(--br-9xs);
+    background-color: var(--color);
+    border: 1px solid var(--color-lightgray);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-base);
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .product-manage-text {
+    position: absolute;
+    top: 0;
+    left: 36px;
+    line-height: 150%;
+    font-weight: bold;
+  }
+  .fibermanualrecordfilled-icon {
+    position: absolute;
+    top: 5px;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    overflow: hidden;
+  }
+  .title-product-manage {
+    position: absolute;
+    top: 100px;
+    left: 264px;
+    width: 196px;
+    height: 30px;
+    font-size: var(--font-size-xl);
+  }
+  .product-manage {
+    position: relative;
+    line-height: 100%;
+    text-transform: capitalize;
+  }
+  .product-manage__container,
+  .topic-path {
+    background-color: var(--color);
+  }
+  .topic-path {
+    position: absolute;
+    border-top: 1px solid var(--color-gainsboro-100);
+    top: 56px;
+    left: 240px;
+    width: 1040px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: var(--padding-5xs);
+    box-sizing: border-box;
+    gap: var(--gap-5xs);
+    font-size: var(--typography-caption-size);
+  }
+  .product-manage__container {
+    // position: relative;
+    width: 100%;
+    // height: 720px;
+    height: 100%;
+    overflow: hidden;
+    text-align: left;
+    font-size: var(--typography-body1-size);
+    color: var(--color-black);
+    font-family: var(--font-noto-sans);
+  }
+
+.create-btn-blue {
+  position: absolute;
+  display: flex;
+  top: 160px;
+  left: 297px;
+  width: 200px;
+  height: 35px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 4px;
+  background: #85A8D4;
+  cursor: pointer;
+}
+.create-btn-blue:hover {
+  background-color:#2faff4;
+}
+.create-btn-pink {
+  position: absolute;
+  display: flex;
+  top: 160px;
+  left: 541px;
+  width: 200px;
+  height: 35px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 4px;
+  background:#D485BA;
+  cursor: pointer;
+}
+.create-btn-pink:hover {
+  background-color:#f136b3;
+}
+.create-btn-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  margin: 5px;
+}
+.create-btn-text {
+  color: #FFF;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  // font-weight: 700;
+  line-height: 100%; /* 16px */
+  font-weight: bold;
+}
+a {
+  text-decoration: none;
+}
+
+  .bulk-deletion {
+    position: absolute;
+    top: 160px;
+    left: 1175px;
+    border-radius: var(--br-9xs);
+    background-color: var(--color-gainsboro-100);
+    width: 66.67px;
+    height: 31px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    // padding: var(--padding-base);
+    box-sizing: border-box;
+    cursor: pointer;
+    text-align: center;
+  }
+  .custom-button {
+    border: none; /* 枠線を削除 */
+    background: none; /* 背景を削除（必要に応じて変更）*/
+    padding: 3px; /* パディングを削除 */
+    display: flex; /* 内容を横並びに配置 */
+    align-items: center; /* 中央揃え */
+    cursor: pointer; /* カーソルをポインターに変更（クリック可能な要素として示すため） */
+  }
+  .bulk-deletion:hover {
+    background-color:#edd5a8;
+  }
+  .dustbox-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+  .button-text {
+    font-weight: bold; /* テキストを太字にする */
+    margin-top: 3px;
+  }

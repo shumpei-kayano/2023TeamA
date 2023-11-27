@@ -1,0 +1,94 @@
+{% extends "store/base.html" %}
+
+{% load static %}
+
+{% block title %}発送済み注文履歴{% endblock %}
+
+{% block contents %}
+
+    <div class="order-history__container">
+      <div class="topic-path">
+        <div class="order-manage">注文管理</div>
+        <img class="searchfilled-icon" alt="" src="{% static 'store/img/keyboardarrowright_mini.png' %}" />
+        <div class="order-manage">発送済み注文履歴</div>
+      </div>
+
+      <div class="search-group">
+        <div class="search-box">
+          <div class="input">
+            <div class="placeholder">検索キーワード</div>
+            <img class="searchfilled-icon" alt="" src="{% static 'store/img/search.png' %}" />
+          </div>
+        </div>
+        <div class="button-search">
+          <div class="search">絞り込み</div>
+        </div>
+      </div>
+
+      <div class="title-order-history">
+        <div class="order-history-text">発送済み注文履歴</div>
+        <img class="fibermanualrecordfilled-icon" alt="" src="{% static 'store/img/maru.png' %}" />
+      </div>
+
+      <table class="table-order-history">
+        <thead>
+          <tr>
+            <td class="head-order-number">注文番号</td>
+            <td class="head-order-day">注文日</td>
+            <td class="head-product-name">商品名</td>
+            <td class="head-quantity">数量</td>
+            <td class="head-price">販売価格</td>
+            <td class="head-co2">CO2</td>
+            <td class="head-type">販売種別</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="order-number">20230130-01</td>
+            <td class="order-day">2023/02/05</td>
+            <td class="product-name">商品名が入ります</td>
+            <td class="quantity">100</td>
+            <td class="price">1,000円</td>
+            <td class="co2">100g</td>
+            <td class="type">共同</td>
+          </tr>
+          <tr>
+            <td class="order-number">20230130-01</td>
+            <td class="order-day">2023/02/05</td>
+            <td class="product-name">商品名が入ります</td>
+            <td class="quantity">100</td>
+            <td class="price">1,000円</td>
+            <td class="co2">100g</td>
+            <td class="type">共同</td>
+          </tr>
+          <tr>
+            <td class="order-number">20230130-01</td>
+            <td class="order-day">2023/02/05</td>
+            <td class="product-name">商品名が入ります</td>
+            <td class="quantity">100</td>
+            <td class="price">1,000円</td>
+            <td class="co2">100g</td>
+            <td class="type">共同</td>
+          </tr>
+          <tr>
+            <td class="order-number">20230130-01</td>
+            <td class="order-day">2023/02/05</td>
+            <td class="product-name">商品名が入ります</td>
+            <td class="quantity">100</td>
+            <td class="price">1,000円</td>
+            <td class="co2">100g</td>
+            <td class="type">共同</td>
+          </tr>
+          <tr>
+            <td class="order-number">20230130-01</td>
+            <td class="order-day">2023/02/05</td>
+            <td class="product-name">商品名が入ります</td>
+            <td class="quantity">100</td>
+            <td class="price">1,000円</td>
+            <td class="co2">100g</td>
+            <td class="type">共同</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+{% endblock %}
