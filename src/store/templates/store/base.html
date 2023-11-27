@@ -30,7 +30,11 @@
                     </div>
                     <div class="dropdown-tenpo">
                         <a href="{% url 'accounts:store_edit' %}">編集画面</a>
+                        <a href="{% url 'store:test' %}">商品登録</a>
                         <a href="{% url 'accounts:store_logout' %}">ログアウト</a>
+                    </div>
+                    <div class="dropdown-tenpo">
+                        <a href="{% url 'store:test2' %}">商品リスト</a>
                     </div>
                 </div>
                 <div class="logout" id="logoutContainer">
@@ -43,7 +47,7 @@
                 <div class="header">
                     <div class="header-storekanri">
                         <div class="header-frame" id="headerFrameContainer">
-                            <p>|{{ user.site_url }}|</p
+                            <p>|{{ user.site_url }}|</p>
                             <p>{{ user.username }}さんがログイン中</p>
                             <p>ユーザータイプ：{{ user.user_type }}</p>
                             <p>モデル名：{{ model_name }}</p>

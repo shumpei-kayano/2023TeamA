@@ -1,0 +1,21 @@
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p>|{{ user.site_url }}|</p>
+    <p>{{ user.username }}さんがログイン中</p>
+    <p>ユーザータイプ：{{ user.user_type }}</p>
+    {% comment %} <p>モデル名：{{ model_name }}</p> {% endcomment %}
+    <p>store_id：{{ user.id }}</p>
+    <p>store：{{ user.melimitstore }}</p>
+    <p>{{ product_form.product_name.label_tag }} {{ product_form.product_name }}</p>
+    <p>{{ product_form.product_category.label_tag }} {{ product_form.product_category }}</p>
+    <p>{{ product_form.product_price.label_tag }} {{ product_form.product_price }}</p>
+    <p>{{ sale_form.sale_price.label_tag }} {{ sale_form.sale_price }}</p>
+    <p>{{ sale_form.sale_start.label_tag }} {{ sale_form.sale_start }}</p>
+    <p>{{ sale_form.sale_end.label_tag }} {{ sale_form.sale_end }}</p>
+    <p>{{ sale_form.stock.label_tag }} {{ sale_form.stock }}</p>
+    <p>{{ product_form.weight.label_tag }} {{ product_form.weight }}</p>
+    <p>{{ sale_form.expiration_date.label_tag }} {{ sale_form.expiration_date }}</p>
+    <p>{{ product_form.product_image.label_tag }} {{ product_form.product_image }}</p>
+    <p>{{ sale_form.description.label_tag }} {{ sale_form.description }}</p>
+    <button type="submit">Submit</button>
+</form>
