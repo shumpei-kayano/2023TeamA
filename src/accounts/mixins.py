@@ -2,6 +2,8 @@ from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
 from accounts.models import MelimitStore, MelimitUser
 
+# 画面遷移時ユーザーがCustomUserに戻ってしまうため、MelimitStore/MelimitUserどちらのオブジェクトか振り分ける処理
+# 各viewで使用する
 class MelimitModelMixin:
     def get_melimitmodel_user(self):
         user = self.request.user

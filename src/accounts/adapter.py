@@ -42,7 +42,7 @@ class MelimitAccountAdapter(DefaultAccountAdapter):
             #     else:
             #         return '/ana_ana/'
             # ユーザー側からログイン (改修後)
-            
+
             if request.session['backend'] == 'accounts.backends.MelimitUserModelBackend':
             # if user.__class__.__name__ == 'MelimitUser':
                 # ログインしたのがユーザー?
