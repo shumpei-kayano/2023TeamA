@@ -101,52 +101,38 @@ def UserCreateView(request):
     return render(request, 'account/user_touroku.html', {'form': form})
 
 
-class UserUpdateView(LoginRequiredMixin, UpdateView):
+# class UserUpdateView(LoginRequiredMixin, UpdateView):
+#     model = MelimitUser
+#     form_class = MelimitUserRegistrationForm
+#     # form_class = MelimitUserUpdateForm
+#     template_name = 'account/user_edit.html'
+#     success_url = reverse_lazy('user:index')
+
+#     def get_object(self, queryset=None):
+#         print(f'aaaaa :{self.request.session.get("user_id")}')
+#         # print(f'session: {request.session}')
+#         print(f'self: {self}')
+#         user_id = self.request.user.id
+#         # user_id = self.request.session.get('user_id')
+#         print(f'user_id: {user_id}')
+#         user = MelimitUser.objects.get(id=user_id)
+#         print('zzzzzzzzzzzzzzz')
+#         return user
+    
+class UserUpdateView(LoginRequiredMixin, UpdateView, MelimitModelMixin):
     model = MelimitUser
     form_class = MelimitUserRegistrationForm
-    # form_class = MelimitUserUpdateForm
     template_name = 'account/user_edit.html'
     success_url = reverse_lazy('user:index')
 
     def get_object(self, queryset=None):
-        print(f'aaaaa :{self.request.session.get("user_id")}')
-        # print(f'session: {request.session}')
-        print(f'self: {self}')
-        user_id = self.request.user.id
-        # user_id = self.request.session.get('user_id')
-        print(f'user_id: {user_id}')
-        user = MelimitUser.objects.get(id=user_id)
-        print('zzzzzzzzzzzzzzz')
+        user = self.get_melimitmodel_user()
+        print(f'user.__class__.__name__: {user.__class__.__name__}')
+        # isinstanceでuserがMelimitUserのインスタンスかどうかを判定
+        print(isinstance(user, MelimitUser))
         return user
     
-    # def form_valid(self, form):
-    #     response = super().form_valid(form)
-    #     backend = 'accounts.backends.MelimitUserModelBackend'  # あなたのバックエンドに合わせて変更してください
-    #     self.object.backend = backend
-    #     # user_id = self.request.session.get('user_id')
-    #     user_id = self.request.user.id
-    #     user = MelimitUser.objects.get(id=user_id)
-    #     # login(self.request, user, backend=backend)
-    #     return response
-
-# def register(request):
-#     if request.method == 'POST':
-#         form = MelimitUserRegistrationForm(request.POST)
-#         if form.is_valid():
-#             print('form.is_valid成功')
-#             form.save()
-#             return redirect('success_url')
-#         else:
-#             print(form.errors)
-#     else:
-#         print('getリクエストだよ')
-#         form = MelimitUserRegistrationForm()
-
-#     return render(request, 'register.html', {'form': form})
-
-# def UserLogoutView(request):
-#     return render(request, 'user/index.html')
-
+    
 # MelimitStore用のログイン画面への遷移
 class MelimitStoreLoginScreenView(LoginView):
     template_name = 'account/store_login.html'  # MelimitStore用のカスタムテンプレート
