@@ -1000,3 +1000,72 @@ button:hover {
   display: block;
   margin-bottom: 100px;
 }
+
+.store-login {
+  width: 50%;
+  margin: 50px auto 0;
+  background-color: #DDDDDD;
+  border-radius: 8px;
+  padding: 30px 50px;
+  text-align: center;
+}
+.store-login__title {
+  display: block;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+}
+.store-login input {
+  width: 50%;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #DDDDDD;
+  border-radius: 4px;
+  font-size: 1.2rem;
+}
+.store-login input:focus {
+  outline: none;
+}
+.store-login__btn {
+  width: 50%;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 1.2rem;
+  background-color: #252525;
+  color: #fff;
+  cursor: pointer;
+}
+.store-login__btn:hover {
+  background-color: #919191;
+  color: black;
+}
+.store-login__signup-btn {
+  display: inline-block;
+  width: 50%;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 1.2rem;
+  background-color: #252525;
+  color: #fff;
+  cursor: pointer;
+}
+.store-login__signup-btn:hover {
+  background-color: #919191;
+  color: black;
+}
+.store-login__what-melimit {
+  display: inline-block;
+  margin: 10px 0;
+  padding: 10px 30px;
+  border-radius: 4px;
+  font-size: 1.2rem;
+  background-color: #252525;
+  color: #fff;
+  cursor: pointer;
+}
+.store-login__what-melimit:hover {
+  background-color: #919191;
+  color: black;
+}
