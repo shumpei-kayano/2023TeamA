@@ -20,10 +20,71 @@ def product_manage_view(request):
     return render(request, 'store/product-manage.html')
 # 一般新規登録
 def create_general_purchase_view(request):
-    return render(request, 'store/create-general-purchase.html')
+    mixin = MelimitModelMixin()
+    mixin.request = request
+    user = mixin.get_melimitmodel_user()
+    if request.method == 'POST':
+        product_form = ProductForm(request.POST, request.FILES)
+        sale_form = SaleForm(request.POST)
+        product_form.instance.store = user.melimitstore
+        # product_form.instance.storeを表示する
+        print(product_form.instance.store)
+        sale_form.instance.store = user.melimitstore
+        # sale_form.instance.storeを表示する
+        print(sale_form.instance.store)
+        sale_form.instance.product = product_form.instance
+        # sale_form.instance.productを表示する
+        print(sale_form.instance.product)
+        if product_form.is_valid() and sale_form.is_valid():
+            product = product_form.save()
+            sale = sale_form.save(commit=False)
+            sale.sale_type = 'general_sales'
+            sale.product = product
+            sale.save()
+            # ここでリダイレクトやメッセージ表示などを行う
+        else:
+            print('ビューのform.is_valid()失敗')
+            print(product_form.errors)
+            print(sale_form.errors)
+    else:
+        product_form = ProductForm()
+        sale_form = SaleForm()
+
+    return render(request, 'store/create-general-purchase.html', {'product_form': product_form, 'sale_form': sale_form, 'user': user, })
+
 # 共同購入新規登録
 def create_group_purchase_view(request):
-    return render(request, 'store/create-group-purchase.html')
+    mixin = MelimitModelMixin()
+    mixin.request = request
+    user = mixin.get_melimitmodel_user()
+    if request.method == 'POST':
+        product_form = ProductForm(request.POST, request.FILES)
+        sale_form = SaleForm(request.POST)
+        product_form.instance.store = user.melimitstore
+        # product_form.instance.storeを表示する
+        print(product_form.instance.store)
+        sale_form.instance.store = user.melimitstore
+        # sale_form.instance.storeを表示する
+        print(sale_form.instance.store)
+        sale_form.instance.product = product_form.instance
+        # sale_form.instance.productを表示する
+        print(sale_form.instance.product)
+        if product_form.is_valid() and sale_form.is_valid():
+            product = product_form.save()
+            sale = sale_form.save(commit=False)
+            sale.sale_type = 'melimit_sales'
+            sale.product = product
+            sale.save()
+            # ここでリダイレクトやメッセージ表示などを行う
+        else:
+            print('ビューのform.is_valid()失敗')
+            print(product_form.errors)
+            print(sale_form.errors)
+    else:
+        product_form = ProductForm()
+        sale_form = SaleForm()
+
+    return render(request, 'store/create-group-purchase.html', {'product_form': product_form, 'sale_form': sale_form, 'user': user, })
 
 # ログイン処理
 def store_login_view(request):
@@ -117,6 +178,7 @@ def create_product_and_sale(request):
         if product_form.is_valid() and sale_form.is_valid():
             product = product_form.save()
             sale = sale_form.save(commit=False)
+            sale.sale_type = 'general_sales'
             sale.product = product
             sale.save()
             # ここでリダイレクトやメッセージ表示などを行う

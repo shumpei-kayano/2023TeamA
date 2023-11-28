@@ -31,7 +31,8 @@
               <div class="button-text">商品名</div>
             </div>
             <div class="product-name-box-input">
-              <input type="text" class="input-active" placeholder="商品名を入力してください" required/>
+              {{ product_form.product_name }}
+              {% comment %} <input type="text" class="input-active" placeholder="商品名を入力してください" required/> {% endcomment %}
             </div>
           </div>
 
@@ -41,7 +42,8 @@
               <div class="button-text">カテゴリ</div>
             </div>
             <div class="category-box-input">
-              <select class="input-active">
+              {{ product_form.product_category }}
+              {% comment %} <select class="input-active">
                 <option value="" disabled selected>カテゴリを選んでください</option>
                 <option value="beef">肉</option>
                 <option value="vege">野菜</option>
@@ -51,7 +53,7 @@
                 <option value="desert">菓子</option>
                 <option value="carbo">米・パン・麺</option>
                 <option value="others">その他</option>
-              </select>
+              </select> {% endcomment %}
             </div>
           </div>
 
@@ -61,7 +63,8 @@
               <div class="button-text">販売価格</div>
             </div>
             <div class="price-box-input">
-              <input type="number" class="input-active" placeholder="販売価格を入力してください（※半角数字）" required/>
+              {{ product_form.product_price }}
+              {% comment %} <input type="number" class="input-active" placeholder="販売価格を入力してください（※半角数字）" required/> {% endcomment %}
             </div>
           </div>
 
