@@ -2,21 +2,102 @@ from django.shortcuts import render
 # formを使用するためにimport
 from .forms import ProductForm, SaleForm
 from accounts.mixins import MelimitModelMixin
+from django.shortcuts import render, redirect
+from accounts.forms import MelimitStoreLoginForm
+from django.contrib.auth import authenticate, login
 
 # Create your views here.
 def index(request):
     return render(request, 'store/index.html')
+# 履歴
 def order_history_view(request):
     return render(request, 'store/order-history.html')
+# 未発送
 def order_not_shipped_view(request):
     return render(request, 'store/order-not-shipped.html')
+# 商品管理(一覧表示)
 def product_manage_view(request):
     return render(request, 'store/product-manage.html')
+# 一般新規登録
 def create_general_purchase_view(request):
     return render(request, 'store/create-general-purchase.html')
+# 共同購入新規登録
 def create_group_purchase_view(request):
     return render(request, 'store/create-group-purchase.html')
 
+# ログイン処理
+def store_login_view(request):
+    user = request.user
+    # username = user.username
+    # model_name = user.__class__.__name__
+    # instance_name = type(user).__name__
+    # return render(request, 'store/base.html', {'model_name': model_name, 'instance_name': instance_name})
+    if request.method == 'POST':
+        form = MelimitStoreLoginForm(request.POST)
+        print('store_login_view')
+        # フォームに入力された値を出力してみる
+        print(f'Username: {form.data.get("username")}')
+        print(f'email: {form.data.get("email")}')
+        print(f'Password: {form.data.get("password")}')
+        if form.is_valid():
+            email = form.cleaned_data.get('email')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, email=email, password=password, backend='accounts.backends.MelimitStoreModelBackend')
+            # 適用される認証バックエンドを出力してみる
+            # print(f'backend: {user.backend}')
+            # ユーザーの情報を出力してみる
+            # print(f'Username: {user.username}')
+            if user is not None:
+                login(request, user)
+                return redirect('store:store_base')
+            else:
+                # フォームが無効な場合の処理をここに書く
+                print('pass')
+                form.add_error(None, 'メールアドレスまたはパスワードが間違っています。')  # ユーザーが認証できない場合のエラーメッセージ
+                return render(request, 'account/store_login.html', {'form': form})
+        else:
+            print(form.errors)
+            print('rogin-error')
+    else:
+        # form = MelimitStoreLoginForm()
+
+        if 'backend' in request.session:
+            del request.session['backend']
+        request.session['backend'] = 'accounts.backends.MelimitStoreModelBackend'
+        print(f'session: {request.session}')
+        print(f'session: {dict(request.session)}')
+
+        return render(request, 'account/store_login.html', {'form': form})
+
+# ログイン後の店舗管理画面
+def store_base_view(request):
+    mixin = MelimitModelMixin()
+    mixin.request = request
+    user = mixin.get_melimitmodel_user()
+    # お客さんがログインしようとしたときの処理
+    if user.__class__.__name__ == 'MelimitUser':
+        return redirect('user:omae_user')
+    # user = request.user
+    # store_id = request.session.get('store_id')
+    # print(f'store_id: {store_id}')
+    # try:
+    #     user = MelimitStore.objects.get(id=store_id)
+    # except MelimitStore.DoesNotExist:
+    #     return redirect('user:omae_user')
+    # model_name = request.session.get('model_name')
+    instance_name = request.session.get('instance_name')
+    model_name = user.__class__.__name__
+    print(f'user.__class__.__name__: {user.__class__.__name__}')
+    # userのsite_urlを取得
+    site_url = user.site_url
+    print(f'site_url: {site_url}')
+    return render(request, 'store/base.html', {
+        'user': user,
+        'model_name': model_name,
+        'instance_name': instance_name,
+    })
+
+# 販売&商品登録
 def create_product_and_sale(request):
     mixin = MelimitModelMixin()
     mixin.request = request
