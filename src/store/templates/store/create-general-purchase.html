@@ -32,7 +32,6 @@
             </div>
             <div class="product-name-box-input">
               {{ product_form.product_name }}
-              {% comment %} <input type="text" class="input-active" placeholder="商品名を入力してください" required/> {% endcomment %}
             </div>
           </div>
 
@@ -43,17 +42,6 @@
             </div>
             <div class="category-box-input">
               {{ product_form.product_category }}
-              {% comment %} <select class="input-active">
-                <option value="" disabled selected>カテゴリを選んでください</option>
-                <option value="beef">肉</option>
-                <option value="vege">野菜</option>
-                <option value="fruit">果物</option>
-                <option value="fish">魚</option>
-                <option value="shellfish">甲殻類</option>
-                <option value="desert">菓子</option>
-                <option value="carbo">米・パン・麺</option>
-                <option value="others">その他</option>
-              </select> {% endcomment %}
             </div>
           </div>
 
@@ -63,8 +51,7 @@
               <div class="button-text">販売価格</div>
             </div>
             <div class="price-box-input">
-              {{ product_form.product_price }}
-              {% comment %} <input type="number" class="input-active" placeholder="販売価格を入力してください（※半角数字）" required/> {% endcomment %}
+              {{ sale_form.sale_price }}
             </div>
           </div>
 
@@ -84,7 +71,7 @@
               <div class="button-text">在庫数</div>
             </div>
             <div class="price-box-input">
-              <input type="number" class="input-active" placeholder="在庫数を入力してください（※半角数字）" required/>
+              {{ sale_form.stock }}
             </div>
           </div>
 
@@ -104,7 +91,7 @@
               <div class="button-text">重量</div>
             </div>
             <div class="price-box-input">
-              <input type="number" class="input-active" placeholder="重量をg（グラム）で入力してください（※半角数字）" required/>
+              {{ product_form.weight }}
             </div>
           </div>
 
@@ -114,7 +101,7 @@
               <div class="button-text">賞味期限</div>
             </div>
             <div class="price-box-input">
-              <input type="date" class="input-active" placeholder="賞味期限を入力してください" required/>
+              {{ sale_form.expiration_date }}
             </div>
           </div>
 
@@ -124,14 +111,7 @@
               <div class="button-text">画像</div>
             </div>
             <div class="price-box-input">
-              <input
-                type="file"
-                id="example"
-                class="input-active"
-                accept="image/*"
-                placeholder="画像を選択してください"
-                multiple
-                required />
+              {{ product_form.product_image }}
                 <div id="preview"></div>
             </div>
           </div>
@@ -142,8 +122,7 @@
               <div class="button-text">商品説明</div>
             </div>
             <div class="price-box-input">
-              <textarea
-                class="input-active" placeholder="商品説明を入力してください" required></textarea>
+              {{ sale_form.description }}
             </div>
           </div>
 

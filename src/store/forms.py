@@ -27,6 +27,18 @@ class ProductForm(forms.ModelForm):
             'product_category': forms.Select(attrs={
                 'class': 'input-active'
             }),
+            'weight': forms.NumberInput(attrs={
+                'class': 'input-active', 
+                'placeholder': '重量をg（グラム）で入力してください（※半角数字）', 
+                'required': 'required'
+            }),
+            'product_image': forms.ClearableFileInput(attrs={
+                'class': 'input-active', 
+                'placeholder': '画像を選択してください',
+                'required': 'required',
+                'multiple': True,
+                'accept': 'image/*'
+            }),
         }
 
 class SaleForm(forms.ModelForm):
@@ -46,5 +58,21 @@ class SaleForm(forms.ModelForm):
                 'class': 'input-active', 
                 'placeholder': '販売価格を入力してください（※半角数字）', 
                 'required': 'required'
-            })
+            }),
+            'stock': forms.NumberInput(attrs={
+                'class': 'input-active', 
+                'placeholder': '在庫数を入力してください（※半角数字）', 
+                'required': 'required'
+            }),
+            'expiration_date': forms.DateInput(attrs={
+                'class': 'input-active', 
+                'placeholder': '賞味期限を入力してください',
+                'required': 'required',
+                'type': 'date'
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'input-active', 
+                'placeholder': '商品説明を入力してください',
+                'required': 'required'
+            }),
         }

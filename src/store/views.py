@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login
 
 # Create your views here.
 def index(request):
+    print('インデックス')
     return render(request, 'store/index.html')
 # 履歴
 def order_history_view(request):
@@ -110,6 +111,7 @@ def store_login_view(request):
             # print(f'Username: {user.username}')
             if user is not None:
                 login(request, user)
+                print('ログイン成功')
                 return redirect('store:store_base')
             else:
                 # フォームが無効な場合の処理をここに書く
@@ -152,6 +154,8 @@ def store_base_view(request):
     # userのsite_urlを取得
     site_url = user.site_url
     print(f'site_url: {site_url}')
+    print(f'user: {user}')
+    print(f'model_name: {model_name}')
     return render(request, 'store/base.html', {
         'user': user,
         'model_name': model_name,
