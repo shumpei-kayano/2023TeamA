@@ -31,7 +31,7 @@ class Product(models.Model):
 
 class Sale(models.Model):
     SALE_CHOICES = (
-        ('common_sales', '一般商品'),
+        ('general_sales', '一般商品'),
         ('melimit_sales', '共同販売商品'),
     )
 
@@ -50,7 +50,7 @@ class Sale(models.Model):
     sale_type = models.CharField("販売タイプ", max_length=20, choices=SALE_CHOICES, blank=True)
 
     def __str__(self):
-        return self.product.product_name + 'のセール'
+        return self.product.product_name
     
     # 現在時刻から終了までの期間を計算する関数
     def remaining_time(self):
