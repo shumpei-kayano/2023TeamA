@@ -21,7 +21,8 @@
 
 
     <div class="group-purchase-create">
-      <form action="#">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
 
         <div class="group-purchase-input">
 
@@ -53,6 +54,7 @@
             <div class="price-box-input">
               {{ sale_form.sale_price }}
             </div>
+            {{ product_form.product_price.label_tag }} {{ product_form.product_price }}
           </div>
 
           <!-- 表示期間の入力欄 -->
@@ -63,6 +65,8 @@
             <div class="price-box-input">
               <input type="datetime-local" class="input-active" placeholder="表示期間を入力してください" required/>
             </div>
+            <p>{{ sale_form.sale_start.label_tag }} {{ sale_form.sale_start }}</p>
+            <p>{{ sale_form.sale_end.label_tag }} {{ sale_form.sale_end }}</p>
           </div>
 
           <!-- 在庫数の入力欄 -->
