@@ -463,8 +463,6 @@ body {
     --br-45xl: 64px;
   }
 
-
-
   .sidebar-child {
     position: absolute;
     top: 0;
@@ -633,6 +631,13 @@ body {
     padding: var(--padding-5xs) var(--padding-base);
   }
 
+
+  .right-content {
+    position: relative;
+    overflow: auto;
+    height: 100%;
+    width: 100%;
+  }
 
 
   .base-container {
