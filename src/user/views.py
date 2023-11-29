@@ -137,3 +137,7 @@ def all_products_general(request):
 # 共同購入商品一覧
 def all_products_joint(request):
     return render(request, 'user/joint-products.html')
+
+# 一般商品詳細
+def general_products_detail(request):
+    return render(request, 'user/general-products_detail.html')

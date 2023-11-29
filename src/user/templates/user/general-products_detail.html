@@ -1,0 +1,135 @@
+{% extends 'user/base.html' %}
+{% block title %}商品詳細{% endblock %}
+{% block content %}
+{% load static %}
+<section class="detail1">
+    <div class="detail1__left">
+        <div id="large-image-container">
+            <!-- ここに拡大画像が表示されます -->
+        </div>
+        <div class="image-container">
+            <img class="small-image" src="{% static 'assets/img/メリ光子.png' %}" alt="Image 1">
+            <img class="small-image" src="{% static 'assets/img/メリ光男.png' %}" alt="Image 2">
+            <img class="small-image" src="{% static 'assets/img/メリ光子.png' %}" alt="Image 3">
+            <img class="small-image" src="{% static 'assets/img/メリ光男.png' %}" alt="Image 4">
+            <img class="small-image" src="{% static 'assets/img/メリ光子.png' %}" alt="Image 5">
+            <img class="small-image" src="{% static 'assets/img/メリ光男.png' %}" alt="Image 6">
+            <!-- 他の画像も同様に -->
+        </div>
+    </div>
+    <div class="detail1__right">
+        <div class="detail1__right--upper">
+            <div class="detail1__right--upper1">
+                <h2 class="detail1__title">トマト</h2>
+                <h3 class="detail1__discount">¥00000（税込）</h3>
+                <p class="detail1__discount--text">00%OFF</p>
+                <p class="detail1__price">¥00000（税込）</p>
+                </div>
+            <div class="detail1__right--upper2">
+                <p class="detail1__genre general">一般購入商品</p>
+                <p class="detail1__soldout">在庫なし</p>
+            </div>
+        </div>
+        <div class="detail1__right--center">
+            <p class="detail1__text">商品説明商品説明商品説明商品説明商品説明商品説明商品説明商品説明</p>
+            <form action="#" method="post">
+                {% csrf_token %}
+                <label for="quantity" class="detail1__text-bd">数量</label>
+                <input type="number" class="cnt" min="1" max="10" step="1" value="1" name="quantity" id="quantity">
+                <input type="hidden" name="product_id" value="#">
+                <button type="submit" class="btn--beige btn--middle">カートに入れる</button>
+                <button type="submit" class="btn--white btn--middle">お気に入りに追加</button>
+            </form>
+        </div>
+        <div class="detail1__right--lower">
+            <div class="detail1__right--lower1">
+                <p class="detail1__text-bd">送料</p>
+                <p class="detail1__text-bd">数量</p>
+            </div>
+            <div class="detail1__right--lower2">
+                <p class="detail1__text">¥00000（税込）</p>
+                <p class="detail1__text">1人00個まで</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="detail2">
+    <div class="area">
+        <input type="radio" name="tab_name" id="tab1" checked>
+        <label class="tab_class" for="tab1">商品情報</label>
+        <div class="content_class">
+            <h4 class="detail2__title">商品情報</h4>
+            <p class="detail2__text">商品情報商品情報商品情報商品情報商品情報商品情報商品情報商品情報商品情報商品情報</p>
+        </div>
+        <input type="radio" name="tab_name" id="tab2" >
+        <label class="tab_class" for="tab2">店舗情報</label>
+        <div class="content_class">
+            <h4 class="detail2__title">店舗情報</h4>
+            <p class="detail2__text">店�
+        </div>
+        <input type="radio" name="tab_name" id="tab3" >
+        <label class="tab_class" for="tab3">送料情報</label>
+        <div class="content_class">
+            <h4 class="detail2__title">送料情報</h4>
+            <p class="detail2__text">送料情報送料情報送料情報送料情報送料情報送料情報送料情報送料情報送料情報送料情報</p>
+        </div>
+    </div>
+</section>
+<section class="detail3">
+    <h4 class="detail3__title">関連商品</h4>
+    <div class="detail3__items">
+        <div class="item--list">
+            <div class="item--card card--blue">
+                <a href="{% url 'user:general_products_detail' %}">
+                    <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+                    <p class="discount">00%OFF</p>
+                    <div class="card--content">
+                        <h3 class="card--title">オオハラ水産</h3>
+                        <h4 class="card--discount">￥100,000（税込）</h4>
+                    </div>
+                </a>
+            </div>
+            <div class="item--card card--blue">
+                <a href="#">
+                    <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+                    <p class="discount">00%OFF</p>
+                    <div class="card--content">
+                        <h3 class="card--title">おおはら精肉店</h3>
+                        <h4 class="card--discount">￥100,000（税込）</h4>
+                    </div>
+                </a>
+            </div>
+            <div class="item--card card--blue">
+                <a href="#">
+                    <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+                    <p class="discount">00%OFF</p>
+                    <div class="card--content">
+                        <h3 class="card--title">おおはら精肉店</h3>
+                        <h4 class="card--discount">￥100,000（税込）</h4>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    window.onload = function() {
+        let smallImages = document.querySelectorAll('.small-image');
+        let largeImageContainer = document.getElementById('large-image-container');
+    
+        // 最初の小さな画像を大きな画像として初期表示
+        let initialLargeImage = document.createElement('img');
+        initialLargeImage.src = smallImages[0].src;
+        largeImageContainer.appendChild(initialLargeImage);
+    
+        smallImages.forEach(image => {
+            image.addEventListener('mouseover', function() {
+                let largeImage = document.createElement('img');
+                largeImage.src = this.src;
+                largeImageContainer.innerHTML = '';
+                largeImageContainer.appendChild(largeImage);
+            });
+        });
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,107 @@
+.detail1 {
+    display: flex;
+    gap: 5rem;
+    padding: 1rem 0;
+    &__left {
+        width: 45%;
+        #large-image-container img {
+            aspect-ratio: 4/3;
+            width: 100%;
+        }
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+        }
+        .small-image {
+            padding: 0.5rem;
+            width: 25%;
+            aspect-ratio: 4/3;
+            cursor: pointer;
+        }
+    }
+    &__right {
+        width: 45%;
+        &--upper{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        &--center{
+            padding-bottom: 1rem;
+            border-bottom: 1px solid $melimit_gray;
+            .cnt{
+                font-weight: bold;
+                padding: 0.5rem;
+                }
+            button{
+                margin: 0 0.5rem;
+                }
+            }
+        &--lower{
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+    &__title {
+        margin-top: 0;
+    }
+    &__discount {
+        color: $melimit_red;
+        margin-top: 0;
+        font-size: 2rem;
+        font-weight: bold;
+        text-align: center;
+        &--text {
+            margin: 0;
+            color: $melimit_white;
+            background-color: $melimit_red;
+            font-weight: bold;
+            text-align: center;
+        }
+    }
+    &__price {
+        color: $melimit_gray;
+        text-decoration: line-through;
+        text-align: center;
+    }
+    &__genre{
+        padding: 0.5rem 2rem;
+        text-align: center;
+        font-weight: bold;
+    }
+    .general {
+            background-color: $melimit_lightblue;
+            border-radius: 0.3125rem;
+        }
+    .joint {
+            background-color: $melimit_pink;
+            border-radius: 0.3125rem;
+        }
+    &__soldout{
+        padding: 0.5rem 2rem;
+        text-align: center;
+        font-weight: bold;
+        color: $melimit_white;
+        background-color: $melimit_red;
+        border-radius: 0.3125rem;
+    }
+    &__text{
+        &-bd {
+            font-weight: bold;
+        }
+    }
+}
+.detail2{
+    padding: 1rem 0;
+    .tab_class {
+        width: calc(100%/3);
+    }
+}
+
+.detail3{
+    padding: 1rem 0;
+}
