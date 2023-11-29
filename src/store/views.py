@@ -16,6 +16,10 @@ def create_general_purchase_view(request):
     return render(request, 'store/create-general-purchase.html')
 def create_group_purchase_view(request):
     return render(request, 'store/create-group-purchase.html')
+def detail_general_view(request):
+    return render(request, 'store/detail-general.html')
+def detail_group_view(request):
+    return render(request, 'store/detail-group.html')
 
 def create_product_and_sale(request):
     mixin = MelimitModelMixin()
