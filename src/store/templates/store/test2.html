@@ -5,7 +5,7 @@
 したがって、productごとに関連するsaleを取得することができます。 {% endcomment %}
 {% for sale in sales %}
     <li>販売種別：{{ sale.get_sale_type_display }}</li>
-    <li>商品名：{{ sale.product.product_name }}</li>
+    <li>商品名：<a href="{% url 'store:test3' sale.pk %}">{{ sale.product.product_name }}</a></li>
     <li>定価：{{ sale.product.product_price }}</li>
     <li>販売価格：{{ sale.sale_price }}</li>
     <li>賞味期限：{{ sale.expiration_date }}</li>

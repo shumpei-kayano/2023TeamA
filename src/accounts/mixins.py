@@ -7,6 +7,10 @@ from accounts.models import MelimitStore, MelimitUser
 class MelimitModelMixin:
     def get_melimitmodel_user(self):
         user = self.request.user
+        if not user.is_authenticated:
+            print("ログインしてない")
+            # ログインしていない場合の処理を記述
+
         # userのidを取得
         melimit_id = user.id
         user_type = user.user_type
@@ -16,6 +20,7 @@ class MelimitModelMixin:
             elif user_type == 'melimit_store':
                 user = MelimitStore.objects.get(id=melimit_id)
         except ObjectDoesNotExist:
+            # print("User does not exist")
             raise Http404("User does not exist")
 
         if user.__class__.__name__ == 'MelimitUser':
@@ -25,4 +30,5 @@ class MelimitModelMixin:
             if isinstance(user, MelimitStore):
                 return user
         else:
+            # print("User is not a MelimitModel")
             raise Http404("User is not a MelimitModel")
