@@ -10,15 +10,29 @@ from django.contrib.auth import authenticate, login
 def index(request):
     print('インデックス')
     return render(request, 'store/index.html')
-# 履歴
+# 発送済み注文履歴(modelは注文履歴モデル、発送済みフラグtrueのものを表示)
 def order_history_view(request):
     return render(request, 'store/order-history.html')
-# 未発送
+# 未発送注文一覧ページ(modelは注文履歴モデル、発送済みフラグfalseのものを表示)
 def order_not_shipped_view(request):
     return render(request, 'store/order-not-shipped.html')
-# 商品管理(一覧表示)
+# 商品管理一覧ページ
 def product_manage_view(request):
-    return render(request, 'store/product-manage.html')
+    mixin = MelimitModelMixin()
+    mixin.request = request
+    user = mixin.get_melimitmodel_user()
+    # productモデルの一覧表示
+    products = user.melimitstore.product_set.all()
+    print(f"products : {products}")
+    for product in products:
+        print(product.__dict__)
+    # saleモデルの一覧表示
+    sales = user.melimitstore.sale_set.all()
+    print(f"sales : {sales}")
+    for sale in sales:
+        print(sale.__dict__)
+    return render(request, 'store/test2.html', {'products': products, 'sales': sales, 'user': user,})
+    # return render(request, 'store/product-manage.html')
 # 一般新規登録
 def create_general_purchase_view(request):
     mixin = MelimitModelMixin()
@@ -163,6 +177,7 @@ def store_base_view(request):
     })
 
 # 販売&商品登録
+# 未使用
 def create_product_and_sale(request):
     mixin = MelimitModelMixin()
     mixin.request = request

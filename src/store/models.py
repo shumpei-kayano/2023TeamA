@@ -4,6 +4,13 @@ from django.utils import timezone
 
 # Create your models here.
 
+# Djangoのchoicesフィールドでは、選択肢をタプルのリストとして定義します。
+# 各タプルの最初の要素はデータベースに保存される実際の値で、
+# 2番目の要素はその値を人間が読める形式で表示するためのものです。
+# したがって、テンプレートでsale_typeを表示するときには、
+# get_<field_name>_displayメソッドを使用して、人間が読める形式の値を取得します。
+# このメソッドはDjangoが自動的に各choicesフィールドに対して生成します。
+
 class Product(models.Model):
     TASTE_CHOICES = (
         ('meat', 'meat'),
@@ -48,6 +55,11 @@ class Sale(models.Model):
     description = models.TextField(verbose_name='商品の説明')
     # 一般商品か、共同販売商品か選択するchoiceフィールド、選択肢は共同販売商品、一般商品
     sale_type = models.CharField("販売タイプ", max_length=20, choices=SALE_CHOICES, blank=True)
+    
+    # 注文履歴modelに設定する
+    # 発送状況(登録時は未発送)
+    # DjangoのBooleanFieldは、データベースレベルではTINYINT型として表現されます。その値は0（False）または1（True）になります。
+    # is_shipped = models.BooleanField("発送状況", default=False)
 
     def __str__(self):
         return self.product.product_name
