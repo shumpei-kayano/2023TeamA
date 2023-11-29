@@ -19,7 +19,7 @@ urlpatterns = [
     path('store_login_success/', views.store_login_view, name='store_login_success'),
     path('store_base/', views.store_base_view, name='store_base'),
     path('test/', views.create_product_and_sale, name='test'),
-    path('test2/', views.product_and_sale_list, name='test2'),,
+    path('test2/', views.product_and_sale_list, name='test2'),
     # 商品詳細ページ
     path('detail-general', views.detail_general_view, name='detail-general'),
     path('detail-group', views.detail_group_view, name='detail-group')

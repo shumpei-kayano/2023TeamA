@@ -1,6 +1,6 @@
 from django.shortcuts import render
 # formを使用するためにimport
-from .forms import ProductForm, SaleForm
+from .forms import ProductForm, SaleForm, ThresholdForm
 from accounts.mixins import MelimitModelMixin
 from django.shortcuts import render, redirect
 from accounts.forms import MelimitStoreLoginForm
@@ -33,6 +33,7 @@ def product_manage_view(request):
         print(sale.__dict__)
     return render(request, 'store/test2.html', {'products': products, 'sales': sales, 'user': user,})
     # return render(request, 'store/product-manage.html')
+
 # 一般新規登録
 def create_general_purchase_view(request):
     mixin = MelimitModelMixin()
@@ -75,6 +76,7 @@ def create_group_purchase_view(request):
     if request.method == 'POST':
         product_form = ProductForm(request.POST, request.FILES)
         sale_form = SaleForm(request.POST)
+        threshold_form = ThresholdForm(request.POST)
         product_form.instance.store = user.melimitstore
         # product_form.instance.storeを表示する
         print(product_form.instance.store)
@@ -84,22 +86,35 @@ def create_group_purchase_view(request):
         sale_form.instance.product = product_form.instance
         # sale_form.instance.productを表示する
         print(sale_form.instance.product)
-        if product_form.is_valid() and sale_form.is_valid():
+        # threshold_formの登録とthresholdの外部キーにsaleのidを設定する
+        if product_form.is_valid() and sale_form.is_valid() and threshold_form.is_valid():
             product = product_form.save()
             sale = sale_form.save(commit=False)
             sale.sale_type = 'melimit_sales'
             sale.product = product
             sale.save()
+            threshold = threshold_form.save(commit=False)
+            threshold.sale = sale
+            threshold.save()
+            # ここでリダイレクトやメッセージ表示などを行う
+        # if product_form.is_valid() and sale_form.is_valid():
+        #     product = product_form.save()
+        #     sale = sale_form.save(commit=False)
+        #     sale.sale_type = 'melimit_sales'
+        #     sale.product = product
+        #     sale.save()
             # ここでリダイレクトやメッセージ表示などを行う
         else:
             print('ビューのform.is_valid()失敗')
             print(product_form.errors)
             print(sale_form.errors)
+            print(threshold_form.errors)
     else:
         product_form = ProductForm()
         sale_form = SaleForm()
+        threshold_form = ThresholdForm()
 
-    return render(request, 'store/create-group-purchase.html', {'product_form': product_form, 'sale_form': sale_form, 'user': user, })
+    return render(request, 'store/create-group-purchase.html', {'product_form': product_form, 'sale_form': sale_form, 'threshold_form': threshold_form, 'user': user, })
 def detail_general_view(request):
     return render(request, 'store/detail-general.html')
 def detail_group_view(request):
