@@ -100,6 +100,10 @@ def create_group_purchase_view(request):
         sale_form = SaleForm()
 
     return render(request, 'store/create-group-purchase.html', {'product_form': product_form, 'sale_form': sale_form, 'user': user, })
+def detail_general_view(request):
+    return render(request, 'store/detail-general.html')
+def detail_group_view(request):
+    return render(request, 'store/detail-group.html')
 
 # ログイン処理
 def store_login_view(request):
