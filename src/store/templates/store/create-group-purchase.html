@@ -164,8 +164,7 @@
               <div class="title-text">画像</div>
             </div>
             <div class="image-box-input" style="height: 200px;">
-              <input
-            <div class="image-box-input">
+              
               {{ product_form.product_image }}
               {% comment %} <input
                 type="file"
@@ -185,8 +184,8 @@
               <div class="title-text">商品説明</div>
             </div>
             <div class="description-box-input" style="height: 200px;">
-              <textarea
-                class="input-active" placeholder="商品説明を入力してください" required></textarea>
+              {% comment %} <textarea
+                class="input-active" placeholder="商品説明を入力してください" required></textarea> {% endcomment %}
               {{ sale_form.description }}
               {% comment %} <textarea
                 class="input-active" placeholder="商品説明を入力してください" required></textarea> {% endcomment %}
