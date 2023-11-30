@@ -25,6 +25,7 @@
                 <li><a href="{% url 'accounts:user_touroku' %}">新規登録</a></li> {% endcomment %}
                 {% comment %} <li><a href="{% url 'accounts:user_edit' %}">情報編集</a></li> {% endcomment %}
                 <li><a href="#">お問い合わせ</a></li>
+                <li><a href="#">site_name:{{ site_name }}</li>
                 <!-- ログイン状態によって表示を変更-->
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'accounts:user_logout' %}">ログアウト</a></li>
@@ -33,7 +34,7 @@
                         email:{{ user.email }}</span></a></li>
                 {% else %}
                     <li><a href="{% url 'account_login_kkkk' %}">ログイン</a></li>
-                    <li><a href="{% url 'accounts:user_touroku' %}">新規登録</a></li>
+                    <li><a href="{% url 'accounts:create_root' %}">新規登録</a></li>
                     <p>ログインしていません。</p>
                 {% endif %}
             </ul>

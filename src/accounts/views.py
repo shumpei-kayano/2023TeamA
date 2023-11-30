@@ -23,7 +23,7 @@ from django.contrib.auth.views import LoginView
 from django.http import Http404
 from accounts.mixins import MelimitModelMixin
 from django.contrib.auth import update_session_auth_hash
-
+from django.contrib.auth.views import PasswordChangeView,PasswordChangeDoneView, PasswordResetView, PasswordResetDoneView, PasswordResetCompleteView, PasswordResetConfirmView
 class MelimitUserLoginView(LoginView):
     template_name = 'account/login.html'  # MelimitStore用のカスタムテンプレート
     form_class = MelimitUserLoginForm
@@ -206,3 +206,57 @@ class StoreUpdateView(LoginRequiredMixin, UpdateView, MelimitModelMixin):
     #     # 編集時には既存のオブジェクトをフォームにセットする
     #     kwargs['instance'] = self.get_object()
     #     return kwargs
+    
+# パスワードリセット用のビュー達
+class PasswordChange(LoginRequiredMixin, PasswordChangeView):
+    """パスワード変更ビュー"""
+    success_url = reverse_lazy('accounts:password_change_done')
+    template_name = 'account/password_change.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs) # 継承元のメソッドCALL
+        context["form_name"] = "password_change"
+        return context
+
+
+class PasswordChangeDone(LoginRequiredMixin,PasswordChangeDoneView):
+    """パスワード変更しました"""
+    template_name = 'account/password_change_done.html'
+
+# --- ここから追加
+class PasswordReset(PasswordResetView):
+    # オーバーライドもとに email_template_name = "registration/password_reset_email.html"があり、変える必要あり
+    # どんな内容のメールを送るのかの設定
+    """パスワード変更用URLの送付ページ"""
+    # subject_template_name = 'accounts/mail_template/reset/subject.txt'
+    # email_template_name = 'accounts/mail_template/reset/message.txt'
+    email_template_name = 'account/password_email.html'
+
+    template_name = 'account/password_reset_form.html'
+    success_url = reverse_lazy('accounts:password_reset_done')
+
+
+class PasswordResetDone(PasswordResetDoneView):
+    """パスワード変更用URLを送りましたページ"""
+    template_name = 'account/password_reset_done.html'
+
+
+class PasswordResetConfirm(PasswordResetConfirmView):
+    """新パスワード入力ページ"""
+    success_url = reverse_lazy('accounts:password_reset_complete')
+    template_name = 'account/password_reset_confirm.html'
+    print('パスワード設定するビュー')
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        print("Form has been submitted successfully")
+        return response
+
+class PasswordResetComplete(PasswordResetCompleteView):
+    print('パスワード再設定後のビュー')
+    """新パスワード設定しましたページ"""
+    template_name = 'account/password_reset_complete.html'
+    
+# class CreaterootView(View):
+#     template_name = 'account/create_root.html'
+def CreaterootView(request):
+    return render(request, 'account/create_root.html')

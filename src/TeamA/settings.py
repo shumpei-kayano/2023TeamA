@@ -190,4 +190,18 @@ AUTH_USER_MODEL = 'accounts.CustomUser'  # 追加
 # LOGIN_URL = 'account_login_kkkk'  # 追加
 
 # ここからログインすると、adapterを経由して遷移する
-# LOGIN_URL = 'store_login'  # 追加
+# ユーザーが未ログイン状態でパスワードを変更すると遷移するページ
+LOGIN_URL = 'account_login_kkkk'  # 追加
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# マイクロソフトのメールサービス、office365を使用する
+EMAIL_HOST = 'smtp.office365.com'
+EMAIL_PORT = 587
+# 使用しているoffice365のメールアドレスとパスワード
+EMAIL_HOST_USER = 'ooi2272105@stu.o-hara.ac.jp'
+EMAIL_HOST_PASSWORD = 'Pokemon6124m'
+EMAIL_USE_TLS = True
+# 開発用 コンソールに出力する
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# localhostからooi学番で送るとエラーが起こるので送信元をHOSTと同じにする
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
