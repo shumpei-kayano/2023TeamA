@@ -25,6 +25,7 @@ urlpatterns = [
     # 穴井さんテスト用
     path('test/', views.create_product_and_sale, name='test'),
     path('test2/', views.product_and_sale_list, name='test2'),
+    path('test3/<int:pk>', views.sale_detail_view, name='test3'),
     # 商品詳細ページ
     path('detail-general', views.detail_general_view, name='detail-general'),
     path('detail-group', views.detail_group_view, name='detail-group'),

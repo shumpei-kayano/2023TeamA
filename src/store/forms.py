@@ -26,7 +26,7 @@ class ProductForm(forms.ModelForm):
                 'placeholder': '画像を選択してください',
                 'required': 'required',
                 'multiple': True,
-                'accept': 'image/*'
+                'accept': 'image/*',
             }),
             'product_price': forms.NumberInput(attrs={
                 'class': 'input-active', 

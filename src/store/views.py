@@ -5,7 +5,7 @@ from accounts.mixins import MelimitModelMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from accounts.forms import MelimitStoreLoginForm
 from django.contrib.auth import authenticate, login
-from .models import Sale
+from .models import Sale, Threshold
 from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
@@ -61,7 +61,12 @@ def sale_detail_view(request, pk):
         except ObjectDoesNotExist:
             print('ログインしているmelimitstoreと取得したいsaleのmelimitstoreが一致しません')
             return render(request, 'store/test3_error.html')
-        return render(request, 'store/test3.html', {'sale': sale, 'user': user,})
+        if sale.sale_type == 'general_sales':
+            return render(request, 'store/detail-general.html', {'sale': sale, 'user': user,})
+        elif sale.sale_type == 'melimit_sales':
+            threshold = Threshold.objects.get(sale=sale)
+            print(f"threshold : {threshold}")
+            return render(request, 'store/detail-group.html', {'sale': sale, 'threshold': threshold, 'user': user,})
     else:
         print('ログインしていません')
         # エラーページを表示する

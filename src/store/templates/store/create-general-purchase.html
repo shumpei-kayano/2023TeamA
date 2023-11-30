@@ -189,6 +189,7 @@
           const imageUrl = e.target.result; // 画像のURLはevent.target.resultで呼び出せる
           const img = document.createElement("img"); // img要素を作成
           img.src = imageUrl; // 画像のURLをimg要素にセット
+          img.style.maxHeight = '170px'; // 最大高さを設定
           preview.appendChild(img); // #previewの中に追加
         }
       
