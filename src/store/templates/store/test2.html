@@ -1,0 +1,27 @@
+<h1>商品管理一覧ページです</h1>
+<p>{{ user }} のページ</p>
+<ul>
+{% comment %} productsがsaleの外部キーである場合、saleはproductに直接関連付けられています。
+したがって、productごとに関連するsaleを取得することができます。 {% endcomment %}
+{% for sale in sales %}
+    <li>販売種別：{{ sale.get_sale_type_display }}</li>
+    <li>商品名：<a href="{% url 'store:test3' sale.pk %}">{{ sale.product.product_name }}</a></li>
+    <li>定価：{{ sale.product.product_price }}</li>
+    <li>販売価格：{{ sale.sale_price }}</li>
+    <li>賞味期限：{{ sale.expiration_date }}</li>
+    <li>在庫数：{{ sale.stock }}</li>
+    <li>重量：{{ sale.product.weight }}グラム</li>
+    <li>カテゴリ：{{ sale.product.product_category }}</li>
+    <li>販売期間：{{ sale.remaining_time }}</li>
+    <li>値引き率：{{ sale.discount_rate }}％</li>
+    <li>CO2：{{ sale.product.CO2 }}キログラム</li>
+    <li>商品説明：{{ sale.description }}</li>
+    <li><img src="{{ sale.product.product_image.url }}" alt="{{ sale.product.product_name }}" width="200"></li>
+    <hr>
+{% empty %}
+    <li>商品はありません。</li>
+{% endfor %}
+{% for sale in sales %}
+    {{ sale.sale.product.product_name }}
+{% endfor %}
+</ul>

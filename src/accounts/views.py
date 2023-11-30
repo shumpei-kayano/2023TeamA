@@ -166,7 +166,7 @@ def StoreCreateView(request):
             #     'model_name': request.session['model_name'],
             #     'instance_name': request.session['instance_name']
             # })
-            return redirect('user:store_base')
+            return redirect('store:store_base')
     # POSTでない場合は空のフォームを生成(最初のページ表示時)
     else:
         form = MelimitStoreRegistrationForm()
