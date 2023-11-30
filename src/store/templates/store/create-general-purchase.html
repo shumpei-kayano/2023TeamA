@@ -54,7 +54,6 @@
             <div class="price-box-input">
               {{ sale_form.sale_price }}
             </div>
-            {{ product_form.product_price.label_tag }} {{ product_form.product_price }}
           </div>
 
           <!-- 定価の入力欄 -->
@@ -76,8 +75,6 @@
               <p>開始：</p><input type="datetime-local" id="startDateTime" class="input-active" placeholder="開始日時を入力してください" required/>
               <p>～終了：</p><input type="datetime-local" id="endDateTime" class="input-active" placeholder="終了日時を入力してください" required/>
             </div>
-            <p>{{ sale_form.sale_start.label_tag }} {{ sale_form.sale_start }}</p>
-            <p>{{ sale_form.sale_end.label_tag }} {{ sale_form.sale_end }}</p>
           </div>
 
           <!-- 在庫数の入力欄 -->
@@ -121,11 +118,11 @@
           </div>
 
           <!-- 画像の選択欄 -->
-          <div class="category-box">
+          <div class="category-box" style="height: 200px;">
             <div class="category-box-title">
               <div class="title-text">画像</div>
             </div>
-            <div class="image-box-input">
+            <div class="image-box-input" style="height: 200px;">
               {% comment %} {{ product_form.product_image }} {% endcomment %}
               <input
                 type="file"
@@ -140,11 +137,11 @@
           </div>
 
           <!-- 商品説明の入力欄 -->
-          <div class="category-box">
+          <div class="category-box" style="height: 200px;">
             <div class="category-box-title">
               <div class="title-text">商品説明</div>
             </div>
-            <div class="description-box-input">
+            <div class="description-box-input" style="height: 200px;">
               {{ sale_form.description }}
             </div>
           </div>

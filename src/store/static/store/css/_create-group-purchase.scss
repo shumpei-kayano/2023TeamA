@@ -28,37 +28,37 @@
 }
 .product-manage__container,
 .topic-path {
-    background-color: var(--color);
+  background-color: var(--color);
 }
 .topic-path {
-    position: absolute;
-    border-top: 1px solid var(--color-gainsboro-100);
-    top: 56px;
-    left: 240px;
-    width: 1040px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    padding: var(--padding-5xs);
-    box-sizing: border-box;
-    gap: var(--gap-5xs);
-    font-size: var(--typography-caption-size);
+  position: absolute;
+  border-top: 1px solid var(--color-gainsboro-100);
+  top: 56px;
+  left: 240px;
+  width: 1040px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-5xs);
+  box-sizing: border-box;
+  gap: var(--gap-5xs);
+  font-size: var(--typography-caption-size);
 }
 .product-manage__container {
-    width: 100%;
-    height: 100%;
-    text-align: left;
-    font-size: var(--typography-body1-size);
-    color: var(--color-black);
-    font-family: var(--font-noto-sans);
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  font-size: var(--typography-body1-size);
+  color: var(--color-black);
 }
 
 
 
 .title-text {
-    position: relative;
-    line-height: 100%;
+  position: relative;
+  line-height: 100%;
+  font-weight: bold;
   }
   .group-purchase-button,
   .product-name-box-title {
@@ -108,7 +108,6 @@
   .product-name-box-input {
     flex-direction: row;
     color: var(--color3);
-    font-family: var(--font-noto-sans);
   }
   .category-box-title,
   .product-name-box {
@@ -183,12 +182,14 @@
   .expiration-box-input,
   .image-box-input,
   .description-box-input {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
     flex: 1;
     border-bottom: 1px solid var(--color-gainsboro-100);
     flex-direction: row;
     padding: var(--padding-xs) var(--padding-base);
     color: var(--color3);
-    font-family: var(--font-noto-sans);
   }
   .group-purchase-input {
     position: absolute;
@@ -200,7 +201,6 @@
     justify-content: flex-start;
     text-align: left;
     color: var(--color-black);
-    font-family: var(--font-noto-sans-jp);
   }
   .group-purchase-create {
     background-color: var(--color);
@@ -208,7 +208,6 @@
     text-align: center;
     font-size: var(--typography-body1-size);
     color: var(--color);
-    font-family: var(--font-noto-sans);
   }
 
 
@@ -235,7 +234,7 @@
   background-color:#f136b3;
 }
 textarea{
-  height:100px;
+  height:180px;
   resize:vertical;
 }
 select {
@@ -321,25 +320,13 @@ select {
 .con-weight-box-input,
 .con-expiration-box-input,
 .con-image-box-input,
-.con-description-box-input  {
+.con-description-box-input {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-}
-.con-price-box-input,
-.con-quantity-box-input,
-.con-discount-box-input,
-.con-period-box-input,
-.con-stock-box-input,
-.con-shipping-box-input,
-.con-weight-box-input,
-.con-expiration-box-input,
-.con-image-box-input,
-.con-description-box-input {
   flex: 1;
   border-bottom: 1px solid var(--color-gainsboro-100);
   flex-direction: row;
-  font-family: var(--font-noto-sans);
 }
 
 
