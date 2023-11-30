@@ -1,10 +1,26 @@
-{% comment %} {% extends "account/base.html" %} {% endcomment %}
-{% load i18n %}
-<h1>店舗用ログイン画面</h1>
-<form class="login" method="POST" action="{% url 'store:store_login_success' %}">
-{% csrf_token %}
-{{ form.as_p }}
-{% url 'account_login_kkkk' %}
-<a href="{% url 'account_login_kkkk' %}">MelimitUser Login</a>
-<button class="btn btn-primary" type="submit">{% trans "Sign In" %}</button>
-</form>
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/style.css' %}">
+    <title>Melimit:店舗管理者ログイン</title>
+</head>
+<body>
+<div class="store-login">
+    <h1 class="store-login__title">店舗管理画面ログイン</h1>
+    <form class="store-login__form" method="POST" action="{% url 'store:store_login_success' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p class="to-forgot-pass"><a href="{% url 'accounts:password_reset' %}">パスワードを忘れた場合</a></p>
+        <button class="store-login__btn" type="submit">ログイン</button>
+        <h2>会員登録がまだの方はこちら</h2>
+        <a class="store-login__signup-btn" href="{% url 'accounts:store_touroku' %}">新規会員登録（無料）</a>
+        <h3>まだ迷っている方はこちら</h3>
+        <a class="store-login__what-melimit"href="{% url 'user:what_melimit' %}">Melimitとは</a>
+        <p><a href="{% url 'user:index' %}">トップページへ戻る</a></p>
+    </form>
+</div>
+</body>
+</html>

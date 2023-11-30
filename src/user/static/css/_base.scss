@@ -85,12 +85,11 @@ header {
     }
   }
   &__menu-btn {
-    line-height: 2rem;
     font-size: 0.8rem;
     border-radius: 5px;
     text-align: center;
     display: inline-block;
-    padding: 0.3rem 3rem;
+    padding: 0.8rem;
   }
   &__serch {
     width: 40%;
@@ -127,17 +126,16 @@ footer {
 }
 
 // 全体に共通のCSSを記述
-@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
 html {
   height: -webkit-fill-available;
   font-size: 100%;
   font-weight: 500;
   font-style: normal;
-  font-weight: bold;
   scroll-behavior: smooth;
 }
 body {
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: 'Noto Sans JP', sans-serif;
   color: $melimit_black;
   background-color: $melimit_white;
   margin: 0 auto;
@@ -156,6 +154,7 @@ a {
   text-decoration: none;
   color: $melimit_black;
   display: inline-block;
+  transition: 0.3s;
   &:hover {
       opacity: 0.7;
       cursor: pointer;
@@ -181,7 +180,8 @@ font-weight: bold;
 border: none;
 cursor: pointer;
 font-size: 100%;
+transition: 0.3s;
 &:hover {
     opacity: 0.7;
-}
+  }
 }

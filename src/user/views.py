@@ -26,6 +26,8 @@ def index(request):
     # return render(request, 'user/index.html')
 def login_view(request):
     return render(request, 'user/login.html')
+def explain_view(request):
+    return render(request, 'user/explain.html')
 
 
     
@@ -50,3 +52,23 @@ def omae_user(request):
 def sinki(request):
     print('sinki_________')
     return render(request, 'user/sinki.html')
+
+# メリミットとは
+def what_melimit(request):
+    return render(request, 'user/explain.html')
+
+# お問い合わせ
+def contact(request):
+    return render(request, 'user/contact.html')
+
+# 一般商品一覧
+def all_products_general(request):
+    return render(request, 'user/general-products.html')
+
+# 共同購入商品一覧
+def all_products_joint(request):
+    return render(request, 'user/joint-products.html')
+
+# 一般商品詳細
+def general_products_detail(request):
+    return render(request, 'user/general-products_detail.html')

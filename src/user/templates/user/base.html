@@ -12,6 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock title %}</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/style.css' %}"> {% endcomment %}
 </head>
 <body>
 <header>
@@ -20,14 +21,9 @@
         <a href="{% url 'user:index' %}"><img src="{% static 'assets/img/Melimit.png' %}" alt="Melimit" class="header_logo"/></a>
         <nav class="header_upper__nav">
             <ul class="header_upper__menu">
-                <li><a href="#">Melimitとは</a></li>
-                {% comment %} <li><a href="{% url 'account_login_kkkk' %}">ログイン</a></li>
-                <li><a href="{% url 'accounts:user_touroku' %}">新規登録</a></li> {% endcomment %}
-                {% comment %} <li><a href="{% url 'accounts:user_edit' %}">情報編集</a></li> {% endcomment %}
-                <li><a href="#">お問い合わせ</a></li>
-                <li><a href="#">site_name:{{ site_name }}</li>
-                <!-- ログイン状態によって表示を変更-->
-                {% if user.is_authenticated %}
+                <li><a href="{% url "user:what_melimit" %}">Melimitとは</a></li>
+                <li><a href="{% url "user:contact" %}">お問い合わせ</a></li>
+                <li>{% if user.is_authenticated %}
                     <li><a href="{% url 'accounts:user_logout' %}">ログアウト</a></li>
                     <li><a href="{% url 'accounts:user_edit' %}"><span>ログインユーザーの名前：{{ user.username }}
                         taste: {{ user.taste }}
@@ -56,8 +52,8 @@
                 </ul>
             </div>
             <ul class="header_down__menu-container">
-                <li><a class="btn--blue header_down__menu-btn">一般購入商品を見る</a></li>
-                <li><a class="btn--pink header_down__menu-btn">共同購入商品を見る</a></li>
+                <li><a class="btn--blue header_down__menu-btn" href="{% url "user:all_products_general" %}">一般購入商品を見る</a></li>
+                <li><a class="btn--pink header_down__menu-btn" href="{% url "user:all_products_joint" %}">共同購入商品を見る</a></li>
             </ul>
         </div>
         <div class="header_down__search">

@@ -43,9 +43,6 @@ INSTALLED_APPS = [
     'allauth.account', # 追加
     'allauth.socialaccount', # 追加
     'store',
-    # 'django.contrib.sites', # 追加
-    # 'allauth', # 追加
-    # 'allauth.account', # 追加
 ]
 
 MIDDLEWARE = [
