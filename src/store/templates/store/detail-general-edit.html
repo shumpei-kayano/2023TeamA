@@ -1,0 +1,373 @@
+{% extends "store/base.html" %}
+
+{% load static %}
+
+{% block title %}一般購入商品の編集中です{% endblock %}
+
+{% block contents %}
+
+<div class="product-manage__container">
+
+    <div class="topic-path">
+        <div class="product-manage">商品管理</div>
+        <img class="searchfilled-icon" alt="" src="{% static 'store/img/keyboardarrowright_mini.png' %}" />
+        <div class="product-manage">一般購入商品の詳細</div>
+        <img class="searchfilled-icon" alt="" src="{% static 'store/img/keyboardarrowright_mini.png' %}" />
+        <div class="product-manage">編集中</div>
+    </div>
+
+    <div class="title-product-manage">
+        <div class="product-manage-text">一般購入商品の編集中です（すべての項目を入力する必要があります）</div>
+        <img class="fibermanualrecordfilled-icon" alt="" src="{% static 'store/img/maru.png' %}" />
+    </div>
+
+
+    
+    <div class="group-purchase-create">
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+  
+          <div class="group-purchase-input">
+  
+            <!-- 商品名の入力欄 -->
+            <div class="product-name-box">
+              <div class="product-name-box-title">
+                <div class="title-text">商品名</div>
+              </div>
+              <div class="product-name-box-input">
+                {{ product_form.product_name }}
+              </div>
+            </div>
+  
+            <!-- カテゴリの選択欄 -->
+            <div class="category-box">
+              <div class="category-box-title">
+                <div class="title-text">カテゴリ</div>
+              </div>
+              <div class="category-box-input">
+                {{ product_form.product_category }}
+              </div>
+            </div>
+  
+            <!-- 販売価格の入力欄 -->
+            <div class="category-box">
+              <div class="category-box-title">
+                <div class="title-text">販売価格</div>
+              </div>
+              <div class="price-box-input">
+                {{ sale_form.sale_price }}
+              </div>
+            </div>
+  
+            <!-- 定価の入力欄 -->
+            <div class="category-box">
+              <div class="category-box-title">
+                <div class="title-text">定価</div>
+              </div>
+              <div class="listprice-box-input">
+                <input type="number" class="input-active" placeholder="定価を入力してください（※半角数字）" required/>
+              </div>
+            </div>
+  
+            <!-- 表示期間の入力欄 -->
+            <div class="category-box">
+              <div class="category-box-title">
+                <div class="title-text">表示期間</div>
+              </div>
+              <div class="period-box-input">
+                <p>開始：</p><input type="datetime-local" id="startDateTime" class="input-active" placeholder="開始日時を入力してください" required/>
+                <p>～終了：</p><input type="datetime-local" id="endDateTime" class="input-active" placeholder="終了日時を入力してください" required/>
+              </div>
+            </div>
+  
+            <!-- 在庫数の入力欄 -->
+            <div class="category-box">
+              <div class="category-box-title">
+                <div class="title-text">在庫数</div>
+              </div>
+              <div class="price-box-input">
+                {{ sale_form.stock }}
+              </div>
+            </div>
+  
+            <!-- 送料の入力欄 -->
+            <div class="category-box">
+              <div class="category-box-title">
+                <div class="title-text">送料</div>
+              </div>
+              <div class="shipping-box-input">
+                <input type="number" class="input-active" placeholder="送料を入力してください（※半角数字）" required/>
+              </div>
+            </div>
+  
+            <!-- 重量の入力欄 -->
+            <div class="category-box">
+              <div class="category-box-title">
+                <div class="title-text">重量</div>
+              </div>
+              <div class="weight-box-input">
+                {{ product_form.weight }}
+              </div>
+            </div>
+  
+            <!-- 賞味期限の入力欄 -->
+            <div class="category-box">
+              <div class="category-box-title">
+                <div class="title-text">賞味期限</div>
+              </div>
+              <div class="expiration-box-input">
+                {{ sale_form.expiration_date }}
+              </div>
+            </div>
+  
+            <!-- 画像の選択欄 -->
+            <div class="category-box" style="height: 200px;">
+              <div class="category-box-title">
+                <div class="title-text">画像</div>
+              </div>
+              <div class="image-box-input" style="height: 200px;">
+                {% comment %} {{ product_form.product_image }} {% endcomment %}
+                <input
+                  type="file"
+                  id="example"
+                  class="input-active"
+                  accept="image/*"
+                  placeholder="画像を選択してください"
+                  multiple
+                  required />
+                  <div id="preview"></div>
+              </div>
+            </div>
+  
+            <!-- 商品説明の入力欄 -->
+            <div class="category-box" style="height: 200px;">
+              <div class="category-box-title">
+                <div class="title-text">商品説明</div>
+              </div>
+              <div class="description-box-input" style="height: 200px;">
+                {{ sale_form.description }}
+              </div>
+            </div>
+  
+            <div class="general-purchase-button" id="generalPurchaseButtonContainer">
+              <button class="general-btn-conf" type="submit">編集内容を確認する</button>
+            </div>
+          </div>
+  
+          <!-- モーダル -->
+          <div id="modal" class="modal">
+            <div class="modal-content">
+              <span class="modal-title">一般購入商品の編集確認画面</span>
+              <span class="close">&times;</span>
+              <!-- 入力内容を表示する部分 -->
+              <div id="confirmationContent">
+                <!-- 確認内容をここに表示 -->
+              </div>
+              <div class="modal-button">
+                <button class="modal-back" type="button">修正する</button>
+                <button class="modal-general" type"submit">編集を完了する</button>
+              </div>
+            </div>
+          </div>
+  
+        </form>
+      </div>
+  
+  
+  
+      <script>
+        // プレビュー画像を表示する
+        function previewFile(file) {
+          // プレビュー画像を追加する要素
+          const preview = document.getElementById('preview');
+        
+          // FileReaderオブジェクトを作成
+          const reader = new FileReader();
+        
+          // ファイルが読み込まれたときに実行する
+          reader.onload = function (e) {
+            const imageUrl = e.target.result; // 画像のURLはevent.target.resultで呼び出せる
+            const img = document.createElement("img"); // img要素を作成
+            img.src = imageUrl; // 画像のURLをimg要素にセット
+            preview.appendChild(img); // #previewの中に追加
+          }
+        
+          // ファイルを読み込む
+          reader.readAsDataURL(file);
+        }
+    
+        // <input>でファイルが選択されたときの処理
+        const fileInput = document.getElementById('example');
+        const handleFileSelect = () => {
+          const files = fileInput.files;
+          for (let i = 0; i < files.length; i++) {
+            previewFile(files[i]);
+          }
+        }
+        fileInput.addEventListener('change', handleFileSelect);
+  
+  
+        // モーダルの処理
+        document.addEventListener('DOMContentLoaded', function () {
+          const form = document.querySelector('form');
+          const modal = document.getElementById('modal');
+          const confirmationContent = document.getElementById('confirmationContent');
+          const closeButton = document.querySelector('.close');
+          const backButton = document.querySelector('.modal-back');
+          const confirmButton = document.querySelector('.modal-general');
+          const submitButton = document.querySelector('.general-btn-conf');
+      
+          // モーダル表示用関数
+          function showModal() {
+              modal.style.display = 'block';
+          }
+      
+          // モーダル非表示用関数
+          function closeModal() {
+              modal.style.display = 'none';
+          }
+      
+          // 「編集内容を確認する」ボタンのクリックイベント
+          submitButton.addEventListener('click', function (event) {
+              event.preventDefault(); // フォームのデフォルトの動作を防止
+      
+            // 入力値を取得
+            const productName = document.querySelector('.product-name-box-input input').value;
+            const category = document.querySelector('.category-box-input select').value;
+            const price = document.querySelector('.price-box-input input').value + '円';
+            const listprice = document.querySelector('.listprice-box-input input').value + '円';
+            // 開始と終了の入力値を取得
+            const startDateTime = document.getElementById('startDateTime').value;
+            const endDateTime = document.getElementById('endDateTime').value;
+            const stock = document.querySelector('.stock-box-input input').value + '個';
+            const shipping = document.querySelector('.shipping-box-input input').value + '円';
+            const weight = document.querySelector('.weight-box-input input').value + 'g';
+            const expiration = document.querySelector('.expiration-box-input input').value;
+            const image = document.querySelector('.image-box-input input').value;
+            const description = document.querySelector('.description-box-input textarea').value;
+    
+            // 確認用の内容を作成
+            const confirmationHTML = `
+            <div class="con-product-name-box">
+              <div class="con-product-name-box-title">
+                <div class="con-title-text">商品名</div>
+              </div>
+              <div class="con-product-name-box-input">
+                <p>${productName}</p>
+              </div>
+            </div>
+            <div class="con-category-box">
+              <div class="con-category-box-title">
+                <div class="con-title-text">カテゴリ</div>
+              </div>
+              <div class="con-product-name-box-input">
+                <p>${category}</p>
+              </div>
+            </div>
+            <div class="con-category-box">
+              <div class="con-category-box-title">
+                <div class="con-title-text">販売価格</div>
+              </div>
+              <div class="con-product-name-box-input">
+                <p>${price}</p>
+              </div>
+            </div>
+            <div class="con-category-box">
+              <div class="con-category-box-title">
+                <div class="con-title-text">定価</div>
+              </div>
+              <div class="con-product-name-box-input">
+                <p>${listprice}</p>
+              </div>
+            </div>
+            <div class="con-category-box">
+              <div class="con-category-box-title">
+                <div class="con-title-text">表示期間</div>
+              </div>
+              <div class="con-product-name-box-input">
+                <p>開始：${startDateTime}</p>
+                <p>～終了：${endDateTime}</p>
+              </div>
+            </div>
+            <div class="con-category-box">
+              <div class="con-category-box-title">
+                <div class="con-title-text">在庫数</div>
+              </div>
+              <div class="con-product-name-box-input">
+                <p>${stock}</p>
+              </div>
+            </div>
+            <div class="con-category-box">
+              <div class="con-category-box-title">
+                <div class="con-title-text">送料</div>
+              </div>
+              <div class="con-product-name-box-input">
+                <p>${shipping}</p>
+              </div>
+            </div>
+            <div class="con-category-box">
+              <div class="con-category-box-title">
+                <div class="con-title-text">重量</div>
+              </div>
+              <div class="con-product-name-box-input">
+                <p>${weight}</p>
+              </div>
+            </div>
+            <div class="con-category-box">
+              <div class="con-category-box-title">
+                <div class="con-title-text">賞味期限</div>
+              </div>
+              <div class="con-product-name-box-input">
+                <p>${expiration}</p>
+              </div>
+            </div>
+            <div class="con-category-box">
+              <div class="con-category-box-title">
+                <div class="con-title-text">画像</div>
+              </div>
+              <div class="con-product-name-box-input">
+                <p>${image}</p>
+              </div>
+            </div>
+            <div class="con-category-box">
+              <div class="con-category-box-title">
+                <div class="con-title-text">商品説明</div>
+              </div>
+              <div class="con-product-name-box-input">
+                <p>${description}</p>
+              </div>
+            </div>
+          `;
+    
+          confirmationContent.innerHTML = confirmationHTML;
+          showModal();
+      });
+  
+      // 「修正する」ボタンのクリックイベント
+      backButton.addEventListener('click', function () {
+          closeModal();
+      });
+  
+      // 「編集を完了する」ボタンのクリックイベント
+      // アラートを出してから編集した商品詳細ページに遷移したい
+      confirmButton.addEventListener('click', function () {
+          alert('編集が完了しました！');
+          closeModal();
+          window.location.href = 'product_manage.html';
+      });
+  
+      // モーダルを閉じるアイコンのクリックイベント
+      closeButton.addEventListener('click', function () {
+          closeModal();
+      });
+  
+      // モーダル外の領域をクリックしたときに閉じる
+      window.addEventListener('click', function (event) {
+          if (event.target === modal) {
+              closeModal();
+          }
+      });
+  });
+  </script>
+</div>
+{% endblock %}

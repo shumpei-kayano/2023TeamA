@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import order_history_view, order_not_shipped_view,product_manage_view,create_general_purchase_view,create_group_purchase_view,detail_general_view,detail_group_view
+from .views import order_history_view, order_not_shipped_view,product_manage_view,create_general_purchase_view,create_group_purchase_view,detail_general_view,detail_group_view,detail_general_edit_view,detail_group_edit_view
 
 app_name = 'store'
 
@@ -19,8 +19,11 @@ urlpatterns = [
     path('store_login_success/', views.store_login_view, name='store_login_success'),
     path('store_base/', views.store_base_view, name='store_base'),
     path('test/', views.create_product_and_sale, name='test'),
-    path('test2/', views.product_and_sale_list, name='test2'),,
+    path('test2/', views.product_and_sale_list, name='test2'),
     # 商品詳細ページ
     path('detail-general', views.detail_general_view, name='detail-general'),
-    path('detail-group', views.detail_group_view, name='detail-group')
+    path('detail-group', views.detail_group_view, name='detail-group'),
+    # 商品編集ページ
+    path('detail-general-edit', views.detail_general_edit_view, name='detail-general-edit'),
+    path('detail-group-edit', views.detail_group_edit_view, name='detail-group-edit')
 ]

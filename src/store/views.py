@@ -100,10 +100,18 @@ def create_group_purchase_view(request):
         sale_form = SaleForm()
 
     return render(request, 'store/create-group-purchase.html', {'product_form': product_form, 'sale_form': sale_form, 'user': user, })
+# 商品詳細ページ(一般)
 def detail_general_view(request):
     return render(request, 'store/detail-general.html')
+# 商品詳細ページ(共同)
 def detail_group_view(request):
     return render(request, 'store/detail-group.html')
+# 詳細ページから遷移した商品編集ページ(一般)
+def detail_general_edit_view(request):
+    return render(request, 'store/detail-general-edit.html')
+# 詳細ページから遷移した商品編集ページ(共同)
+def detail_group_edit_view(request):
+    return render(request, 'store/detail-group-edit.html')
 
 # ログイン処理
 def store_login_view(request):
