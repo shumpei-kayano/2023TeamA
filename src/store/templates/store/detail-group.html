@@ -1,0 +1,181 @@
+{% extends "store/base.html" %}
+
+{% load static %}
+
+{% block title %}共同購入商品の詳細{% endblock %}
+
+{% block contents %}
+
+<div class="product-manage__container">
+
+    <div class="topic-path">
+        <div class="product-manage">商品管理</div>
+        <img class="searchfilled-icon" alt="" src="{% static 'store/img/keyboardarrowright_mini.png' %}" />
+        <div class="product-manage">共同購入商品の詳細</div>
+    </div>
+
+    <div class="title-product-manage">
+        <div class="product-manage-text">共同購入商品の詳細</div>
+        <img class="fibermanualrecordfilled-icon" alt="" src="{% static 'store/img/maru.png' %}" />
+    </div>
+
+
+    <div class="group-purchase-create">
+        <form action="#">
+
+        <div class="group-purchase-input">
+
+            <!-- 商品名の入力欄 -->
+            <div class="product-name-box">
+            <div class="product-name-box-title">
+                <div class="title-text">商品名</div>
+            </div>
+            <div class="product-name-box-input">
+                <span>商品名が入ってます</span>
+            </div>
+            </div>
+
+            <!-- カテゴリの選択欄 -->
+            <div class="category-box">
+            <div class="category-box-title">
+                <div class="title-text">カテゴリ</div>
+            </div>
+            <div class="category-box-input">
+                <span>カテゴリが入ってます</span>
+            </div>
+            </div>
+
+            <!-- 販売価格の入力欄 -->
+            <div class="category-box">
+            <div class="category-box-title">
+                <div class="title-text">販売価格</div>
+            </div>
+            <div class="price-box-input">
+                <span>販売価格が入ってます</span>
+            </div>
+            </div>
+
+            <!-- 定価の入力欄 -->
+            <div class="category-box">
+            <div class="category-box-title">
+                <div class="title-text">定価</div>
+            </div>
+            <div class="listprice-box-input">
+                <span>定価が入ってます</span>
+            </div>
+            </div>
+
+            <!-- 共同購入達成数量の入力欄 -->
+            <div class="category-box">
+            <div class="category-box-title">
+                <div class="title-text">共同購入達成数量</div>
+            </div>
+            <div class="quantity-box-input">
+                <span>共同購入達成数量が入ってます</span>
+            </div>
+            </div>
+
+            <!-- 共同購入達成時の値引率の入力欄 -->
+            <div class="category-box">
+            <div class="category-box-title">
+                <div class="title-text">共同購入達成時の値引率</div>
+            </div>
+            <div class="discount-box-input">
+                <span>共同購入達成時の値引率が入ってます</span>
+            </div>
+            </div>
+
+            <!-- 表示期間の入力欄 -->
+            <div class="category-box">
+            <div class="category-box-title">
+                <div class="title-text">表示期間</div>
+            </div>
+            <div class="period-box-input">
+                <span>表示期間が入ってます　開始：　～　終了：</span>
+            </div>
+            </div>
+
+            <!-- 在庫数の入力欄 -->
+            <div class="category-box">
+            <div class="category-box-title">
+                <div class="title-text">在庫数</div>
+            </div>
+            <div class="stock-box-input">
+                <span>在庫数が入ってます</span>
+            </div>
+            </div>
+
+            <!-- 送料の入力欄 -->
+            <div class="category-box">
+            <div class="category-box-title">
+                <div class="title-text">送料</div>
+            </div>
+            <div class="shipping-box-input">
+                <span>送料が入ってます</span>
+            </div>
+            </div>
+
+            <!-- 重量の入力欄 -->
+            <div class="category-box">
+            <div class="category-box-title">
+                <div class="title-text">重量</div>
+            </div>
+            <div class="weight-box-input">
+                <span>重量が入ってます</span>
+            </div>
+            </div>
+
+            <!-- 賞味期限の入力欄 -->
+            <div class="category-box">
+            <div class="category-box-title">
+                <div class="title-text">賞味期限</div>
+            </div>
+            <div class="expiration-box-input">
+                <span>賞味期限が入ってます</span>
+            </div>
+            </div>
+
+            <!-- 画像の選択欄 -->
+            <div class="category-box" style="height: 200px;">
+            <div class="category-box-title">
+                <div class="title-text">画像</div>
+            </div>
+            <div class="image-box-input" style="height: 200px;">
+                <span>画像が入ってます</span>
+            </div>
+            </div>
+
+            <!-- 商品説明の入力欄 -->
+            <div class="category-box" style="height: 200px;">
+            <div class="category-box-title">
+                <div class="title-text">商品説明</div>
+            </div>
+            <div class="description-box-input" style="height: 200px;">
+                <span>商品説明が入ってます</span>
+            </div>
+            </div>
+
+            <!-- リンク3種類 -->
+            <div class="group-product-button">
+                <a href="#!" class="btn-product">実際の商品ページを見る</a>
+            </div>
+
+            <div class="product-delete-button">
+                <button class="btn-delete" onclick="location.href='#!'">商品を削除する</button>
+            </div>
+
+            <div class="group-edit-button">
+                <a href="detail-group-edit.html" class="btn-edit">商品を編集する</a>
+            </div>
+        </div>
+
+        </form>
+    </div>
+
+
+
+
+
+
+</div>
+{% endblock %}
