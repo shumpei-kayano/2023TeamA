@@ -21,7 +21,8 @@ class Product(models.Model):
     )
 
     product_name = models.CharField(max_length=200, verbose_name='商品名')
-    product_price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='定価')
+    product_price = models.IntegerField(verbose_name='定価')
+    # product_price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='定価')
     weight = models.IntegerField(verbose_name='重量')
     product_image = models.ImageField(upload_to='images', verbose_name='商品画像')
     product_category = models.CharField("カテゴリ", max_length=20, choices=TASTE_CHOICES, blank=True)
@@ -44,7 +45,8 @@ class Sale(models.Model):
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     store = models.ForeignKey(MelimitStore, on_delete=models.CASCADE)
-    sale_price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='販売価格')
+    sale_price = models.IntegerField(verbose_name='販売価格')
+    # sale_price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='販売価格')
     sale_start = models.DateTimeField(verbose_name='販売開始日時')
     sale_end = models.DateTimeField(verbose_name='販売終了日時')
     # 在庫数
@@ -71,3 +73,20 @@ class Sale(models.Model):
     # 値引き率を計算する関数
     def discount_rate(self):
         return round((1 - self.sale_price / self.product.product_price) * 100)
+
+# しきい値model
+class Threshold(models.Model):
+    # 割引率(%表示)
+    discount_rate = models.IntegerField(verbose_name='割引率')
+    # しきい値(個数)
+    threshold = models.IntegerField(verbose_name='しきい値')
+    # saleの外部キー
+    sale = models.ForeignKey(Sale, on_delete=models.CASCADE)
+
+    def __str__(self):
+        # product_nameとMelimitStoreモデルのusernameを取得し、usernameのproduct_nameのしきい値という形で表示する
+        return self.sale.store.username + '：' + self.sale.product.product_name + 'のしきい値'
+    
+    # 割引率とsale_priceから割引額を計算する関数
+    def discount_amount(self):
+        return round(self.sale.sale_price * self.discount_rate / 100)

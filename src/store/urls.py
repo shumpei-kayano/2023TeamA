@@ -15,9 +15,14 @@ urlpatterns = [
     # 商品新規登録ページ
     path('create-general-purchase', views.create_general_purchase_view, name='create-general-purchase'),
     path('create-group-purchase', views.create_group_purchase_view, name='create-group-purchase'),
-    # 穴井さんテスト用
+    # 商品詳細ページ
+    path('detail-general', views.detail_general_view, name='detail-general'),
+    path('detail-group', views.detail_group_view, name='detail-group'),
+    # ログイン処理
     path('store_login_success/', views.store_login_view, name='store_login_success'),
+    # ログイン後のベースページ
     path('store_base/', views.store_base_view, name='store_base'),
+    # 穴井さんテスト用
     path('test/', views.create_product_and_sale, name='test'),
     path('test2/', views.product_and_sale_list, name='test2'),
     # 商品詳細ページ

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Product, Sale
+from .models import Product, Sale, Threshold
 
 class ProductForm(forms.ModelForm):
     class Meta:
@@ -26,6 +26,11 @@ class ProductForm(forms.ModelForm):
                 'required': 'required',
                 'multiple': True,
                 'accept': 'image/*'
+            }),
+            'product_price': forms.NumberInput(attrs={
+                'class': 'input-active', 
+                'placeholder': '定価を入力してください（※半角数字）', 
+                'required': 'required'
             }),
         }
 
@@ -54,6 +59,35 @@ class SaleForm(forms.ModelForm):
             'description': forms.Textarea(attrs={
                 'class': 'input-active', 
                 'placeholder': '商品説明を入力してください',
+                'required': 'required'
+            }),
+            'sale_start': forms.DateTimeInput(attrs={
+                'class': 'input-active', 
+                'title': '販売開始日時を入力してください',
+                'required': 'required',
+                'type': 'datetime-local'
+            }),
+            'sale_end': forms.DateTimeInput(attrs={
+                'class': 'input-active', 
+                'title': '販売終了日時を入力してください',
+                'required': 'required',
+                'type': 'datetime-local'
+            }),
+        }
+
+class ThresholdForm(forms.ModelForm):
+    class Meta:
+        model = Threshold
+        fields = ['discount_rate', 'threshold']
+        widgets = {
+            'discount_rate': forms.NumberInput(attrs={
+                'class': 'input-active', 
+                'placeholder': '共同購入達成時の値引率を入力してください（※半角数字）', 
+                'required': 'required'
+            }),
+            'threshold': forms.NumberInput(attrs={
+                'class': 'input-active', 
+                'placeholder': '共同購入達成数量を入力してください（※半角数字）', 
                 'required': 'required'
             }),
         }

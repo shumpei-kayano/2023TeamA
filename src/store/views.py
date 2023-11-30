@@ -1,10 +1,12 @@
 from django.shortcuts import render
 # formを使用するためにimport
-from .forms import ProductForm, SaleForm
+from .forms import ProductForm, SaleForm, ThresholdForm
 from accounts.mixins import MelimitModelMixin
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from accounts.forms import MelimitStoreLoginForm
 from django.contrib.auth import authenticate, login
+from .models import Sale
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 def index(request):
@@ -16,7 +18,9 @@ def order_history_view(request):
 # 未発送注文一覧ページ(modelは注文履歴モデル、発送済みフラグfalseのものを表示)
 def order_not_shipped_view(request):
     return render(request, 'store/order-not-shipped.html')
+
 # 商品管理一覧ページ
+# 検証用(render先が仮)
 def product_manage_view(request):
     mixin = MelimitModelMixin()
     mixin.request = request
@@ -33,6 +37,36 @@ def product_manage_view(request):
         print(sale.__dict__)
     return render(request, 'store/test2.html', {'products': products, 'sales': sales, 'user': user,})
     # return render(request, 'store/product-manage.html')
+
+# 商品詳細ページ
+# 検証用
+def sale_detail_view(request, pk):
+    if pk > Sale.objects.latest('id').id:
+        return render(request, 'store/test3_error.html')
+    sale = get_object_or_404(Sale, id=pk)
+    # ログイン中のユーザーだけが商品詳細ページを見れるようにする
+    mixin = MelimitModelMixin()
+    mixin.request = request
+    user = mixin.get_melimitmodel_user()
+    print(f"pk : {pk}")
+    print(f"user.id : {user.id}")
+    print(f"user.melimitstore : {user.melimitstore}")
+    print(f"sale.store : {sale.store}")
+    print(f"trueならsale取得、詳細表示する : {user.melimitstore == sale.store}")
+    if user.is_authenticated:
+        try:
+            # saleのpkとmelimitstoreオブジェクトの組み合わせが正しい場合のみDBからsaleを取得する
+            # つまり、urlを直接入力しても他店のsaleは取得できない
+            sale = Sale.objects.get(id=pk, store=user.melimitstore)
+        except ObjectDoesNotExist:
+            print('ログインしているmelimitstoreと取得したいsaleのmelimitstoreが一致しません')
+            return render(request, 'store/test3_error.html')
+        return render(request, 'store/test3.html', {'sale': sale, 'user': user,})
+    else:
+        print('ログインしていません')
+        # エラーページを表示する
+        return render(request, 'store/test3_error.html')
+
 # 一般新規登録
 def create_general_purchase_view(request):
     mixin = MelimitModelMixin()
@@ -75,6 +109,7 @@ def create_group_purchase_view(request):
     if request.method == 'POST':
         product_form = ProductForm(request.POST, request.FILES)
         sale_form = SaleForm(request.POST)
+        threshold_form = ThresholdForm(request.POST)
         product_form.instance.store = user.melimitstore
         # product_form.instance.storeを表示する
         print(product_form.instance.store)
@@ -84,20 +119,35 @@ def create_group_purchase_view(request):
         sale_form.instance.product = product_form.instance
         # sale_form.instance.productを表示する
         print(sale_form.instance.product)
-        if product_form.is_valid() and sale_form.is_valid():
+        # threshold_formの登録とthresholdの外部キーにsaleのidを設定する
+        if product_form.is_valid() and sale_form.is_valid() and threshold_form.is_valid():
             product = product_form.save()
             sale = sale_form.save(commit=False)
             sale.sale_type = 'melimit_sales'
             sale.product = product
             sale.save()
+            threshold = threshold_form.save(commit=False)
+            threshold.sale = sale
+            threshold.save()
+            # ここでリダイレクトやメッセージ表示などを行う
+        # if product_form.is_valid() and sale_form.is_valid():
+        #     product = product_form.save()
+        #     sale = sale_form.save(commit=False)
+        #     sale.sale_type = 'melimit_sales'
+        #     sale.product = product
+        #     sale.save()
             # ここでリダイレクトやメッセージ表示などを行う
         else:
             print('ビューのform.is_valid()失敗')
             print(product_form.errors)
             print(sale_form.errors)
+            print(threshold_form.errors)
     else:
         product_form = ProductForm()
         sale_form = SaleForm()
+        threshold_form = ThresholdForm()
+
+    return render(request, 'store/create-group-purchase.html', {'product_form': product_form, 'sale_form': sale_form, 'threshold_form': threshold_form, 'user': user, })
 
     return render(request, 'store/create-group-purchase.html', {'product_form': product_form, 'sale_form': sale_form, 'user': user, })
 # 商品詳細ページ(一般)
@@ -224,6 +274,7 @@ def create_product_and_sale(request):
     return render(request, 'store/test.html', {'product_form': product_form, 'sale_form': sale_form, 'user': user, })
 
 # productモデルとsaleモデルの一覧表示
+# 検証用
 def product_and_sale_list(request):
     mixin = MelimitModelMixin()
     mixin.request = request

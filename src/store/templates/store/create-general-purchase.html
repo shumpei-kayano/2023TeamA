@@ -62,7 +62,8 @@
               <div class="title-text">定価</div>
             </div>
             <div class="listprice-box-input">
-              <input type="number" class="input-active" placeholder="定価を入力してください（※半角数字）" required/>
+              {{ product_form.product_price }}
+              {% comment %} <input type="number" class="input-active" placeholder="定価を入力してください（※半角数字）" required/> {% endcomment %}
             </div>
           </div>
 
@@ -72,8 +73,10 @@
               <div class="title-text">表示期間</div>
             </div>
             <div class="period-box-input">
-              <p>開始：</p><input type="datetime-local" id="startDateTime" class="input-active" placeholder="開始日時を入力してください" required/>
-              <p>～終了：</p><input type="datetime-local" id="endDateTime" class="input-active" placeholder="終了日時を入力してください" required/>
+              <p>開始：</p>{{ sale_form.sale_start }}
+              <p>～終了：</p>{{ sale_form.sale_end }}
+              {% comment %} <p>開始：</p><input type="datetime-local" id="startDateTime" class="input-active" placeholder="開始日時を入力してください" required/>
+              <p>～終了：</p><input type="datetime-local" id="endDateTime" class="input-active" placeholder="終了日時を入力してください" required/> {% endcomment %}
             </div>
           </div>
 
@@ -123,15 +126,15 @@
               <div class="title-text">画像</div>
             </div>
             <div class="image-box-input" style="height: 200px;">
-              {% comment %} {{ product_form.product_image }} {% endcomment %}
-              <input
+              {{ product_form.product_image }}
+              {% comment %} <input
                 type="file"
                 id="example"
                 class="input-active"
                 accept="image/*"
                 placeholder="画像を選択してください"
                 multiple
-                required />
+                required /> {% endcomment %}
                 <div id="preview"></div>
             </div>
           </div>
