@@ -1310,7 +1310,7 @@ input:checked + .tab_class + .content_class {
   border-radius: 0.3125rem;
 }
 .detail1 .joint {
-  background-color: #D485BA;
+  background-color: rgba(212, 133, 186, 0.2);
   border-radius: 0.3125rem;
 }
 .detail1__soldout {
@@ -1323,6 +1323,21 @@ input:checked + .tab_class + .content_class {
 }
 .detail1__text-bd {
   font-weight: bold;
+}
+.detail1 .progress-bar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: #e9ecef;
+}
+.detail1 .progress-bar .step {
+  flex: 1;
+  background-color: #ccc;
+}
+.detail1 .progress-bar .step.completed {
+  background-color: #007bff;
 }
 
 .detail2 {
