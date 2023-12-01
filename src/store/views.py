@@ -5,8 +5,9 @@ from accounts.mixins import MelimitModelMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from accounts.forms import MelimitStoreLoginForm
 from django.contrib.auth import authenticate, login
-from .models import Sale, Threshold
+from .models import Product, Sale, Threshold
 from django.core.exceptions import ObjectDoesNotExist
+from django.views.generic import View
 
 # Create your views here.
 def index(request):
@@ -295,6 +296,33 @@ def product_and_sale_list(request):
     for sale in sales:
         print(sale.__dict__)
     return render(request, 'store/test2.html', {'products': products, 'sales': sales, 'user': user,})
+
+class ProductAndSaleDeleteView(View):
+    def get(self, request, *args, **kwargs):
+        product_ids = request.GET.getlist('product_ids')  # 選択した商品のIDを取得
+        print(f"product_ids : {product_ids}")
+        products = Product.objects.filter(id__in=product_ids)
+        for product in products:
+            sales = product.sale_set.all()  # Productに関連するSaleを取得
+            for sale in sales:
+                print(f"sale : {sale}")
+        print(f"products : {products}")
+        print(f"sales : {sales}")
+        return render(request, 'store/test4.html', {'products': products})
+
+    def post(self, request, *args, **kwargs):
+        product_ids = request.POST.getlist('product_ids')  # 選択した商品のIDを取得
+        for product_id in product_ids:
+            self.delete_product_and_sale(product_id)
+        return redirect('store:test2')
+
+    def delete_product_and_sale(self, product_id):
+        # productモデルの削除
+        product = get_object_or_404(Product, id=product_id)
+        product.delete()
+        # saleモデルの削除
+        sale = get_object_or_404(Sale, product_id=product_id)
+        sale.delete()
 
 # productモデルの登録
 # 未使用

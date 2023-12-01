@@ -1,0 +1,6 @@
+<h1>以下を削除しますか</h1>
+    <ul>
+        {% for product in products %}
+            <li>{{ product.name }} (ID: {{ product.id }})</li>
+        {% endfor %}
+    </ul>

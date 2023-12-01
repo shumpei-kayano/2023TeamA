@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import order_history_view, order_not_shipped_view,product_manage_view,create_general_purchase_view,create_group_purchase_view,detail_general_view,detail_group_view,detail_general_edit_view,detail_group_edit_view
+from .views import ProductAndSaleDeleteView
 
 app_name = 'store'
 
@@ -23,9 +23,10 @@ urlpatterns = [
     # ログイン後のベースページ
     path('store_base/', views.store_base_view, name='store_base'),
     # 穴井さんテスト用
-    path('test/', views.create_product_and_sale, name='test'),
-    path('test2/', views.product_and_sale_list, name='test2'),
-    path('test3/<int:pk>', views.sale_detail_view, name='test3'),
+    path('test/', views.create_product_and_sale, name='test'), # 商品登録
+    path('test2/', views.product_and_sale_list, name='test2'), # 商品一覧
+    path('test3/<int:pk>', views.sale_detail_view, name='test3'), # 商品詳細
+    path('product_and_sale_delete/', ProductAndSaleDeleteView.as_view(), name='product_and_sale_delete'), # 商品削除
     # 商品詳細ページ
     path('detail-general', views.detail_general_view, name='detail-general'),
     path('detail-group', views.detail_group_view, name='detail-group'),
