@@ -23,6 +23,7 @@
             <ul class="header_upper__menu">
                 <li><a href="{% url "user:what_melimit" %}">Melimitとは</a></li>
                 <li><a href="{% url "user:contact" %}">お問い合わせ</a></li>
+                <li><a href="#">site_name: {{ site_name }}</a></li>
                 <li>{% if user.is_authenticated %}
                     <li><a href="{% url 'accounts:user_logout' %}">ログアウト</a></li>
                     <li><a href="{% url 'accounts:user_edit' %}"><span>ログインユーザーの名前：{{ user.username }}

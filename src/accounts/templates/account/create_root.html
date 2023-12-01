@@ -1,3 +1,10 @@
+{% extends "account/user-base.html" %}
+{% load static %}
 
+{% block title %}ユーザー登録{% endblock %}
+
+{% block content %}
 <a href="{% url 'accounts:user_touroku' %}">リンク1</a>
 <a href="{% url 'accounts:store_touroku' %}">リンク2</a>
+
+{% endblock %}

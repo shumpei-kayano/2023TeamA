@@ -4,23 +4,40 @@ from django.contrib.auth import logout, authenticate, login
 from accounts.forms import MelimitStoreLoginForm
 from accounts.models import MelimitStore, MelimitUser
 from accounts.mixins import MelimitModelMixin
-
+from store.models import Sale, Product
+import random
 # Create your views here.
 # @login_required
 def index(request):
     print(request.user)
+    # ログインしているか
     if request.user.is_authenticated:
+        # ログインしているのがユーザーか
         if request.user.user_type == 'melimit_user' :
             user_id = request.user.id
             # user_id = request.session.get('user_id')
             print(f'user_id: {user_id}')
             user = MelimitUser.objects.get(id=user_id)
             print(f'user: {user}')
-            return render(request, 'user/index.html', {'user': user})
+            user_taste = user.taste  # ユーザーの好みを取得
+            matching_sales = Sale.objects.filter(product__product_category=user_taste).order_by('?')[:3]  # ユーザーの好みに合った商品をランダムに3つ取得
+            
+            # matching_sales = Sale.objects.filter(product__product_category=user_taste)  # ユーザーの好みに合った商品を取得
+            # random_sale = random.choice(matching_sales)  # ランダムに1つの商品を選択
+            categories = Product.TASTE_CHOICES #商品をカテゴリーごとに取得
+            # random_sale.sale_priceとrandom_sale.product.product_price
+            
+            sales_by_category = {category[0]: Sale.objects.filter(product__product_category=category[0]) for category in categories}
+            # return render(request, 'index.html', {'random_sale': random_sale})
+            return render(request, 'user/index.html', {'user': user,'random_sales': matching_sales,'sales_by_category': sales_by_category})
         else:
             return redirect('user:omae_store')
     else:
-        return render(request, 'user/index.html')
+        # 商品をカテゴリーごとに取得
+        categories = Product.TASTE_CHOICES
+        sales_by_category = {category[0]: Sale.objects.filter(product__product_category=category[0]) for category in categories}
+        # return render(request, 'sales_list.html', {'sales_by_category': sales_by_category})
+        return render(request, 'user/index.html', {'sales_by_category': sales_by_category})
     # print('index_________')
     # print(request.user.user_id)
     # return render(request, 'user/index.html')
