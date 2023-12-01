@@ -78,7 +78,7 @@
             border-radius: 0.3125rem;
         }
     .joint {
-            background-color: $melimit_pink;
+            background-color: $melimit_lightpink;
             border-radius: 0.3125rem;
         }
     &__soldout{
@@ -92,6 +92,22 @@
     &__text{
         &-bd {
             font-weight: bold;
+        }
+    }
+    
+    .progress-bar {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        border-radius: 5px;
+        overflow: hidden;
+        background-color: #e9ecef;
+        .step {
+            flex: 1;                      // ステップの数に応じて調整
+            background-color: #ccc;
+            &.completed {
+                background-color: #007bff; // 完了したステップの色
+            }
         }
     }
 }
