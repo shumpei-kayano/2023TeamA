@@ -1,0 +1,97 @@
+.contact {
+    &-container {
+        width: 87%;
+        margin: 2rem auto;
+
+        @media (max-width: 768px) {
+            width: 100%;
+        }
+    }
+    &-title {
+        display: block;
+        color: $melimit-black;
+        font-size: 1.5rem;
+        margin-top: 50px;
+        text-align: center;
+
+        @media (max-width: 768px) {
+            font-size: 1.2rem;
+            margin-top: 30px;
+        }
+    }
+    &__form-group {
+        margin-bottom: 50px;
+        position: relative;
+
+        @media (max-width: 768px) {
+            margin-bottom: 30px;
+        }
+
+        &.required {
+            label::before {
+                content: "必須";
+                text-align: center;
+                position: absolute;
+                left: 4rem;
+                background-color: $melimit-red;
+                color: $melimit-white;
+                font-size: 1rem;
+                display: inline-block;
+                width: 10%;
+                padding: 0.5rem 0;
+                margin-right: 2rem;
+            }
+        }
+        input, textarea {
+            display: inline-block;
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #EBEBEB;
+            border-radius: 5px;
+            font-size: 1rem;
+            line-height: 1.5;
+            position: relative;
+            top: -2rem;
+
+            @media (max-width: 768px) {
+                top: 0;
+            }
+        }
+        label {
+            margin: 15rem;
+            line-height: 1.5;
+        }
+        .contact__input-group {
+            position: absolute;
+            right: 4rem;
+            display: inline-block;
+            width: 50%;
+            font-size: 1rem;
+
+            @media (max-width: 768px) {
+                position: static;
+                width: 100%;
+            }
+
+            &:focus {
+                outline: none;
+                border: 1px solid $main_color;
+            }
+        }
+    }
+    .contact-btn {
+        text-align: center;
+        button {
+            margin: 50px 0;
+            background-color: $main_color;
+            color: $melimit-white;
+            width: 20%;
+            padding: 1rem 0;
+
+            @media (max-width: 768px) {
+                width: 100%;
+                margin: 30px 0;
+            }
+        }
+    }
+}

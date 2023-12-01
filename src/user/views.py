@@ -28,9 +28,11 @@ def login_view(request):
     return render(request, 'user/login.html')
 def explain_view(request):
     return render(request, 'user/explain.html')
+def contact_view(request):
+    return render(request, 'user/contact.html')
 
 
-    
+
     # return render(request, 'user/index.html')
 
 def anai(request):
