@@ -5,8 +5,9 @@ from accounts.mixins import MelimitModelMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from accounts.forms import MelimitStoreLoginForm
 from django.contrib.auth import authenticate, login
-from .models import Sale
+from .models import Product, Sale, Threshold
 from django.core.exceptions import ObjectDoesNotExist
+from django.views.generic import View
 
 # Create your views here.
 def index(request):
@@ -61,7 +62,12 @@ def sale_detail_view(request, pk):
         except ObjectDoesNotExist:
             print('ログインしているmelimitstoreと取得したいsaleのmelimitstoreが一致しません')
             return render(request, 'store/test3_error.html')
-        return render(request, 'store/test3.html', {'sale': sale, 'user': user,})
+        if sale.sale_type == 'general_sales':
+            return render(request, 'store/detail-general.html', {'sale': sale, 'user': user,})
+        elif sale.sale_type == 'melimit_sales':
+            threshold = Threshold.objects.get(sale=sale)
+            print(f"threshold : {threshold}")
+            return render(request, 'store/detail-group.html', {'sale': sale, 'threshold': threshold, 'user': user,})
     else:
         print('ログインしていません')
         # エラーページを表示する
@@ -149,10 +155,19 @@ def create_group_purchase_view(request):
 
     return render(request, 'store/create-group-purchase.html', {'product_form': product_form, 'sale_form': sale_form, 'threshold_form': threshold_form, 'user': user, })
 
+    return render(request, 'store/create-group-purchase.html', {'product_form': product_form, 'sale_form': sale_form, 'user': user, })
+# 商品詳細ページ(一般)
 def detail_general_view(request):
     return render(request, 'store/detail-general.html')
+# 商品詳細ページ(共同)
 def detail_group_view(request):
     return render(request, 'store/detail-group.html')
+# 詳細ページから遷移した商品編集ページ(一般)
+def detail_general_edit_view(request):
+    return render(request, 'store/detail-general-edit.html')
+# 詳細ページから遷移した商品編集ページ(共同)
+def detail_group_edit_view(request):
+    return render(request, 'store/detail-group-edit.html')
 
 # ログイン処理
 def store_login_view(request):
@@ -281,6 +296,33 @@ def product_and_sale_list(request):
     for sale in sales:
         print(sale.__dict__)
     return render(request, 'store/test2.html', {'products': products, 'sales': sales, 'user': user,})
+
+class ProductAndSaleDeleteView(View):
+    def get(self, request, *args, **kwargs):
+        product_ids = request.GET.getlist('product_ids')  # 選択した商品のIDを取得
+        print(f"product_ids : {product_ids}")
+        products = Product.objects.filter(id__in=product_ids)
+        for product in products:
+            sales = product.sale_set.all()  # Productに関連するSaleを取得
+            for sale in sales:
+                print(f"sale : {sale}")
+        print(f"products : {products}")
+        print(f"sales : {sales}")
+        return render(request, 'store/test4.html', {'products': products})
+
+    def post(self, request, *args, **kwargs):
+        product_ids = request.POST.getlist('product_ids')  # 選択した商品のIDを取得
+        for product_id in product_ids:
+            self.delete_product_and_sale(product_id)
+        return redirect('store:test2')
+
+    def delete_product_and_sale(self, product_id):
+        # productモデルの削除
+        product = get_object_or_404(Product, id=product_id)
+        product.delete()
+        # saleモデルの削除
+        sale = get_object_or_404(Sale, product_id=product_id)
+        sale.delete()
 
 # productモデルの登録
 # 未使用

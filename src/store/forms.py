@@ -21,11 +21,12 @@ class ProductForm(forms.ModelForm):
                 'required': 'required'
             }),
             'product_image': forms.ClearableFileInput(attrs={
+                'id': 'example',
                 'class': 'input-active', 
                 'placeholder': '画像を選択してください',
                 'required': 'required',
                 'multiple': True,
-                'accept': 'image/*'
+                'accept': 'image/*',
             }),
             'product_price': forms.NumberInput(attrs={
                 'class': 'input-active', 
@@ -62,12 +63,14 @@ class SaleForm(forms.ModelForm):
                 'required': 'required'
             }),
             'sale_start': forms.DateTimeInput(attrs={
+                'id': 'startDateTime',
                 'class': 'input-active', 
                 'title': '販売開始日時を入力してください',
                 'required': 'required',
                 'type': 'datetime-local'
             }),
             'sale_end': forms.DateTimeInput(attrs={
+                'id': 'endDateTime',
                 'class': 'input-active', 
                 'title': '販売終了日時を入力してください',
                 'required': 'required',

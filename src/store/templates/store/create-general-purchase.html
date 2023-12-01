@@ -85,7 +85,7 @@
             <div class="category-box-title">
               <div class="title-text">在庫数</div>
             </div>
-            <div class="price-box-input">
+            <div class="stock-box-input">
               {{ sale_form.stock }}
             </div>
           </div>
@@ -121,11 +121,11 @@
           </div>
 
           <!-- 画像の選択欄 -->
-          <div class="category-box">
+          <div class="category-box" style="height: 200px;">
             <div class="category-box-title">
               <div class="title-text">画像</div>
             </div>
-            <div class="image-box-input">
+            <div class="image-box-input" style="height: 200px;">
               {{ product_form.product_image }}
               {% comment %} <input
                 type="file"
@@ -140,11 +140,11 @@
           </div>
 
           <!-- 商品説明の入力欄 -->
-          <div class="category-box">
+          <div class="category-box" style="height: 200px;">
             <div class="category-box-title">
               <div class="title-text">商品説明</div>
             </div>
-            <div class="description-box-input">
+            <div class="description-box-input" style="height: 200px;">
               {{ sale_form.description }}
             </div>
           </div>
@@ -189,6 +189,7 @@
           const imageUrl = e.target.result; // 画像のURLはevent.target.resultで呼び出せる
           const img = document.createElement("img"); // img要素を作成
           img.src = imageUrl; // 画像のURLをimg要素にセット
+          img.style.maxHeight = '170px'; // 最大高さを設定
           preview.appendChild(img); // #previewの中に追加
         }
       
