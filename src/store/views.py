@@ -219,8 +219,9 @@ def store_base_view(request):
     mixin = MelimitModelMixin()
     mixin.request = request
     user = mixin.get_melimitmodel_user()
-    # お客さんがログインしようとしたときの処理
-    if user.__class__.__name__ == 'MelimitUser':
+    # melimitstore以外のユーザーを弾く
+    # if user.__class__.__name__ == 'MelimitUser':
+    if user.__class__.__name__ != 'MelimitStore':
         return redirect('user:omae_user')
     # user = request.user
     # store_id = request.session.get('store_id')
@@ -302,27 +303,32 @@ class ProductAndSaleDeleteView(View):
         product_ids = request.GET.getlist('product_ids')  # 選択した商品のIDを取得
         print(f"product_ids : {product_ids}")
         products = Product.objects.filter(id__in=product_ids)
+        sales = []
         for product in products:
-            sales = product.sale_set.all()  # Productに関連するSaleを取得
-            for sale in sales:
-                print(f"sale : {sale}")
+            product_sales = product.sale_set.all()  # Productに関連するSaleを取得
+            sales.extend(product_sales)  # Saleをリストに追加
         print(f"products : {products}")
         print(f"sales : {sales}")
         return render(request, 'store/test4.html', {'products': products})
 
     def post(self, request, *args, **kwargs):
         product_ids = request.POST.getlist('product_ids')  # 選択した商品のIDを取得
+        print(f"del_product_ids : {product_ids}")
         for product_id in product_ids:
+            print(f"delete : {product_id}")
             self.delete_product_and_sale(product_id)
         return redirect('store:test2')
 
     def delete_product_and_sale(self, product_id):
         # productモデルの削除
         product = get_object_or_404(Product, id=product_id)
+        print(f"del_product : {product}")
+        print(f"del_id : {product_id}")
         product.delete()
-        # saleモデルの削除
-        sale = get_object_or_404(Sale, product_id=product_id)
-        sale.delete()
+    # productはsaleの外部キーなので、productを削除するとsaleも削除される
+    # また、thresholdはsaleの外部キーなので、saleを削除するとthresholdも削除される
+    # そのため、productを削除すると関連するsaleとthresholdも削除される
+    # モデル定義でon_delete=models.CASCADEを指定しているため
 
 # productモデルの登録
 # 未使用
