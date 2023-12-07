@@ -75,6 +75,7 @@ def sale_detail_view(request, pk):
 
 # 一般新規登録
 def create_general_purchase_view(request):
+    print('view:create_general_purchase_view')
     mixin = MelimitModelMixin()
     mixin.request = request
     user = mixin.get_melimitmodel_user()
@@ -83,24 +84,32 @@ def create_general_purchase_view(request):
         sale_form = SaleForm(request.POST)
         product_form.instance.store = user.melimitstore
         # product_form.instance.storeを表示する
-        print(product_form.instance.store)
+        print(f"product_form.instance.store: {product_form.instance.store}")
         sale_form.instance.store = user.melimitstore
         # sale_form.instance.storeを表示する
-        print(sale_form.instance.store)
+        print(f"sale_form.instance.store: {sale_form.instance.store}")
         sale_form.instance.product = product_form.instance
         # sale_form.instance.productを表示する
-        print(sale_form.instance.product)
+        print(f"sale_form.instance.product: {sale_form.instance.product}")
         if product_form.is_valid() and sale_form.is_valid():
-            product = product_form.save()
-            sale = sale_form.save(commit=False)
-            sale.sale_type = 'general_sales'
-            sale.product = product
-            sale.save()
-            # ここでリダイレクトやメッセージ表示などを行う
+            product_price = product_form.cleaned_data.get('product_price')
+            sale_price = sale_form.cleaned_data.get('sale_price')
+            print(f"定価product_price:{product_price}")
+            print(f"販売sale_price:{sale_price}")
+            if sale_price > product_price:
+                sale_form.add_error('sale_price', '販売価格は定価以下で入力して下さい。')
+                print(f"view_sale_form.errors: {sale_form.errors}")
+            else:
+                product = product_form.save()
+                sale = sale_form.save(commit=False)
+                sale.sale_type = 'general_sales'
+                sale.product = product
+                sale.save()
+                # ここでリダイレクトやメッセージ表示などを行う
         else:
-            print('ビューのform.is_valid()失敗')
-            print(product_form.errors)
-            print(sale_form.errors)
+            print('一般新規登録ビューのform.is_valid()失敗')
+            print(f"product_form.errors: {product_form.errors}")
+            print(f"sale_form.errors: {sale_form.errors}")
     else:
         product_form = ProductForm()
         sale_form = SaleForm()
@@ -171,6 +180,7 @@ def detail_group_edit_view(request):
 
 # ログイン処理
 def store_login_view(request):
+    print('view:store_login_view')
     user = request.user
     # username = user.username
     # model_name = user.__class__.__name__
@@ -216,6 +226,7 @@ def store_login_view(request):
 
 # ログイン後の店舗管理画面
 def store_base_view(request):
+    print('view:store_base_view')
     mixin = MelimitModelMixin()
     mixin.request = request
     user = mixin.get_melimitmodel_user()

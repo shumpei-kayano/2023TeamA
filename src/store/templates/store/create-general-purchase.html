@@ -23,8 +23,24 @@
     <div class="group-purchase-create">
       <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-
         <div class="group-purchase-input">
+
+        {% if sale_form.sale_price.errors %}
+          <div style="color: red;">
+            {{ sale_form.sale_price.errors }}
+          </div>
+        {% endif %}
+        {% if product_form.errors %}
+          <div style="color: red;">
+            <ul>
+              {% for field, errors in product_form.errors.items %}
+                {% for error in errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
 
           <!-- 商品名の入力欄 -->
           <div class="product-name-box">
@@ -53,6 +69,9 @@
             </div>
             <div class="price-box-input">
               {{ sale_form.sale_price }}
+              {% if sale_form.sale_price.errors %}
+                {{ sale_form.sale_price.errors }}
+              {% endif %}
             </div>
           </div>
 

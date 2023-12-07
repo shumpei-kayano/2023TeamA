@@ -6,7 +6,9 @@ from accounts.models import MelimitStore, MelimitUser
 # 各viewで使用する
 class MelimitModelMixin:
     def get_melimitmodel_user(self):
+        print('mixins:get_melimitmodel_user')
         user = self.request.user
+        print(f"mixin_user：{user}")
         if not user.is_authenticated:
             print("ログインしてない")
             # ログインしていない場合の処理を記述

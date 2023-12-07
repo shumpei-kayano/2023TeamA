@@ -8,7 +8,12 @@
     <p>store：{{ user.melimitstore }}</p>
     <p>{{ product_form.product_name.label_tag }} {{ product_form.product_name }}</p>
     <p>{{ product_form.product_category.label_tag }} {{ product_form.product_category }}</p>
-    <p>{{ product_form.product_price.label_tag }} {{ product_form.product_price }}</p>
+    <p>
+        {{ product_form.product_price.label_tag }} {{ product_form.product_price }}
+            {% if product_form.product_price.errors %}
+                {{ product_form.product_price.errors }}
+            {% endif %}
+    </p>
     <p>{{ sale_form.sale_price.label_tag }} {{ sale_form.sale_price }}</p>
     <p>{{ sale_form.sale_start.label_tag }} {{ sale_form.sale_start }}</p>
     <p>{{ sale_form.sale_end.label_tag }} {{ sale_form.sale_end }}</p>
