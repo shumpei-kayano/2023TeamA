@@ -22,132 +22,140 @@
     </div>
 
 
-    
     <div class="group-purchase-create">
-        <form method="post" enctype="multipart/form-data">
-          {% csrf_token %}
-  
-          <div class="group-purchase-input">
-  
-            <!-- 商品名の入力欄 -->
-            <div class="product-name-box">
-              <div class="product-name-box-title">
-                <div class="title-text">商品名</div>
-              </div>
-              <div class="product-name-box-input">
-                {{ product_form.product_name }}
-              </div>
+      <form action="#">
+
+        <div class="group-purchase-input">
+
+          <!-- 商品名の入力欄 -->
+          <div class="product-name-box">
+            <div class="product-name-box-title">
+              <div class="title-text">商品名</div>
             </div>
-  
-            <!-- カテゴリの選択欄 -->
-            <div class="category-box">
-              <div class="category-box-title">
-                <div class="title-text">カテゴリ</div>
-              </div>
-              <div class="category-box-input">
-                {{ product_form.product_category }}
-              </div>
+            <div class="product-name-box-input">
+              <input type="text" class="input-active" placeholder="商品名を入力してください" required/>
             </div>
-  
-            <!-- 販売価格の入力欄 -->
-            <div class="category-box">
-              <div class="category-box-title">
-                <div class="title-text">販売価格</div>
-              </div>
-              <div class="price-box-input">
-                {{ sale_form.sale_price }}
-              </div>
+          </div>
+
+          <!-- カテゴリの選択欄 -->
+          <div class="category-box">
+            <div class="category-box-title">
+              <div class="title-text">カテゴリ</div>
             </div>
-  
-            <!-- 定価の入力欄 -->
-            <div class="category-box">
-              <div class="category-box-title">
-                <div class="title-text">定価</div>
-              </div>
-              <div class="listprice-box-input">
-                <input type="number" class="input-active" placeholder="定価を入力してください（※半角数字）" required/>
-              </div>
+            <div class="category-box-input">
+              <select class="input-active">
+                <option value="" disabled selected>カテゴリを選んでください</option>
+                <option value="beef">肉</option>
+                <option value="vege">野菜</option>
+                <option value="fruit">果物</option>
+                <option value="fish">魚</option>
+                <option value="shellfish">甲殻類</option>
+                <option value="desert">菓子</option>
+                <option value="carbo">米・パン・麺</option>
+                <option value="others">その他</option>
+              </select>
             </div>
-  
-            <!-- 表示期間の入力欄 -->
-            <div class="category-box">
-              <div class="category-box-title">
-                <div class="title-text">表示期間</div>
-              </div>
-              <div class="period-box-input">
-                <p>開始：</p><input type="datetime-local" id="startDateTime" class="input-active" placeholder="開始日時を入力してください" required/>
-                <p>～終了：</p><input type="datetime-local" id="endDateTime" class="input-active" placeholder="終了日時を入力してください" required/>
-              </div>
+          </div>
+
+          <!-- 販売価格の入力欄 -->
+          <div class="category-box">
+            <div class="category-box-title">
+              <div class="title-text">販売価格</div>
             </div>
-  
-            <!-- 在庫数の入力欄 -->
-            <div class="category-box">
-              <div class="category-box-title">
-                <div class="title-text">在庫数</div>
-              </div>
-              <div class="price-box-input">
-                {{ sale_form.stock }}
-              </div>
+            <div class="price-box-input">
+              <input type="number" class="input-active" placeholder="販売価格を入力してください（※半角数字）" required/>
             </div>
-  
-            <!-- 送料の入力欄 -->
-            <div class="category-box">
-              <div class="category-box-title">
-                <div class="title-text">送料</div>
-              </div>
-              <div class="shipping-box-input">
-                <input type="number" class="input-active" placeholder="送料を入力してください（※半角数字）" required/>
-              </div>
+          </div>
+
+          <!-- 定価の入力欄 -->
+          <div class="category-box">
+            <div class="category-box-title">
+              <div class="title-text">定価</div>
             </div>
-  
-            <!-- 重量の入力欄 -->
-            <div class="category-box">
-              <div class="category-box-title">
-                <div class="title-text">重量</div>
-              </div>
-              <div class="weight-box-input">
-                {{ product_form.weight }}
-              </div>
+            <div class="listprice-box-input">
+              <input type="number" class="input-active" placeholder="定価を入力してください（※半角数字）" required/>
             </div>
-  
-            <!-- 賞味期限の入力欄 -->
-            <div class="category-box">
-              <div class="category-box-title">
-                <div class="title-text">賞味期限</div>
-              </div>
-              <div class="expiration-box-input">
-                {{ sale_form.expiration_date }}
-              </div>
+          </div>
+
+          <!-- 表示期間の入力欄 -->
+          <div class="category-box">
+            <div class="category-box-title">
+              <div class="title-text">表示期間</div>
             </div>
-  
-            <!-- 画像の選択欄 -->
-            <div class="category-box" style="height: 200px;">
-              <div class="category-box-title">
-                <div class="title-text">画像</div>
-              </div>
-              <div class="image-box-input" style="height: 200px;">
-                {% comment %} {{ product_form.product_image }} {% endcomment %}
-                <input
-                  type="file"
-                  id="example"
-                  class="input-active"
-                  accept="image/*"
-                  placeholder="画像を選択してください"
-                  multiple
-                  required />
-                  <div id="preview"></div>
-              </div>
+            <div class="period-box-input">
+              <p>開始：</p><input type="datetime-local" id="startDateTime" class="input-active" placeholder="開始日時を入力してください" required/>
+              <p>～終了：</p><input type="datetime-local" id="endDateTime" class="input-active" placeholder="終了日時を入力してください" required/>
             </div>
-  
-            <!-- 商品説明の入力欄 -->
-            <div class="category-box" style="height: 200px;">
-              <div class="category-box-title">
-                <div class="title-text">商品説明</div>
-              </div>
-              <div class="description-box-input" style="height: 200px;">
-                {{ sale_form.description }}
-              </div>
+          </div>
+
+          <!-- 在庫数の入力欄 -->
+          <div class="category-box">
+            <div class="category-box-title">
+              <div class="title-text">在庫数</div>
             </div>
+            <div class="stock-box-input">
+              <input type="number" class="input-active" placeholder="在庫数を入力してください（※半角数字）" required/>
+            </div>
+          </div>
+
+          <!-- 送料の入力欄 -->
+          <div class="category-box">
+            <div class="category-box-title">
+              <div class="title-text">送料</div>
+            </div>
+            <div class="shipping-box-input">
+              <input type="number" class="input-active" placeholder="送料を入力してください（※半角数字）" required/>
+            </div>
+          </div>
+
+          <!-- 重量の入力欄 -->
+          <div class="category-box">
+            <div class="category-box-title">
+              <div class="title-text">重量</div>
+            </div>
+            <div class="weight-box-input">
+              <input type="number" class="input-active" placeholder="重量をg（グラム）で入力してください（※半角数字）" required/>
+            </div>
+          </div>
+
+          <!-- 賞味期限の入力欄 -->
+          <div class="category-box">
+            <div class="category-box-title">
+              <div class="title-text">賞味期限</div>
+            </div>
+            <div class="expiration-box-input">
+              <input type="date" class="input-active" placeholder="賞味期限を入力してください" required/>
+            </div>
+          </div>
+
+          <!-- 画像の選択欄 -->
+          <div class="category-box" style="height: 200px;">
+            <div class="category-box-title">
+              <div class="title-text">画像</div>
+            </div>
+            <div class="image-box-input" style="height: 200px;">
+              <input
+                type="file"
+                id="example"
+                class="input-active"
+                accept="image/*"
+                placeholder="画像を選択してください"
+                multiple
+                required />
+                <div id="preview"></div>
+            </div>
+          </div>
+
+          <!-- 商品説明の入力欄 -->
+          <div class="category-box" style="height: 200px;">
+            <div class="category-box-title">
+              <div class="title-text">商品説明</div>
+            </div>
+            <div class="description-box-input" style="height: 200px;">
+              <textarea
+                class="input-active" placeholder="商品説明を入力してください" required></textarea>
+            </div>
+          </div>
   
             <div class="general-purchase-button" id="generalPurchaseButtonContainer">
               <button class="general-btn-conf" type="submit">編集内容を確認する</button>

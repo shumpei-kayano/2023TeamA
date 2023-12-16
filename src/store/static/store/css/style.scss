@@ -1,6 +1,8 @@
 // base.cssを一番下にする
-@import "order-history";
+@import "order-not-shipped-content";
 @import "order-not-shipped";
+@import "order-history-content";
+@import "order-history";
 @import "product-manage";
 @import "create-general-purchase";
 @import "create-group-purchase";
