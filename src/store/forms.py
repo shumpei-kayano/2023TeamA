@@ -2,6 +2,7 @@ from django import forms
 from .models import Product, Sale, Threshold
 
 class ProductForm(forms.ModelForm):
+
     class Meta:
         model = Product
         exclude = ['store'] # storeは自動で入るので、フォームには表示しない
@@ -37,6 +38,14 @@ class ProductForm(forms.ModelForm):
         }
 
 class SaleForm(forms.ModelForm):
+    # sale_price = forms.IntegerField(
+    #     min_value=1,
+    #     max_value=1_000_000,
+    #     error_messages={
+    #         'min_value': '販売価格は1円以上100万円以下で入力して下さい。',
+    #         'max_value': '販売価格は1円以上100万円以下で入力して下さい。',
+    #     }
+    # )
     class Meta:
         model = Sale
         exclude = ['product', 'store']
@@ -79,14 +88,27 @@ class SaleForm(forms.ModelForm):
             }),
         }
 
-    # 販売価格のバリデーション
-    def clean_sale_price(self):
-        print('関数:clean_sale_price')
-        sale_price = self.cleaned_data.get('sale_price')
-        print(f"sale_price:{sale_price}")
+    def clean(self):
+        print('関数:clean')
+        cleaned_data = super().clean()
+        sale_price = cleaned_data.get('sale_price')
+        product_price = self.instance.product.product_price if self.instance.product else None
+        print(f"クリーンsale_price:{sale_price}")
+        print(f"クリーンproduct_price:{product_price}")
+        if sale_price and product_price and sale_price > product_price:
+            self.add_error('sale_price', '販売価格は商品の定価以下でなければなりません。')
         if sale_price is not None and (sale_price < 1 or sale_price > 1_000_000):
-            raise forms.ValidationError('販売価格は1円以上100万円以下で入力して下さい。')
-        return sale_price
+            self.add_error('sale_price', '販売価格は1円以上100万円以下で入力して下さい。')
+        return cleaned_data
+
+    # 販売価格のバリデーション
+    # def clean_sale_price(self):
+    #     print('関数:clean_sale_price')
+    #     sale_price = self.cleaned_data.get('sale_price')
+    #     print(f"sale_price:{sale_price}")
+    #     if sale_price is not None and (sale_price < 1 or sale_price > 1_000_000):
+    #         raise forms.ValidationError('販売価格は1円以上100万円以下で入力して下さい。')
+    #     return sale_price
 
 class ThresholdForm(forms.ModelForm):
     class Meta:
