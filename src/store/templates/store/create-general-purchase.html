@@ -26,21 +26,34 @@
         <div class="group-purchase-input">
 
         {% if sale_form.sale_price.errors %}
-          <div style="color: red;">
+          {% comment %} <div style="color: red;"> {% endcomment %}
             {{ sale_form.sale_price.errors }}
-          </div>
+          {% comment %} </div> {% endcomment %}
         {% endif %}
+
+        <div style="color: red;">
+          <ul>
+        {% if sale_form.errors %}
+        {% for field, errors in sale_form.errors.items %}
+        {% for error in errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+        {% endfor %}
+        {% endif %}
+
         {% if product_form.errors %}
-          <div style="color: red;">
-            <ul>
+          {% comment %} <div style="color: red;"> {% endcomment %}
+            {% comment %} <ul> {% endcomment %}
               {% for field, errors in product_form.errors.items %}
                 {% for error in errors %}
                   <li>{{ error }}</li>
                 {% endfor %}
               {% endfor %}
-            </ul>
-          </div>
+            {% comment %} </ul>
+          </div> {% endcomment %}
         {% endif %}
+          </ul>
+        </div>
 
           <!-- 商品名の入力欄 -->
           <div class="product-name-box">

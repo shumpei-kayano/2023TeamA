@@ -37,6 +37,13 @@ class ProductForm(forms.ModelForm):
             }),
         }
 
+    def clean_product_price(self):
+        product_price = self.cleaned_data.get('product_price')
+        if product_price is not None and (product_price < 1 or product_price > 1_000_000):
+            # raise forms.ValidationError('定価は1円以上100万円以下で入力して下さい。')
+            self.add_error('product_price', '定価は1円以上100万円以下で入力して下さい。')
+        return product_price
+
 class SaleForm(forms.ModelForm):
     # sale_price = forms.IntegerField(
     #     min_value=1,
