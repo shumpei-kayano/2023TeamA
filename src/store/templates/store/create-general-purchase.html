@@ -5,6 +5,7 @@
 {% block title %}一般購入商品の新規登録{% endblock %}
 
 {% block contents %}
+
 <div class="product-manage__container">
 
     <div class="topic-path">
@@ -18,7 +19,7 @@
         <img class="fibermanualrecordfilled-icon" alt="" src="{% static 'store/img/maru.png' %}" />
     </div>
 
-
+    <div class="contents">
 
     <div class="group-purchase-create">
       <form method="post" enctype="multipart/form-data">
@@ -204,6 +205,9 @@
 
       </form>
     </div>
+    </div>
+
+</div>
 
 
 
@@ -383,7 +387,8 @@
   
       // 「この内容で登録する」ボタンのクリックイベント
       confirmButton.addEventListener('click', function () {
-          alert('この内容で登録しました！');
+          alert('新規登録が完了しました！');
+          window.location.href = "detail-general"; // detail-generalにリダイレクト
           closeModal();
       });
       

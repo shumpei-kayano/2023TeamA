@@ -1,0 +1,103 @@
+{% extends "store/base.html" %}
+
+{% load static %}
+
+{% block title %}発送済み注文履歴{% endblock %}
+
+{% block contents %}
+
+    {% comment %} <div class="order-history__container"> {% endcomment %}
+      <div class="topic-path">
+        <div class="order-manage">注文管理</div>
+        <img class="searchfilled-icon" alt="" src="{% static 'store/img/keyboardarrowright_mini.png' %}" />
+        <div class="order-manage">発送済み注文履歴</div>
+        <img class="searchfilled-icon" alt="" src="{% static 'store/img/keyboardarrowright_mini.png' %}" />
+        <div class="order-manage">詳細</div>
+      </div>
+    {% comment %} </div> {% endcomment %}
+
+
+    <div class="oeder-history-contents">
+        <!-- ここから購入した人の情報 -->
+        <!-- どの項目が必要か？ -->
+        <div class="consumer-info">
+          <div class="consumer-info-title">購入者情報</div>
+        </div>
+        <div class="consumer-info-con">
+          <table>
+            <tr class="consumer-table-con">
+              <th class="info-label">注文番号</th>
+              <td class="info-value">20231212</td>
+            </tr>
+            <tr class="consumer-table-con">
+              <th class="info-label">名前</th>
+              <td class="info-value">山田 太郎</td>
+            </tr>
+            <tr class="consumer-table-con">
+              <th class="info-label">メールアドレス</th>
+              <td class="info-value">taro.yamada@sample.com</td>
+            </tr>
+            <tr class="consumer-table-con">
+              <th class="info-label">電話番号</th>
+              <td class="info-value">080-0000-0000</td>
+            </tr>
+            <tr class="consumer-table-con">
+                <th class="info-label">住所</th>
+                <td class="info-value">〒000-0000　東京都 渋谷区 本町2丁目1-1</td>
+            </tr>
+          </table>
+        </div>
+  
+  
+  
+        <!-- ここから購入内容 -->
+        <!-- どの項目が必要か？ -->
+        <div class="consumer-info-naiyou">
+          <div class="consumer-info-title">購入内容</div>
+        </div>
+        <div class="consumer-naiyou-con">
+          <table style="margin-bottom: 1000px;">
+            <tr class="consumer-table-con">
+              <th class="info-label">注文日</th>
+              <td class="info-value">2022/12/18</td>
+            </tr>
+            <tr class="consumer-table-con">
+              <th class="info-label">商品名</th>
+              <td class="info-value">ほわー</td>
+            </tr>
+            <tr class="consumer-table-con">
+              <th class="info-label">数量</th>
+              <td class="info-value">100個</td>
+            </tr>
+            <tr class="consumer-table-con">
+              <th class="info-label">販売価格</th>
+              <td class="info-value">1,000円</td>
+            </tr>
+            <tr class="consumer-table-con">
+              <th class="info-label">合計金額</th>
+              <td class="info-value">100,000円</td>
+            </tr>
+            <tr class="consumer-table-con">
+              <th class="info-label">支払い方法</th>
+              <td class="info-value">クレジットカード</td>
+            </tr>
+            <tr class="consumer-table-con">
+              <th class="info-label">CO2排出削減量</th>
+              <td class="info-value">100g</td>
+            </tr>
+            <tr class="consumer-table-con">
+              <th class="info-label">配送日</th>
+              <td class="info-value">2022/12/20</td>
+            </tr>
+            <tr class="consumer-table-con">
+              <th class="info-label">販売種別</th>
+              <td class="info-value">共同</td>
+            </tr>
+          </table>
+        </div>
+
+
+
+
+
+{% endblock %}

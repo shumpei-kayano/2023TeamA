@@ -1,0 +1,114 @@
+.shipment {
+    position: absolute;
+    top: 850px;
+    left: 265px;
+    background-color: var(--color);
+    border-left: 5px solid var(--color-black);
+    box-sizing: border-box;
+    width: 992px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 8px;
+  }
+  .shipment-btn {
+    position: absolute;
+    top: 880px;
+    left: 50%;
+    margin: 50px;
+    border-radius: var(--br-9xs);
+    background-color: #333;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .shipment-btn-con {
+    border: none;
+    background: none;
+    padding: 20px 30px;
+    font-size: 16px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .shipment-btn-con:hover {
+    background-color: #bbb;
+    border-radius: var(--br-9xs);
+  }
+  
+
+
+  .shipment-modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  .shipment-modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%;
+    height: 60%;
+    border-radius: 5px;
+  }
+  
+  .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .shipment-modal-label {
+    position: absolute;
+    top: 210px;
+    left: 400px;
+    font-size: var(--font-size-sm);
+  }
+  .shipment-modal-input {
+    position: relative;
+    top: 60px;
+    left: 15%;
+    background-color: var(--color);
+    border: 1px solid var(--color-gainsboro-100);
+    box-sizing: border-box;
+    border-radius: 2px;
+    width: 500px;
+    height: 50px;
+    padding: 10px;
+    cursor: pointer;
+  }
+.shipment-modal-btn-con {
+  position: absolute;
+  font-size: medium;
+  top: 320px;
+  border-radius: var(--br-9xs);
+  background-color: var(--color-black);
+  width: 200px;
+  left: 42%;
+  font-weight: bold;
+  box-sizing: border-box;
+  cursor: pointer;
+  border: none;
+  padding: 15px;
+  color: #fff;
+}
+.shipment-modal-btn-con:hover {
+  background-color: #bbb;
+  border-radius: var(--br-9xs);
+}
