@@ -37,6 +37,7 @@ class ProductForm(forms.ModelForm):
             }),
         }
 
+    # 定価のバリデーション
     def clean_product_price(self):
         product_price = self.cleaned_data.get('product_price')
         if product_price is not None and (product_price < 1 or product_price > 1_000_000):
@@ -45,14 +46,6 @@ class ProductForm(forms.ModelForm):
         return product_price
 
 class SaleForm(forms.ModelForm):
-    # sale_price = forms.IntegerField(
-    #     min_value=1,
-    #     max_value=1_000_000,
-    #     error_messages={
-    #         'min_value': '販売価格は1円以上100万円以下で入力して下さい。',
-    #         'max_value': '販売価格は1円以上100万円以下で入力して下さい。',
-    #     }
-    # )
     class Meta:
         model = Sale
         exclude = ['product', 'store']
@@ -95,6 +88,7 @@ class SaleForm(forms.ModelForm):
             }),
         }
 
+    # formのclassが違うので、cleanメソッドをオーバーライドして販売価格と定価を比較する
     def clean(self):
         print('関数:clean')
         cleaned_data = super().clean()
@@ -103,19 +97,20 @@ class SaleForm(forms.ModelForm):
         print(f"クリーンsale_price:{sale_price}")
         print(f"クリーンproduct_price:{product_price}")
         if sale_price and product_price and sale_price > product_price:
-            self.add_error('sale_price', '販売価格は商品の定価以下でなければなりません。')
-        if sale_price is not None and (sale_price < 1 or sale_price > 1_000_000):
-            self.add_error('sale_price', '販売価格は1円以上100万円以下で入力して下さい。')
+            self.add_error('sale_price', '販売価格は商品の定価未満で入力して下さい。')
+        # if sale_price is not None and (sale_price < 1 or sale_price > 1_000_000):
+        #     self.add_error('sale_price', '販売価格は1円以上100万円以下で入力して下さい。')
         return cleaned_data
 
     # 販売価格のバリデーション
-    # def clean_sale_price(self):
-    #     print('関数:clean_sale_price')
-    #     sale_price = self.cleaned_data.get('sale_price')
-    #     print(f"sale_price:{sale_price}")
-    #     if sale_price is not None and (sale_price < 1 or sale_price > 1_000_000):
-    #         raise forms.ValidationError('販売価格は1円以上100万円以下で入力して下さい。')
-    #     return sale_price
+    def clean_sale_price(self):
+        print('関数:clean_sale_price')
+        sale_price = self.cleaned_data.get('sale_price')
+        print(f"sale_price:{sale_price}")
+        if sale_price is not None and (sale_price < 1 or sale_price > 1_000_000):
+            # raise forms.ValidationError('販売価格は1円以上100万円以下で入力して下さい。')
+            self.add_error('sale_price', '販売価格は1円以上100万円以下で入力して下さい。')
+        return sale_price
 
 class ThresholdForm(forms.ModelForm):
     class Meta:
