@@ -721,9 +721,20 @@ body {
   justify-content: space-around;
 }
 #confirmLogout, #cancelLogout {
+  border-radius: 5px;
   margin: 10px;
   padding: 10px 20px; /* ボタン内のテキストとボタンの境界との間隔を調整 */
   font-size: 18px; /* テキストのサイズを調整 */
   font-weight: bold; /* テキストの太さを調整 */
   border: none; /* ボタンの枠線を削除 */
+  cursor: pointer;
+}
+#confirmLogout:hover, #cancelLogout:hover {
+  border-radius: 5px;
+  background-color: #444;
+  color: white;
+  cursor: pointer;
+}
+a,a:visited{
+  color: inherit;
 }

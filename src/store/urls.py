@@ -8,8 +8,12 @@ urlpatterns = [
     path('', views.index, name='index'),
     # 発送済み注文履歴ページ
     path('order-history', views.order_history_view, name='order-history'),
+    # 発送済み注文履歴ページの中身
+    path('order-history-content', views.order_history_content_view, name='order-history-content'),
     # 未発送注文一覧ページ
     path('order-not-shipped', views.order_not_shipped_view, name='order-not-shipped'),
+    # 未発送注文一覧ページの中身
+    path('order-not-shipped-content', views.order_not_shipped_content_view, name='order-not-shipped-content'),
     # 商品管理一覧ページ
     path('product-manage', views.product_manage_view, name='product-manage'),
     # 商品新規登録ページ
@@ -32,5 +36,13 @@ urlpatterns = [
     path('detail-group', views.detail_group_view, name='detail-group'),
     # 商品編集ページ
     path('detail-general-edit', views.detail_general_edit_view, name='detail-general-edit'),
-    path('detail-group-edit', views.detail_group_edit_view, name='detail-group-edit')
+    path('detail-group-edit', views.detail_group_edit_view, name='detail-group-edit'),
+    # パスワード再設定用のメール送信ページ
+    path('pass-mail', views.pass_mail_view, name='pass_mail'),
+    # 店舗情報設定ページ
+    path('store-info', views.store_info_view, name='store-info'),
+    # 店舗情報設定ページの編集
+    path('store-info-edit', views.store_info_edit_view, name='store-info-edit'),
+    # 店舗の新規登録ページ
+    path('store-create', views.store_create_view, name='store-create'),
 ]

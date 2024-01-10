@@ -355,7 +355,8 @@
   
       // 「この内容で登録する」ボタンのクリックイベント
       confirmButton.addEventListener('click', function () {
-          alert('この内容で登録しました！');
+          alert('新規登録が完了しました！');
+          window.location.href = "detail-general"; // detail-generalにリダイレクト
           closeModal();
       });
       

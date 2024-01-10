@@ -16,9 +16,28 @@ def index(request):
 # 発送済み注文履歴(modelは注文履歴モデル、発送済みフラグtrueのものを表示)
 def order_history_view(request):
     return render(request, 'store/order-history.html')
+# 発送済み注文履歴ページの中身
+def order_history_content_view(request):
+    return render(request, 'store/order-history-content.html')
 # 未発送注文一覧ページ(modelは注文履歴モデル、発送済みフラグfalseのものを表示)
 def order_not_shipped_view(request):
     return render(request, 'store/order-not-shipped.html')
+# 未発送注文一覧ページの中身
+def order_not_shipped_content_view(request):
+    return render(request, 'store/order-not-shipped-content.html')
+# パスワード再設定用のメール送信ページ
+def pass_mail_view(request):
+    return render(request, 'store/pass-mail.html')
+# 店舗情報設定ページ
+def store_info_view(request):
+    return render(request, 'store/store-info.html')
+# 店舗情報設定ページの編集
+def store_info_edit_view(request):
+    return render(request, 'store/store-info-edit.html')
+# 店舗の新規登録ページ
+def store_create_view(request):
+    return render(request, 'store/store-create.html')
+
 
 # 商品管理一覧ページ
 # 検証用(render先が仮)
