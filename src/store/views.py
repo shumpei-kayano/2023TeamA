@@ -1,6 +1,6 @@
 from django.shortcuts import render
 # formを使用するためにimport
-from .forms import ProductForm, SaleForm, ThresholdForm
+from .forms import ProductForm, SaleForm, ThresholdForm, MelimitStoreEditForm
 from accounts.mixins import MelimitModelMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from accounts.forms import MelimitStoreLoginForm
@@ -31,9 +31,25 @@ def pass_mail_view(request):
 # 店舗情報設定ページ
 def store_info_view(request):
     return render(request, 'store/store-info.html')
+
 # 店舗情報設定ページの編集
 def store_info_edit_view(request):
-    return render(request, 'store/store-info-edit.html')
+    mixin = MelimitModelMixin()
+    mixin.request = request
+    user = mixin.get_melimitmodel_user()
+    print(f"店舗情報設定ページの編集のuser : {user}")
+    print(request.method)
+    if request.method == 'POST':
+        print('postです')
+        form = MelimitStoreEditForm(request.POST, instance=user.melimitstore)
+        if form.is_valid():
+            form.save()
+            return redirect('store:store-info')
+    else:
+        print('postじゃないです')
+        form = MelimitStoreEditForm(instance=user.melimitstore)
+    return render(request, 'store/store-info-edit.html', {'form': form, 'user': user,})
+
 # 店舗の新規登録ページ
 def store_create_view(request):
     return render(request, 'store/store-create.html')
@@ -55,7 +71,7 @@ def product_manage_view(request):
     print(f"sales : {sales}")
     for sale in sales:
         print(sale.__dict__)
-    return render(request, 'store/test2.html', {'products': products, 'sales': sales, 'user': user,})
+    return render(request, 'store/product-manage.html', {'products': products, 'sales': sales, 'user': user,})
     # return render(request, 'store/product-manage.html')
 
 # 商品詳細ページ
@@ -215,7 +231,7 @@ def store_login_view(request):
             if user is not None:
                 login(request, user)
                 print('ログイン成功')
-                return redirect('store:store_base')
+                return redirect('store:index')
             else:
                 # フォームが無効な場合の処理をここに書く
                 print('pass')

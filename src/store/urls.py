@@ -20,8 +20,8 @@ urlpatterns = [
     path('create-general-purchase', views.create_general_purchase_view, name='create-general-purchase'),
     path('create-group-purchase', views.create_group_purchase_view, name='create-group-purchase'),
     # 商品詳細ページ
-    path('detail-general', views.detail_general_view, name='detail-general'),
-    path('detail-group', views.detail_group_view, name='detail-group'),
+    # path('detail-general', views.detail_general_view, name='detail-general'),
+    # path('detail-group', views.detail_group_view, name='detail-group'),
     # ログイン処理
     path('store_login_success/', views.store_login_view, name='store_login_success'),
     # ログイン後のベースページ

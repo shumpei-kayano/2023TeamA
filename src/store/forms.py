@@ -1,5 +1,6 @@
 from django import forms
 from .models import Product, Sale, Threshold
+from accounts.models import MelimitStore
 
 class ProductForm(forms.ModelForm):
 
@@ -128,3 +129,13 @@ class ThresholdForm(forms.ModelForm):
                 'required': 'required'
             }),
         }
+
+class MelimitStoreEditForm(forms.ModelForm):
+    class Meta:
+        model = MelimitStore
+        fields = ['username', 'postal_code', 'prefecture', 'city', 'address', 'phone_number', 'store_image', 'site_url']
+        # fields = ['username']
+    
+    def save(self, commit=True):
+        user = super().save(commit=True)
+        return user

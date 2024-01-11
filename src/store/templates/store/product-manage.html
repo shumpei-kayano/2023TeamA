@@ -40,6 +40,9 @@
         <span class="create-btn-text">共同購入商品新規登録</span>
       </a>
 
+      <form method="get" action="{% url 'store:product_and_sale_delete' %}">
+        {% csrf_token %}
+
       <div class="bulk-deletion">
         <button type="submit" class="custom-button">
           <img class="dustbox-icon" alt="" src="{% static 'store/img/dustbox.png' %}" />
@@ -69,6 +72,7 @@
         </thead>
         <tbody>
           <tr>
+            {% for sale in sales %}
             {% comment %} <td class="order-number">20230130-01</td>
             <td class="order-day">2023/02/05</td>
             <td class="product-name">商品名が入ります</td>
@@ -76,6 +80,23 @@
             <td class="price">1,000円</td>
             <td class="co2">100g</td>
             <td class="type">共同</td> {% endcomment %}
+            {% comment %} <td class="product-number"><input type="checkbox" id="checkbox">20230130-01</td>
+            <td class="product-name">商品名が入ります</td>
+            <td class="price">1,000円</td>
+            <td class="inventory">123</td>
+            <td class="period">2024/03/31</td>
+            <td class="category">海産</td>
+            <td class="type">共同</td> {% endcomment %}
+            <td class="product-number"><input type="checkbox" id="checkbox">{{ sale.id }}</td>
+            <td class="product-name">{{ sale.product.product_name }}</td>
+            <td class="price">{{ sale.sale_price }}</td>
+            <td class="inventory">{{ sale.stock }}</td>
+            <td class="period">{{ sale.remaining_time }}</td>
+            <td class="category">{{ sale.product.get_product_category_display }}</td>
+            <td class="type">{{ sale.get_sale_type_display }}</td>
+          </tr>
+          {% endfor %}
+          {% comment %} <tr>
             <td class="product-number"><input type="checkbox" id="checkbox">20230130-01</td>
             <td class="product-name">商品名が入ります</td>
             <td class="price">1,000円</td>
@@ -110,17 +131,43 @@
             <td class="period">2024/03/31</td>
             <td class="category">海産</td>
             <td class="type">共同</td>
-          </tr>
-          <tr>
-            <td class="product-number"><input type="checkbox" id="checkbox">20230130-01</td>
-            <td class="product-name">商品名が入ります</td>
-            <td class="price">1,000円</td>
-            <td class="inventory">123</td>
-            <td class="period">2024/03/31</td>
-            <td class="category">海産</td>
-            <td class="type">共同</td>
-          </tr>
+          </tr> {% endcomment %}
         </tbody>
       </table>
+      </form>
+
+      <form method="get" action="{% url 'store:product_and_sale_delete' %}">
+        {% csrf_token %}
+        <h1>商品管理一覧ページです</h1>
+        <p>{{ user }} のページ</p>
+        <input type="submit" value="一括削除">
+        <ul>
+        {% comment %} productsがsaleの外部キーである場合、saleはproductに直接関連付けられています。
+        したがって、productごとに関連するsaleを取得することができます。 {% endcomment %}
+        {% for sale in sales %}
+            <li>販売種別：{{ sale.get_sale_type_display }}</li>
+            <li>商品名：<a href="{% url 'store:test3' sale.pk %}">{{ sale.product.product_name }}</a></li>
+            <li>定価：{{ sale.product.product_price }}</li>
+            <li>販売価格：{{ sale.sale_price }}</li>
+            <li>賞味期限：{{ sale.expiration_date }}</li>
+            <li>在庫数：{{ sale.stock }}</li>
+            <li>重量：{{ sale.product.weight }}グラム</li>
+            <li>カテゴリ：{{ sale.product.product_category }}</li>
+            <li>販売期間：{{ sale.remaining_time }}</li>
+            <li>値引き率：{{ sale.discount_rate }}％</li>
+            <li>CO2：{{ sale.product.CO2 }}キログラム</li>
+            <li>商品説明：{{ sale.description }}</li>
+            <li><img src="{{ sale.product.product_image.url }}" alt="{{ sale.product.product_name }}" width="200"></li>
+            <li>{{sale.product.id }}</li>
+            <input type="checkbox" name="product_ids" value="{{ sale.product.id }}">
+            <hr>
+        {% empty %}
+            <li>商品はありません。</li>
+        {% endfor %}
+        {% for sale in sales %}
+            {{ sale.product.product_name }}
+        {% endfor %}
+        </ul>
+    </form>
     </div>
 {% endblock %}

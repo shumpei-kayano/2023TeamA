@@ -18,7 +18,8 @@
     </div>
 
     <div class="store-info-container">
-        <form action="#">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
 
             <div class="store-info-box" style="border-top: 1px solid var(--color-gainsboro-100);">
                 <div class="store-info-box-title">
@@ -26,7 +27,8 @@
                 </div>
                 <div class="store-info-box-input">
                     {% comment %} <span>店舗名が入っています</span> {% endcomment %}
-                    <input type="text" class="store-input-active" placeholder="現在の情報が入ってるようにしたい" required/>
+                    {% comment %} <input type="text" class="store-input-active" placeholder="{{ user.username }}" required/> {% endcomment %}
+                    <input type="text" class="store-input-active" name="username" value="{{ user.username }}" required/>
                 </div>
             </div>
 
@@ -56,19 +58,20 @@
                 </div>
                 <div class="store-info-box-input">
                     {% comment %} <span>郵便番号（半角数字）が入っています</span> {% endcomment %}
-                    <input type="text" class="store-input-active" placeholder="現在の情報が入ってるようにしたい" required/>
+                    {% comment %} <input type="text" class="store-input-active" placeholder="{{ user.postal_code }}" required/> {% endcomment %}
+                    <input type="text" class="store-input-active" name="postal_code" value="{{ user.postal_code }}" />
                 </div>
             </div>
 
-            <div class="store-info-box">
+            {% comment %} <div class="store-info-box">
                 <div class="store-info-box-title">
                     <div class="store-title-text">所在地</div>
                 </div>
-                <div class="store-info-box-input">
+                <div class="store-info-box-input"> {% endcomment %}
                     {% comment %} <span>所在地が入っています</span> {% endcomment %}
-                    <input type="text" class="store-input-active" placeholder="現在の情報が入ってるようにしたい" required/>
+                    {% comment %} <input type="text" class="store-input-active" placeholder="{{ user.prefecture }} {{ user.city }} {{ usr.address }}" />
                 </div>
-            </div>
+            </div> {% endcomment %}
 
             <div class="store-info-box">
                 <div class="store-info-box-title">
@@ -76,29 +79,29 @@
                 </div>
                 <div class="store-info-box-input">
                     {% comment %} <span>電話番号（半角数字）が入っています</span> {% endcomment %}
-                    <input type="text" class="store-input-active" placeholder="現在の情報が入ってるようにしたい" required/>
+                    <input type="text" class="store-input-active" name="phone_number" placeholder="{{ user.phone_number }}" />
                 </div>
             </div>
 
-            <div class="store-info-box">
+            {% comment %} <div class="store-info-box">
                 <div class="store-info-box-title">
                     <div class="store-title-text">メールアドレス</div>
                 </div>
-                <div class="store-info-box-input">
+                <div class="store-info-box-input"> {% endcomment %}
                     {% comment %} <span>メールアドレスが入ってます</span> {% endcomment %}
-                    <input type="text" class="store-input-active" placeholder="現在の情報が入ってるようにしたい" required/>
+                    {% comment %} <input type="text" class="store-input-active" placeholder="{{ user.site_url }}" />
                 </div>
-            </div>
+            </div> {% endcomment %}
 
-            <div class="store-info-box">
+            {% comment %} <div class="store-info-box">
                 <div class="store-info-box-title">
                     <div class="store-title-text">パスワード</div>
                 </div>
-                <div class="store-info-box-input">
+                <div class="store-info-box-input"> {% endcomment %}
                     {% comment %} <span>パスワードが入ってます</span> {% endcomment %}
-                    <input type="text" class="store-input-active" placeholder="現在の情報が入ってるようにしたい" required/>
+                    {% comment %} <input type="text" class="store-input-active" placeholder="{{ user.password }}" />
                 </div>
-            </div>
+            </div> {% endcomment %}
 
             <div class="store-info-box">
                 <div class="store-info-box-title">
@@ -106,18 +109,19 @@
                 </div>
                 <div class="store-info-box-input">
                     {% comment %} <span>WebサイトのURLが入っています</span> {% endcomment %}
-                    <input type="text" class="store-input-active" placeholder="現在の情報が入ってるようにしたい">
+                    <input type="text" class="store-input-active" name="site_url" placeholder="{{ user.site_url }}">
                 </div>
             </div>
 
             <div class="store-info-button">
-                <a href="store-info-edit" class="btn-store-edit" style="color: #FFF;">この内容で更新する</a>
+                {% comment %} <a href="store-info-edit" class="btn-store-edit" style="color: #FFF;">この内容で更新する</a> {% endcomment %}
+                <button type="submit" class="btn-store-edit" style="color: #FFF;">この内容で更新する</button>
             </div>
 
         </form>
     </div>
 
-    <script>
+    {% comment %} <script>
         // 更新ボタンがクリックされた時の処理
         document.querySelector('.btn-store-edit').addEventListener('click', function(event) {
             event.preventDefault(); // ボタンのデフォルトの動作を無効化
@@ -130,7 +134,7 @@
             // store-info.htmlに遷移
             window.location.href = 'store-info';
         });
-    </script>
+    </script> {% endcomment %}
 
 </div>
 

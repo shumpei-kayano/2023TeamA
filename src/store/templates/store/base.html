@@ -27,8 +27,8 @@
                                         </h3>
                                         <!--/.accordion-title-->
                                         <div class="accordion-content"  style="display:none;">
-                                            <a href="order-not-shipped" class="accordion-content-text">・未発送注文一覧</a>
-                                            <a href="order-history" class="accordion-content-text">・発送済み注文履歴</a>
+                                            <a href="{% url 'store:order-not-shipped' %}" class="accordion-content-text">・未発送注文一覧</a>
+                                            <a href="{% url 'store:order-history' %}" class="accordion-content-text">・発送済み注文履歴</a>
                                         </div>
                                         <!--/.accordion-content-->
                                     </div>
@@ -46,9 +46,9 @@
                                         </h3>
                                         <!--/.accordion-title-->
                                         <div class="accordion-content"  style="display:none;">
-                                            <a href="product-manage" class="accordion-content-text">・商品管理一覧</a>
-                                            <a href="create-general-purchase" class="accordion-content-text">・新規登録（一般）</a>
-                                            <a href="create-group-purchase" class="accordion-content-text">・新規登録（共同）</a>
+                                            <a href="{% url 'store:product-manage' %}" class="accordion-content-text">・商品管理一覧</a>
+                                            <a href="{% url 'store:create-general-purchase' %}" class="accordion-content-text">・新規登録（一般）</a>
+                                            <a href="{% url 'store:create-group-purchase' %}" class="accordion-content-text">・新規登録（共同）</a>
                                         </div>
                                         <!--/.accordion-content-->
                                     </div>
@@ -60,7 +60,7 @@
                             <div class="dropdown-tenpo" id="dropdownTenpoContainer">
                                 <div class="dropdown-text">
                                     <div class="accordion-item">
-                                        <a href="store-info">
+                                        <a href="{% url 'store:store-info' %}">
                                             <h3 class="accordion-title js-accordion-title">
                                                 <span>店舗情報設定</span>
                                                 <img class="keyboardarrowright-icon" alt="" src="{% static 'store/img/keyboardarrowright.png' %}" />

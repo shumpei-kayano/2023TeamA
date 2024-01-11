@@ -16,14 +16,15 @@
     </div>
 
     <div class="store-info-container">
-        <form action="#">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
 
             <div class="store-info-box" style="border-top: 1px solid var(--color-gainsboro-100);">
                 <div class="store-info-box-title">
                     <div class="store-title-text">店舗名</div>
                 </div>
                 <div class="store-info-box-input">
-                    <span>店舗名が入っています</span>
+                    <span>{{ user.melimitstore }}</span>
                 </div>
             </div>
 
@@ -50,7 +51,7 @@
                     <div class="store-title-text">郵便番号（半角数字）</div>
                 </div>
                 <div class="store-info-box-input">
-                    <span>郵便番号（半角数字）が入っています</span>
+                    <span>{{ user.postal_code }}</span>
                 </div>
             </div>
 
@@ -59,7 +60,7 @@
                     <div class="store-title-text">所在地</div>
                 </div>
                 <div class="store-info-box-input">
-                    <span>所在地が入っています</span>
+                    <span>{{ user.prefecture }} {{ user.city }} {{ usr.address }}</span>
                 </div>
             </div>
 
@@ -68,7 +69,7 @@
                     <div class="store-title-text">電話番号（半角数字）</div>
                 </div>
                 <div class="store-info-box-input">
-                    <span>電話番号（半角数字）が入っています</span>
+                    <span>{{ user.phone_number }}</span>
                 </div>
             </div>
 
@@ -77,7 +78,7 @@
                     <div class="store-title-text">メールアドレス</div>
                 </div>
                 <div class="store-info-box-input">
-                    <span>メールアドレスが入ってます</span>
+                    <span>{{ user.site_url }}</span>
                 </div>
             </div>
 
@@ -86,7 +87,7 @@
                     <div class="store-title-text">パスワード</div>
                 </div>
                 <div class="store-info-box-input">
-                    <span>パスワードが入ってます</span>
+                    <span>{{user.password }}</span>
                 </div>
             </div>
 
@@ -95,7 +96,7 @@
                     <div class="store-title-text">WebサイトのURL</div>
                 </div>
                 <div class="store-info-box-input">
-                    <span>WebサイトのURLが入っています</span>
+                    <span>{{ user.site_url }}</span>
                 </div>
             </div>
 
