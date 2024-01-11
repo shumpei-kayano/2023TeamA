@@ -46,9 +46,9 @@
                                         </h3>
                                         <!--/.accordion-title-->
                                         <div class="accordion-content"  style="display:none;">
-                                            <a href="product-manage" class="accordion-content-text">・商品管理一覧</a>
-                                            <a href="create-general-purchase" class="accordion-content-text">・新規登録（一般）</a>
-                                            <a href="create-group-purchase" class="accordion-content-text">・新規登録（共同）</a>
+                                            <a href="{% url 'store:product-manage' %}" class="accordion-content-text">・商品管理一覧</a>
+                                            <a href="{% url 'store:create-general-purchase' %}" class="accordion-content-text">・新規登録（一般）</a>
+                                            <a href="{% url 'store:create-group-purchase' %}" class="accordion-content-text">・新規登録（共同）</a>
                                         </div>
                                         <!--/.accordion-content-->
                                     </div>

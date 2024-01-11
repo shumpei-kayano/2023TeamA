@@ -55,8 +55,7 @@ def product_manage_view(request):
     print(f"sales : {sales}")
     for sale in sales:
         print(sale.__dict__)
-    return render(request, 'store/test2.html', {'products': products, 'sales': sales, 'user': user,})
-    # return render(request, 'store/product-manage.html')
+    return render(request, 'store/product-manage.html', {'products': products, 'sales': sales, 'user': user,})
 
 # 商品詳細ページ
 # 検証用
@@ -261,7 +260,7 @@ def store_base_view(request):
     print(f'site_url: {site_url}')
     print(f'user: {user}')
     print(f'model_name: {model_name}')
-    return render(request, 'store/base.html', {
+    return render(request, 'store/index.html', {
         'user': user,
         'model_name': model_name,
         'instance_name': instance_name,

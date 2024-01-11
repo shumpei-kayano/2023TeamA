@@ -5,7 +5,8 @@ from .views import ProductAndSaleDeleteView
 app_name = 'store'
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    # ログイン後の店舗トップページ（グラフとか表示れるところ）
+    path('index', views.index, name='index'),
     # 発送済み注文履歴ページ
     path('order-history', views.order_history_view, name='order-history'),
     # 発送済み注文履歴ページの中身

@@ -3,6 +3,50 @@
 {% block title %}店舗管理画面{% endblock %}
 
 
-{% block content %}
+{% block contents %}
+<div class="product-manage__container">
+    <div class="topic-path">
+        <div class="product-manage">トップページ</div>
+    </div>
 
+    <div class="top-page-content">
+        <h1>店舗管理画面</h1>
+
+        <div class="chartWrapper" style="position: relative; overflow-x: scroll;">
+            <div class="chartContainer" style="height:200px;">
+                <canvas id="chart" style="position: absolute; left: 0; top: 0;"></canvas>
+            </div>
+        </div>
+    </div> {% comment %} /top-page-content {% endcomment %}
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+        var xAxisLabelMinWidth = 50; // データ当たりの幅を設定
+        var data = [12, 19, 3, 5, 2, 12, 19, 3, 5, 2, 12, 19, 3, 5, 2];
+        var width = data.length*xAxisLabelMinWidth; // グラフ全体の幅を計算
+        document.getElementById('chart').style.width = width+"px"; // グラフの幅を設定
+        document.getElementById('chart').style.height = "250px"; // htmlと同じ高さを設定
+
+        var myChart = new Chart(document.getElementById('chart').getContext('2d'), {
+            type: 'bar',
+            data: {
+            labels: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o'],
+                datasets: [{
+                    label: 'sample data',
+                    data: data,
+                }]
+            },
+            options: {
+                responsive: false, //trueにすると画面の幅に合わせて作図してしまう
+            }
+        });
+
+    </script>
+    
+
+
+
+
+</div>
 {% endblock %}
