@@ -699,6 +699,11 @@ button:hover {
   opacity: 0.7;
 }
 
+.btn {
+  font-size: 0.8rem;
+  border-radius: 5px;
+  padding: 0.8rem;
+}
 .btn--beige {
   background-color: #D4B985;
   color: #FFFFFF;
@@ -869,6 +874,25 @@ input:checked + .tab_class {
 
 input:checked + .tab_class + .content_class {
   display: block;
+}
+
+.cart__shopping-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 2em;
+}
+.cart__shopping-table td {
+  text-align: center;
+  vertical-align: middle;
+}
+.cart__shopping-table img {
+  padding: 0.1em;
+  width: 5rem;
+  aspect-ratio: 4/3;
+}
+.cart__shopping-table .cnt {
+  font-weight: bold;
+  padding: 0.5rem;
 }
 
 /* Form Layout */
@@ -1411,4 +1435,43 @@ input:checked + .tab_class + .content_class {
     width: 100%;
     margin: 30px 0;
   }
+}
+.cart__upper {
+  margin-top: 2rem;
+}
+.cart__title {
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+.cart__bottom {
+  margin: 2rem 0;
+}
+.cart__btns {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px; /* ボタン間のスペースを追加 */
+}
+.cart__total {
+  display: flex;
+  justify-content: flex-end;
+}
+.cart__total ul {
+  background-color: #EBEBEB;
+  border-radius: 5px;
+  width: 40%;
+  padding: 1em;
+}
+.cart__total ul p {
+  font-weight: bold;
+}
+.cart__total ul li {
+  margin-bottom: 0.5em;
+}
+.cart__total ul li.total {
+  border-top: 1px solid #252525;
+}
+.cart__total span {
+  float: right;
+  color: #F75050;
 }

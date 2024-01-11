@@ -1,0 +1,41 @@
+.cart {
+    &__upper {
+    margin-top: 2rem
+    }
+    &__title {
+        margin-bottom: 20px;
+        color: #333;
+        text-align: center;
+    }
+    &__bottom {
+    margin: 2rem 0;
+    }
+    &__btns {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px; /* ボタン間のスペースを追加 */
+    }
+    &__total {
+        display: flex;
+        justify-content: flex-end;
+        ul {
+            background-color: $melimit_gray;
+            border-radius: 5px;
+            width: 40%;
+            padding: 1em;
+            p {
+                font-weight: bold;
+            }
+            li {
+                margin-bottom: 0.5em;
+            }
+            li.total{
+                border-top: 1px solid $melimit_black;
+            }
+        }
+        span {
+            float: right;
+            color: $melimit_red;
+        }
+    }
+}

@@ -112,3 +112,7 @@ def general_products_detail(request):
 # 共同購入商品詳細
 def joint_products_detail(request):
     return render(request, 'user/joint-products_detail.html')
+
+# カート
+def cart(request):
+    return render(request, 'user/cart.html')

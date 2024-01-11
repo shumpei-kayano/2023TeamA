@@ -38,7 +38,7 @@
         </nav>
         <div class="header_upper__icon">
             <a href="#"><img class ="header_icon"src="{% static 'assets/img/love.png' %}" alt="love"></a>
-            <a href="#"><img class ="header_icon"src="{% static 'assets/img/cart.png' %}" alt="cart"></a>
+            <a href="{% url "user:cart" %}"><img class ="header_icon"src="{% static 'assets/img/cart.png' %}" alt="cart"></a>
         </div>
     </div>
     <div class="header_down">
