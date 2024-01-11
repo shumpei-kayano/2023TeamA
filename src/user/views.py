@@ -80,6 +80,23 @@ def what_melimit(request):
 def contact(request):
     return render(request, 'user/contact.html')
 
+# お問い合わせ確認
+def contact_confirm(request):
+    context = {
+        'name': request.POST['name'],
+        'company': request.POST['company'],
+        'email': request.POST['email'],
+        'phone': request.POST['phone'],
+        'message': request.POST['message'],
+    }
+     # フォームのデータをセッションに保存
+    request.session['contact_data'] = request.POST
+    return render(request, 'user/contact-cfm.html', context)
+
+# お問い合わせ送信完了
+def contact_complete(request):
+    return render(request, 'user/contact-complete.html')
+
 # 一般商品一覧
 def all_products_general(request):
     return render(request, 'user/general-products.html')

@@ -3,46 +3,46 @@
 {% block content %}
 <h2 class="contact-title">お問い合わせフォーム</h2>
 <div class="contact-container">
-    <form method="POST" class="contact">
+    <form method="POST" class="contact" action="{% url "user:contact_confirm" %}">
         {% csrf_token %}
 
         <div class="contact__form-group required">
         <label for="name">氏名 </label><br>
         <span class="contact__input-group">
-            <input type="text" id="name" name="name" required><br>
+            <input type="text" id="name" name="name" required value="{{ request.session.contact_data.name }}" ><br>
         </span>
         </div>
 
         <div class="contact__form-group">
         <label for="company">会社・組織名</label><br>
         <span class="contact__input-group">
-            <input type="text" id="company" name="company"><br>
+            <input type="text" id="company" name="company" value="{{ request.session.contact_data.company }}"><br>
         </span>
         </div>
 
         <div class="contact__form-group required">
         <label for="email">メールアドレス</label><br>
         <span class="contact__input-group">
-            <input type="email" id="email" name="email" required><br>
+            <input type="email" id="email" name="email" required value="{{ request.session.contact_data.email }}"><br>
         </span>
         </div>
 
         <div class="contact__form-group required">
         <label for="phone">電話番号</label><br>
         <span class="contact__input-group">
-            <input type="tel" id="phone" name="phone" required><br>
+            <input type="tel" id="phone" name="phone" required value="{{ request.session.contact_data.phone }}"><br>
         </span>
         </div>
 
         <div class="contact__form-group required">
         <label for="message">お問い合わせ内容</label><br>
         <span class="contact__input-group">
-            <textarea id="message" name="message" required></textarea><br>
+            <textarea id="message" name="message" required>{{ request.session.contact_data.message }}</textarea><br>
         </span>
         </div>
 
         <div class="contact-btn">
-        <button type="submit">送信</button>
+        <button type="submit">確認</button>
         </div>
     </form>
 </div>

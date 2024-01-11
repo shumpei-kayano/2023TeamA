@@ -1350,3 +1350,65 @@ input:checked + .tab_class + .content_class {
 .detail3 {
   padding: 1rem 0;
 }
+
+.contact__btn-container {
+  margin: 100px 0;
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+@media (max-width: 768px) {
+  .contact__btn-container {
+    flex-direction: column;
+  }
+}
+.contact__btn-container .contact-cfm-btn {
+  text-align: center;
+  width: 100%;
+}
+.contact__btn-container .contact-cfm-btn button {
+  background-color: #D4B985;
+  color: #FFFFFF;
+  width: 30%;
+  padding: 1rem 0;
+}
+@media (max-width: 768px) {
+  .contact__btn-container .contact-cfm-btn button {
+    width: 100%;
+    margin: 30px 0;
+  }
+}
+.contact__btn-container .contact-cancel-btn {
+  text-align: center;
+  width: 100%;
+}
+.contact__btn-container .contact-cancel-btn button {
+  background-color: #EBEBEB;
+  color: #252525;
+  width: 30%;
+  padding: 1rem 0;
+}
+@media (max-width: 768px) {
+  .contact__btn-container .contact-cancel-btn button {
+    width: 100%;
+    margin: 30px 0;
+  }
+}
+
+.contact-cmp-btn {
+  text-align: center;
+  width: 100%;
+}
+.contact-cmp-btn button {
+  margin: 50px 0;
+  background-color: #EBEBEB;
+  color: #252525;
+  width: 20%;
+  padding: 1rem 0;
+}
+@media (max-width: 768px) {
+  .contact-cmp-btn button {
+    width: 100%;
+    margin: 30px 0;
+  }
+}
