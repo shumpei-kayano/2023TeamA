@@ -33,7 +33,10 @@
                                 <div class="store-title-text">店舗名</div>
                             </div>
                             <div class="store-create-box-input">
-                                <input type="text" class="store-create-input-active" placeholder="店舗名を入力してください" required/>
+                                <input type="text" class="store-create-input-active" required
+                                {% comment %} 20文字以内の正規表現 {% endcomment %}
+                                pattern="^.{1,20}$"
+                                placeholder="店舗名を入力してください">
                             </div>
                         </div>
 
@@ -42,7 +45,10 @@
                                 <div class="store-title-text">店舗責任者名</div>
                             </div>
                             <div class="store-create-box-input">
-                                <input type="text" class="store-create-input-active" placeholder="店舗責任者名を入力してください" required/>
+                                <input type="text" class="store-create-input-active" required
+                                {% comment %} 15文字以内の正規表現 {% endcomment %}
+                                pattern="^.{1,15}$"
+                                placeholder="店舗責任者名を入力してください">
                             </div>
                         </div>
 
@@ -51,7 +57,10 @@
                                 <div class="store-title-text">店舗責任者名(フリガナ)</div>
                             </div>
                             <div class="store-create-box-input">
-                                <input type="text" class="store-create-input-active" placeholder="店舗責任者名（フリガナ）を入力してください" required/>
+                                <input type="text" class="store-create-input-active" required
+                                {% comment %} 全角カタカナの正規表現 {% endcomment %}
+                                pattern="^[ァ-ンヴー]+$ , [\u30A1-\u30FF]*"
+                                placeholder="店舗責任者名（フリガナ）を入力してください">
                             </div>
                         </div>
 
@@ -60,7 +69,10 @@
                                 <div class="store-title-text">郵便番号(半角数字)</div>
                             </div>
                             <div class="store-create-box-input">
-                                <input type="text" class="store-create-input-active" placeholder="郵便番号（半角数字）を入力してください（ハイフン不要）" required/>
+                                <input type="text" class="store-create-input-active" required
+                                {% comment %} 半角数字7文字の正規表現 {% endcomment %}
+                                pattern="^[0-9]{7}$"
+                                placeholder="郵便番号（半角数字）を入力してください（ハイフン不要）">
                             </div>
                         </div>
 
@@ -69,7 +81,8 @@
                                 <div class="store-title-text">所在地</div>
                             </div>
                             <div class="store-create-box-input">
-                                <input type="text" class="store-create-input-active" placeholder="所在地を入力してください" required/>
+                                <input type="text" class="store-create-input-active" required
+                                placeholder="所在地を入力してください">
                             </div>
                         </div>
 
@@ -78,7 +91,10 @@
                                 <div class="store-title-text">電話番号(半角数字)</div>
                             </div>
                             <div class="store-create-box-input">
-                                <input type="text" class="store-create-input-active" placeholder="電話番号（半角数字）を入力してください（ハイフン不要）" required/>
+                                <input type="tel" class="store-create-input-active" required
+                                {% comment %} 半角数字10文字or11文字の正規表現 {% endcomment %}
+                                pattern="^[0-9]{10,11}$"
+                                placeholder="電話番号（半角数字）を入力してください（ハイフン不要）">
                             </div>
                         </div>
 
@@ -87,7 +103,9 @@
                                 <div class="store-title-text">メールアドレス</div>
                             </div>
                             <div class="store-create-box-input">
-                                <input type="text" class="store-create-input-active" placeholder="メールアドレスを入力してください（半角）" required/>
+                                <input type="email" class="store-create-input-active" required
+                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                                placeholder="メールアドレスを入力してください（半角）">
                             </div>
                         </div>
 
@@ -96,7 +114,10 @@
                                 <div class="store-title-text">パスワード</div>
                             </div>
                             <div class="store-create-box-input">
-                                <input type="text" class="store-create-input-active" placeholder="パスワードを入力してください（半角）" required/>
+                                <input type="password" class="store-create-input-active" required
+                                {% comment %} 半角英数字8文字以上、20文字以下の正規表現 {% endcomment %}
+                                pattern="^(?=.*?[a-z])(?=.*?\d)[a-z\d]{8,20}$"
+                                placeholder="パスワードを入力してください（半角）">
                             </div>
                         </div>
 
@@ -105,7 +126,8 @@
                                 <div class="store-title-text">WebサイトのURL</div>
                             </div>
                             <div class="store-create-box-input">
-                                <input type="text" class="store-create-input-active" placeholder="WebサイトのURLがある場合は入力してください（半角）">
+                                <input type="url" class="store-create-input-active"
+                                placeholder="WebサイトのURLがある場合は入力してください（半角）">
                             </div>
                         </div>
 
@@ -189,6 +211,7 @@
                 alert('店舗の新規登録が完了しました！'); // アラートを表示
                 window.location.href = 'store-info'; // store-info.htmlに遷移
             });
+            
             </script>
 
         </div>

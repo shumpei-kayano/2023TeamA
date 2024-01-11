@@ -100,3 +100,72 @@
   border: none;
   color: var(--color);
 }
+
+
+/* 1000px以下の場合 */
+@media screen and (max-width: 1000px) {
+  .ue-title,
+  .pass-nakami,
+  .pass-main {
+    width: 90%;
+    left: 5%;
+  }
+
+  .pass-input {
+    width: 80%;
+    left: 10%;
+  }
+
+  .pass-top {
+    // top: 85%;
+    left: 38%;
+  }
+
+  .emailsub {
+    top: 200px;
+    left: 40%;
+  }
+}
+
+/* 700px以下の場合 */
+@media screen and (max-width: 700px) {
+  .ue-title,
+  .pass-nakami,
+  .pass-main {
+    width: 90%;
+    left: 5%;
+  }
+
+  .pass-input {
+    width: 80%;
+    left: 10%;
+  }
+
+  .pass-input-email {
+    width: 100%;
+    padding: var(--padding-base);
+    margin-bottom: var(--margin-base);
+  }
+
+  .pass-top {
+    // top: 90%;
+    left: 32%;
+  }
+
+  .emailsub {
+    top: 220px;
+    left: 10%;
+    width: 80%;
+  }
+  .pass-nakami-title {
+    position: absolute;
+    top: 24px;
+    left: 5%;
+    background-color: var(--color-gainsboro-100);
+    width: 90%;
+    align-items: flex-start;
+    padding: var(--padding-xs) var(--padding-xl);
+    text-align: center;
+    font-size: 19px;
+  }
+}

@@ -277,7 +277,7 @@ def store_base_view(request):
     print(f'site_url: {site_url}')
     print(f'user: {user}')
     print(f'model_name: {model_name}')
-    return render(request, 'store/base.html', {
+    return render(request, 'store/index.html', {
         'user': user,
         'model_name': model_name,
         'instance_name': instance_name,
