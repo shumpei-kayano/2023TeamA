@@ -1,0 +1,29 @@
+.notice {
+  &-head {
+    font-weight: bold;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+    text-align: center;
+    font-size: 1.5rem;
+  }
+  &-top {
+    display: flex;
+    align-items: center;
+    gap: 11rem;
+    margin-bottom: 5rem;
+
+    &-image {
+      width: 500px;
+      height: 312px;
+      border: 1px solid #000;  // 追加: 画像に黒色の枠線を追加
+    }  // 追加: &-imageの閉じカッコ
+
+    &-text {
+      display: flex;  // 追加: display: flex;
+      flex-direction: column;
+      margin-left: -2rem;
+      text-align: center;
+      margin-bottom: 10rem;
+    }
+  }
+}

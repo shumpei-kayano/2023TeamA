@@ -1,2 +1,101 @@
 {% extends 'user/base.html' %}
 {% load static %}
+{% block title %}お知らせ{% endblock %}
+{% block content %}
+<section class="notice-head">
+<h2>お知らせ</h2>
+</section>
+
+<section class="notice-top">
+    <div class="notice-top-image">
+        <img src="{% static 'path/to/your/image1.jpg' %}" >
+    </div>
+        <div class="notice-top-text">
+        <h3>ここにお題1を書く</h3>
+        <p>テキストテキストテキストテキストテキストテキスト</p>
+        </div>
+    </div>
+</section>
+
+<div class="item--list">
+    <div class="item--card card--notice">
+        <a href="{% url "user:notice" %}">
+            <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+            <div class="card--content">
+                <p><span class="card--date-category">2020/00/00</span><span class="card--date-category">カテゴリー</span></p>
+                <h3 class="card--title">Card Title</h3>
+                <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+            </div>
+        </a>
+    </div>
+    <div class="item--card card--notice">
+        <a href="#">
+            <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+            <div class="card--content">
+                <p><span class="card--date-category">2020/00/00</span><span class="card--date-category">カテゴリー</span></p>
+                <h3 class="card--title">Card Title</h3>
+                <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+            </div>
+        </a>
+    </div>
+    <div class="item--card card--notice">
+        <a href="#">
+            <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+            <div class="card--content">
+                <p><span class="card--date-category">2020/00/00</span><span class="card--date-category">カテゴリー</span></p>
+                <h3 class="card--title">Card Title</h3>
+                <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+            </div>
+        </a>
+    </div>
+    <a class="btn--beige btn--middle mgt-10">お知らせ一覧</a>
+</section>
+</div>
+
+<script>
+window.onload = function(){
+    //画像を配列に格納
+    var images =['url({% static 'assets/img/350x160.png' %})',
+                 'url({% static 'assets/img/350x160.png' %})',
+                 'url({% static 'assets/img/350x160.png' %})']
+    //要素をHTMLから取得
+    //画像
+    var target = document.getElementById('slide');
+    //>,<
+    var right = document.getElementById('right');
+    var left = document.getElementById('left');
+
+    //クリックしたときに変わるようにカウント変数
+    var count = 0;
+
+    //クリックしたら画像変更
+   function change(){
+       target.style.backgroundImage = images[count];
+    }
+   //>をクリックしたらcountを+1する
+   function goNext(){
+       if(count == 2){
+           count = 0;
+       }else{
+           count++;
+       }
+       change();
+   }
+   
+   //<をクリックしたらcountを-1する
+   function goBack(){
+       if(count == 0){
+           count = 2;
+       }else{
+           count--;
+       }
+       change();
+   }
+
+   //クリックイベント
+   right.addEventListener('click',goNext,false);
+   left.addEventListener('click',goBack,false);
+};
+</script>   
+
+{% endblock %}

@@ -116,3 +116,6 @@ def joint_products_detail(request):
 # カート
 def cart(request):
     return render(request, 'user/cart.html')
+#お知らせ詳細
+def notice(request):
+    return render(request, 'user/notice.html')

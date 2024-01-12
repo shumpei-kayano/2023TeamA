@@ -1073,6 +1073,32 @@ input:checked + .tab_class + .content_class {
   }
 }
 
+.notice-head {
+  font-weight: bold;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+  text-align: center;
+  font-size: 1.5rem;
+}
+.notice-top {
+  display: flex;
+  align-items: center;
+  gap: 11rem;
+  margin-bottom: 5rem;
+}
+.notice-top-image {
+  width: 500px;
+  height: 312px;
+  border: 1px solid #000;
+}
+.notice-top-text {
+  display: flex;
+  flex-direction: column;
+  margin-left: -2rem;
+  text-align: center;
+  margin-bottom: 10rem;
+}
+
 .loading {
   position: fixed;
   top: 0;
@@ -1375,6 +1401,46 @@ input:checked + .tab_class + .content_class {
   padding: 1rem 0;
 }
 
+.cart__upper {
+  margin-top: 2rem;
+}
+.cart__title {
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+.cart__bottom {
+  margin: 2rem 0;
+}
+.cart__btns {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px; /* ボタン間のスペースを追加 */
+}
+.cart__total {
+  display: flex;
+  justify-content: flex-end;
+}
+.cart__total ul {
+  background-color: #EBEBEB;
+  border-radius: 5px;
+  width: 40%;
+  padding: 1em;
+}
+.cart__total ul p {
+  font-weight: bold;
+}
+.cart__total ul li {
+  margin-bottom: 0.5em;
+}
+.cart__total ul li.total {
+  border-top: 1px solid #252525;
+}
+.cart__total span {
+  float: right;
+  color: #F75050;
+}
+
 .contact__btn-container {
   margin: 100px 0;
   display: flex;
@@ -1435,43 +1501,4 @@ input:checked + .tab_class + .content_class {
     width: 100%;
     margin: 30px 0;
   }
-}
-.cart__upper {
-  margin-top: 2rem;
-}
-.cart__title {
-  margin-bottom: 20px;
-  color: #333;
-  text-align: center;
-}
-.cart__bottom {
-  margin: 2rem 0;
-}
-.cart__btns {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px; /* ボタン間のスペースを追加 */
-}
-.cart__total {
-  display: flex;
-  justify-content: flex-end;
-}
-.cart__total ul {
-  background-color: #EBEBEB;
-  border-radius: 5px;
-  width: 40%;
-  padding: 1em;
-}
-.cart__total ul p {
-  font-weight: bold;
-}
-.cart__total ul li {
-  margin-bottom: 0.5em;
-}
-.cart__total ul li.total {
-  border-top: 1px solid #252525;
-}
-.cart__total span {
-  float: right;
-  color: #F75050;
 }
