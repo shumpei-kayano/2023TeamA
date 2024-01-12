@@ -46,9 +46,13 @@ class MelimitUserLoginView(LoginView):
                 password = form.cleaned_data.get('password')
                 user = authenticate(request, email=email, password=password, backend='accounts.backends.MelimitUserModelBackend')
                 if user is not None:
+                    # ログイン後にuserのindexのビューを通るように変更
                     login(request, user)
                     print('login')
-                    return render(request, 'user/index.html', {'form': form})
+                    #return render(request, 'user/index.html', {'form': form})
+                    # ログイン成功時にビューに遷移する
+                    return redirect('user:index')
+                #{% url 'user:index' %}
                 else:
                     print('user is None 認証失敗')
                     form.add_error(None, 'メールアドレスまたはパスワードが間違っています。')  # ユーザーが認証できない場合のエラーメッセージ

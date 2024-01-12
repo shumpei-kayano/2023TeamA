@@ -2,6 +2,20 @@
 {% block title %}一般購入商品{% endblock %}
 {% load static %}
 {% block content %}
+{% comment %} 
+            <li>商品名：<a href="{% url 'store:test3' sale.pk %}">{{ sale.product.product_name }}</a></li> 
+            {% endcomment %}
+            {% comment %} sales_by_choice['general_sales'] 
+            <div class="item--card card--blue">
+            <a href="#">
+                <img src="{{ random_sale.product.product_image.url }}" alt="{{ random_sale.product.product_name }}" class="card--img">
+                <p class="discount">ひとつめ {{ random_sale.discount_rate }}％</p>
+                <div class="card--content">
+                    <h3 class="card--title">{{ random_sale.product.product_name }}</h3>
+                    <h4 class="card--discount">￥{{ random_sale.sale_price }}(税込)</h4>
+                </div>
+            </a>
+        </div>{% endcomment %}
 <section>
     <h2 class="center">一般購入商品</h2>
     <form>
@@ -14,7 +28,26 @@
             </select>
         </label>
     </form>
+    
     <div class="item--list">
+        {% comment %} {% for sale in sales_by_choices.general_sales %} {% endcomment %}
+        {% for sale in sales %}
+            <div class="item--card card--blue">
+                <a href="{% url 'user:general_products_detail' pk=sale.pk %}">
+                    <img src="{{ sale.product.product_image.url }}" alt="{{ sale.product.product_name }}" class="card--img">
+                    <p class="discount">{{ sale.discount_rate }}％OFF</p>
+                    <div class="card--content">
+                        <h3 class="card--title">{{ sale.product.product_name }}</h3>
+                        <h4 class="card--discount">￥{{ sale.sale_price }}(税込)</h4>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% comment %} <div class="item--list">
+        
+        
         <div class="item--card card--blue">
             <a href="{% url 'user:general_products_detail' %}">
                 <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
@@ -25,6 +58,7 @@
                 </div>
             </a>
         </div>
+        
         <div class="item--card card--blue">
             <a href="#">
                 <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
@@ -135,6 +169,7 @@
                 </div>
             </a>
         </div>
-    </div>
+    </div> {% endcomment %}
+    
 </section>
 {% endblock %}
