@@ -95,3 +95,7 @@ def general_products_detail(request):
 # 共同購入商品詳細
 def joint_products_detail(request):
     return render(request, 'user/joint-products_detail.html')
+
+#お知らせ詳細
+def notice(request):
+    return render(request, 'user/notice.html')
