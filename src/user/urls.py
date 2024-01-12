@@ -21,4 +21,5 @@ urlpatterns = [
     path('all-products/joint/joint-products_detail/', views.joint_products_detail, name='joint_products_detail'),
     path('cart/', views.cart, name='cart'),
     path('notice/', views.notice, name='notice'),
+    path('history/', views.history, name='history'),
 ]

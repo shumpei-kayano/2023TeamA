@@ -182,11 +182,16 @@
 // 商品リスト（カート,注文確認等）
 .cart__shopping-table {
     width: 100%;
-    border-collapse: separate;
+    border-collapse: collapse;
     border-spacing: 2em;
+    margin-bottom: 100px;
+    th {
+        padding: 15px 0;
+    }
     td {
         text-align:center;
         vertical-align:middle;
+        padding: 25px 0;
     }
     img {
         padding: 0.1em;
@@ -197,4 +202,12 @@
         font-weight: bold;
         padding: 0.5rem;
         }
+    tr {
+        border-bottom: 1px solid #ccc;
+    }
+    .definition {
+        color: $melimit_red;
+        font-size: 0.75rem;
+        font-weight: bold;
+    }
     }

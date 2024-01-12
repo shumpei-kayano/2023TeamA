@@ -878,12 +878,17 @@ input:checked + .tab_class + .content_class {
 
 .cart__shopping-table {
   width: 100%;
-  border-collapse: separate;
+  border-collapse: collapse;
   border-spacing: 2em;
+  margin-bottom: 100px;
+}
+.cart__shopping-table th {
+  padding: 15px 0;
 }
 .cart__shopping-table td {
   text-align: center;
   vertical-align: middle;
+  padding: 25px 0;
 }
 .cart__shopping-table img {
   padding: 0.1em;
@@ -893,6 +898,14 @@ input:checked + .tab_class + .content_class {
 .cart__shopping-table .cnt {
   font-weight: bold;
   padding: 0.5rem;
+}
+.cart__shopping-table tr {
+  border-bottom: 1px solid #ccc;
+}
+.cart__shopping-table .definition {
+  color: #F75050;
+  font-size: 0.75rem;
+  font-weight: bold;
 }
 
 /* Form Layout */

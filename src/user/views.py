@@ -119,3 +119,7 @@ def cart(request):
 #お知らせ詳細
 def notice(request):
     return render(request, 'user/notice.html')
+
+# 注文詳細
+def history(request):
+    return render(request, 'user/history.html')
