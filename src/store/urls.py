@@ -31,7 +31,8 @@ urlpatterns = [
     path('test/', views.create_product_and_sale, name='test'), # 商品登録
     path('test2/', views.product_and_sale_list, name='test2'), # 商品一覧
     path('sale_detail/<int:pk>', views.sale_detail_view, name='sale_detail'), # 商品詳細 # 採用
-    path('product_and_sale_delete/', ProductAndSaleDeleteView.as_view(), name='product_and_sale_delete'), # 商品削除
+    path('product_and_sale_delete/', ProductAndSaleDeleteView.as_view(), name='product_and_sale_delete'), # 商品複数削除
+    path('test_test/<int:pk>', views.product_and_sale_delete_view, name='test_test'), # 商品削除
     # 商品詳細ページ
     # path('detail-general', views.detail_general_view, name='detail-general'),
     # path('detail-group', views.detail_group_view, name='detail-group'),

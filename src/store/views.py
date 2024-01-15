@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login
 from .models import Product, Sale, Threshold
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import View
+from django.http import HttpResponseBadRequest
 
 # Create your views here.
 def index(request):
@@ -133,7 +134,7 @@ def create_general_purchase_view(request):
             sale.sale_type = 'general_sales'
             sale.product = product
             sale.save()
-            # ここでリダイレクトやメッセージ表示などを行う
+            return redirect('store:product-manage')
         else:
             print('一般新規登録ビューのform.is_valid()失敗')
             print(f"product_form.errors: {product_form.errors}")
@@ -205,14 +206,7 @@ def create_group_purchase_view(request):
             threshold = threshold_form.save(commit=False)
             threshold.sale = sale
             threshold.save()
-            # ここでリダイレクトやメッセージ表示などを行う
-        # if product_form.is_valid() and sale_form.is_valid():
-        #     product = product_form.save()
-        #     sale = sale_form.save(commit=False)
-        #     sale.sale_type = 'melimit_sales'
-        #     sale.product = product
-        #     sale.save()
-            # ここでリダイレクトやメッセージ表示などを行う
+            return redirect('store:product-manage')
         else:
             print('ビューのform.is_valid()失敗')
             print(product_form.errors)
@@ -415,7 +409,29 @@ def product_and_sale_list(request):
         print(sale.__dict__)
     return render(request, 'store/test2.html', {'products': products, 'sales': sales, 'user': user,})
 
-#
+# 商品削除
+def product_and_sale_delete_view(request, pk):
+    print('削除ビュー')
+    if request.method == 'POST':
+        # pkを元にproductとsaleを取得する
+        product = get_object_or_404(Product, id=pk)
+        sale = get_object_or_404(Sale, product=product)
+        mixin = MelimitModelMixin()
+        mixin.request = request
+        user = mixin.get_melimitmodel_user()
+        print('削除postです')
+        print(f"product: {product}")
+        print(f"sale: {sale}")
+        print(f"user: {user}")
+        # 取得しているproductとsaleがログイン中のユーザーのものかを確認する
+        if product.store == user.melimitstore and sale.store == user.melimitstore:
+            product.delete()
+            print('削除完了')
+            return redirect('store:product-manage')
+    else:
+        return HttpResponseBadRequest()
+
+# 商品複数一括削除
 class ProductAndSaleDeleteView(View):
     def get(self, request, *args, **kwargs):
         product_ids = request.GET.getlist('product_ids')  # 選択した商品のIDを取得

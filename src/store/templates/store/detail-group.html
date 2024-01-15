@@ -20,9 +20,9 @@
     </div>
 
     <div class="group-purchase-create">
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
         <div class="group-purchase-input">
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
           <!-- 商品名の入力欄 -->
           <div class="product-name-box">
             <div class="product-name-box-title">
@@ -167,24 +167,27 @@
             {% comment %} <a href="detail-group-edit.html" class="btn-edit">商品を編集する</a> {% endcomment %}
           </div>
         </div>
-
+      </form>
           <!-- 「商品を削除する」ボタンを押した時に出てくるモーダル -->
           <div id="modal" class="modal">
             <div class="modal-content">
               <span class="modal-title">共同購入商品を本当に削除しますか？</span>
               <span class="close">&times;</span>
-              <!-- 入力内容を表示する部分 -->
-              <div id="confirmationContent">
-                <!-- 確認内容をここに表示 -->
-              </div>
-              <div class="modal-button">
-                <button class="modal-back" type="button">もどる</button>
-                <button class="modal-group" type"submit">削除する</button>
-              </div>
+                <form id="deleteForm" method="POST" action="{% url 'store:test_test' sale.product.pk %}">
+                  {% csrf_token %}
+                  <!-- 入力内容を表示する部分 -->
+                  <div id="confirmationContent">
+                    <!-- 確認内容をここに表示 -->
+                  </div>
+                  <div class="modal-button">
+                    <button class="modal-back" type="button">もどる</button>
+                    <button class="modal-group" type"submit">削除する</button>
+                  </div>
+                </form>
             </div>
           </div>
 
-      </form>
+      
     </div>
 
     <script>
