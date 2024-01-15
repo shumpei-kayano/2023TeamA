@@ -127,3 +127,7 @@ def history(request):
 def order_completed(request):
     return render(request, 'user/order-completed.html')
     
+
+# お気に入り
+def favorite(request):
+    return render(request, 'user/favorite.html')

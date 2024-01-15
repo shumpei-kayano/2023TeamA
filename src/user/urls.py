@@ -23,4 +23,5 @@ urlpatterns = [
     path('notice/', views.notice, name='notice'),
     path('history/', views.history, name='history'),
     path('order_completed/', views.order_completed, name='order_completed'),
+    path('favorite/', views.favorite, name='favorite'),
 ]

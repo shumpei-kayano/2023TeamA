@@ -1432,16 +1432,10 @@ input:checked + .tab_class + .content_class {
   padding: 1rem 0;
 }
 
-.cart__upper {
-  margin-top: 2rem;
-}
 .cart__title {
   margin-bottom: 20px;
   color: #333;
   text-align: center;
-}
-.cart__bottom {
-  margin: 2rem 0;
 }
 .cart__btns {
   display: flex;
