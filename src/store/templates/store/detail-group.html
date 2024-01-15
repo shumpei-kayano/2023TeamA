@@ -39,7 +39,7 @@
               <div class="title-text">カテゴリ</div>
             </div>
             <div class="category-box-input">
-              <span>{{ sale.product.product_category }}</span>
+              <span>{{ sale.product.get_product_category_display }}</span>
             </div>
           </div>
 
@@ -163,7 +163,7 @@
           </div>
 
           <div class="group-edit-button">
-            <a href="detail-group-edit" class="btn-edit">商品を編集する</a>
+            <a href="{% url 'store:detail-group-edit' sale.product.pk %}" class="btn-edit">商品を編集する</a>
             {% comment %} <a href="detail-group-edit.html" class="btn-edit">商品を編集する</a> {% endcomment %}
           </div>
         </div>

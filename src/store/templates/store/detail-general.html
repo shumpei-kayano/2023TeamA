@@ -41,7 +41,7 @@
                 <div class="title-text">カテゴリ</div>
             </div>
             <div class="category-box-input">
-                <span>{{ sale.product.product_category }}</span>
+                <span>{{ sale.product.get_product_category_display }}</span>
             </div>
             </div>
 
@@ -71,7 +71,7 @@
                 <div class="title-text">表示期間</div>
             </div>
             <div class="period-box-input">
-                <span>開始：{{ sale.sale_end}}　～　終了：{{ sale.sale_end }}</span>
+                <span>開始：{{ sale.sale_end }}　～　終了：{{ sale.sale_end }}</span>
             </div>
             </div>
 
@@ -146,7 +146,7 @@
 
             <div class="general-edit-button">
                 {% comment %} <a href="#!" class="btn-edit">商品を編集する</a> {% endcomment %}
-                <a href="detail-general-edit" class="btn-edit">商品を編集する</a>
+                <a href="{% url 'store:detail-general-edit' sale.product.pk %}" class="btn-edit">商品を編集する</a>
             </div>
         </div>
         <!-- 「商品を削除する」ボタンを押した時に出てくるモーダル -->

@@ -57,6 +57,7 @@ def store_create_view(request):
 
 # 商品管理一覧ページ
 # 検証用(render先が仮)
+# 実際のページに適用済み
 def product_manage_view(request):
     mixin = MelimitModelMixin()
     mixin.request = request
@@ -140,8 +141,41 @@ def create_general_purchase_view(request):
     else:
         product_form = ProductForm()
         sale_form = SaleForm()
-
     return render(request, 'store/create-general-purchase.html', {'product_form': product_form, 'sale_form': sale_form, 'user': user, })
+
+# 詳細ページから遷移した商品編集ページ(一般)
+def detail_general_edit_view(request, product_id):
+    mixin = MelimitModelMixin()
+    mixin.request = request
+    user = mixin.get_melimitmodel_user()
+    product = get_object_or_404(Product, id=product_id, store=user.melimitstore)
+    sale = get_object_or_404(Sale, product=product, store=user.melimitstore)
+    if request.method == 'POST':
+        product_form = ProductForm(request.POST, request.FILES, instance=product)
+        sale_form = SaleForm(request.POST, instance=sale, request=request)
+        if product_form.is_valid() and sale_form.is_valid():
+            product = product_form.save()
+            sale = sale_form.save(commit=False)
+            sale.product = product
+            sale.sale_type = 'general_sales'
+            sale.save()
+            print('完了')
+            # 編集が完了したら、適切なページにリダイレクトする
+            return redirect('store:product-manage')
+        else:
+            print('失敗')
+    else:
+        product_form = ProductForm(instance=product)
+        sale_form = SaleForm(instance=sale)
+        print(f"product_form: {product_form}")
+        # print(f"sale_form: {sale_form}")
+        print(f"編集product: {product.__dict__}")
+        print(f"編集sale: {sale.__dict__}")
+        print(product.product_name)
+
+    return render(request, 'store/detail-general-edit.html', {'product_form': product_form, 'sale_form': sale_form, 'product': product, 'user': user})
+    # return render(request, 'store/detail-general-edit.html')
+
 
 # 共同購入新規登録
 def create_group_purchase_view(request):
@@ -165,8 +199,8 @@ def create_group_purchase_view(request):
         if product_form.is_valid() and sale_form.is_valid() and threshold_form.is_valid():
             product = product_form.save()
             sale = sale_form.save(commit=False)
-            sale.sale_type = 'melimit_sales'
             sale.product = product
+            sale.sale_type = 'melimit_sales'
             sale.save()
             threshold = threshold_form.save(commit=False)
             threshold.sale = sale
@@ -192,18 +226,63 @@ def create_group_purchase_view(request):
     return render(request, 'store/create-group-purchase.html', {'product_form': product_form, 'sale_form': sale_form, 'threshold_form': threshold_form, 'user': user, })
 
     return render(request, 'store/create-group-purchase.html', {'product_form': product_form, 'sale_form': sale_form, 'user': user, })
+
+# 詳細ページから遷移した商品編集ページ(共同)
+def detail_group_edit_view(request, product_id):
+    print(f"共同product_id: {product_id}")
+    mixin = MelimitModelMixin()
+    mixin.request = request
+    user = mixin.get_melimitmodel_user()
+    product = get_object_or_404(Product, id=product_id, store=user.melimitstore)
+    sale = get_object_or_404(Sale, product=product, store=user.melimitstore)
+    threshold = get_object_or_404(Threshold, sale=sale)
+    if request.method == 'POST':
+        product_form = ProductForm(request.POST, request.FILES, instance=product)
+        print('1番')
+        sale_form = SaleForm(request.POST, instance=sale, request=request)
+        print('2番')
+        threshold_form = ThresholdForm(request.POST, instance=threshold)
+        product_form.instance.store = user.melimitstore
+        if product_form.is_valid() and sale_form.is_valid() and threshold_form.is_valid():
+            product = product_form.save()
+            sale = sale_form.save(commit=False)
+            sale.sale_type = 'melimit_sales'
+            sale.product = product
+            sale.save()
+            threshold = threshold_form.save(commit=False)
+            threshold.sale = sale
+            threshold.save()
+            print('完了')
+            # 編集が完了したら、適切なページにリダイレクトする
+            return redirect('store:product-manage')
+        else:
+            # print(f"product_form: {product_form.is_valid()}")
+            # print(f"productエラー: {product_form.errors}")
+            # print(f"sale_form: {sale_form.is_valid()}")
+            # print(f"saleエラー: {sale_form.errors}")
+            # print(f"threshold_form: {threshold_form.is_valid()}")
+            # print(f"saleエラー: {sale_form.errors}")
+            print(f"product: {product.__dict__}")
+            print(f"sale: {sale.__dict__}")
+            print(f"threshold: {threshold.__dict__}")
+            print('失敗')
+    else:
+        product_form = ProductForm(instance=product)
+        sale_form = SaleForm(instance=sale)
+        threshold_form = ThresholdForm(instance=threshold)
+        print(f"threshold_form: {threshold_form}")
+
+    return render(request, 'store/detail-group-edit.html', {'product_form': product_form, 'sale_form': sale_form, 'threshold_form': threshold_form,'product': product,'user': user})
+
 # 商品詳細ページ(一般)
 def detail_general_view(request):
     return render(request, 'store/detail-general.html')
 # 商品詳細ページ(共同)
 def detail_group_view(request):
     return render(request, 'store/detail-group.html')
-# 詳細ページから遷移した商品編集ページ(一般)
-def detail_general_edit_view(request):
-    return render(request, 'store/detail-general-edit.html')
 # 詳細ページから遷移した商品編集ページ(共同)
-def detail_group_edit_view(request):
-    return render(request, 'store/detail-group-edit.html')
+# def detail_group_edit_view(request):
+#     return render(request, 'store/detail-group-edit.html')
 
 # ログイン処理
 def store_login_view(request):
@@ -336,6 +415,7 @@ def product_and_sale_list(request):
         print(sale.__dict__)
     return render(request, 'store/test2.html', {'products': products, 'sales': sales, 'user': user,})
 
+#
 class ProductAndSaleDeleteView(View):
     def get(self, request, *args, **kwargs):
         product_ids = request.GET.getlist('product_ids')  # 選択した商品のIDを取得

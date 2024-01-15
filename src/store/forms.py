@@ -28,9 +28,12 @@ class ProductForm(forms.ModelForm):
                 'class': 'input-active', 
                 'placeholder': '画像を選択してください',
                 'required': 'required',
-                'multiple': True,
+                'multiple': False,
                 'accept': 'image/*',
-            }),
+                'label': '画像を変更',
+            }
+            # clearable_file_input_template=('<input type="file" id="{id}" class="{class}" placeholder="{placeholder}" required multiple accept="{accept}" />''<div class="clearable-file-input-label"></div>'),
+            ),
             'product_price': forms.NumberInput(attrs={
                 'class': 'input-active', 
                 'placeholder': '定価を入力してください（※半角数字）', 
@@ -47,6 +50,9 @@ class ProductForm(forms.ModelForm):
         return product_price
 
 class SaleForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super().__init__(*args, **kwargs)
     class Meta:
         model = Sale
         exclude = ['product', 'store']
@@ -89,14 +95,39 @@ class SaleForm(forms.ModelForm):
             }),
         }
 
-    # formのclassが違うので、cleanメソッドをオーバーライドして販売価格と定価を比較する
+    # formのclassが違うので、cleanメソッドをオーバーライドしてsale_price(販売価格)とproduct_price(定価)を比較する
+    # cleanメソッドは、is_valid()が呼ばれた時に自動的に呼ばれる(詳細は個人notionに記載)
     def clean(self):
         print('関数:clean')
         cleaned_data = super().clean()
         sale_price = cleaned_data.get('sale_price')
-        product_price = self.instance.product.product_price if self.instance.product else None
+        print("3番")
+        # okパターン(httpリクエストのpostパラメータからstr型で取得し、int型に変換する)
+        product_price = int(self.request.POST.get('product_price')) if self.request else None
+
+        # okパターン(cleaned_dataからint型で取得する)
+        # formを定義後、is_validでバリデーションとクリーニングを行い、formの値を正しい型に更新しcleaned_data辞書からint型で値を取得する
+        # pro_form = ProductForm(self.request.POST, instance=self.instance.product)
+        # if pro_form.is_valid():
+        #     product_price = pro_form.cleaned_data.get('product_price')
+        # else:
+        #     product_price = None
+
+        # 一応okパターン(DBからint型で取得する。ただし、比較前にDB登録しているため、比較結果がNGでも定価だけが登録されてしまう)
+        # pro_form = ProductForm(self.request.POST, instance=self.instance.product)
+        # if pro_form.is_valid():
+        #     saved_pro=pro_form.save(commit=True)
+        # product_price = saved_pro.product_price
+
+        # ngパターン
+        # self.instance.productで取得できるのは、編集前のproductの情報(DBに保存されている情報)
+        # product_price = self.instance.product.product_price if self.instance.product else None
+
+        print("4番")
         print(f"クリーンsale_price:{sale_price}")
         print(f"クリーンproduct_price:{product_price}")
+        # product_priceの型を確認
+        print(f"product_priceの型:{type(product_price)}")
         if sale_price and product_price and sale_price > product_price:
             self.add_error('sale_price', '販売価格は商品の定価未満で入力して下さい。')
         # if sale_price is not None and (sale_price < 1 or sale_price > 1_000_000):
