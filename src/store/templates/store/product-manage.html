@@ -31,11 +31,11 @@
       </div>
 
       {% comment %} <a href="{% url 'store:product_manage' %}" class="create__btn create-btn--blue"> {% endcomment %}
-      <a href="#" class="create-btn-blue">
+      <a href="{% url 'store:create-general-purchase' %}" class="create-btn-blue">
         <img class="create-btn-icon" alt="" src="{% static 'store/img/new.png' %}" />
         <span class="create-btn-text">一般購入商品新規登録</span>
       </a>
-      <a href="#" class="create-btn-pink">
+      <a href="{% url 'store:create-group-purchase' %}" class="create-btn-pink">
         <img class="create-btn-icon" alt="" src="{% static 'store/img/new.png' %}" />
         <span class="create-btn-text">共同購入商品新規登録</span>
       </a>

@@ -159,6 +159,7 @@
         
         document.getElementById('confirmLogout').addEventListener('click', function() {
         // ここにログアウト処理を書く
+        window.location.href = "{% url 'accounts:store_logout' %}";
         });
         
 

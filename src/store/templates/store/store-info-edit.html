@@ -79,7 +79,7 @@
                 </div>
                 <div class="store-info-box-input">
                     {% comment %} <span>電話番号（半角数字）が入っています</span> {% endcomment %}
-                    <input type="text" class="store-input-active" name="phone_number" placeholder="{{ user.phone_number }}" />
+                    <input type="text" class="store-input-active" name="phone_number" value="{{ user.phone_number }}" />
                 </div>
             </div>
 
@@ -109,7 +109,7 @@
                 </div>
                 <div class="store-info-box-input">
                     {% comment %} <span>WebサイトのURLが入っています</span> {% endcomment %}
-                    <input type="text" class="store-input-active" name="site_url" placeholder="{{ user.site_url }}">
+                    <input type="text" class="store-input-active" name="site_url" value="{{ user.site_url }}">
                 </div>
             </div>
 
@@ -121,20 +121,22 @@
         </form>
     </div>
 
-    {% comment %} <script>
+    <script>
         // 更新ボタンがクリックされた時の処理
         document.querySelector('.btn-store-edit').addEventListener('click', function(event) {
             event.preventDefault(); // ボタンのデフォルトの動作を無効化
         
             // ここで更新処理を行う（API呼び出しなど）
-        
+            const form = document.getElementById("{{ form }}");
+            form.method = "POST";
+            form.submit();
             // アラートを表示
             alert("店舗情報を更新しました！");
         
             // store-info.htmlに遷移
             window.location.href = 'store-info';
         });
-    </script> {% endcomment %}
+    </script>
 
 </div>
 

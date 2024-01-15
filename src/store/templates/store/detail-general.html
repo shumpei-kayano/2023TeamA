@@ -152,10 +152,10 @@
       <!-- 「商品を削除する」ボタンを押した時に出てくるモーダル -->
       <div id="modal" class="modal">
           <div class="modal-content">
-          <span class="modal-title">共同購入商品を本当に削除しますか？</span>
+          <span class="modal-title">一般購入商品を本当に削除しますか？</span>
           <span class="close">&times;</span>
           <!-- 入力内容を表示する部分 -->
-            <form id="deleteForm" method="POST" action="{% url 'store:test_test' sale.product.pk %}">
+            {% comment %} <form id="deleteForm" method="POST" action="{% url 'store:test_test' sale.product.pk %}"> {% endcomment %}
               {% csrf_token %}
               <div id="confirmationContent">
                   <!-- 確認内容をここに表示 -->
@@ -164,7 +164,7 @@
                   <button class="modal-back" type="button">もどる</button>
                   <button class="modal-general" type="submit">削除する</button>
               </div>
-            </form>
+            {% comment %} </form> {% endcomment %}
           </div>
     </div>
 </div>
@@ -314,7 +314,7 @@
       // 「削除する」ボタンのクリックイベント
       // アラートを出してから商品管理ページに遷移する予定
       confirmButton.addEventListener('click', function () {
-          alert('共同購入商品を削除しました！');
+          alert('一般購入商品を削除しました！');
           closeModal();
           window.location.href = '#!';
       });

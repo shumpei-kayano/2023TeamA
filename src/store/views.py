@@ -29,9 +29,15 @@ def order_not_shipped_content_view(request):
 # パスワード再設定用のメール送信ページ
 def pass_mail_view(request):
     return render(request, 'store/pass-mail.html')
-# 店舗情報設定ページ
+# 店舗情報設定ページ(閲覧)
 def store_info_view(request):
-    return render(request, 'store/store-info.html')
+    # print(f"mixin前のuser : {request.__dict__}")
+    mixin = MelimitModelMixin()
+    mixin.request = request
+    user = mixin.get_melimitmodel_user()
+    # print(f"店舗情報設定ページのuser : {user.__dict__}")
+    # print(f"url : {user.site_url}")
+    return render(request, 'store/store-info.html', {'user': user,})
 
 # 店舗情報設定ページの編集
 def store_info_edit_view(request):
@@ -43,12 +49,17 @@ def store_info_edit_view(request):
     if request.method == 'POST':
         print('postです')
         form = MelimitStoreEditForm(request.POST, instance=user.melimitstore)
+        print(f"form : {form}")
         if form.is_valid():
             form.save()
-            return redirect('store:store-info')
+            return render(request, 'store/store-info.html', {'form': form, 'user': user,})
+        else:
+            print('失敗')
+            print(form.errors)
     else:
         print('postじゃないです')
         form = MelimitStoreEditForm(instance=user.melimitstore)
+        print(f"form : {form}")
     return render(request, 'store/store-info-edit.html', {'form': form, 'user': user,})
 
 # 店舗の新規登録ページ
@@ -290,7 +301,8 @@ def store_login_view(request):
         form = MelimitStoreLoginForm(request.POST)
         print('store_login_view')
         # フォームに入力された値を出力してみる
-        print(f'Username: {form.data.get("username")}')
+        # print(f'Username: {user.username}') # まだ認証前なので、userも存在しない
+        # print(f'Username: {form.data.get("username")}') # formにusernameがないので、form.data.get("username")はエラーになる
         print(f'email: {form.data.get("email")}')
         print(f'Password: {form.data.get("password")}')
         if form.is_valid():
