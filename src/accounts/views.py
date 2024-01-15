@@ -260,3 +260,7 @@ class PasswordResetComplete(PasswordResetCompleteView):
 #     template_name = 'account/create_root.html'
 def CreaterootView(request):
     return render(request, 'account/create_root.html')
+
+# マイページへの遷移
+def MypageView(request):
+    return render(request, 'account/mypage.html')
