@@ -123,3 +123,7 @@ def notice(request):
 # 注文詳細
 def history(request):
     return render(request, 'user/history.html')
+#注文完了
+def order_completed(request):
+    return render(request, 'user/order-completed.html')
+    

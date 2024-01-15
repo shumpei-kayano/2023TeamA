@@ -1,0 +1,21 @@
+.order {
+    &-head {
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    &-bottom {
+        font-size: 2rem;
+        text-align: center;
+        margin-top: 5rem;
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 76px; /* 画像とテキストの間隔を調整 */
+    }
+
+    &-btn {
+        text-align: center;
+    }
+}

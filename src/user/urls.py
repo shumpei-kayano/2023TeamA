@@ -22,4 +22,5 @@ urlpatterns = [
     path('cart/', views.cart, name='cart'),
     path('notice/', views.notice, name='notice'),
     path('history/', views.history, name='history'),
+    path('order_completed/', views.order_completed, name='order_completed'),
 ]

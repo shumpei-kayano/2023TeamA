@@ -1110,6 +1110,24 @@ input:checked + .tab_class + .content_class {
   margin-bottom: 10rem;
 }
 
+.order-head {
+  font-size: 2rem;
+  text-align: center;
+}
+.order-bottom {
+  font-size: 2rem;
+  text-align: center;
+  margin-top: 5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 76px; /* 画像とテキストの間隔を調整 */
+}
+.order-btn {
+  text-align: center;
+}
+
 .loading {
   position: fixed;
   top: 0;
