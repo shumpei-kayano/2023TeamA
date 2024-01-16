@@ -313,10 +313,14 @@ def store_login_view(request):
             # print(f'backend: {user.backend}')
             # ユーザーの情報を出力してみる
             # print(f'Username: {user.username}')
-            if user is not None:
+            # userのmodelがMelimitStoreならログイン成功
+            if user.__class__.__name__ == 'MelimitStore':
                 login(request, user)
                 print('ログイン成功')
                 return redirect('store:index')
+            elif user.__class__.__name__ != 'MelimitStore':
+                print('ログイン失敗')
+                return redirect('store:store_login')
             else:
                 # フォームが無効な場合の処理をここに書く
                 print('pass')
@@ -325,8 +329,9 @@ def store_login_view(request):
         else:
             print(form.errors)
             print('rogin-error')
+            return redirect('store:store_login')
     else:
-        # form = MelimitStoreLoginForm()
+        form = MelimitStoreLoginForm()
 
         if 'backend' in request.session:
             del request.session['backend']

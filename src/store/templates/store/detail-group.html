@@ -173,7 +173,7 @@
             <div class="modal-content">
               <span class="modal-title">共同購入商品を本当に削除しますか？</span>
               <span class="close">&times;</span>
-                <form id="deleteForm" method="POST" action="{% url 'store:test_test' sale.product.pk %}">
+                <form id="deleteForm" method="POST" action="{% url 'store:product_delete' sale.product.pk %}">
                   {% csrf_token %}
                   <!-- 入力内容を表示する部分 -->
                   <div id="confirmationContent">

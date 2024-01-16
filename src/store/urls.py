@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 from .views import ProductAndSaleDeleteView
+# accountsアプリviews.pyのStoreCreateViewをインポート
+# from accounts.views import StoreCreateView
 
 app_name = 'store'
 
@@ -21,24 +23,18 @@ urlpatterns = [
     path('create-general-purchase', views.create_general_purchase_view, name='create-general-purchase'),
     path('create-group-purchase', views.create_group_purchase_view, name='create-group-purchase'),
     # 商品詳細ページ
-    # path('detail-general', views.detail_general_view, name='detail-general'),
-    # path('detail-group', views.detail_group_view, name='detail-group'),
-    # ログイン処理
-    path('store_login_success/', views.store_login_view, name='store_login_success'),
-    # ログイン後のベースページ
-    path('store_base/', views.store_base_view, name='store_base'),
-    # 穴井さんテスト用
-    path('test/', views.create_product_and_sale, name='test'), # 商品登録
-    path('test2/', views.product_and_sale_list, name='test2'), # 商品一覧
-    path('sale_detail/<int:pk>', views.sale_detail_view, name='sale_detail'), # 商品詳細 # 採用
-    path('product_and_sale_delete/', ProductAndSaleDeleteView.as_view(), name='product_and_sale_delete'), # 商品複数削除
-    path('test_test/<int:pk>', views.product_and_sale_delete_view, name='test_test'), # 商品削除
-    # 商品詳細ページ
+    path('sale_detail/<int:pk>', views.sale_detail_view, name='sale_detail'),
     # path('detail-general', views.detail_general_view, name='detail-general'),
     # path('detail-group', views.detail_group_view, name='detail-group'),
     # 商品編集ページ
     path('detail-general-edit/<int:product_id>/', views.detail_general_edit_view, name='detail-general-edit'),
     path('detail-group-edit/<int:product_id>/', views.detail_group_edit_view, name='detail-group-edit'),
+    # 商品削除
+    path('product_delete/<int:pk>', views.product_and_sale_delete_view, name='product_delete'),
+    # ログイン処理
+    path('store_login/', views.store_login_view, name='store_login'),
+    # ログイン後のベースページ
+    path('store_base/', views.store_base_view, name='store_base'),
     # パスワード再設定用のメール送信ページ
     path('pass-mail', views.pass_mail_view, name='pass_mail'),
     # 店舗情報設定ページ
@@ -46,5 +42,9 @@ urlpatterns = [
     # 店舗情報設定ページの編集
     path('store-info-edit', views.store_info_edit_view, name='store-info-edit'),
     # 店舗の新規登録ページ
-    path('store-create', views.store_create_view, name='store-create'),
+    # path('store-create', views.StoreCreateView, name='store-create'),
+    # 穴井さんテスト用
+    path('test/', views.create_product_and_sale, name='test'), # 商品登録
+    path('test2/', views.product_and_sale_list, name='test2'), # 商品一覧
+    path('product_and_sale_delete/', ProductAndSaleDeleteView.as_view(), name='product_and_sale_delete'), # 商品複数削除
 ]

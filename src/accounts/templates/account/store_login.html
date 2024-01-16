@@ -10,7 +10,10 @@
 <body>
 <div class="store-login">
     <h1 class="store-login__title">店舗管理画面ログイン</h1>
-    <form class="store-login__form" method="POST" action="{% url 'store:store_login_success' %}">
+    {% if form.error %}
+        {{ form.error }}
+    {% endif %}
+    <form class="store-login__form" method="POST" action="{% url 'store:store_login' %}">
         {% csrf_token %}
         {{ form.as_p }}
         <p class="to-forgot-pass"><a href="{% url 'accounts:password_reset' %}">パスワードを忘れた場合</a></p>

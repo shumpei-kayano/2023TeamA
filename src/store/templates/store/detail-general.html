@@ -155,7 +155,7 @@
           <span class="modal-title">一般購入商品を本当に削除しますか？</span>
           <span class="close">&times;</span>
           <!-- 入力内容を表示する部分 -->
-            {% comment %} <form id="deleteForm" method="POST" action="{% url 'store:test_test' sale.product.pk %}"> {% endcomment %}
+            <form id="deleteForm" method="POST" action="{% url 'store:product_delete' sale.product.pk %}">
               {% csrf_token %}
               <div id="confirmationContent">
                   <!-- 確認内容をここに表示 -->
@@ -164,7 +164,7 @@
                   <button class="modal-back" type="button">もどる</button>
                   <button class="modal-general" type="submit">削除する</button>
               </div>
-            {% comment %} </form> {% endcomment %}
+            </form>
           </div>
     </div>
 </div>
