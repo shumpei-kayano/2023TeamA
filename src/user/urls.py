@@ -25,4 +25,5 @@ urlpatterns = [
     path('order_completed/', views.order_completed, name='order_completed'),
     path('favorite/', views.favorite, name='favorite'),
     path('pass_mail/', views.pass_mail, name='pass_mail'),
+    path('cash-register/', views.cash_register, name='cash_register'),
 ]

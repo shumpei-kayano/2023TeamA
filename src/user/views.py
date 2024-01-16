@@ -135,3 +135,7 @@ def favorite(request):
 # パスワード設定用メール送信完了
 def pass_mail(request):
     return render(request, 'user/pass-mail.html')
+
+# 注文確認
+def cash_register(request):
+    return render(request, 'user/cash-register.html')

@@ -1490,6 +1490,84 @@ input:checked + .tab_class + .content_class {
   color: #F75050;
 }
 
+.register .cart__shopping-table {
+  margin-bottom: 0;
+}
+.register__title {
+  text-align: center;
+  padding-bottom: 20px;
+}
+.register__cart--general-title {
+  padding-left: 1rem;
+  background-color: rgba(133, 168, 212, 0.2);
+}
+.register__cart--joint-title {
+  padding-left: 1rem;
+  background-color: rgba(212, 133, 186, 0.2);
+}
+.register__total {
+  padding: 1em;
+}
+.register__total p {
+  font-weight: bold;
+}
+.register__total li {
+  margin-bottom: 0.5em;
+}
+.register__total li.total {
+  border-top: 1px solid #252525;
+}
+.register__total span {
+  float: right;
+  color: #F75050;
+}
+.register__caution {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.8em;
+  color: #F75050;
+}
+.register__confirm {
+  text-align: center;
+}
+.register__confirm label {
+  font-weight: bold;
+}
+.register__confirm input {
+  vertical-align: middle;
+}
+.register__user-info-title {
+  padding-left: 1rem;
+  background-color: #D4B985;
+}
+.register__user-info-content {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  vertical-align: middle;
+  border-top: 1px solid #EBEBEB;
+  border-bottom: 1px solid #EBEBEB;
+  padding: 1em;
+}
+.register__user-info-label p {
+  font-weight: bold;
+}
+.register__user-info-subtitle, .register__user-info-btn {
+  margin: auto 0;
+}
+.register__final-confirmation {
+  margin-bottom: 1rem;
+}
+.register__final-confirmation-title {
+  padding-left: 1rem;
+  background-color: #EBEBEB;
+}
+.register__final-confirmation-btn {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 1em;
+}
+
 .contact__btn-container {
   margin: 100px 0;
   display: flex;
