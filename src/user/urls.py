@@ -24,4 +24,5 @@ urlpatterns = [
     path('history/', views.history, name='history'),
     path('order_completed/', views.order_completed, name='order_completed'),
     path('favorite/', views.favorite, name='favorite'),
+    path('pass_mail/', views.pass_mail, name='pass_mail'),
 ]

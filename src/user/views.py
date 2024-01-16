@@ -131,3 +131,7 @@ def order_completed(request):
 # お気に入り
 def favorite(request):
     return render(request, 'user/favorite.html')
+
+# パスワード設定用メール送信完了
+def pass_mail(request):
+    return render(request, 'user/pass-mail.html')
