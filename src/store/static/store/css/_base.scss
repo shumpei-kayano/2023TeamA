@@ -738,3 +738,40 @@ body {
 a,a:visited{
   color: inherit;
 }
+
+
+@media screen and (max-width:1100px) {
+  .header, topic-path {
+    width: 860px;
+  }
+}
+@media screen and (max-width:1000px) {
+  .header, topic-path {
+    width: 760px;
+  }
+}
+@media screen and (max-width:900px) {
+  .header, topic-path {
+    width: 660px;
+  }
+}
+@media screen and (max-width:800px) {
+  .header, topic-path {
+    width: 560px;
+  }
+}
+@media screen and (max-width:700px) {
+  .header, topic-path {
+    width: 460px;
+    }
+}
+@media screen and (max-width:600px) {
+  .header, topic-path {
+    width: 360px;
+  }
+}
+@media screen and (max-width:500px) {
+  .header, topic-path {
+    width: 260px;
+  }
+}
