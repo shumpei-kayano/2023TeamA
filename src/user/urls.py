@@ -17,5 +17,5 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     #path('test3/<int:pk>', views.sale_detail_view, name='test3'), # 商品詳細
     path('all-products/general/general-products_detail/<int:pk>', views.general_products_detail, name='general_products_detail'),
-    path('all-products/joint/joint-products_detail/', views.joint_products_detail, name='joint_products_detail'),
+    path('all-products/joint/joint-products_detail/<int:pk>', views.joint_products_detail, name='joint_products_detail'),
 ]

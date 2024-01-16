@@ -65,14 +65,15 @@
         <label class="tab_class" for="tab1">商品情報</label>
         <div class="content_class">
             <h4 class="detail2__title">商品情報</h4>
-            <p class="detail2__text">商品情報商品情報商品情報商品情報商品情報商品情報商品情報商品情報商品情報商品情報</p>
+            <p class="detail2__text">{{ sale.description }}商品情報商品情報商品情報商品情報商品情報商品情報商品情報商品情報商品情報商品情報</p>
         </div>
         <input type="radio" name="tab_name" id="tab2" >
         <label class="tab_class" for="tab2">店舗情報</label>
         <div class="content_class">
             <h4 class="detail2__title">店舗情報</h4>
-            <p class="detail2__text">{{ sale.product.store.email }}店�
-            <a href="{{ sale.product.store.site_url }}" class="detail2__text">{{ sale.product.store.site_url }}</a>
+            <p class="detail2__text">名前:{{ sale.product.store.username }}
+            <p class="detail2__text">店舗連絡メールアドレス：{{ sale.product.store.email }}
+            <a href="{{ sale.product.store.site_url }}" class="detail2__text">店舗のURL:{{ sale.product.store.site_url }}</a>
         </div>
         <input type="radio" name="tab_name" id="tab3" >
         <label class="tab_class" for="tab3">送料情報</label>
@@ -87,18 +88,37 @@
     <div class="detail3__items">
         <div class="item--list">
             {% comment %} 関連商品をループで表示 {% endcomment %}
+            {% comment %} 商品が一般か、共同か判断必須。 {% endcomment %}
             {% for related_sale in related_sales %}
                 {% if forloop.counter <= 3 %}
-                    <div class="item--card card--blue">
-                        <a href="{% url 'user:general_products_detail' pk=related_sale.pk %}">
-                            <img src="{{ related_sale.product.product_image.url }}" alt="{{ related_sale.product.product_name }}" class="card--img">
-                            <p class="discount">{{ related_sale.discount_rate }}%OFF</p>
-                            <div class="card--content">
-                                <h3 class="card--title">{{ related_sale.product.product_name }}</h3>
-                                <h4 class="card--discount">￥{{ related_sale.sale_price }}（税込）</h4>
-                            </div>
-                        </a>
-                    </div>
+                {% comment %} 商品が一般の時 {% endcomment %}
+                    {% if related_sale.sale_type == 'general_sales' %}
+                        <div class="item--card card--blue">
+                            <a href="{% url 'user:general_products_detail' pk=related_sale.pk %}">
+                                <img src="{{ related_sale.product.product_image.url }}" alt="{{ related_sale.product.product_name }}" class="card--img">
+                                <p class="discount">{{ related_sale.discount_rate }}%OFF</p>
+                                <div class="card--content">
+                                    <h3 class="card--title">{{ related_sale.product.product_name }}</h3>
+                                    <h4 class="card--discount">￥{{ related_sale.sale_price }}（税込）</h4>
+                                </div>
+                            </a>
+                        </div>
+                        {% comment %} 商品が共同の時 {% endcomment %}
+                    {% else %}
+                        <div class="item--card card--pink">
+                            <a href="{% url 'user:joint_products_detail' pk=related_sale.pk %}">
+                                <img src="{{ related_sale.product.product_image.url }}" alt="{{ related_sale.product.product_name }}" class="card--img">
+                                <p class="discount">{{ related_sale.discount_rate }}％</p>
+                                <div class="card--content">
+                                    <h3 class="card--title">{{ related_sale.product.product_name }}</h3>
+                                    <meter low="69" high="80" max="100" value="84">B</meter>
+                                    <p class="card--text">あと00人達成で</p>
+                                    <p class="card--price">{{ related_sale.sale_price }}(税込)</p>
+                                    <h4 class="card--discount">￥100,000（税込）</h4>
+                                </div>
+                            </a>
+                        </div>
+                    {% endif %}
                 {% endif %}
             {% endfor %}
             {% comment %} <div class="item--card card--blue">
