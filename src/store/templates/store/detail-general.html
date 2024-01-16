@@ -208,7 +208,7 @@
           const shipping = document.querySelector('.shipping-box-input span').textContent + '円';
           const weight = document.querySelector('.weight-box-input span').textContent + 'g';
           const expiration = document.querySelector('.expiration-box-input span').textContent;
-          const image = document.querySelector('.image-box-input img').textContent;
+          const image = document.querySelector('.image-box-input img').src;
           const description = document.querySelector('.description-box-input span').textContent;
   
           // 確認用の内容を作成
@@ -290,7 +290,8 @@
               <div class="con-title-text">画像</div>
             </div>
             <div class="con-product-name-box-input">
-              <p>${image}</p>
+              <img src="${image}" alt="${productName}" height="160">
+              {% comment %} <p>${image}</p> {% endcomment %}
             </div>
           </div>
           <div class="con-category-box">
