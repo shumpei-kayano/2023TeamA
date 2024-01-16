@@ -6,7 +6,9 @@ from accounts.models import MelimitStore, MelimitUser
 # 各viewで使用する
 class MelimitModelMixin:
     def get_melimitmodel_user(self):
+        print('mixins:get_melimitmodel_user')
         user = self.request.user
+        print(f"try前mixin_user：{user}")
         if not user.is_authenticated:
             print("ログインしてない")
             # ログインしていない場合の処理を記述
@@ -17,18 +19,29 @@ class MelimitModelMixin:
         try:
             if user_type == 'melimit_user':
                 user = MelimitUser.objects.get(id=melimit_id)
+                if user.__class__.__name__ == 'MelimitUser':
+                    if isinstance(user, MelimitUser):
+                        print(f"try後mixin_user：{user}")
+                        return user
             elif user_type == 'melimit_store':
                 user = MelimitStore.objects.get(id=melimit_id)
+                if user.__class__.__name__ == 'MelimitStore':
+                    if isinstance(user, MelimitStore):
+                        print(f"try後mixin_user：{user}")
+                        return user
+            else:
+                # print("User is not a MelimitModel")
+                raise Http404("User is not a MelimitModel")
         except ObjectDoesNotExist:
             # print("User does not exist")
             raise Http404("User does not exist")
 
-        if user.__class__.__name__ == 'MelimitUser':
-            if isinstance(user, MelimitUser):
-                return user
-        elif user.__class__.__name__ == 'MelimitStore':
-            if isinstance(user, MelimitStore):
-                return user
-        else:
-            # print("User is not a MelimitModel")
-            raise Http404("User is not a MelimitModel")
+        # if user.__class__.__name__ == 'MelimitUser':
+        #     if isinstance(user, MelimitUser):
+        #         return user
+        # elif user.__class__.__name__ == 'MelimitStore':
+        #     if isinstance(user, MelimitStore):
+        #         return user
+        # else:
+        #     # print("User is not a MelimitModel")
+        #     raise Http404("User is not a MelimitModel")

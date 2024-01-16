@@ -20,9 +20,9 @@
     </div>
 
     <div class="group-purchase-create">
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
         <div class="group-purchase-input">
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
           <!-- 商品名の入力欄 -->
           <div class="product-name-box">
             <div class="product-name-box-title">
@@ -39,7 +39,7 @@
               <div class="title-text">カテゴリ</div>
             </div>
             <div class="category-box-input">
-              <span>{{ sale.product.product_category }}</span>
+              <span>{{ sale.product.get_product_category_display }}</span>
             </div>
           </div>
 
@@ -163,27 +163,31 @@
           </div>
 
           <div class="group-edit-button">
-            <a href="detail-group-edit.html" class="btn-edit">商品を編集する</a>
+            <a href="{% url 'store:detail-group-edit' sale.product.pk %}" class="btn-edit">商品を編集する</a>
+            {% comment %} <a href="detail-group-edit.html" class="btn-edit">商品を編集する</a> {% endcomment %}
           </div>
         </div>
-
+      </form>
           <!-- 「商品を削除する」ボタンを押した時に出てくるモーダル -->
           <div id="modal" class="modal">
             <div class="modal-content">
               <span class="modal-title">共同購入商品を本当に削除しますか？</span>
               <span class="close">&times;</span>
-              <!-- 入力内容を表示する部分 -->
-              <div id="confirmationContent">
-                <!-- 確認内容をここに表示 -->
-              </div>
-              <div class="modal-button">
-                <button class="modal-back" type="button">もどる</button>
-                <button class="modal-group" type"submit">削除する</button>
-              </div>
+                <form id="deleteForm" method="POST" action="{% url 'store:product_delete' sale.product.pk %}">
+                  {% csrf_token %}
+                  <!-- 入力内容を表示する部分 -->
+                  <div id="confirmationContent">
+                    <!-- 確認内容をここに表示 -->
+                  </div>
+                  <div class="modal-button">
+                    <button class="modal-back" type="button">もどる</button>
+                    <button class="modal-group" type"submit">削除する</button>
+                  </div>
+                </form>
             </div>
           </div>
 
-      </form>
+      
     </div>
 
     <script>
@@ -227,7 +231,7 @@
               const shipping = document.querySelector('.shipping-box-input span').textContent + '円';
               const weight = document.querySelector('.weight-box-input span').textContent + 'g';
               const expiration = document.querySelector('.expiration-box-input span').textContent;
-              const image = document.querySelector('.image-box-input img').textContent;
+              const image = document.querySelector('.image-box-input img').src;
               const description = document.querySelector('.description-box-input span').textContent;
       
               // 確認用の内容を作成
@@ -325,7 +329,8 @@
                   <div class="con-title-text">画像</div>
                 </div>
                 <div class="con-product-name-box-input">
-                  <p>${image}</p>
+                  <img src="${image}" alt="${productName}" height="160">
+                  {% comment %} <p>${image}</p> {% endcomment %}
                 </div>
               </div>
               <div class="con-category-box">

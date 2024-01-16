@@ -1,0 +1,85 @@
+.consumer-info-naiyou {
+    position: absolute;
+    top: 350px;
+    left: 265px;
+    background-color: var(--color);
+    border-left: 5px solid var(--color-black);
+    box-sizing: border-box;
+    width: 992px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 8px;
+  }
+  .consumer-table-con {
+    width: 992px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .info-label {
+    background-color: var(--color-whitesmoke-100);
+    border-bottom: 1px solid var(--color-gainsboro-100);
+    box-sizing: border-box;
+    width: 240px;
+    flex-direction: row;
+    padding: var(--padding-xs) var(--padding-base);
+  }
+  .consumer-naiyou-con,
+  .consumer-info-con,
+  .info-label,
+  .info-value {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .info-value {
+    flex: 1;
+    border-bottom: 1px solid var(--color-gainsboro-100);
+    flex-direction: row;
+    padding: var(--padding-xs) var(--padding-base);
+  }
+  .consumer-naiyou-con,
+  .consumer-info-con {
+    position: absolute;
+    left: 264px;
+    flex-direction: column;
+    font-size: var(--typography-body1-size);
+  }
+  .consumer-info-con {
+    top: 50px;
+  }
+  .consumer-naiyou-con {
+    top: 400px;
+}
+  .consumer-info-title {
+    flex: 1;
+    position: relative;
+    line-height: 150%;
+  }
+  .consumer-info {
+    position: absolute;
+    top: 0px;
+    left: 264px;
+    background-color: var(--color);
+    border-left: 5px solid var(--color-black);
+    box-sizing: border-box;
+    width: 992px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 8px;
+  }
+  .oeder-history-contents {
+    position: relative;
+    overflow: scroll;
+    width: 100%;
+    height: 100%;
+    top: 100px;
+    text-align: left;
+    font-size: var(--font-size-xl);
+    color: var(--color-black);
+  }

@@ -1,0 +1,55 @@
+{% comment %} {% extends "store/base.html" %} {% endcomment %}
+
+{% load static %}
+
+{% comment %} {% block title %}パスワード再設定用のメール送信{% endblock %} {% endcomment %}
+
+{% block contents %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+    {% block title %}パスワード再設定用のメール送信ページ{% endblock %}
+    </title>
+    <link rel="stylesheet" href="{% static 'store/css/style.css' %}" />
+    </head>
+
+</head>
+<body>
+  <div class="pass-container">
+    <div class="ue-title">
+      <div class="ue-text">パスワードの再設定</div>
+    </div>
+    <div class="pass-main">
+      <div class="pass-nakami"></div>
+      <div class="pass-nakami-title">
+        <div class="nakami-text">パスワード再設定用のメールを送信します</div>
+      </div>
+      <form id="emailForm">
+        <div class="pass-input">
+          <div class="pass-input-nakami">
+            <input type="email" class="pass-input-email" required
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+            placeholder="会員登録時のメールアドレスを入力してください">
+          </div>
+        </div>
+        <button type="submit" id="emailSubmit" class="emailsub">送信</button>
+      </form>
+      <a href="https://www.yahoo.co.jp/" class="pass-top">トップページにもどる</a>
+    </div>
+  </div>
+
+  <script>
+    document.querySelector("#emailForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // デフォルトのsubmitイベントをキャンセル
+      alert("メールを送信しました！"); // アラートを表示
+      window.location.href = "https://www.yahoo.co.jp/"; // https://www.yahoo.co.jp/にリダイレクト
+    });
+  </script>
+</body>
+</html>
+
+{% endblock %}

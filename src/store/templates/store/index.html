@@ -2,7 +2,251 @@
 {% load static %}
 {% block title %}店舗管理画面{% endblock %}
 
+{% block contents %}
+<div class="product-manage__container">
+    <div class="main-container">
+        <div class="topic-path">
+            <div class="product-manage"></div>
+        </div>
 
-{% block content %}
+        <div class="top-page-content">
+            {% comment %} 注文状況部分 {% endcomment %}
+            <div class="order-status">
+                <div class="order-status-title">注文状況</div>
+                <div class="order-status-nakami">
+                    <div class="order-status-koumoku">
+                        <div class="koumoku-title">新規注文</div>
+                        <div class="koumoku-nakami">0</div>
+                    </div>
+                    <div class="order-status-koumoku">
+                        <div class="koumoku-title">入金待ち</div>
+                        <div class="koumoku-nakami">100</div>
+                    </div>
+                    <div class="order-status-koumoku">
+                        <div class="koumoku-title">未発送</div>
+                        <div class="koumoku-nakami">50</div>
+                    </div>
+                </div>
+            </div>
+            
+            {% comment %} グラフ部分 {% endcomment %}
+            <div class="chartWrapper">
+                <div class="chartContainer" style="height:240px; position: relative;">
+                    <canvas id="chart_pro" style="position: absolute; left: 0; top: 0;"></canvas>
+                    <canvas id="chart_co2" style="position: absolute; left: 0; top: 260px;"></canvas>
+                </div>
+            </div>
 
+            <div class="chart-toggle-pro">
+                <button onclick="toggleChart('month', 'pro')">月単位</button>
+                <button onclick="toggleChart('day', 'pro')">日単位</button>
+                <button onclick="toggleChart('year', 'pro')">年単位</button>
+            </div>
+            <div class="chart-toggle-co2">
+                <button onclick="toggleChart('month', 'co2')">月単位</button>
+                <button onclick="toggleChart('day', 'co2')">日単位</button>
+                <button onclick="toggleChart('year', 'co2')">年単位</button>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script>
+            var xAxisLabelMinWidth = 50;
+
+            // グラフの初期表示は月単位
+            var currentChartType_pro = 'month';
+            var currentChartType_co2 = 'month';
+
+            // 現在の月を取得
+            var currentMonth = new Date().getMonth() + 1;
+
+            // 現在の日を取得
+            var currentDay = new Date().getDate();
+
+            // 現在の年を取得
+            var currentYear = new Date().getFullYear();
+
+            // 店舗売上金額のデータ
+            var data_pro = [33, 19, 48, 25, 26, 34, 14, 35, 41, 26, 45, 35, 26, 34, 14, 35, 41]; // 仮のデータ(DBと紐づける)
+            var width_pro = data_pro.length * xAxisLabelMinWidth;
+            {% comment %} document.getElementById('chart_pro').style.width = width_pro + "px"; {% endcomment %}
+            document.getElementById('chart_pro').style.width = "600px";
+            document.getElementById('chart_pro').style.height = "240px";
+
+            var myChart_pro = new Chart(document.getElementById('chart_pro').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: getLabels(currentChartType_pro, currentMonth, currentDay, currentYear),
+                    datasets: [
+                        {
+                            label: currentChartType_pro === 'month' ? '月単位' : currentChartType_pro === 'day' ? '日単位' : '年単位',
+                            data: data_pro,
+                            backgroundColor: '#FFB6C180',
+                        },
+                    ],
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: '店舗売上金額',
+                            font: {
+                                size: 16,
+                                weight: 'bold'
+                            },
+                            padding: {
+                                bottom: -3
+                            }
+                        }
+                    },
+                    responsive: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: '金額(万円)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                // text: currentChartType_pro === 'year' ? '年' : currentChartType_pro === 'month' ? '月' : '日'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // CO2削減量のデータ
+            var data_co2 = [10, 5, 20, 15, 25, 12, 18, 8, 30, 22, 16, 28]; // 仮のデータ(DBと紐づける)
+            var width_co2 = data_co2.length * xAxisLabelMinWidth;
+            {% comment %} document.getElementById('chart_co2').style.width = width_co2 + "px"; {% endcomment %}
+            document.getElementById('chart_co2').style.width = "600px";
+            document.getElementById('chart_co2').style.height = "240px";
+
+            var myChart_co2 = new Chart(document.getElementById('chart_co2').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: getLabels(currentChartType_co2, currentMonth, currentDay, currentYear),
+                    datasets: [
+                        {
+                            label: currentChartType_co2 === 'month' ? '月単位' : currentChartType_pro === 'day' ? '日単位' : '年単位',
+                            data: data_co2,
+                            backgroundColor: '#a0d8ef80',
+                        },
+                    ],
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'CO2削減量',
+                            font: {
+                                size: 16,
+                                weight: 'bold'
+                            },
+                            padding: {
+                                bottom: -3
+                            }
+                        }
+                    },
+                    responsive: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: '削減量(g)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                // text: currentChartType_co2 === 'year' ? '年' : currentChartType_co2 === 'month' ? '月' : '日'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // 切り替える関数
+            function toggleChart(type, chart) {
+                if (chart === 'pro') {
+                    currentChartType_pro = type;
+                    updateChart(myChart_pro, data_pro, type);
+                } else if (chart === 'co2') {
+                    currentChartType_co2 = type;
+                    updateChart(myChart_co2, data_co2, type);
+                }
+            }
+
+            // グラフを更新する関数
+            function updateChart(chart, data, type) {
+                chart.data.labels = getLabels(type, currentMonth, currentDay);
+                chart.data.datasets.forEach((dataset, index) => {
+                    dataset.label = type === 'month' ? '月単位' : type === 'day' ? '日単位' : '年単位';
+                    dataset.hidden = type === 'month' && index !== 0;  // デフォルトで非表示にする条件
+                });
+                chart.data.datasets[0].data = data;
+
+                // chart.options.scales.x.title.text = type === 'year' ? '年' : type === 'month' ? '月' : '日';
+                chart.update();
+            }
+
+            // ラベルを取得する関数
+            function getLabels(type, month, day, year) {
+                if (type === 'month') {
+                    // 'month' タイプの場合、12個のデータのみを表示するように修正
+                    return getMonthLabels(month).slice(0, 12);
+                } else if (type === 'day') {
+                    // 'day' タイプの場合、7個のデータのみを表示するように修正
+                    return getDayLabels(day).slice(0, 7);
+                } else if (type === 'year') {
+                    // 'year' タイプの場合、5個のデータのみを表示するように修正
+                    return getYearLabels(year).slice(0, 5);
+                }
+            }
+
+            // 現在の月から過去12か月分のラベルを生成
+            function getMonthLabels(currentMonth) {
+                var labels = [];
+                for (var i = 0; i < 12; i++) {
+                    var month = currentMonth - i;
+                    if (month <= 0) {
+                        month = month + 12;
+                    }
+                    labels.push(month + '月');
+                }
+                return labels.reverse(); // ラベルを逆順にする
+            }
+
+            // 現在の日から始まる過去7日分のラベルを生成
+            function getDayLabels(currentDay) {
+                var labels = [];
+                for (var i = 0; i < 7; i++) {
+                    var day = currentDay - i;
+                    if (day <= 0) {
+                        day = day + 31;
+                    }
+                    labels.push(day + '日');
+                }
+                return labels.reverse(); // ラベルを逆順にする
+            }
+
+
+            // 現在の年から始まる過去5年分のラベルを生成
+            function getYearLabels() {
+                var labels = [];
+                var currentYear = new Date().getFullYear();
+                for (var i = 0; i < 5; i++) {
+                    labels.push((currentYear - i) + '年');
+                }
+                return labels.reverse(); // ラベルを逆順にする
+            }
+
+        </script>
+    </div>
+</div>
 {% endblock %}

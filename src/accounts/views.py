@@ -152,29 +152,38 @@ class MelimitStoreLogoutView(View):
 # MelimitStore用の新規登録
 def StoreCreateView(request):
     if request.method == 'POST':
+        print('店舗登録post')
         form = MelimitStoreRegistrationForm(request.POST)
+        print(f'フォームエラー: {form.errors}')
         if form.is_valid():
-            user = form.save()
+            request.user = form.save()
+            print(f'request.user: {request.user.__dict__}')
+            print(f'request: {request.__dict__}')
             # backendを指定してログインさせる
-            user.backend = 'accounts.backends.MelimitStoreModelBackend'
-            model_name = type(user).__name__
-            instance_name = type(user).__name__
+            request.user.backend = 'accounts.backends.MelimitStoreModelBackend'
+            # user.user_type = 'melimit_store'
+            mixin = MelimitModelMixin()
+            mixin.request = request
+            # print(f'user: {user.__dict__}')
+            user = mixin.get_melimitmodel_user()
+            # model_name = type(user).__name__
+            # instance_name = type(user).__name__
             # セッションにモデル名とインスタンス名を保存
-            request.session['model_name'] = model_name
-            request.session['instance_name'] = instance_name
-            login(request, user)
+            # request.session['model_name'] = model_name
+            # request.session['instance_name'] = instance_name
+            login(request, request.user)
             # セッション'model_name'と'instance_name'を出力してみる
-            print(f'model_name: {request.session["model_name"]}')
-            print(f'instance_name: {request.session["instance_name"]}')
+            # print(f'model_name: {request.session["model_name"]}')
+            # print(f'instance_name: {request.session["instance_name"]}')
             # return render(request, 'store/base.html', {
             #     'model_name': request.session['model_name'],
             #     'instance_name': request.session['instance_name']
             # })
-            return redirect('store:store_base')
+            return redirect('store:store_login_success')
     # POSTでない場合は空のフォームを生成(最初のページ表示時)
     else:
         form = MelimitStoreRegistrationForm()
-    return render(request, 'account/store_touroku.html', {'form': form})
+    return render(request, 'store/store-create.html', {'form': form})
 
 # MelimitStore用の会員情報編集
 class StoreUpdateView(LoginRequiredMixin, UpdateView, MelimitModelMixin):
