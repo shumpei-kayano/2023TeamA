@@ -139,3 +139,6 @@ def pass_mail(request):
 # 注文確認
 def cash_register(request):
     return render(request, 'user/cash-register.html')
+#新規登録
+def signup_choice(request):
+    return render(request, 'user/signup-choice.html')

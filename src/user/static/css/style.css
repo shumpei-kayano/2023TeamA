@@ -1152,6 +1152,39 @@ input:checked + .tab_class + .content_class {
   margin-top: -3rem;
 }
 
+.signup-bottom {
+  display: flex;
+  justify-content: space-between;
+}
+.signup-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.signup-option .option-content {
+  display: flex;
+  gap: 10px;
+}
+.signup-option .option-content p {
+  margin-top: 60px;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+.signup-option .img-left {
+  margin-top: 1rem;
+}
+.signup-option .left {
+  margin-top: 0.8rem;
+}
+.signup-option img {
+  width: 200px;
+  height: auto;
+}
+.signup-detail {
+  display: flex;
+}
+
 .loading {
   position: fixed;
   top: 0;
