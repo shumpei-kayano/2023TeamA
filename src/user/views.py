@@ -337,8 +337,6 @@ def joint_products_detail(request,pk):
     #オブジェクトの中身、メソッド、属性の名前を出力できる
     # print(dir(sale.product.store))
     return render(request, 'user/joint-products_detail.html', {'sale': sale,'sale_infos':sale_infos,'related_sales':related_sales})
-def joint_products_detail(request):
-    return render(request, 'user/joint-products_detail.html')
 
 # カート
 def cart(request):
