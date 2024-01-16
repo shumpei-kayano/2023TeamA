@@ -15,7 +15,17 @@ urlpatterns = [
     path('all-products/general/', views.all_products_general, name='all_products_general'),
     path('all-products/joint/', views.all_products_joint, name='all_products_joint'),
     path('contact/', views.contact, name='contact'),
+    path('contact/confirm/', views.contact_confirm, name='contact_confirm'),
+    path('contact/complete/', views.contact_complete, name='contact_complete'),
     #path('test3/<int:pk>', views.sale_detail_view, name='test3'), # 商品詳細
     path('all-products/general/general-products_detail/<int:pk>', views.general_products_detail, name='general_products_detail'),
     path('all-products/joint/joint-products_detail/<int:pk>', views.joint_products_detail, name='joint_products_detail'),
+    path('cart/', views.cart, name='cart'),
+    path('notice/', views.notice, name='notice'),
+    path('history/', views.history, name='history'),
+    path('order_completed/', views.order_completed, name='order_completed'),
+    path('favorite/', views.favorite, name='favorite'),
+    path('pass_mail/', views.pass_mail, name='pass_mail'),
+    path('cash-register/', views.cash_register, name='cash_register'),
+    path('signup_choice/', views.signup_choice, name='signup_choice'),
 ]

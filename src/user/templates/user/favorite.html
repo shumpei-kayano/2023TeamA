@@ -1,2 +1,85 @@
 {% extends 'user/base.html' %}
 {% load static %}
+{% block title %}お気に入り{% endblock %}
+{% block content %}
+<h2 class="cart__title">お気に入り</h2>
+    <table class="cart__shopping-table">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">商品</th>
+            <th scope="col">種別</th>
+            <th scope="col">価格</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% comment %} {% for item in cart_items %} {% endcomment %}
+          <tr>
+            <td>
+                <img src="{% static 'assets/img/メリ光男.png' %}" alt="野菜"/>
+            </td>
+            <td>
+                トマト
+                {% comment %} {{ item.product.name }} {% endcomment %}
+            </td>
+            <td>
+                一般購入商品
+                {% comment %} {{ item.product.category }} {% endcomment %}
+            </td>
+            <td>
+                100円
+                {% comment %} {{ item.product.price }} {% endcomment %}
+            </td>
+            <td>
+                <a href="#" class="btn btn--white">詳細</a>
+            </td>
+            <td>
+                <form action="#" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn--beige">カートに追加</button>
+                </form>
+            </td>
+            <td>
+                <form action="#" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn--red">削除</button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="{% static 'assets/img/メリ光男.png' %}" alt="野菜"/>
+            </td>
+            <td>
+                トマト
+                {% comment %} {{ item.product.name }} {% endcomment %}
+            </td>
+            <td>
+                一般購入商品
+                {% comment %} {{ item.product.category }} {% endcomment %}
+            </td>
+            <td>
+                100円
+                {% comment %} {{ item.product.price }} {% endcomment %}
+            </td>
+            <td>
+                <a href="#" class="btn btn--white">詳細</a>
+            </td>
+            <td>
+                <form action="#" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn--beige">カートに追加</button>
+                </form>
+            </td>
+            <td>
+                <form action="#" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn">削除</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+{% endblock %}

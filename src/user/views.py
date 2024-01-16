@@ -84,6 +84,23 @@ def what_melimit(request):
 def contact(request):
     return render(request, 'user/contact.html')
 
+# お問い合わせ確認
+def contact_confirm(request):
+    context = {
+        'name': request.POST['name'],
+        'company': request.POST['company'],
+        'email': request.POST['email'],
+        'phone': request.POST['phone'],
+        'message': request.POST['message'],
+    }
+    # フォームのデータをセッションに保存
+    request.session['contact_data'] = request.POST
+    return render(request, 'user/contact-cfm.html', context)
+
+# お問い合わせ送信完了
+def contact_complete(request):
+    return render(request, 'user/contact-complete.html')
+
 # 一般商品一覧
 def all_products_general(request):
     sales_by_choices = {}
@@ -320,3 +337,35 @@ def joint_products_detail(request,pk):
     #オブジェクトの中身、メソッド、属性の名前を出力できる
     # print(dir(sale.product.store))
     return render(request, 'user/joint-products_detail.html', {'sale': sale,'sale_infos':sale_infos,'related_sales':related_sales})
+def joint_products_detail(request):
+    return render(request, 'user/joint-products_detail.html')
+
+# カート
+def cart(request):
+    return render(request, 'user/cart.html')
+#お知らせ詳細
+def notice(request):
+    return render(request, 'user/notice.html')
+
+# 注文詳細
+def history(request):
+    return render(request, 'user/history.html')
+#注文完了
+def order_completed(request):
+    return render(request, 'user/order-completed.html')
+    
+
+# お気に入り
+def favorite(request):
+    return render(request, 'user/favorite.html')
+
+# パスワード設定用メール送信完了
+def pass_mail(request):
+    return render(request, 'user/pass-mail.html')
+
+# 注文確認
+def cash_register(request):
+    return render(request, 'user/cash-register.html')
+#新規登録
+def signup_choice(request):
+    return render(request, 'user/signup-choice.html')

@@ -2,6 +2,9 @@
 
 // ボタン
 .btn {
+    font-size: 0.8rem;
+    border-radius: 5px;
+    padding: 0.8rem;
     &--beige {
         background-color: $main_color;
         color: $melimit_white;
@@ -176,3 +179,35 @@
   input:checked + .tab_class + .content_class {
     display: block;
   }
+// 商品リスト（カート,注文確認等）
+.cart__shopping-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 2em;
+    margin-bottom: 100px;
+    th {
+        padding: 15px 0;
+    }
+    td {
+        text-align:center;
+        vertical-align:middle;
+        padding: 25px 0;
+    }
+    img {
+        padding: 0.1em;
+        width: 5rem;
+        aspect-ratio: 4/3;
+    }
+    .cnt{
+        font-weight: bold;
+        padding: 0.5rem;
+        }
+    tr {
+        border-bottom: 1px solid #ccc;
+    }
+    .definition {
+        color: $melimit_red;
+        font-size: 0.75rem;
+        font-weight: bold;
+    }
+    }

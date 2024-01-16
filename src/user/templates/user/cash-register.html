@@ -1,2 +1,206 @@
 {% extends 'user/base.html' %}
 {% load static %}
+{% block title %}注文確認{% endblock %}
+{% block content %}
+<section class="register">
+    <h2 class="register__title">注文確認</h2>
+    <div class="register__cart">
+        <h3 class="register__cart--general-title">一般購入</h3>
+        <table class="cart__shopping-table">
+            <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">商品</th>
+                <th scope="col">種別</th>
+                <th scope="col">価格</th>
+                <th scope="col">数量</th>
+                <th scope="col">小計</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% comment %} {% for item in cart_items %} {% endcomment %}
+            <tr>
+                <td>
+                    <img src="{% static 'assets/img/メリ光男.png' %}" alt="野菜"/>
+                </td>
+                <td>
+                    トマト
+                    {% comment %} {{ item.product.name }} {% endcomment %}
+                </td>
+                <td>
+                    一般購入商品
+                    {% comment %} {{ item.product.category }} {% endcomment %}
+                </td>
+                <td>
+                    100円
+                    {% comment %} {{ item.product.price }} {% endcomment %}
+                </td>
+                <td>
+                    1
+                    {% comment %} {{ item.quantity }} {% endcomment %}
+                </td>
+                <td>
+                    100円
+                    {% comment %} {{ item.total_price }} {% endcomment %}
+                </td>
+            </tr>
+        </table>
+        <ul class="register__total">
+            <p>合計金額</p>
+            <li>
+                小計
+                <span>100円</span>
+            </li>
+            <li>
+                送料
+                <span>100円</span>
+            </li>
+            <li class="total">
+                <p>
+                合計
+                <span>100円</span>
+                </p>
+            </li>
+        </ul>
+    </div>
+    <div class="register__cart">
+        <h3 class="register__cart--joint-title">共同購入</h3>
+        <table class="cart__shopping-table">
+            <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">商品</th>
+                <th scope="col">種別</th>
+                <th scope="col">価格</th>
+                <th scope="col">数量</th>
+                <th scope="col">小計</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% comment %} {% for item in cart_items %} {% endcomment %}
+            <tr>
+                <td>
+                    <img src="{% static 'assets/img/メリ光男.png' %}" alt="野菜"/>
+                </td>
+                <td>
+                    トマト
+                    {% comment %} {{ item.product.name }} {% endcomment %}
+                </td>
+                <td>
+                    一般購入商品
+                    {% comment %} {{ item.product.category }} {% endcomment %}
+                </td>
+                <td>
+                    100円
+                    {% comment %} {{ item.product.price }} {% endcomment %}
+                </td>
+                <td>
+                    1
+                    {% comment %} {{ item.quantity }} {% endcomment %}
+                </td>
+                <td>
+                    100円
+                    {% comment %} {{ item.total_price }} {% endcomment %}
+                </td>
+            </tr>
+        </table>
+    </div>
+    <ul class="register__total">
+        <p>合計金額</p>
+        <li>
+            小計
+            <span>100円</span>
+        </li>
+        <li>
+            送料
+            <span>100円</span>
+        </li>
+        <li class="total">
+            <p>
+            合計
+            <span>100円</span>
+            </p>
+        </li>
+    </ul>
+    <p class="register__caution">※共同購入商品は目標個数に達しなかった場合、最終割引は適用されません。（定価からの割引は適用されます。）</p>
+    <p class="register__caution">また、発送日時も前後する場合があります。</p>
+    <p class="register__caution">必ず<a href="#">melimitご利用ガイド</a>をご一読ください。</p>
+    <div class="register__confirm">
+        <input type="checkbox" id="confirm-checkbox">
+        <label for="confirm-checkbox">確認しました</label>
+    </div>
+</section>
+<section class="register__user-info">
+    <h3 class="register__user-info-title">あなたの登録情報</h3>
+    <div class="register__user-info-content">
+        <p class="register__user-info-subtitle">お客様情報</p>
+        <div class="register__user-info-label">
+            <p>氏名</p>
+            <p>電話番号</p>
+        </div>
+        <div class="register__user-info-detail">
+            <p class="register__user-info-value">メリ光男</p>
+            <p class="register__user-info-value">090-1234-5678</p>
+        </div>
+        <a href="#" class="register__user-info-btn btn btn--gray">変更する</a>
+    </div>
+    <div class="register__user-info-content">
+        <p class="register__user-info-subtitle">住所情報</p>
+        <div class="register__user-info-label">
+            <p>郵便番号</p>
+            <p>都道府県</p>
+            <p>市区町村</p>
+            <p>番地</p>
+            <p>建物名</p>
+        </div>
+        <div class="register__user-info-detail">
+            <p class="register__user-info-value">123-4567</p>
+            <p class="register__user-info-value">東京都</p>
+            <p class="register__user-info-value">渋谷区</p>
+            <p class="register__user-info-value">1-2-3</p>
+            <p class="register__user-info-value">メリ光ビル</p>
+        </div>
+        <a href="#" class="register__user-info-btn btn btn--gray">変更する</a>
+    </div>
+    <div class="register__user-info-content">
+        <p class="register__user-info-subtitle">お支払方法</p>
+        <div class="register__user-info-detail">
+            <p class="register__user-info-value">クレジットカード</p>
+        </div>
+        <a href="#" class="register__user-info-btn btn btn--gray">変更する</a>
+</section>
+<section class="register__final-confirmation">
+    <h3 class="register__final-confirmation-title">最終確認</h3>
+    <ul class="register__total">
+        <p>合計金額</p>
+        <li>
+            一般購入
+            <span>100円</span>
+        </li>
+        <li>
+            共同購入
+            <span>100円</span>
+        </li>
+        <li class="total">
+            <p>
+            合計
+            <span>200円</span>
+            </p>
+        </li>
+    </ul>
+    <div class="register__final-confirmation-btn">
+        <a href="{% url 'user:cart' %}" class="btn btn--gray">戻る</a>
+        <button type="submit" id="submit-button" class="btn btn--beige">注文を確定する</button>
+    </div>
+</section>
+<script>
+    document.getElementById('submit-button').addEventListener('click', function(event) {
+        if (document.getElementById('confirm-checkbox').checked) {
+            window.location.href = "{% url 'user:order_completed' %}";
+        } else {
+            event.preventDefault();
+            alert('共同購入商品の注意事項をご確認ください。');
+        }
+    });
+</script>
+{% endblock %}

@@ -34,8 +34,7 @@ html {
   cursor: default; /* 1 */
   line-height: 1.5; /* 2 */
   -moz-tab-size: 4; /* 3 */
-  -o-tab-size: 4;
-     tab-size: 4; /* 3 */
+  tab-size: 4; /* 3 */
   -webkit-tap-highlight-color: transparent;
   -ms-text-size-adjust: 100%; /* 5 */
   -webkit-text-size-adjust: 100%; /* 5 */
@@ -131,8 +130,7 @@ a {
  */
 abbr[title] {
   text-decoration: underline;
-  -webkit-text-decoration: underline dotted;
-          text-decoration: underline dotted;
+  text-decoration: underline dotted;
 }
 
 /**
@@ -401,6 +399,7 @@ dialog {
   color: black;
   display: block;
   height: -moz-fit-content;
+  height: -webkit-fit-content;
   height: fit-content;
   left: 0;
   margin: auto;
@@ -408,6 +407,7 @@ dialog {
   position: absolute;
   right: 0;
   width: -moz-fit-content;
+  width: -webkit-fit-content;
   width: fit-content;
 }
 
@@ -453,7 +453,8 @@ label,
 select,
 summary,
 textarea,
-[tabindex] { /* 1 */
+[tabindex] {
+  -ms-touch-action: manipulation; /* 1 */
   touch-action: manipulation; /* 2 */
 }
 
@@ -522,8 +523,7 @@ header {
 
 .header_logo, .footer_logo {
   width: 7.5rem;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 @media (max-width: 768px) {
   .header_logo, .footer_logo {
@@ -557,8 +557,7 @@ header {
 }
 .header_upper__icon .header_icon {
   width: 2rem;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   margin: 0 1rem;
 }
 
@@ -699,6 +698,11 @@ button:hover {
   opacity: 0.7;
 }
 
+.btn {
+  font-size: 0.8rem;
+  border-radius: 5px;
+  padding: 0.8rem;
+}
 .btn--beige {
   background-color: #D4B985;
   color: #FFFFFF;
@@ -770,8 +774,7 @@ button:hover {
 
 .card--img {
   width: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .card--content {
   text-align: center;
@@ -869,6 +872,38 @@ input:checked + .tab_class {
 
 input:checked + .tab_class + .content_class {
   display: block;
+}
+
+.cart__shopping-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 2em;
+  margin-bottom: 100px;
+}
+.cart__shopping-table th {
+  padding: 15px 0;
+}
+.cart__shopping-table td {
+  text-align: center;
+  vertical-align: middle;
+  padding: 25px 0;
+}
+.cart__shopping-table img {
+  padding: 0.1em;
+  width: 5rem;
+  aspect-ratio: 4/3;
+}
+.cart__shopping-table .cnt {
+  font-weight: bold;
+  padding: 0.5rem;
+}
+.cart__shopping-table tr {
+  border-bottom: 1px solid #ccc;
+}
+.cart__shopping-table .definition {
+  color: #F75050;
+  font-size: 0.75rem;
+  font-weight: bold;
 }
 
 /* Form Layout */
@@ -1049,6 +1084,107 @@ input:checked + .tab_class + .content_class {
   }
 }
 
+.notice-head {
+  font-weight: bold;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+  text-align: center;
+  font-size: 1.5rem;
+}
+.notice-top {
+  display: flex;
+  align-items: center;
+  gap: 11rem;
+  margin-bottom: 5rem;
+}
+.notice-top-image {
+  width: 500px;
+  height: 312px;
+  border: 1px solid #000;
+}
+.notice-top-text {
+  display: flex;
+  flex-direction: column;
+  margin-left: -2rem;
+  text-align: center;
+  margin-bottom: 10rem;
+}
+
+.order-head {
+  font-size: 2rem;
+  text-align: center;
+}
+.order-bottom {
+  font-size: 2rem;
+  text-align: center;
+  margin-top: 5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 76px; /* 画像とテキストの間隔を調整 */
+}
+.order-btn {
+  text-align: center;
+}
+
+.pass-head {
+  font-size: 1rem;
+  text-align: center;
+}
+.pass-bottom {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-top: -1rem;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px; /* 画像とテキストの間隔を調整 */
+}
+.pass-bottom img {
+  width: 150px;
+  height: auto;
+}
+.pass-btn {
+  text-align: center;
+  margin-bottom: 2rem;
+  margin-top: -3rem;
+}
+
+.signup-bottom {
+  display: flex;
+  justify-content: space-between;
+}
+.signup-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.signup-option .option-content {
+  display: flex;
+  gap: 10px;
+}
+.signup-option .option-content p {
+  margin-top: 60px;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+.signup-option .img-left {
+  margin-top: 1rem;
+}
+.signup-option .left {
+  margin-top: 0.8rem;
+}
+.signup-option img {
+  width: 200px;
+  height: auto;
+}
+.signup-detail {
+  display: flex;
+}
+
 .loading {
   position: fixed;
   top: 0;
@@ -1177,6 +1313,7 @@ input:checked + .tab_class + .content_class {
   height: 30px;
   border-top: 5px solid rgb(255, 255, 255);
   border-right: 5px solid rgb(255, 255, 255);
+  -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
 }
 .section1 .back::before {
@@ -1185,6 +1322,7 @@ input:checked + .tab_class + .content_class {
   height: 30px;
   border-bottom: 5px solid rgb(255, 255, 255);
   border-left: 5px solid rgb(255, 255, 255);
+  -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
 }
 .section1 .slideshow {
@@ -1349,4 +1487,178 @@ input:checked + .tab_class + .content_class {
 
 .detail3 {
   padding: 1rem 0;
+}
+
+.cart__title {
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+.cart__btns {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px; /* ボタン間のスペースを追加 */
+}
+.cart__total {
+  display: flex;
+  justify-content: flex-end;
+}
+.cart__total ul {
+  background-color: #EBEBEB;
+  border-radius: 5px;
+  width: 40%;
+  padding: 1em;
+}
+.cart__total ul p {
+  font-weight: bold;
+}
+.cart__total ul li {
+  margin-bottom: 0.5em;
+}
+.cart__total ul li.total {
+  border-top: 1px solid #252525;
+}
+.cart__total span {
+  float: right;
+  color: #F75050;
+}
+
+.register .cart__shopping-table {
+  margin-bottom: 0;
+}
+.register__title {
+  text-align: center;
+  padding-bottom: 20px;
+}
+.register__cart--general-title {
+  padding-left: 1rem;
+  background-color: rgba(133, 168, 212, 0.2);
+}
+.register__cart--joint-title {
+  padding-left: 1rem;
+  background-color: rgba(212, 133, 186, 0.2);
+}
+.register__total {
+  padding: 1em;
+}
+.register__total p {
+  font-weight: bold;
+}
+.register__total li {
+  margin-bottom: 0.5em;
+}
+.register__total li.total {
+  border-top: 1px solid #252525;
+}
+.register__total span {
+  float: right;
+  color: #F75050;
+}
+.register__caution {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.8em;
+  color: #F75050;
+}
+.register__confirm {
+  text-align: center;
+}
+.register__confirm label {
+  font-weight: bold;
+}
+.register__confirm input {
+  vertical-align: middle;
+}
+.register__user-info-title {
+  padding-left: 1rem;
+  background-color: #D4B985;
+}
+.register__user-info-content {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  vertical-align: middle;
+  border-top: 1px solid #EBEBEB;
+  border-bottom: 1px solid #EBEBEB;
+  padding: 1em;
+}
+.register__user-info-label p {
+  font-weight: bold;
+}
+.register__user-info-subtitle, .register__user-info-btn {
+  margin: auto 0;
+}
+.register__final-confirmation {
+  margin-bottom: 1rem;
+}
+.register__final-confirmation-title {
+  padding-left: 1rem;
+  background-color: #EBEBEB;
+}
+.register__final-confirmation-btn {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 1em;
+}
+
+.contact__btn-container {
+  margin: 100px 0;
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+@media (max-width: 768px) {
+  .contact__btn-container {
+    flex-direction: column;
+  }
+}
+.contact__btn-container .contact-cfm-btn {
+  text-align: center;
+  width: 100%;
+}
+.contact__btn-container .contact-cfm-btn button {
+  background-color: #D4B985;
+  color: #FFFFFF;
+  width: 30%;
+  padding: 1rem 0;
+}
+@media (max-width: 768px) {
+  .contact__btn-container .contact-cfm-btn button {
+    width: 100%;
+    margin: 30px 0;
+  }
+}
+.contact__btn-container .contact-cancel-btn {
+  text-align: center;
+  width: 100%;
+}
+.contact__btn-container .contact-cancel-btn button {
+  background-color: #EBEBEB;
+  color: #252525;
+  width: 30%;
+  padding: 1rem 0;
+}
+@media (max-width: 768px) {
+  .contact__btn-container .contact-cancel-btn button {
+    width: 100%;
+    margin: 30px 0;
+  }
+}
+
+.contact-cmp-btn {
+  text-align: center;
+  width: 100%;
+}
+.contact-cmp-btn button {
+  margin: 50px 0;
+  background-color: #EBEBEB;
+  color: #252525;
+  width: 20%;
+  padding: 1rem 0;
+}
+@media (max-width: 768px) {
+  .contact-cmp-btn button {
+    width: 100%;
+    margin: 30px 0;
+  }
 }

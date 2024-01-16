@@ -1,0 +1,63 @@
+.contact__btn-container {
+    margin: 100px 0;
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    // margin: 50px 0;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+    }
+
+    .contact-cfm-btn {
+        text-align: center;
+        width: 100%;
+        button {
+            // margin: 50px 0;
+            background-color: $main_color;
+            color: $melimit-white;
+            width: 30%;
+            padding: 1rem 0;
+    
+            @media (max-width: 768px) {
+                width: 100%;
+                margin: 30px 0;
+            }
+        }
+    }
+    
+    .contact-cancel-btn {
+        text-align: center;
+        width: 100%;
+        button {
+            // margin: 50px 0;
+            background-color: $melimit-gray;
+            color: $melimit-black;
+            width: 30%;
+            padding: 1rem 0;
+    
+            @media (max-width: 768px) {
+                width: 100%;
+                margin: 30px 0;
+            }
+        }
+    }
+}
+
+.contact-cmp-btn {
+    
+    text-align: center;
+    width: 100%;
+    button {
+        margin: 50px 0;
+        background-color: $melimit-gray;
+        color: $melimit-black;
+        width: 20%;
+        padding: 1rem 0;
+
+        @media (max-width: 768px) {
+            width: 100%;
+            margin: 30px 0;
+        }
+    }
+}

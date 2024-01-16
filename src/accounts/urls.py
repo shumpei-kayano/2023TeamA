@@ -22,4 +22,5 @@ urlpatterns = [
     path('password_reset/done/', views.PasswordResetDone.as_view(), name='password_reset_done'), #追加
     path('reset/<uidb64>/<token>/', views.PasswordResetConfirm.as_view(), name='password_reset_confirm'), #追加
     path('reset/done/', views.PasswordResetComplete.as_view(), name='password_reset_complete'), #追加
+    path('mypage/', views.MypageView, name='mypage'),
 ]
