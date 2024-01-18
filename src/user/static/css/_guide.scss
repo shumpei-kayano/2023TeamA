@@ -1,0 +1,56 @@
+.guide {
+    margin: auto;
+    text-align: center;
+
+    &-head {
+        text-align: center;
+        font-size: 30px;
+    }
+
+    &-one {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        h3 {
+            font-size: 60px;
+            flex: 1;
+        }
+        img {
+            width: 500px;
+            height: auto;
+            border-radius: 50%;
+        }
+    }
+
+    &-two {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: $main_color;
+        img {
+            width: 500px;
+            height: auto;
+            border-radius: 50%;
+        }
+        h3 {
+            font-size: 60px;
+            flex: 1;
+        }
+    }
+
+    &-three {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        h3 {
+            font-size: 60px;
+            flex: 1;
+        }
+        img {
+            width: 500px;
+            height: auto;
+            border-radius: 50%;
+        }
+    }
+}

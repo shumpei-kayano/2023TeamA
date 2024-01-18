@@ -1185,6 +1185,70 @@ input:checked + .tab_class + .content_class {
   display: flex;
 }
 
+.detail-head {
+  text-align: center;
+}
+.detail-content {
+  text-align: center;
+  font-size: 3rem;
+}
+.detail-back {
+  text-align: right;
+}
+
+.guide {
+  margin: auto;
+  text-align: center;
+}
+.guide-head {
+  text-align: center;
+  font-size: 30px;
+}
+.guide-one {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.guide-one h3 {
+  font-size: 60px;
+  flex: 1;
+}
+.guide-one img {
+  width: 500px;
+  height: auto;
+  border-radius: 50%;
+}
+.guide-two {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #D4B985;
+}
+.guide-two img {
+  width: 500px;
+  height: auto;
+  border-radius: 50%;
+}
+.guide-two h3 {
+  font-size: 60px;
+  flex: 1;
+}
+.guide-three {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.guide-three h3 {
+  font-size: 60px;
+  flex: 1;
+}
+.guide-three img {
+  width: 500px;
+  height: auto;
+  border-radius: 50%;
+}
+
 .loading {
   position: fixed;
   top: 0;

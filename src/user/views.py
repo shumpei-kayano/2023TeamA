@@ -367,3 +367,11 @@ def cash_register(request):
 #新規登録
 def signup_choice(request):
     return render(request, 'user/signup-choice.html')
+
+#ご利用ガイド（詳細）
+def guide_detail(request):
+    return render(request, 'user/guide-detail.html')
+
+#ご利用ガイド
+def guide(request):
+    return render(request, 'user/guide.html')
