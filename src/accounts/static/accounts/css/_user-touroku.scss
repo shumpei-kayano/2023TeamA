@@ -1,5 +1,31 @@
+@mixin form-element {
+    position: absolute;
+    right: 4rem;
+    display: inline-block;
+    width: 50%;
+    padding: 0.5rem;
+    border: 1px solid $melimit-gray;
+    border-radius: 5px;
+    font-size: 1rem;
+    &:focus {
+        outline: none;
+        border: 1px solid $main_color;
+    }
+}
+
+@mixin label-element {
+    text-align: center;
+    position: absolute;
+    left: 4rem;
+    font-size: 1rem;
+    display: inline-block;
+    width: 10%;
+    padding: 0.5rem 0;
+    margin-right: 2rem;
+    z-index: 1; // 追加
+}
+
 .signup {
-    // text-align: left;
     &-container {
         width: 87%;
         margin: 2rem auto;
@@ -15,40 +41,27 @@
         margin-bottom: 50px;
         position: relative;
         .required {
-            text-align: center;
-            position: absolute;
-            left: 4rem;
+            @include label-element;
             background-color: $melimit-red;
             color: $melimit-white;
-            font-size: 1rem;
-            display: inline-block;
-            width: 10%;
-            padding: 0.5rem 0;
-            margin-right: 2rem;
+        }
+        .any {
+            @include label-element;
+            background-color: $melimit-gray;
         }
         label {
-            // display: inline-block;
             margin: 15rem;
         }
         input {
-            position: absolute;
-            right: 4rem;
-            display: inline-block;
-            width: 50%;
-            padding: 0.5rem;
-            border: 1px solid $melimit-gray;
-            border-radius: 5px;
-            font-size: 1rem;
-            &:focus {
-                outline: none;
-                border: 1px solid $main_color;
-            }
+            @include form-element;
+        }
+        select {
+            @include form-element;
         }
     }
     .signup-btn {
         text-align: center;
         button {
-            // display: inline-block;
             margin: 50px 0;
             background-color: $main_color;
             color: $melimit-white;
@@ -56,5 +69,4 @@
             padding: 1rem 0;
         }
     }
-
 }

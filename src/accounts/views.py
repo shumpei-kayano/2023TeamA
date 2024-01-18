@@ -277,3 +277,6 @@ def CreaterootView(request):
 # マイページへの遷移
 def MypageView(request):
     return render(request, 'account/mypage.html')
+
+def Re_custView(request):
+    return render(request, 'account/re_cust.html')

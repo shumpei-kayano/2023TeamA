@@ -1,10 +1,76 @@
-{% extends "account/base.html" %}
-
+{% extends "account/user-base.html" %}
+{% block title %}お客様情報変更{% endblock %}
 {% block content %}
-<h2>ユーザー情報編集</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">更新</button>
-</form>
+<h2 class="signup-title">お客様情報変更</h2>
+<div class="signup-container">
+    <form method="POST" class="signup">
+        {% csrf_token %}
+        <div class="signup__form-group">
+            <span class="required">必須</span>
+            {{ form.email.label_tag }}
+            <span class="signup__input-group">
+                {{ form.email }}
+            </span>
+        </div>
+        <div class="signup__form-group">
+            <span class="required">必須</span>
+            {{ form.password_confirm.label_tag }}
+            <span class="signup__input-group">
+                {{ form.password_confirm }}
+            </span>
+        </div>
+        <div class="signup__form-group">
+            <span class="required">必須</span>
+            {{ form.username.label_tag }}
+            <span class="signup__input-group">
+                {{ form.username }}
+            </span>
+        </div>
+        <div class="signup__form-group">
+            <span class="required">必須</span>
+            {{ form.postal_code.label_tag }}
+            <span class="signup__input-group">
+                {{ form.postal_code }}
+            </span>
+        </div>
+        <div class="signup__form-group">
+            <span class="required">必須</span>
+            {{ form.prefecture.label_tag }}
+            <span class="signup__input-group">
+                {{ form.prefecture }}
+            </span>
+        </div>
+        <div class="signup__form-group">
+            <span class="required">必須</span>
+            {{ form.city.label_tag }}
+            <span class="signup__input-group">
+                {{ form.city }}
+            </span>
+        </div>
+        <div class="signup__form-group">
+            <span class="required">必須</span>
+            {{ form.address.label_tag }}
+            <span class="signup__input-group">
+                {{ form.address }}
+            </span>
+        </div>
+        <div class="signup__form-group">
+            <span class="required">必須</span>
+            {{ form.phone_number.label_tag }}
+            <span class="signup__input-group">
+                {{ form.phone_number }}
+            </span>
+        </div>
+        <div class="signup__form-group">
+            <span class="any">任意</span>
+            {{ form.taste.label_tag }}
+            <span class="signup__input-group">
+                {{ form.taste }}
+            </span>
+        </div>
+        <div class="signup-btn">
+            <button type="submit">変更</button>
+        </div>
+    </form>
+</div>
 {% endblock %}
