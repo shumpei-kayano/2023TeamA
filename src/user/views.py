@@ -341,9 +341,10 @@ def joint_products_detail(request,pk):
 # カート
 def cart(request):
     return render(request, 'user/cart.html')
+
 #お知らせ詳細
-def notice(request):
-    return render(request, 'user/notice.html')
+def notice_detail(request):
+    return render(request, 'user/notice-detail.html')
 
 # 注文詳細
 def history(request):
@@ -375,3 +376,7 @@ def guide_detail(request):
 #ご利用ガイド
 def guide(request):
     return render(request, 'user/guide.html')
+
+# お知らせ一覧
+def notice(request):
+    return render(request, 'user/notice.html')

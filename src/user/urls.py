@@ -21,7 +21,7 @@ urlpatterns = [
     path('all-products/general/general-products_detail/<int:pk>', views.general_products_detail, name='general_products_detail'),
     path('all-products/joint/joint-products_detail/<int:pk>', views.joint_products_detail, name='joint_products_detail'),
     path('cart/', views.cart, name='cart'),
-    path('notice/', views.notice, name='notice'),
+    path('notice-detail/', views.notice_detail, name='notice_detail'),
     path('history/', views.history, name='history'),
     path('order_completed/', views.order_completed, name='order_completed'),
     path('favorite/', views.favorite, name='favorite'),
@@ -30,4 +30,5 @@ urlpatterns = [
     path('signup_choice/', views.signup_choice, name='signup_choice'),
     path('guide_detail/', views.guide_detail, name='guide_detail'),
     path('guide/', views.guide, name='guide'),
+    path('notice/', views.notice, name='notice'),
 ]
