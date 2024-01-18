@@ -154,7 +154,6 @@ def StoreCreateView(request):
     if request.method == 'POST':
         print('店舗登録post')
         form = MelimitStoreRegistrationForm(request.POST)
-        print(f'フォームエラー: {form.errors}')
         if form.is_valid():
             request.user = form.save()
             print(f'request.user: {request.user.__dict__}')
@@ -179,7 +178,11 @@ def StoreCreateView(request):
             #     'model_name': request.session['model_name'],
             #     'instance_name': request.session['instance_name']
             # })
-            return redirect('store:store_login')
+            return redirect('store:index')
+        else:
+            print('店舗登録失敗')
+            print(f'失敗フォームエラー: {form.errors}')
+            return render(request, 'store/store-create.html', {'form': form})
     # POSTでない場合は空のフォームを生成(最初のページ表示時)
     else:
         form = MelimitStoreRegistrationForm()

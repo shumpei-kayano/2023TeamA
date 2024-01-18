@@ -18,16 +18,22 @@
             <div class="ue-title">
                 <div class="ue-text">店舗の新規会員登録</div>
             </div>
-
+                {% if form.errors %}
+                    <div class="alert alert-danger">
+                        <ul>
+                        {% for field, error in form.errors.items %}
+                            <li><strong>{{ field }}:</strong> {{ error|join:", " }}</li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
 
             <div class="store-create-main">
                 <div class="store-create-title">
                     <div class="nakami-text">※店舗の新規会員登録を行います。以下の項目を入力してください。</div>
                 </div>
-
                 <div class="store-create-container">
-                    <form method="POST" enctype="multipart/form-data">
-                        {% csrf_token %}
+                    
                         <div class="store-create-box" style="border-top: 1px solid var(--color-gainsboro-100);">
                             <div class="store-create-box-title">
                                 <div class="store-title-text">店舗名</div>
@@ -146,18 +152,21 @@
                             <a href="store-info-edit" class="btn-store-create" style="color: #FFF;">確認して登録する</a>
                         </div>
 
-                    </form>
+                    
                 </div>
             </div>
 
             <div id="myModal" class="modal">
                 <div class="store-modal-content">
                     <span class="close">&times;</span>
-                    <div id="modal-content-display"></div>
-                    <div class="store-modal-btn">
-                        <button class="btn-modal-edit">修正する</button>
-                        <button class="btn-modal-confirm">店舗を登録する</button>
-                    </div>
+                    <form id="modal-form" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div id="modal-content-display"></div>
+                        <div class="store-modal-btn">
+                            <button class="btn-modal-edit">修正する</button>
+                            <button class="btn-modal-confirm">店舗を登録する</button>
+                        </div>
+                    </form>
                 </div>
             </div>
           
@@ -170,12 +179,19 @@
                 // モーダルと表示領域を取得
                 const modal = document.getElementById('myModal');
                 const modalContent = document.getElementById('modal-content-display');
+                const modalForm = document.getElementById('modal-form');
             
                 // 入力値を表示するためのHTMLコンテンツを作成
                 let content = '<div class="modal-title-store">店舗の新規登録確認画面</div><div class="store-modal-ul"><ul>';
             
                 inputs.forEach(input => {
                     content += `<div class="store-modal-li"><li><div class="store-modal-li-hidari">${input.parentElement.previousElementSibling.querySelector('.store-title-text').textContent}</div> <div class="store-modal-li-migi">${input.value}</div></li></div>`;
+                    // 各入力値をhidden inputとしてフォームに追加
+                    const hiddenInput = document.createElement('input');
+                    hiddenInput.type = 'hidden';
+                    hiddenInput.name = input.name;
+                    hiddenInput.value = input.value;
+                    modalForm.appendChild(hiddenInput);
                 });
             
                 content += '</ul></div>';
@@ -210,6 +226,7 @@
             // 修正するボタンをクリックした際の処理
             const editButton = document.querySelector('.btn-modal-edit');
             editButton.addEventListener('click', function() {
+                event.preventDefault(); // デフォルトの送信を防ぐ
                 const modal = document.getElementById('myModal');
                 modal.style.display = 'none'; // モーダルを非表示にする
             });
@@ -220,7 +237,7 @@
                 const modal = document.getElementById('myModal');
                 modal.style.display = 'none'; // モーダルを非表示にする
                 alert('店舗の新規登録が完了しました！'); // アラートを表示
-                window.location.href = 'store-info'; // store-info.htmlに遷移
+                // window.location.href = 'store-info'; // store-info.htmlに遷移
             });
             
             </script>

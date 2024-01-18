@@ -318,18 +318,19 @@ def store_login_view(request):
                 login(request, user)
                 print('ログイン成功')
                 return redirect('store:index')
-            elif user.__class__.__name__ != 'MelimitStore':
-                print('ログイン失敗')
-                return redirect('store:store_login')
+            # elif user.__class__.__name__ != 'MelimitStore':
+            #     print('ログイン失敗')
+            #     # 店舗側以外のユーザーがログインしようとした場合は、エラーメッセージを表示する
+            #     form.add_error(None, '店舗の方以外はログインできません。')  # ユーザーが認証できない場合のエラーメッセージ
             else:
                 # フォームが無効な場合の処理をここに書く
                 print('pass')
                 form.add_error(None, 'メールアドレスまたはパスワードが間違っています。')  # ユーザーが認証できない場合のエラーメッセージ
-                return render(request, 'account/store_login.html', {'form': form})
+                # return render(request, 'account/store_login.html', {'form': form})
         else:
             print(form.errors)
             print('rogin-error')
-            return redirect('store:store_login')
+        return render(request, 'account/store_login.html', {'form': form})
     else:
         form = MelimitStoreLoginForm()
 

@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import PermissionsMixin
-from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.base_user import AbstractBaseUser # passwordのフィールドを持っている
 from django.utils import timezone
 from django.contrib.contenttypes.models import ContentType # 追加
 from django.contrib.auth.models import Permission # 追加

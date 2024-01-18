@@ -41,6 +41,7 @@ class Sale(models.Model):
     SALE_CHOICES = (
         ('general_sales', '一般商品'),
         ('melimit_sales', '共同販売商品'),
+        # 文字数を揃える必要あり
     )
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
