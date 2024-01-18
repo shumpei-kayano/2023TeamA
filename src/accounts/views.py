@@ -93,16 +93,29 @@ class MelimitUserLoginView(LoginView):
 def UserCreateView(request):
     if request.method == 'POST':
         form = MelimitUserRegistrationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            # backendを指定してログインさせる
-            user.backend = 'accounts.backends.MelimitUserModelBackend'
-            login(request, user)
-            # return redirect('user:index')
-            return render(request, 'user/index.html')
+        print(f'きてるよ')
+        # バリデーションをスキップし、直接セッションにデータを保存
+        request.session['registration_data'] = request.POST
+        return redirect('accounts:touroku_confirm')
     else:
         form = MelimitUserRegistrationForm()
     return render(request, 'account/user_touroku.html', {'form': form})
+    # if request.method == 'POST':
+    #     form = MelimitUserRegistrationForm(request.POST)
+    #     print(f'きてるよ')
+    #     if form.is_valid():
+    #         user = form.save(commit=False)
+    #         # backendを指定してログインさせる
+    #         # user.backend = 'accounts.backends.MelimitUserModelBackend'
+    #         # login(request, user)
+    #         # return redirect('user:index')
+    #         request.session['registration_data'] = request.POST
+    #         return redirect('accounts:touroku_confirm')
+    #     else:
+    #         print(form.errors)
+    # else:
+    #     form = MelimitUserRegistrationForm()
+    # return render(request, 'account/user_touroku.html', {'form': form})
 
 
 # class UserUpdateView(LoginRequiredMixin, UpdateView):
@@ -278,5 +291,56 @@ def CreaterootView(request):
 def MypageView(request):
     return render(request, 'account/mypage.html')
 
-def Re_custView(request):
-    return render(request, 'account/re_cust.html')
+
+def user_touroku_cfm(request):
+    print('cfmcfm')
+    if 'registration_data' in request.session:
+        form = MelimitUserRegistrationForm(request.session['registration_data'])
+        return render(request, 'account/user_touroku-cfm.html', {'form': form})
+    else:
+        return redirect('UserCreateView')  # セッションデータがない場合は入力画面に戻る
+
+# 新規登録確認
+def TourokuConfirm(request):
+    # if request.method == 'POST' and 'registration_data' in request.session:
+    #     form = MelimitUserRegistrationForm(request.session['registration_data'])
+    #     user = form.save(commit=False)
+    #     print('登録きてるよ')
+    #     user.backend = 'accounts.backends.MelimitUserModelBackend'
+    #     login(request, user)
+    #     del request.session['registration_data']
+    #     return redirect('user:index')
+    # else:
+    #     return redirect('accounts:user_touroku')
+    if request.method == 'POST' and 'registration_data' in request.session:
+        form = MelimitUserRegistrationForm(request.session['registration_data'])
+        if form.is_valid():
+            print('登録きてるよ')
+            # フォームのデータをセッションに保存
+            # context = {
+            #     'email': request.POST['email'],
+            #     'password': request.POST['password'],
+            #     'password_confirm': request.POST['password_confirm'],
+            #     'username': request.POST['username'],
+            #     'postal_code': request.POST['postal_code'],
+            #     'prefecture': request.POST['prefecture'],
+            #     'city': request.POST['city'],
+            #     'address': request.POST['address'],
+            #     'phone_number': request.POST['phone_number'],
+            #     'taste': request.POST['taste'],
+            # }
+            # request.session['registration_data'] = request.POST
+            # return render(request, 'account/user_touroku-cfm.html', context)
+            user = form.save()
+            print('登録成功')
+                # backendを指定してログインさせる
+            user.backend = 'accounts.backends.MelimitUserModelBackend'
+            login(request, user)
+            del request.session['registration_data']
+            return redirect('user:index')
+        else:
+            print(form.errors)
+            print('登録失敗')
+            return render(request, 'account/user_touroku.html', {'form': form})
+    else:
+        return redirect('accounts:user_touroku')
