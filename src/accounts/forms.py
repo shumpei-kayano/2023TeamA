@@ -118,4 +118,14 @@ class MelimitUserRegistrationForm(forms.ModelForm):
             user.save()  # パスワードを設定した後に再度保存
         return user
             
+    #パスワード１とパスワード２が違うときにform.is_validがfalseを返すようにするメソッド
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get("password")
+        password_confirm = cleaned_data.get("password_confirm")
+
+        if password and password_confirm and password != password_confirm:
+            self.add_error('password_confirm', "Passwords do not match")
+
+        return cleaned_data
 
