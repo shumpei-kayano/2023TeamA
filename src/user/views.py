@@ -342,30 +342,34 @@ def joint_products_detail(request,pk):
 # カート
 #セッションからカートを取得し、詳細情報をデータベースから取得する
 def cart(request):
-    cart = request.session['cart']
-    cart_items = []
-    all_price = 0
-    #カートの各商品ごとにidと数量をループ
-    for pk, quantity in cart.items():
-        sale = get_object_or_404(Sale, id=pk)
-        #sale.pk商品の主キー(プライマリーキー)
-        print(sale.pk)
-        if sale.sale_type == 'general_sales':
-            sale_type = '一般商品'
-        else:
-            sale_type = '共同販売商品'
-        
-        all_price += sale.sale_price * quantity
-        #商品の商品名、種別(一般or共同)、一つ当たりの価格、数量、合計価格をリストに追加
-        cart_items.append({
-            'pk':sale.pk,
-            'sale_image': sale.product.product_image,
-            'sale': sale.product.product_name,
-            'sale_type':sale_type,
-            'sale_price':sale.sale_price,
-            'quantity': quantity,
-            'total_price': sale.sale_price * quantity,
-        })
+    #request.session['cart']が存在するかどうかのif
+    if 'cart' not in request.session:
+        return render(request, 'user/cart.html')
+    else:
+        cart = request.session['cart']
+        cart_items = []
+        all_price = 0
+        #カートの各商品ごとにidと数量をループ
+        for pk, quantity in cart.items():
+            sale = get_object_or_404(Sale, id=pk)
+            #sale.pk商品の主キー(プライマリーキー)
+            print(sale.pk)
+            if sale.sale_type == 'general_sales':
+                sale_type = '一般商品'
+            else:
+                sale_type = '共同販売商品'
+            
+            all_price += sale.sale_price * quantity
+            #商品の商品名、種別(一般or共同)、一つ当たりの価格、数量、合計価格をリストに追加
+            cart_items.append({
+                'pk':sale.pk,
+                'sale_image': sale.product.product_image,
+                'sale': sale.product.product_name,
+                'sale_type':sale_type,
+                'sale_price':sale.sale_price,
+                'quantity': quantity,
+                'total_price': sale.sale_price * quantity,
+            })
 
     return render(request, 'user/cart.html', {'cart_items': cart_items,'all_price':all_price})
     # return render(request, 'user/cart.html')
@@ -443,6 +447,39 @@ def update_cart(request):
     cart = request.session.get('cart', {})
     cart[pk] = cart.get(pk, 0) + quantity
 
+    request.session['cart'] = cart
+
+    # 新しいカートのデータを作成
+    cart_items = []
+    #カートの各商品ごとにidと数量をループ
+    for pk, quantity in cart.items():
+        sale = get_object_or_404(Sale, id=pk)
+        if sale.sale_type == 'general_sales':
+            sale_type = '一般商品'
+        else:
+            sale_type = '共同販売商品'
+        #商品の商品名、種別(一般or共同)、一つ当たりの価格、数量、合計価格をリストに追加
+        cart_items.append({
+            'pk':sale.pk,
+            'sale_image': sale.product.product_image.url,
+            'sale': sale.product.product_name,
+            'sale_type':sale_type,
+            'sale_price':sale.sale_price,
+            'quantity': quantity,
+            'total_price': sale.sale_price * quantity,
+        })
+
+
+    return JsonResponse({'cart_items': cart_items})
+
+#カートから商品を削除する
+def delete_cart(request):
+    pk = request.POST.get('pk')
+    print(pk)
+    print(11111)
+    cart = request.session.get('cart', {})
+    del cart[pk]
+    print(cart)
     request.session['cart'] = cart
 
     # 新しいカートのデータを作成

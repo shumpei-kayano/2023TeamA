@@ -121,3 +121,79 @@ $(".increase-quantity, .decrease-quantity").click(function() {
         console.log('Request failed: ' + textStatus + ', ' + errorThrown);  // デバッグ：リクエスト失敗時のログ出力
     });
 });
+// $(".delete-quantity").click(function() {
+//     console.log('Delete button clicked');  // デバッグ：削除ボタンがクリックされたときにログを出力
+//     var pk = $(this).data('pk');
+
+//     var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+//     $.ajaxSetup({
+//         beforeSend: function(xhr, settings) {
+//             xhr.setRequestHeader("X-CSRFToken", csrftoken);
+//         }
+//     });
+//     var deleteItemPromise = $.post('/delete_item/', {pk: pk});
+//     deleteItemPromise.then(function(data) {
+//         console.log(data);  // デバッグ：レスポンスデータをログに出力
+//         updateCartDisplay(data.cart_items);
+//     }).fail(function(jqXHR, textStatus, errorThrown) {
+//         console.log('Request failed: ' + textStatus + ', ' + errorThrown);  // デバッグ：リクエスト失敗時のログ出力
+//     });
+// });
+
+// $(".delete-quantity").click(function() {
+//     var pk = $(this).data('pk');  // data-pk属性からpkを取得
+
+//     $.ajax({
+//         url: '/delete_item/',  // 適切なエンドポイントに変更してください
+//         type: 'POST',
+//         data: {
+//             'pk': pk,  // pkをPOSTデータとして送信
+//             'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+//         },
+//         dataType: 'json',
+//         success: function (data) {
+//             // 成功時の処理
+//         }
+//     });
+// });
+
+// $(".delete-quantity").click(function() {
+//     console.log('Delete button clicked');  // デバッグ：削除ボタンがクリックされたときにログを出力
+//     var pk = $(this).data('pk');
+//     console.log('pk: ' + pk);  // デバッグ：pkの値をログに出力
+
+//     var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+//     $.ajaxSetup({
+//         beforeSend: function(xhr, settings) {
+//             xhr.setRequestHeader("X-CSRFToken", csrftoken);
+//         }
+//     });
+//     var deleteItemPromise = $.post('/delete_item/', {pk: pk});
+//     deleteItemPromise.then(function(data) {
+//         console.log(data);  // デバッグ：レスポンスデータをログに出力
+//         updateCartDisplay(data.cart_items);
+//     }).fail(function(jqXHR, textStatus, errorThrown) {
+//         console.log('Request failed: ' + textStatus + ', ' + errorThrown);  // デバッグ：リクエスト失敗時のログ出力
+//     });
+// });
+
+$(".delete-quantity").click(function(e) {
+    //e.preventDefault();  // フォームのデフォルトの送信動作をキャンセル
+    console.log('Delete button clicked');  // デバッグ：削除ボタンがクリックされたときにログを出力
+    var pk = $(this).attr('data-pk');  // attrメソッドを使用してdata-pk属性の値を取得
+    console.log('pk: ' + pk);  // デバッグ：pkの値をログに出力
+
+    var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    });
+    var deleteItemPromise = $.post('/delete_item/', {pk: pk});
+    deleteItemPromise.then(function(data) {
+        console.log(data);  // デバッグ：レスポンスデータをログに出力
+        updateCartDisplay(data.cart_items);
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+        console.log('Request failed: ' + textStatus + ', ' + errorThrown);  // デバッグ：リクエスト失敗時のログ出力
+    });
+});
