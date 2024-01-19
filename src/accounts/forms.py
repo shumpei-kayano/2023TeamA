@@ -135,5 +135,5 @@ class CustomPasswordResetForm(PasswordResetForm):
         email = self.cleaned_data['email']
         if not get_user_model().objects.filter(email=email).exists():
             print('サーバーにそのメアドないよ！')
-            raise ValidationError("There is no user registered with the specified email address!")
+            raise ValidationError("サーバーにそのメアドは登録されてないよ！")
         return email
