@@ -1,9 +1,10 @@
 # forms.py
 from django import forms
 from .models import MelimitUser, MelimitStore
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm,PasswordResetForm
 from django.contrib.auth.models import User
-
+from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 class MelimitStoreLoginForm(forms.Form):
     email = forms.EmailField(required=True)
     password = forms.CharField(widget=forms.PasswordInput)
@@ -129,3 +130,10 @@ class MelimitUserRegistrationForm(forms.ModelForm):
 
         return cleaned_data
 
+class CustomPasswordResetForm(PasswordResetForm):
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if not get_user_model().objects.filter(email=email).exists():
+            print('サーバーにそのメアドないよ！')
+            raise ValidationError("There is no user registered with the specified email address!")
+        return email
