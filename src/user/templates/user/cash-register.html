@@ -4,10 +4,12 @@
 {% block content %}
 <section class="register">
     <h2 class="register__title">注文確認</h2>
-    {% for cart_item in cart_items %}
-        {% if cart_item.sale_type == 'general_sales' %}
+    {% comment %} {% for cart_item in cart_items %}
+        {% if cart_item.sale_type == '一般商品' %} {% endcomment %}
+        
             <div class="register__cart">
                 <h3 class="register__cart--general-title">一般購入</h3>
+                
                 <table class="cart__shopping-table">
                     <thead>
                     <tr>
@@ -20,6 +22,7 @@
                     </tr>
                     </thead>
                     <tbody>
+                        {% for cart_item in cart_item_gen %}
                     {% comment %} {% for item in cart_items %} {% endcomment %}
                     <tr>
                         <td>
@@ -46,7 +49,9 @@
                             {% comment %} {{ item.total_price }} {% endcomment %}
                         </td>
                     </tr>
+                    {% endfor %}
                 </table>
+                
                 <ul class="register__total">
                     <p>合計金額</p>
                     <li>
@@ -64,8 +69,11 @@
                         </p>
                     </li>
                 </ul>
+                
             </div>
-        {% else %}
+        
+        {% for cart_item in cart_item_mel %}
+        {% comment %} {% else %} {% endcomment %}
             <div class="register__cart">
                 <h3 class="register__cart--joint-title">共同購入</h3>
                 <table class="cart__shopping-table">
@@ -125,8 +133,9 @@
                     </p>
                 </li>
             </ul>
-        {% endif %}
-    {% endfor %}
+        {% endfor %}
+        {% comment %} {% endif %}
+    {% endfor %} {% endcomment %}
     <p class="register__caution">※共同購入商品は目標個数に達しなかった場合、最終割引は適用されません。（定価からの割引は適用されます。）</p>
     <p class="register__caution">また、発送日時も前後する場合があります。</p>
     <p class="register__caution">必ず<a href="#">melimitご利用ガイド</a>をご一読ください。</p>

@@ -420,7 +420,21 @@ def cash_register(request):
             'quantity': quantity,
             'total_price': sale.sale_price * quantity,
         })
-    return render(request, 'user/cash-register.html',{'cart_items':cart_items})
+    #cart_itemsはカートの全商品
+    print(cart_items)
+    cart_item_gen = []
+    cart_item_mel = []
+    for i in cart_items:
+        print(i['sale_type'])
+        if i['sale_type'] == '一般商品':
+            cart_item_gen.append(i)
+        else:
+            cart_item_mel.append(i)
+    print('一般商品',cart_item_gen)
+    print('共同商品',cart_item_mel)
+    # sale_typeごとに分ける？
+    
+    return render(request, 'user/cash-register.html',{'cart_items':cart_items,'cart_item_gen':cart_item_gen,'cart_item_mel':cart_item_mel})
 
 #新規登録
 def signup_choice(request):
