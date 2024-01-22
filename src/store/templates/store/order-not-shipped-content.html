@@ -106,7 +106,7 @@
                 <form action="" method="post">
                     {% csrf_token %}
                     <div class="shipment-modal-con">
-                    <div class="shipment-modal-label">（*థ౪థ）発送日</div>
+                    {% comment %} <div class="shipment-modal-label">発送日</div> {% endcomment %}
                     {% comment %} <input class="shipment-modal-input" type="date" name="shipment_date" value=""> {% endcomment %}
                     <input class="shipment-modal-input" type="date" name="shipment_date" id="shipment_date" value="">
                     </div>
