@@ -28,4 +28,15 @@ urlpatterns = [
     path('pass_mail/', views.pass_mail, name='pass_mail'),
     path('cash-register/', views.cash_register, name='cash_register'),
     path('signup_choice/', views.signup_choice, name='signup_choice'),
+    # テスト用
+    # 一覧表示
+    path('products/', views.product_list, name='product_list'),
+    # 購入数選択
+    path('select/<int:product_id>/', views.select_product, name='select_product'),
+    # 確認画面
+    path('confirm/<int:product_id>/', views.confirm_order, name='confirm_order'),
+    # 購入
+    path('order/<int:product_id>/', views.order_product, name='order_product'),
+    # 購入完了
+    path('complete/', views.order_complete, name='order_complete'),
 ]

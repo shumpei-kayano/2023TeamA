@@ -7,6 +7,9 @@ from accounts.mixins import MelimitModelMixin
 from store.models import Sale, Product
 import random
 from django.db.models import Q
+from django.shortcuts import get_object_or_404
+# orderhistoryをimportする
+from .models import OrderHistory
 # Create your views here.
 # @login_required
 def index(request):
@@ -367,3 +370,61 @@ def cash_register(request):
 #新規登録
 def signup_choice(request):
     return render(request, 'user/signup-choice.html')
+
+# テスト/商品一覧表示
+def product_list(request):
+    print('テスト/商品一覧表示のビュー')
+    products = Product.objects.all()
+    sales = Sale.objects.all()
+    return render(request, 'user/01_itiran_test.html', {'products': products, 'sales': sales,})
+
+# テスト/商品選択
+def select_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    # productインスタンスからSaleインスタンスを取得
+    sale = Sale.objects.get(product_id=product.id)
+    return render(request, 'user/02_tyuumonn_test.html', {'product': product, 'sale': sale})
+
+# テスト/注文確認
+def confirm_order(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    quantity = request.POST.get('quantity')
+    total = product.product_price * int(quantity)
+    store = product.store  # ProductモデルからMelimitStoreモデルのインスタンスを取得
+    sale = Sale.objects.get(product_id=product.id)  # Saleモデルのインスタンスを取得
+    quantity = int(request.POST.get('quantity'))  # 送信された数量を取得
+    # amount = product.product_price * quantity  # 合計金額を計算
+    co2 = product.weight * 0.4 * quantity  # 合計重量を計算
+    # コンテキストに必要なデータを格納
+    context = {
+        'product': product,
+        'quantity': quantity,
+        'total': total,
+        'store': store,
+        'sale': sale,
+        'co2': co2,
+    }
+    return render(request, 'user/03_kakuninn_test.html', context)
+
+# テスト/購入
+def order_product(request, product_id):
+    print('テスト/購入のビュー')
+    product = get_object_or_404(Product, id=product_id)
+    if request.method == 'POST':
+        print(f"customuser_ptr_id: {request.user.id}")
+        print(f"request.user.id: {request.user.id}")
+        user = MelimitUser.objects.get(customuser_ptr_id=request.user.id)
+        print(f"userの中身: {user.__dict__}")
+        store = product.store  # ProductモデルからMelimitStoreモデルのインスタンスを取得
+        sale = Sale.objects.get(product_id=product.id)  # Saleモデルのインスタンスを取得
+        quantity = int(request.POST.get('quantity'))  # 送信された数量を取得
+        amount = product.product_price * quantity  # 合計金額を計算
+        weight = product.weight * quantity  # 合計重量を計算
+        order = OrderHistory(sale=sale, product=product, orderhistory_store=store,orderhistory_user=user, amount=amount, quantity=quantity,)
+        order.save()
+        return redirect('user:order_complete')
+    return render(request, 'user/02_tyuumonn_test.html', {'product': product})
+
+# テスト/完了画面
+def order_complete(request):
+    return render(request, 'user/04_complete_test.html')
