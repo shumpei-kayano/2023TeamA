@@ -35,7 +35,6 @@ urlpatterns = [
     path('cart/<int:pk>', views.add_to_cart, name='add_to_cart'),
     path('update_cart/',views.update_cart,name='update_cart'),
     path('delete_item/',views.delete_cart, name='delete_cart'),
-]
     # テスト用
     # 一覧表示
     path('products/', views.product_list, name='product_list'),
@@ -47,4 +46,6 @@ urlpatterns = [
     path('order/<int:product_id>/', views.order_product, name='order_product'),
     # 購入完了
     path('complete/', views.order_complete, name='order_complete'),
+    # エラー
+    path('error/', views.error_view, name='error'),
 ]

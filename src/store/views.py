@@ -6,14 +6,31 @@ from django.shortcuts import render, redirect, get_object_or_404
 from accounts.forms import MelimitStoreLoginForm
 from django.contrib.auth import authenticate, login
 from .models import Product, Sale, Threshold
+from user.models import OrderHistory
+from accounts.models import MelimitStore
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import View
 from django.http import HttpResponseBadRequest
+from django.db.models import Sum
+from django.db.models.functions import TruncMonth
+from datetime import datetime
 
 # Create your views here.
 def index(request):
+    # ログインしているユーザーを取得する
+    mixin = MelimitModelMixin()
+    mixin.request = request
+    user = mixin.get_melimitmodel_user()
+    # modelからデータを取得する
+    print(f"user : {user.__dict__}")
+    print(f"user.customuser_ptr_id : {user.customuser_ptr_id}")
+    # store = MelimitStore.objects.get(user=user.customuser_ptr_id)
+    # 同じ店舗のOrderHistoryを取得し、月ごとにCO2とamountを集計する
+    data = OrderHistory.objects.filter(orderhistory_store_id=user.customuser_ptr_id).annotate(month=TruncMonth('order_date')).values('month').annotate(total_co2=Sum('co2'), total_amount=Sum('amount')).order_by('month')
     print('インデックス')
-    return render(request, 'store/index.html')
+    # dataを全て表示する
+    print(f"data : {data}")
+    return render(request, 'store/index.html', {'data': data})
 # 発送済み注文履歴(modelは注文履歴モデル、発送済みフラグtrueのものを表示)
 def order_history_view(request):
     return render(request, 'store/order-history.html')

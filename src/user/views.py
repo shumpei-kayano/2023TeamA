@@ -678,6 +678,8 @@ def order_product(request, product_id):
         store = product.store  # ProductモデルからMelimitStoreモデルのインスタンスを取得
         sale = Sale.objects.get(product_id=product.id)  # Saleモデルのインスタンスを取得
         quantity = int(request.POST.get('quantity'))  # 送信された数量を取得
+        if sale.stock < quantity:
+            return redirect('user:error')
         amount = product.product_price * quantity  # 合計金額を計算
         weight = product.weight * quantity  # 合計重量を計算
         order = OrderHistory(sale=sale, product=product, orderhistory_store=store,orderhistory_user=user, amount=amount, quantity=quantity,)
@@ -688,3 +690,7 @@ def order_product(request, product_id):
 # テスト/完了画面
 def order_complete(request):
     return render(request, 'user/04_complete_test.html')
+
+# テスト/エラー画面
+def error_view(request):
+    return render(request, 'user/05_error_test.html')
