@@ -1,0 +1,55 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% block title %}お知らせ{% endblock %}
+{% block content %}
+<section class="notice-head">
+<h2>お知らせ</h2>
+</section>
+
+<section class="notice-top">
+    <div class="notice-top-image">
+        <img src="{% static 'path/to/your/image1.jpg' %}" >
+    </div>
+        <div class="notice-top-text">
+        <h3>ここにお題1を書く</h3>
+        <p>テキストテキストテキストテキストテキストテキスト</p>
+        </div>
+    </div>
+</section>
+
+<div class="item--list">
+    <div class="item--card card--notice">
+        <a href="{% url "user:notice_detail" %}">
+            <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+            <div class="card--content">
+                <p><span class="card--date-category">2020/00/00</span><span class="card--date-category">カテゴリー</span></p>
+                <h3 class="card--title">Card Title</h3>
+                <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+            </div>
+        </a>
+    </div>
+    <div class="item--card card--notice">
+        <a href="#">
+            <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+            <div class="card--content">
+                <p><span class="card--date-category">2020/00/00</span><span class="card--date-category">カテゴリー</span></p>
+                <h3 class="card--title">Card Title</h3>
+                <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+            </div>
+        </a>
+    </div>
+    <div class="item--card card--notice">
+        <a href="#">
+            <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+            <div class="card--content">
+                <p><span class="card--date-category">2020/00/00</span><span class="card--date-category">カテゴリー</span></p>
+                <h3 class="card--title">Card Title</h3>
+                <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+            </div>
+        </a>
+    </div>
+    <a href="{% url "user:notice" %}" class="btn--beige btn--middle mgt-10">お知らせ一覧</a>
+</section>
+</div>
+
+{% endblock %}
