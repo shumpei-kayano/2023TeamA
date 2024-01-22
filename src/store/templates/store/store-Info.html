@@ -55,12 +55,31 @@
                 </div>
             </div>
 
+            {% comment %} 「所在地」から3項目に変更 {% endcomment %}
             <div class="store-info-box">
                 <div class="store-info-box-title">
-                    <div class="store-title-text">所在地</div>
+                    <div class="store-title-text">都道府県</div>
                 </div>
                 <div class="store-info-box-input">
-                    <span>{{ user.prefecture }} {{ user.city }} {{ usr.address }}</span>
+                    <span>{{ user.prefecture }}</span>
+                </div>
+            </div>
+
+            <div class="store-info-box">
+                <div class="store-info-box-title">
+                    <div class="store-title-text">市町村</div>
+                </div>
+                <div class="store-info-box-input">
+                    <span>{{ user.city }}</span>
+                </div>
+            </div>
+
+            <div class="store-info-box">
+                <div class="store-info-box-title">
+                    <div class="store-title-text">番地以降</div>
+                </div>
+                <div class="store-info-box-input">
+                    <span>{{ user.address }}</span>
                 </div>
             </div>
 

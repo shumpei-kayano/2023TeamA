@@ -435,3 +435,47 @@ select {
 .description-box-input span {
   margin: 10px;
 }
+
+/* レスポンシブ対応 */
+@media screen and (max-width: 800px) {
+  .product-name-box, .category-box {
+    width: 80%;
+    width: 100%;
+
+    height: 90px;
+    text-align: left;
+    flex-direction: column;
+    margin-bottom: 10px;
+    border-style: none;
+  }
+  .product-name-box-title, .category-box-title {
+    width: 100%;
+    text-align: left;
+    border-bottom: none;
+  }
+  .product-name-box-input, .category-box-input, .price-box-input, .listprice-box-input, .quantity-box-input, .discount-box-input, .period-box-input, .stock-box-input, .shipping-box-input, .weight-box-input, .expiration-box-input, .image-box-input, .description-box-input {
+    width: 100%;
+    margin-right: auto;
+    border-bottom: none;
+  }
+  .group-purchase-button, .general-purchase-button {
+    position: relative;
+    left: 0px;
+  }
+  .product-delete-button, .group-product-button, .general-product-button {
+    transform: scale(0.7);
+  }
+  .product-delete-button {
+    position: relative;
+    bottom: -55px;
+    left: -50px;
+  }
+  .group-edit-button {
+    left: 180px;
+    top: 94%;
+  }
+  .general-edit-button {
+    left: 180px;
+    top: 93%;
+  }
+}

@@ -1,16 +1,17 @@
 .shipment {
-    position: absolute;
     top: 850px;
     left: 265px;
     background-color: var(--color);
     border-left: 5px solid var(--color-black);
     box-sizing: border-box;
-    width: 992px;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     justify-content: flex-start;
     padding: 8px;
+    position: relative; /* positionをrelativeに変更 */
+    width: 100%; /* 画面幅いっぱいに */
+    flex-wrap: wrap; /* 画面が狭い場合に折り返すために追加 */
   }
   .shipment-btn {
     position: absolute;
@@ -35,33 +36,29 @@
     background-color: #bbb;
     border-radius: var(--br-9xs);
   }
-  
-
-
   .shipment-modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
   }
-  
   .shipment-modal-content {
     background-color: #fefefe;
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 60%;
-    height: 60%;
+    width: 80%; /* 画面が狭い場合に適切な幅に変更 */
+    max-width: 600px; /* 画面が広い場合に過度な幅にならないように制限 */
+    height: auto; /* 高さを自動調整 */
     border-radius: 5px;
+    box-sizing: border-box; /* box-sizingを追加 */
   }
-  
   .close {
     color: #aaaaaa;
     float: right;
@@ -75,40 +72,54 @@
     cursor: pointer;
   }
   .shipment-modal-label {
-    position: absolute;
-    top: 210px;
-    left: 400px;
+    position: relative; /* positionをrelativeに変更 */
+    top: auto; /* 固定された位置を削除 */
+    left: auto; /* 固定された位置を削除 */
     font-size: var(--font-size-sm);
   }
   .shipment-modal-input {
     position: relative;
-    top: 60px;
-    left: 15%;
+    top: auto; /* 固定された位置を削除 */
+    left: auto; /* 固定された位置を削除 */
     background-color: var(--color);
     border: 1px solid var(--color-gainsboro-100);
     box-sizing: border-box;
     border-radius: 2px;
-    width: 500px;
+    width: 100%; /* 画面幅いっぱいに */
     height: 50px;
     padding: 10px;
     cursor: pointer;
   }
-.shipment-modal-btn-con {
-  position: absolute;
-  font-size: medium;
-  top: 320px;
-  border-radius: var(--br-9xs);
-  background-color: var(--color-black);
-  width: 200px;
-  left: 42%;
-  font-weight: bold;
-  box-sizing: border-box;
-  cursor: pointer;
-  border: none;
-  padding: 15px;
-  color: #fff;
-}
+  .shipment-modal-btn {
+    text-align: center;
+  }
+  .shipment-modal-btn-con {
+    font-size: medium;
+    border-radius: var(--br-9xs);
+    background-color: var(--color-black);
+    top: auto;
+    width: 200px;
+    font-weight: bold;
+    box-sizing: border-box;
+    cursor: pointer;
+    border: none;
+    padding: 15px;
+    color: #fff;
+    margin-top: 20px; /* 適切なスペースを追加 */
+  }
 .shipment-modal-btn-con:hover {
   background-color: #bbb;
   border-radius: var(--br-9xs);
 }
+
+
+
+
+
+
+
+
+
+
+
+

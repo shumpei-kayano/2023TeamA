@@ -19,6 +19,9 @@
     justify-content: flex-start;
     font-weight: bold;
   }
+  thead td {
+    padding: var(--padding-base);
+  }
   .head-product-number,
   .head-product-name,
   .head-price,
@@ -48,16 +51,6 @@
   .head-category {
     width: 120px;
   }
-  
-  tbody tr {
-    border-bottom: 1px solid var(--color-gainsboro-100);
-    width: 992px;
-  }
-  tbody td {
-    padding: var(--padding-base);
-    gap: var(--gap-5xl);
-    cursor: pointer;
-  }
 
   #checkbox {
     margin: 5px;
@@ -80,13 +73,13 @@
     width: 140px;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    // white-space: nowrap;
   }
   .product-name {
     width: 230px;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    // white-space: nowrap;
   }
   .inventory,
   .type {
@@ -98,22 +91,15 @@
   .category {
     width: 120px;
   }
- 
-
   /* tdの共通のスタイル定義 */
   .table-product-manage td {
     position: relative;
     justify-content: center;
     text-align: center;
-    padding: var(--padding-base);
     gap: var(--gap-5xl);  box-sizing: border-box;
     flex-direction: row;
     align-items: center;
   }
-  
-  
-  
-
   .placeholder {
     flex: 1;
     position: relative;
@@ -141,12 +127,8 @@
   }
   .search-box {
     position: absolute;
-    // height: 6.67%;
-    // width: 26.8%;
-    // top: 13.89%;
     top: 100px;
     right: 10%;
-    // bottom: 79.44%;
     left: 63.2%;
     display: flex;
     flex-direction: column;
@@ -174,7 +156,6 @@
     text-align: center;
     cursor: pointer;
   }
-
   .product-manage-text {
     position: absolute;
     top: 0;
@@ -223,9 +204,7 @@
     font-size: var(--typography-caption-size);
   }
   .product-manage__container {
-    // position: relative;
     width: 100%;
-    // height: 720px;
     height: 100%;
     overflow-x: hidden;
     text-align: left;
@@ -233,7 +212,6 @@
     color: var(--color-black);
     position: absolute;
   }
-
 .create-btn-blue {
   position: absolute;
   display: flex;
@@ -279,14 +257,12 @@
   text-align: center;
   font-size: 14px;
   font-style: normal;
-  // font-weight: 700;
   line-height: 100%; /* 16px */
   font-weight: bold;
 }
 a {
   text-decoration: none;
 }
-
   .bulk-deletion {
     position: absolute;
     top: 160px;
@@ -299,7 +275,6 @@ a {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    // padding: var(--padding-base);
     box-sizing: border-box;
     cursor: pointer;
     text-align: center;
@@ -323,4 +298,32 @@ a {
   .button-text {
     font-weight: bold; /* テキストを太字にする */
     margin-top: 3px;
+  }
+  tbody tr {
+    border-bottom: 1px solid var(--color-gainsboro-100);
+    width: 992px;
+  }
+  tbody td {
+    padding: 0px;
+    gap: var(--gap-5xl);
+    cursor: pointer;
+  }
+
+
+
+  @media screen and (max-width: 800px) {
+    .table-product-manage {
+      transform:scale(0.8);
+      transform-origin:left;
+      top: 170px;
+    }
+    .create-btn-blue, .create-btn-pink {
+      top: 200px;
+    }
+    .create-btn-blue {
+      left: 265px;
+    }
+    .create-btn-pink {
+      left: 520px;
+    }
   }
