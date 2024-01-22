@@ -9,7 +9,7 @@ from django.urls import reverse
 import logging
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
-from .forms import MelimitStoreRegistrationForm, MelimitStoreLoginForm, MelimitUserLoginForm, MelimitUserRegistrationForm
+from .forms import MelimitStoreRegistrationForm, MelimitStoreLoginForm, MelimitUserLoginForm, MelimitUserRegistrationForm, CustomPasswordResetForm
 from django.views.generic.edit import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import MelimitStore, MelimitUser
@@ -249,13 +249,18 @@ class PasswordChangeDone(LoginRequiredMixin,PasswordChangeDoneView):
     """パスワード変更しました"""
     template_name = 'account/password_change_done.html'
 
+
 # --- ここから追加
 class PasswordReset(PasswordResetView):
+    form_class = CustomPasswordResetForm
     # オーバーライドもとに email_template_name = "registration/password_reset_email.html"があり、変える必要あり
     # どんな内容のメールを送るのかの設定
     """パスワード変更用URLの送付ページ"""
     # subject_template_name = 'accounts/mail_template/reset/subject.txt'
     # email_template_name = 'accounts/mail_template/reset/message.txt'
+    
+    #メアドがデータベースに存在するか確認必須！！！！！！！！
+    
     email_template_name = 'account/password_email.html'
 
     template_name = 'account/password_reset_form.html'

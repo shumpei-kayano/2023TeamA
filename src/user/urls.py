@@ -32,4 +32,7 @@ urlpatterns = [
     path('guide/', views.guide, name='guide'),
     path('notice/', views.notice, name='notice'),
     path('sdgs/', views.sdgs, name='sdgs'),
+    path('cart/<int:pk>', views.add_to_cart, name='add_to_cart'),
+    path('update_cart/',views.update_cart,name='update_cart'),
+    path('delete_item/',views.delete_cart, name='delete_cart'),
 ]

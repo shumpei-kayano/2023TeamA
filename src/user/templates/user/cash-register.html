@@ -4,124 +4,129 @@
 {% block content %}
 <section class="register">
     <h2 class="register__title">注文確認</h2>
-    <div class="register__cart">
-        <h3 class="register__cart--general-title">一般購入</h3>
-        <table class="cart__shopping-table">
-            <thead>
-            <tr>
-                <th scope="col"></th>
-                <th scope="col">商品</th>
-                <th scope="col">種別</th>
-                <th scope="col">価格</th>
-                <th scope="col">数量</th>
-                <th scope="col">小計</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% comment %} {% for item in cart_items %} {% endcomment %}
-            <tr>
-                <td>
-                    <img src="{% static 'assets/img/メリ光男.png' %}" alt="野菜"/>
-                </td>
-                <td>
-                    トマト
-                    {% comment %} {{ item.product.name }} {% endcomment %}
-                </td>
-                <td>
-                    一般購入商品
-                    {% comment %} {{ item.product.category }} {% endcomment %}
-                </td>
-                <td>
-                    100円
-                    {% comment %} {{ item.product.price }} {% endcomment %}
-                </td>
-                <td>
-                    1
-                    {% comment %} {{ item.quantity }} {% endcomment %}
-                </td>
-                <td>
-                    100円
-                    {% comment %} {{ item.total_price }} {% endcomment %}
-                </td>
-            </tr>
-        </table>
-        <ul class="register__total">
-            <p>合計金額</p>
-            <li>
-                小計
-                <span>100円</span>
-            </li>
-            <li>
-                送料
-                <span>100円</span>
-            </li>
-            <li class="total">
-                <p>
-                合計
-                <span>100円</span>
-                </p>
-            </li>
-        </ul>
-    </div>
-    <div class="register__cart">
-        <h3 class="register__cart--joint-title">共同購入</h3>
-        <table class="cart__shopping-table">
-            <thead>
-            <tr>
-                <th scope="col"></th>
-                <th scope="col">商品</th>
-                <th scope="col">種別</th>
-                <th scope="col">価格</th>
-                <th scope="col">数量</th>
-                <th scope="col">小計</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% comment %} {% for item in cart_items %} {% endcomment %}
-            <tr>
-                <td>
-                    <img src="{% static 'assets/img/メリ光男.png' %}" alt="野菜"/>
-                </td>
-                <td>
-                    トマト
-                    {% comment %} {{ item.product.name }} {% endcomment %}
-                </td>
-                <td>
-                    一般購入商品
-                    {% comment %} {{ item.product.category }} {% endcomment %}
-                </td>
-                <td>
-                    100円
-                    {% comment %} {{ item.product.price }} {% endcomment %}
-                </td>
-                <td>
-                    1
-                    {% comment %} {{ item.quantity }} {% endcomment %}
-                </td>
-                <td>
-                    100円
-                    {% comment %} {{ item.total_price }} {% endcomment %}
-                </td>
-            </tr>
-        </table>
-    </div>
-    <ul class="register__total">
-        <p>合計金額</p>
-        <li>
-            小計
-            <span>100円</span>
-        </li>
-        <li>
-            送料
-            <span>100円</span>
-        </li>
-        <li class="total">
-            <p>
-            合計
-            <span>100円</span>
-            </p>
-        </li>
-    </ul>
+    {% for cart_item in cart_items %}
+        {% if cart_item.sale_type == 'general_sales' %}
+            <div class="register__cart">
+                <h3 class="register__cart--general-title">一般購入</h3>
+                <table class="cart__shopping-table">
+                    <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">商品</th>
+                        <th scope="col">種別</th>
+                        <th scope="col">価格</th>
+                        <th scope="col">数量</th>
+                        <th scope="col">小計</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% comment %} {% for item in cart_items %} {% endcomment %}
+                    <tr>
+                        <td>
+                            <img src="{% static 'assets/img/メリ光男.png' %}" alt="野菜"/>
+                        </td>
+                        <td>
+                            トマト
+                            {% comment %} {{ item.product.name }} {% endcomment %}
+                        </td>
+                        <td>
+                            一般購入商品
+                            {% comment %} {{ item.product.category }} {% endcomment %}
+                        </td>
+                        <td>
+                            100円
+                            {% comment %} {{ item.product.price }} {% endcomment %}
+                        </td>
+                        <td>
+                            1
+                            {% comment %} {{ item.quantity }} {% endcomment %}
+                        </td>
+                        <td>
+                            100円
+                            {% comment %} {{ item.total_price }} {% endcomment %}
+                        </td>
+                    </tr>
+                </table>
+                <ul class="register__total">
+                    <p>合計金額</p>
+                    <li>
+                        小計
+                        <span>100円</span>
+                    </li>
+                    <li>
+                        送料
+                        <span>100円</span>
+                    </li>
+                    <li class="total">
+                        <p>
+                        合計
+                        <span>100円</span>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        {% else %}
+            <div class="register__cart">
+                <h3 class="register__cart--joint-title">共同購入</h3>
+                <table class="cart__shopping-table">
+                    <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">商品</th>
+                        <th scope="col">種別</th>
+                        <th scope="col">価格</th>
+                        <th scope="col">数量</th>
+                        <th scope="col">小計</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% comment %} {% for item in cart_items %} {% endcomment %}
+                    <tr>
+                        <td>
+                            <img src="{% static 'assets/img/メリ光男.png' %}" alt="野菜"/>
+                        </td>
+                        <td>
+                            トマト
+                            {% comment %} {{ item.product.name }} {% endcomment %}
+                        </td>
+                        <td>
+                            一般購入商品
+                            {% comment %} {{ item.product.category }} {% endcomment %}
+                        </td>
+                        <td>
+                            100円
+                            {% comment %} {{ item.product.price }} {% endcomment %}
+                        </td>
+                        <td>
+                            1
+                            {% comment %} {{ item.quantity }} {% endcomment %}
+                        </td>
+                        <td>
+                            100円
+                            {% comment %} {{ item.total_price }} {% endcomment %}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <ul class="register__total">
+                <p>合計金額</p>
+                <li>
+                    小計
+                    <span>100円</span>
+                </li>
+                <li>
+                    送料
+                    <span>100円</span>
+                </li>
+                <li class="total">
+                    <p>
+                    合計
+                    <span>100円</span>
+                    </p>
+                </li>
+            </ul>
+        {% endif %}
+    {% endfor %}
     <p class="register__caution">※共同購入商品は目標個数に達しなかった場合、最終割引は適用されません。（定価からの割引は適用されます。）</p>
     <p class="register__caution">また、発送日時も前後する場合があります。</p>
     <p class="register__caution">必ず<a href="#">melimitご利用ガイド</a>をご一読ください。</p>

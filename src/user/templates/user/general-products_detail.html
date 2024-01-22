@@ -38,11 +38,11 @@
         </div>
         <div class="detail1__right--center">
             <p class="detail1__text">{{ sale.description }}商品説明商品説明商品説明商品説明商品説明商品説明商品説明商品説明</p>
-            <form action="#" method="post">
+            <form action="{% url 'user:add_to_cart' sale.pk %}" method="post">
                 {% csrf_token %}
                 <label for="quantity" class="detail1__text-bd">数量</label>
                 <input type="number" class="cnt" min="1" max="10" step="1" value="1" name="quantity" id="quantity">
-                <input type="hidden" name="product_id" value="#">
+                <input type="hidden" name="product_id" value="{{ sale.pk }}">
                 <button type="submit" class="btn--beige btn--middle">カートに入れる</button>
                 <button type="submit" class="btn--white btn--middle">お気に入りに追加</button>
             </form>
