@@ -1,6 +1,8 @@
 {% extends 'user/base.html' %}
 {% load static %}
 {% block title %}トップページ{% endblock %}
+{% block js %}{% endblock %}
+{% block css %}{% endblock %}
 {% block content %}
 <div class="loading">
     <img class="loading__logo" src="{% static 'assets/img/Melimit.png' %}" alt="VOOL">
@@ -12,14 +14,22 @@
         <a class="btn--beige btn--big mgt-10">食品ロスとは</a>
     </div>
     <div class="section1__right">
-        <div class ="slide-pic">
-            <div id ="slide" class="slideshow">
-                <p class="disc">Melimit</p>
-                <a class ="arrow next" id ="right" href ="#"></a>
-                <a class ="arrow back" id ="left" href ="#"></a>
+        <div class="d-demo">
+            <div class="d-demo__wrap">
+                {% with ''|center:2 as range %}
+                {% for _ in range %}
+                <ul class="d-demo__list d-demo__list--left">
+                    <li class="d-demo__item"><img src="{% static 'assets/img/メリ光男.png' %}" alt></li>
+                    <li class="d-demo__item"><img src="{% static 'assets/img/メリ光子.png' %}" alt></li>
+                    <li class="d-demo__item"><img src="{% static 'assets/img/メリ光男.png' %}" alt></li>
+                    <li class="d-demo__item"><img src="{% static 'assets/img/メリ光子.png' %}" alt></li>
+                    <li class="d-demo__item"><img src="{% static 'assets/img/メリ光男.png' %}" alt></li>
+                    <li class="d-demo__item"><img src="{% static 'assets/img/メリ光子.png' %}" alt></li>
+                 </ul>
+                {% endfor %}
+                {% endwith %}
             </div>
-        </div>
-    </div>
+         </div>
 </section>
 <section class="section section2">
     <h2 class="section__title">おすすめ商品</h2>
@@ -349,51 +359,4 @@
         </div>
         <a href="{% url "user:notice" %}" class="btn--beige btn--middle mgt-10">お知らせ一覧</a>
 </section>
-</div>
-    
-<script>
-    window.onload = function(){
-        //画像を配列に格納
-        var images =['url({% static 'assets/img/350x160.png' %})',
-                     'url({% static 'assets/img/350x160.png' %})',
-                     'url({% static 'assets/img/350x160.png' %})']
-        //要素をHTMLから取得
-        //画像
-        var target = document.getElementById('slide');
-        //>,<
-        var right = document.getElementById('right');
-        var left = document.getElementById('left');
-    
-        //クリックしたときに変わるようにカウント変数
-        var count = 0;
-    
-        //クリックしたら画像変更
-       function change(){
-           target.style.backgroundImage = images[count];
-        }
-       //>をクリックしたらcountを+1する
-       function goNext(){
-           if(count == 2){
-               count = 0;
-           }else{
-               count++;
-           }
-           change();
-       }
-       
-       //<をクリックしたらcountを-1する
-       function goBack(){
-           if(count == 0){
-               count = 2;
-           }else{
-               count--;
-           }
-           change();
-       }
-   
-       //クリックイベント
-       right.addEventListener('click',goNext,false);
-       left.addEventListener('click',goBack,false);
-   };
-    </script>   
 {% endblock %}
