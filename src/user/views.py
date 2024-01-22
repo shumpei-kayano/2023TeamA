@@ -375,8 +375,8 @@ def cart(request):
     # return render(request, 'user/cart.html')
 
 #お知らせ詳細
-def notice(request):
-    return render(request, 'user/notice.html')
+def notice_detail(request):
+    return render(request, 'user/notice-detail.html')
 
 # 注文詳細
 def history(request):
@@ -504,3 +504,18 @@ def delete_cart(request):
 
 
     return JsonResponse({'cart_items': cart_items})
+#ご利用ガイド（詳細）
+def guide_detail(request):
+    return render(request, 'user/guide-detail.html')
+
+#ご利用ガイド
+def guide(request):
+    return render(request, 'user/guide.html')
+
+# お知らせ一覧
+def notice(request):
+    return render(request, 'user/notice.html')
+
+# MelimitとSDGs
+def sdgs(request):
+    return render(request, 'user/sdgs.html')
