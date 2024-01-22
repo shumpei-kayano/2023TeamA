@@ -35,10 +35,10 @@ class MelimitStoreModelBackend(ModelBackend):
                 # storeのインスタンス名を出力してみる
                 instance_name = type(store).__name__
                 print(f'instance: {instance_name}')
-                # セッションにモデル名とインスタンス名を保存
-                request.session['model_name'] = model_name
-                request.session['instance_name'] = instance_name
-                request.session['store_id'] = store.id
+                # セッションにモデル名とインスタンス名を保存 # セッションはいらないかも(2024/1/15)
+                # request.session['model_name'] = model_name
+                # request.session['instance_name'] = instance_name
+                # request.session['store_id'] = store.id
                 return store
         except MelimitStore.DoesNotExist:
             print('none')

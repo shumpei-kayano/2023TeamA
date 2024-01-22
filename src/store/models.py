@@ -13,14 +13,14 @@ from django.utils import timezone
 
 class Product(models.Model):
     TASTE_CHOICES = (
-        ('meat', 'meat'),
-        ('vegetables', 'vegetables'),
-        ('fruit', 'fruit'),
-        ('fish', 'fish'),
-        # ('other', 'その他'),
+        ('meat', '肉類'),
+        ('vegetables', '野菜'),
+        ('fruit', '果物'),
+        ('fish', '魚介類'),
+        ('other', 'その他'),
     )
 
-    product_name = models.CharField(max_length=200, verbose_name='商品名')
+    product_name = models.CharField(max_length=100, verbose_name='商品名')
     product_price = models.IntegerField(verbose_name='定価')
     # product_price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='定価')
     weight = models.IntegerField(verbose_name='重量')

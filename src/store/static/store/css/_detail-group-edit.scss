@@ -17,7 +17,7 @@
     position: absolute;
     top: 100px;
     left: 264px;
-    width: 70%;
+    width: 1040px;
     height: 30px;
     font-size: var(--font-size-xl);
 }
@@ -46,11 +46,15 @@
   font-size: var(--typography-caption-size);
 }
 .product-manage__container {
+  // position: relative;
   width: 100%;
+  // height: 720px;
   height: 100%;
+  overflow-x: hidden;
   text-align: left;
   font-size: var(--typography-body1-size);
   color: var(--color-black);
+  position: absolute;
 }
 
 
@@ -416,4 +420,18 @@ select {
   font-weight: bold; /* テキストを太字にする */
 }
 
-
+.product-name-box-input span,
+.category-box-input span,
+.price-box-input span,
+.listprice-box-input span,
+.quantity-box-input span,
+.discount-box-input span,
+.period-box-input span,
+.stock-box-input span,
+.shipping-box-input span,
+.weight-box-input span,
+.expiration-box-input span,
+.image-box-input span,
+.description-box-input span {
+  margin: 10px;
+}

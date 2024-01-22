@@ -1,0 +1,143 @@
+{% extends "store/base.html" %}
+
+{% load static %}
+
+{% block title %}店舗情報設定の編集{% endblock %}
+
+{% block contents %}
+
+<div class="product-manage__container">
+    <div class="topic-path">
+        <div class="product-manage">店舗情報設定</div>
+        <img class="searchfilled-icon" alt="" src="{% static 'store/img/keyboardarrowright_mini.png' %}" />
+        <div class="product-manage">編集中</div>
+    </div>
+    <div class="title-product-manage">
+        <div class="product-manage-text">店舗情報の編集中です</div>
+        <img class="fibermanualrecordfilled-icon" alt="" src="{% static 'store/img/maru.png' %}" />
+    </div>
+
+    <div class="store-info-container">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="store-info-box" style="border-top: 1px solid var(--color-gainsboro-100);">
+                <div class="store-info-box-title">
+                    <div class="store-title-text">店舗名</div>
+                </div>
+                <div class="store-info-box-input">
+                    {% comment %} <span>店舗名が入っています</span> {% endcomment %}
+                    {% comment %} <input type="text" class="store-input-active" placeholder="{{ user.username }}" required/> {% endcomment %}
+                    <input type="text" class="store-input-active" name="username" value="{{ user.username }}" required/>
+                </div>
+            </div>
+
+            <div class="store-info-box">
+                <div class="store-info-box-title">
+                    <div class="store-title-text">店舗責任者名</div>
+                </div>
+                <div class="store-info-box-input">
+                    {% comment %} <span>店舗責任者名が入っています</span> {% endcomment %}
+                    <input type="text" class="store-input-active" placeholder="現在の情報が入ってるようにしたい" required/>
+                </div>
+            </div>
+
+            <div class="store-info-box">
+                <div class="store-info-box-title">
+                    <div class="store-title-text">店舗責任者名（フリガナ）</div>
+                </div>
+                <div class="store-info-box-input">
+                    {% comment %} <span>店舗責任者名（フリガナ）が入っています</span> {% endcomment %}
+                    <input type="text" class="store-input-active" placeholder="現在の情報が入ってるようにしたい" required/>
+                </div>
+            </div>
+
+            <div class="store-info-box">
+                <div class="store-info-box-title">
+                    <div class="store-title-text">郵便番号（半角数字）</div>
+                </div>
+                <div class="store-info-box-input">
+                    {% comment %} <span>郵便番号（半角数字）が入っています</span> {% endcomment %}
+                    {% comment %} <input type="text" class="store-input-active" placeholder="{{ user.postal_code }}" required/> {% endcomment %}
+                    <input type="text" class="store-input-active" name="postal_code" value="{{ user.postal_code }}" />
+                </div>
+            </div>
+
+            {% comment %} <div class="store-info-box">
+                <div class="store-info-box-title">
+                    <div class="store-title-text">所在地</div>
+                </div>
+                <div class="store-info-box-input"> {% endcomment %}
+                    {% comment %} <span>所在地が入っています</span> {% endcomment %}
+                    {% comment %} <input type="text" class="store-input-active" placeholder="{{ user.prefecture }} {{ user.city }} {{ usr.address }}" />
+                </div>
+            </div> {% endcomment %}
+
+            <div class="store-info-box">
+                <div class="store-info-box-title">
+                    <div class="store-title-text">電話番号（半角数字）</div>
+                </div>
+                <div class="store-info-box-input">
+                    {% comment %} <span>電話番号（半角数字）が入っています</span> {% endcomment %}
+                    <input type="text" class="store-input-active" name="phone_number" value="{{ user.phone_number }}" />
+                </div>
+            </div>
+
+            {% comment %} <div class="store-info-box">
+                <div class="store-info-box-title">
+                    <div class="store-title-text">メールアドレス</div>
+                </div>
+                <div class="store-info-box-input"> {% endcomment %}
+                    {% comment %} <span>メールアドレスが入ってます</span> {% endcomment %}
+                    {% comment %} <input type="text" class="store-input-active" placeholder="{{ user.site_url }}" />
+                </div>
+            </div> {% endcomment %}
+
+            {% comment %} <div class="store-info-box">
+                <div class="store-info-box-title">
+                    <div class="store-title-text">パスワード</div>
+                </div>
+                <div class="store-info-box-input"> {% endcomment %}
+                    {% comment %} <span>パスワードが入ってます</span> {% endcomment %}
+                    {% comment %} <input type="text" class="store-input-active" placeholder="{{ user.password }}" />
+                </div>
+            </div> {% endcomment %}
+
+            <div class="store-info-box">
+                <div class="store-info-box-title">
+                    <div class="store-title-text">WebサイトのURL</div>
+                </div>
+                <div class="store-info-box-input">
+                    {% comment %} <span>WebサイトのURLが入っています</span> {% endcomment %}
+                    <input type="text" class="store-input-active" name="site_url" value="{{ user.site_url }}">
+                </div>
+            </div>
+
+            <div class="store-info-button">
+                {% comment %} <a href="store-info-edit" class="btn-store-edit" style="color: #FFF;">この内容で更新する</a> {% endcomment %}
+                <button type="submit" class="btn-store-edit" style="color: #FFF;">この内容で更新する</button>
+            </div>
+
+        </form>
+    </div>
+
+    <script>
+        // 更新ボタンがクリックされた時の処理
+        document.querySelector('.btn-store-edit').addEventListener('click', function(event) {
+            event.preventDefault(); // ボタンのデフォルトの動作を無効化
+        
+            // ここで更新処理を行う（API呼び出しなど）
+            const form = document.getElementById("{{ form }}");
+            form.method = "POST";
+            form.submit();
+            // アラートを表示
+            alert("店舗情報を更新しました！");
+        
+            // store-info.htmlに遷移
+            window.location.href = 'store-info';
+        });
+    </script>
+
+</div>
+
+{% endblock %}

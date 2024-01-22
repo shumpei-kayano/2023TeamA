@@ -5,6 +5,7 @@
 {% block title %}一般購入商品の新規登録{% endblock %}
 
 {% block contents %}
+
 <div class="product-manage__container">
 
     <div class="topic-path">
@@ -18,13 +19,42 @@
         <img class="fibermanualrecordfilled-icon" alt="" src="{% static 'store/img/maru.png' %}" />
     </div>
 
-
+    <div class="contents">
 
     <div class="group-purchase-create">
       <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-
         <div class="group-purchase-input">
+
+        {% if sale_form.sale_price.errors %}
+          {% comment %} <div style="color: red;"> {% endcomment %}
+            {{ sale_form.sale_price.errors }}
+          {% comment %} </div> {% endcomment %}
+        {% endif %}
+
+        <div style="color: red;">
+          <ul>
+        {% if sale_form.errors %}
+        {% for field, errors in sale_form.errors.items %}
+        {% for error in errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+        {% endfor %}
+        {% endif %}
+
+        {% if product_form.errors %}
+          {% comment %} <div style="color: red;"> {% endcomment %}
+            {% comment %} <ul> {% endcomment %}
+              {% for field, errors in product_form.errors.items %}
+                {% for error in errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              {% endfor %}
+            {% comment %} </ul>
+          </div> {% endcomment %}
+        {% endif %}
+          </ul>
+        </div>
 
           <!-- 商品名の入力欄 -->
           <div class="product-name-box">
@@ -53,6 +83,9 @@
             </div>
             <div class="price-box-input">
               {{ sale_form.sale_price }}
+              {% if sale_form.sale_price.errors %}
+                {{ sale_form.sale_price.errors }}
+              {% endif %}
             </div>
           </div>
 
@@ -172,6 +205,9 @@
 
       </form>
     </div>
+    </div>
+
+</div>
 
 
 
@@ -351,7 +387,8 @@
   
       // 「この内容で登録する」ボタンのクリックイベント
       confirmButton.addEventListener('click', function () {
-          alert('この内容で登録しました！');
+          alert('新規登録が完了しました！');
+          window.location.href = "detail-general"; // detail-generalにリダイレクト
           closeModal();
       });
       

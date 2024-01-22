@@ -46,9 +46,13 @@ class MelimitUserLoginView(LoginView):
                 password = form.cleaned_data.get('password')
                 user = authenticate(request, email=email, password=password, backend='accounts.backends.MelimitUserModelBackend')
                 if user is not None:
+                    # ログイン後にuserのindexのビューを通るように変更
                     login(request, user)
                     print('login')
-                    return render(request, 'user/index.html', {'form': form})
+                    #return render(request, 'user/index.html', {'form': form})
+                    # ログイン成功時にビューに遷移する
+                    return redirect('user:index')
+                #{% url 'user:index' %}
                 else:
                     print('user is None 認証失敗')
                     form.add_error(None, 'メールアドレスまたはパスワードが間違っています。')  # ユーザーが認証できない場合のエラーメッセージ
@@ -89,16 +93,29 @@ class MelimitUserLoginView(LoginView):
 def UserCreateView(request):
     if request.method == 'POST':
         form = MelimitUserRegistrationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            # backendを指定してログインさせる
-            user.backend = 'accounts.backends.MelimitUserModelBackend'
-            login(request, user)
-            # return redirect('user:index')
-            return render(request, 'user/index.html')
+        print(f'きてるよ')
+        # バリデーションをスキップし、直接セッションにデータを保存
+        request.session['registration_data'] = request.POST
+        return redirect('accounts:touroku_confirm')
     else:
         form = MelimitUserRegistrationForm()
     return render(request, 'account/user_touroku.html', {'form': form})
+    # if request.method == 'POST':
+    #     form = MelimitUserRegistrationForm(request.POST)
+    #     print(f'きてるよ')
+    #     if form.is_valid():
+    #         user = form.save(commit=False)
+    #         # backendを指定してログインさせる
+    #         # user.backend = 'accounts.backends.MelimitUserModelBackend'
+    #         # login(request, user)
+    #         # return redirect('user:index')
+    #         request.session['registration_data'] = request.POST
+    #         return redirect('accounts:touroku_confirm')
+    #     else:
+    #         print(form.errors)
+    # else:
+    #     form = MelimitUserRegistrationForm()
+    # return render(request, 'account/user_touroku.html', {'form': form})
 
 
 # class UserUpdateView(LoginRequiredMixin, UpdateView):
@@ -148,29 +165,38 @@ class MelimitStoreLogoutView(View):
 # MelimitStore用の新規登録
 def StoreCreateView(request):
     if request.method == 'POST':
+        print('店舗登録post')
         form = MelimitStoreRegistrationForm(request.POST)
+        print(f'フォームエラー: {form.errors}')
         if form.is_valid():
-            user = form.save()
+            request.user = form.save()
+            print(f'request.user: {request.user.__dict__}')
+            print(f'request: {request.__dict__}')
             # backendを指定してログインさせる
-            user.backend = 'accounts.backends.MelimitStoreModelBackend'
-            model_name = type(user).__name__
-            instance_name = type(user).__name__
+            request.user.backend = 'accounts.backends.MelimitStoreModelBackend'
+            # user.user_type = 'melimit_store'
+            mixin = MelimitModelMixin()
+            mixin.request = request
+            # print(f'user: {user.__dict__}')
+            user = mixin.get_melimitmodel_user()
+            # model_name = type(user).__name__
+            # instance_name = type(user).__name__
             # セッションにモデル名とインスタンス名を保存
-            request.session['model_name'] = model_name
-            request.session['instance_name'] = instance_name
-            login(request, user)
+            # request.session['model_name'] = model_name
+            # request.session['instance_name'] = instance_name
+            login(request, request.user)
             # セッション'model_name'と'instance_name'を出力してみる
-            print(f'model_name: {request.session["model_name"]}')
-            print(f'instance_name: {request.session["instance_name"]}')
+            # print(f'model_name: {request.session["model_name"]}')
+            # print(f'instance_name: {request.session["instance_name"]}')
             # return render(request, 'store/base.html', {
             #     'model_name': request.session['model_name'],
             #     'instance_name': request.session['instance_name']
             # })
-            return redirect('store:store_base')
+            return redirect('store:store_login')
     # POSTでない場合は空のフォームを生成(最初のページ表示時)
     else:
         form = MelimitStoreRegistrationForm()
-    return render(request, 'account/store_touroku.html', {'form': form})
+    return render(request, 'store/store-create.html', {'form': form})
 
 # MelimitStore用の会員情報編集
 class StoreUpdateView(LoginRequiredMixin, UpdateView, MelimitModelMixin):
@@ -264,3 +290,57 @@ def CreaterootView(request):
 # マイページへの遷移
 def MypageView(request):
     return render(request, 'account/mypage.html')
+
+
+def user_touroku_cfm(request):
+    print('cfmcfm')
+    if 'registration_data' in request.session:
+        form = MelimitUserRegistrationForm(request.session['registration_data'])
+        return render(request, 'account/user_touroku-cfm.html', {'form': form})
+    else:
+        return redirect('UserCreateView')  # セッションデータがない場合は入力画面に戻る
+
+# 新規登録確認
+def TourokuConfirm(request):
+    # if request.method == 'POST' and 'registration_data' in request.session:
+    #     form = MelimitUserRegistrationForm(request.session['registration_data'])
+    #     user = form.save(commit=False)
+    #     print('登録きてるよ')
+    #     user.backend = 'accounts.backends.MelimitUserModelBackend'
+    #     login(request, user)
+    #     del request.session['registration_data']
+    #     return redirect('user:index')
+    # else:
+    #     return redirect('accounts:user_touroku')
+    if request.method == 'POST' and 'registration_data' in request.session:
+        form = MelimitUserRegistrationForm(request.session['registration_data'])
+        if form.is_valid():
+            print('登録きてるよ')
+            # フォームのデータをセッションに保存
+            # context = {
+            #     'email': request.POST['email'],
+            #     'password': request.POST['password'],
+            #     'password_confirm': request.POST['password_confirm'],
+            #     'username': request.POST['username'],
+            #     'postal_code': request.POST['postal_code'],
+            #     'prefecture': request.POST['prefecture'],
+            #     'city': request.POST['city'],
+            #     'address': request.POST['address'],
+            #     'phone_number': request.POST['phone_number'],
+            #     'taste': request.POST['taste'],
+            # }
+            # request.session['registration_data'] = request.POST
+            # return render(request, 'account/user_touroku-cfm.html', context)
+            user = form.save()
+            print('登録成功')
+                # backendを指定してログインさせる
+            user.backend = 'accounts.backends.MelimitUserModelBackend'
+            login(request, user)
+            del request.session['registration_data']
+            return redirect('user:index')
+        else:
+            print(form.errors)
+            print('登録失敗')
+            return render(request, 'account/user_touroku.html', {'form': form})
+    else:
+        return redirect('accounts:user_touroku')

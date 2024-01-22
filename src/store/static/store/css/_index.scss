@@ -1,1 +1,119 @@
-// 
+.top-page-content {
+    position: absolute;
+    top: 70px;
+    width: 1040px;
+}
+.order-status {
+    position: fixed;
+    top: 115px;
+    left: 22%;
+    background-color: var(--color-whitesmoke-100);
+    border-bottom: 1px solid var(--color-gainsboro-100);
+    box-sizing: border-box;
+    width: 280px;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 30px;
+    text-align: center;
+}
+.order-status-title {
+    font-weight: bold;
+}
+.order-status-nakami {
+    position: absolute;
+    top: 60px;
+    left: 0px;
+}
+.order-status-koumoku {
+    width: 280px;
+    height: 50px;
+    display: flex;
+    border-bottom: 1px solid var(--color-gainsboro-100);
+    align-items: center;
+    padding: 30px;
+    justify-content: space-between;
+}
+.chartWrapper {
+    position: fixed;
+    top: 70px;
+    left: 50%;
+}
+.chart-toggle-pro {
+    position: relative;
+    left: 1040px;
+    top: 5px;
+    cursor: pointer;
+}
+.chart-toggle-co2 {
+    position: relative;
+    left: 1040px;
+    top: 240px;
+    cursor: pointer;
+}
+
+
+@media only screen and (max-width:1280px) {
+    .main-container {
+        transform:scale(1);
+        transform-origin:top;
+    }
+}
+@media only screen and (max-width:1000px) {
+    .order-status, .chartWrapper, .chart-toggle-pro, .chart-toggle-co2 {
+        transform:scale(0.8);
+        transform-origin:top;
+    }
+    .chartWrapper {
+        position: fixed;
+        top: 400px;
+        left: 20%;
+    }
+    .chart-toggle-pro {
+        position: relative;
+        left: 45%;
+        top: 330px;
+    }
+    .chart-toggle-co2 {
+        position: relative;
+        left: 45%;
+        top: 510px;
+    }
+}
+@media only screen and (max-width:800px) {
+    // .main-container {
+    //     transform:scale(0.6);
+    //     transform-origin:top;
+    //     height: 200%;
+    // }
+    .order-status {
+        transform:scale(0.7);
+        transform-origin:top;
+        position: fixed;
+        left: 20%;
+    }
+    .chartWrapper {
+        transform:scale(0.7);
+        transform-origin:top;
+        position: fixed;
+        top: 400px;
+        left: 20%;
+    }
+    .chart-toggle-pro {
+        transform:scale(0.7);
+        transform-origin:top;
+        position: relative;
+        left: 35%;
+        top: 330px;
+    }
+    .chart-toggle-co2 {
+        transform:scale(0.7);
+        transform-origin:top;
+        position: relative;
+        left: 35%;
+        top: 485px;
+    }
+}
+

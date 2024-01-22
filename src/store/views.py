@@ -1,6 +1,6 @@
 from django.shortcuts import render
 # formを使用するためにimport
-from .forms import ProductForm, SaleForm, ThresholdForm
+from .forms import ProductForm, SaleForm, ThresholdForm, MelimitStoreEditForm
 from accounts.mixins import MelimitModelMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from accounts.forms import MelimitStoreLoginForm
@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login
 from .models import Product, Sale, Threshold
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import View
+from django.http import HttpResponseBadRequest
 
 # Create your views here.
 def index(request):
@@ -16,12 +17,59 @@ def index(request):
 # 発送済み注文履歴(modelは注文履歴モデル、発送済みフラグtrueのものを表示)
 def order_history_view(request):
     return render(request, 'store/order-history.html')
+# 発送済み注文履歴ページの中身
+def order_history_content_view(request):
+    return render(request, 'store/order-history-content.html')
 # 未発送注文一覧ページ(modelは注文履歴モデル、発送済みフラグfalseのものを表示)
 def order_not_shipped_view(request):
     return render(request, 'store/order-not-shipped.html')
+# 未発送注文一覧ページの中身
+def order_not_shipped_content_view(request):
+    return render(request, 'store/order-not-shipped-content.html')
+# パスワード再設定用のメール送信ページ
+def pass_mail_view(request):
+    return render(request, 'store/pass-mail.html')
+# 店舗情報設定ページ(閲覧)
+def store_info_view(request):
+    # print(f"mixin前のuser : {request.__dict__}")
+    mixin = MelimitModelMixin()
+    mixin.request = request
+    user = mixin.get_melimitmodel_user()
+    # print(f"店舗情報設定ページのuser : {user.__dict__}")
+    # print(f"url : {user.site_url}")
+    return render(request, 'store/store-info.html', {'user': user,})
+
+# 店舗情報設定ページの編集
+def store_info_edit_view(request):
+    mixin = MelimitModelMixin()
+    mixin.request = request
+    user = mixin.get_melimitmodel_user()
+    print(f"店舗情報設定ページの編集のuser : {user}")
+    print(request.method)
+    if request.method == 'POST':
+        print('postです')
+        form = MelimitStoreEditForm(request.POST, instance=user.melimitstore)
+        print(f"form : {form}")
+        if form.is_valid():
+            form.save()
+            return render(request, 'store/store-info.html', {'form': form, 'user': user,})
+        else:
+            print('失敗')
+            print(form.errors)
+    else:
+        print('postじゃないです')
+        form = MelimitStoreEditForm(instance=user.melimitstore)
+        print(f"form : {form}")
+    return render(request, 'store/store-info-edit.html', {'form': form, 'user': user,})
+
+# 店舗の新規登録ページ
+def store_create_view(request):
+    return render(request, 'store/store-create.html')
+
 
 # 商品管理一覧ページ
 # 検証用(render先が仮)
+# 実際のページに適用済み
 def product_manage_view(request):
     mixin = MelimitModelMixin()
     mixin.request = request
@@ -36,7 +84,7 @@ def product_manage_view(request):
     print(f"sales : {sales}")
     for sale in sales:
         print(sale.__dict__)
-    return render(request, 'store/test2.html', {'products': products, 'sales': sales, 'user': user,})
+    return render(request, 'store/product-manage.html', {'products': products, 'sales': sales, 'user': user,})
     # return render(request, 'store/product-manage.html')
 
 # 商品詳細ページ
@@ -75,6 +123,7 @@ def sale_detail_view(request, pk):
 
 # 一般新規登録
 def create_general_purchase_view(request):
+    print('view:create_general_purchase_view')
     mixin = MelimitModelMixin()
     mixin.request = request
     user = mixin.get_melimitmodel_user()
@@ -83,29 +132,62 @@ def create_general_purchase_view(request):
         sale_form = SaleForm(request.POST)
         product_form.instance.store = user.melimitstore
         # product_form.instance.storeを表示する
-        print(product_form.instance.store)
+        print(f"product_form.instance.store: {product_form.instance.store}")
         sale_form.instance.store = user.melimitstore
         # sale_form.instance.storeを表示する
-        print(sale_form.instance.store)
+        print(f"sale_form.instance.store: {sale_form.instance.store}")
         sale_form.instance.product = product_form.instance
         # sale_form.instance.productを表示する
-        print(sale_form.instance.product)
+        print(f"sale_form.instance.product: {sale_form.instance.product}")
         if product_form.is_valid() and sale_form.is_valid():
             product = product_form.save()
             sale = sale_form.save(commit=False)
             sale.sale_type = 'general_sales'
             sale.product = product
             sale.save()
-            # ここでリダイレクトやメッセージ表示などを行う
+            return redirect('store:product-manage')
         else:
-            print('ビューのform.is_valid()失敗')
-            print(product_form.errors)
-            print(sale_form.errors)
+            print('一般新規登録ビューのform.is_valid()失敗')
+            print(f"product_form.errors: {product_form.errors}")
+            print(f"sale_form.errors: {sale_form.errors}")
     else:
         product_form = ProductForm()
         sale_form = SaleForm()
-
     return render(request, 'store/create-general-purchase.html', {'product_form': product_form, 'sale_form': sale_form, 'user': user, })
+
+# 詳細ページから遷移した商品編集ページ(一般)
+def detail_general_edit_view(request, product_id):
+    mixin = MelimitModelMixin()
+    mixin.request = request
+    user = mixin.get_melimitmodel_user()
+    product = get_object_or_404(Product, id=product_id, store=user.melimitstore)
+    sale = get_object_or_404(Sale, product=product, store=user.melimitstore)
+    if request.method == 'POST':
+        product_form = ProductForm(request.POST, request.FILES, instance=product)
+        sale_form = SaleForm(request.POST, instance=sale, request=request)
+        if product_form.is_valid() and sale_form.is_valid():
+            product = product_form.save()
+            sale = sale_form.save(commit=False)
+            sale.product = product
+            sale.sale_type = 'general_sales'
+            sale.save()
+            print('完了')
+            # 編集が完了したら、適切なページにリダイレクトする
+            return redirect('store:product-manage')
+        else:
+            print('失敗')
+    else:
+        product_form = ProductForm(instance=product)
+        sale_form = SaleForm(instance=sale)
+        print(f"product_form: {product_form}")
+        # print(f"sale_form: {sale_form}")
+        print(f"編集product: {product.__dict__}")
+        print(f"編集sale: {sale.__dict__}")
+        print(product.product_name)
+
+    return render(request, 'store/detail-general-edit.html', {'product_form': product_form, 'sale_form': sale_form, 'product': product, 'user': user})
+    # return render(request, 'store/detail-general-edit.html')
+
 
 # 共同購入新規登録
 def create_group_purchase_view(request):
@@ -129,20 +211,13 @@ def create_group_purchase_view(request):
         if product_form.is_valid() and sale_form.is_valid() and threshold_form.is_valid():
             product = product_form.save()
             sale = sale_form.save(commit=False)
-            sale.sale_type = 'melimit_sales'
             sale.product = product
+            sale.sale_type = 'melimit_sales'
             sale.save()
             threshold = threshold_form.save(commit=False)
             threshold.sale = sale
             threshold.save()
-            # ここでリダイレクトやメッセージ表示などを行う
-        # if product_form.is_valid() and sale_form.is_valid():
-        #     product = product_form.save()
-        #     sale = sale_form.save(commit=False)
-        #     sale.sale_type = 'melimit_sales'
-        #     sale.product = product
-        #     sale.save()
-            # ここでリダイレクトやメッセージ表示などを行う
+            return redirect('store:product-manage')
         else:
             print('ビューのform.is_valid()失敗')
             print(product_form.errors)
@@ -156,21 +231,67 @@ def create_group_purchase_view(request):
     return render(request, 'store/create-group-purchase.html', {'product_form': product_form, 'sale_form': sale_form, 'threshold_form': threshold_form, 'user': user, })
 
     return render(request, 'store/create-group-purchase.html', {'product_form': product_form, 'sale_form': sale_form, 'user': user, })
+
+# 詳細ページから遷移した商品編集ページ(共同)
+def detail_group_edit_view(request, product_id):
+    print(f"共同product_id: {product_id}")
+    mixin = MelimitModelMixin()
+    mixin.request = request
+    user = mixin.get_melimitmodel_user()
+    product = get_object_or_404(Product, id=product_id, store=user.melimitstore)
+    sale = get_object_or_404(Sale, product=product, store=user.melimitstore)
+    threshold = get_object_or_404(Threshold, sale=sale)
+    if request.method == 'POST':
+        product_form = ProductForm(request.POST, request.FILES, instance=product)
+        print('1番')
+        sale_form = SaleForm(request.POST, instance=sale, request=request)
+        print('2番')
+        threshold_form = ThresholdForm(request.POST, instance=threshold)
+        product_form.instance.store = user.melimitstore
+        if product_form.is_valid() and sale_form.is_valid() and threshold_form.is_valid():
+            product = product_form.save()
+            sale = sale_form.save(commit=False)
+            sale.sale_type = 'melimit_sales'
+            sale.product = product
+            sale.save()
+            threshold = threshold_form.save(commit=False)
+            threshold.sale = sale
+            threshold.save()
+            print('完了')
+            # 編集が完了したら、適切なページにリダイレクトする
+            return redirect('store:product-manage')
+        else:
+            # print(f"product_form: {product_form.is_valid()}")
+            # print(f"productエラー: {product_form.errors}")
+            # print(f"sale_form: {sale_form.is_valid()}")
+            # print(f"saleエラー: {sale_form.errors}")
+            # print(f"threshold_form: {threshold_form.is_valid()}")
+            # print(f"saleエラー: {sale_form.errors}")
+            print(f"product: {product.__dict__}")
+            print(f"sale: {sale.__dict__}")
+            print(f"threshold: {threshold.__dict__}")
+            print('失敗')
+    else:
+        product_form = ProductForm(instance=product)
+        sale_form = SaleForm(instance=sale)
+        threshold_form = ThresholdForm(instance=threshold)
+        print(f"threshold_form: {threshold_form}")
+
+    return render(request, 'store/detail-group-edit.html', {'product_form': product_form, 'sale_form': sale_form, 'threshold_form': threshold_form,'product': product,'user': user})
+
 # 商品詳細ページ(一般)
 def detail_general_view(request):
     return render(request, 'store/detail-general.html')
 # 商品詳細ページ(共同)
 def detail_group_view(request):
     return render(request, 'store/detail-group.html')
-# 詳細ページから遷移した商品編集ページ(一般)
-def detail_general_edit_view(request):
-    return render(request, 'store/detail-general-edit.html')
 # 詳細ページから遷移した商品編集ページ(共同)
-def detail_group_edit_view(request):
-    return render(request, 'store/detail-group-edit.html')
+# def detail_group_edit_view(request):
+#     return render(request, 'store/detail-group-edit.html')
 
 # ログイン処理
 def store_login_view(request):
+    print('view:store_login_view')
     user = request.user
     # username = user.username
     # model_name = user.__class__.__name__
@@ -180,7 +301,8 @@ def store_login_view(request):
         form = MelimitStoreLoginForm(request.POST)
         print('store_login_view')
         # フォームに入力された値を出力してみる
-        print(f'Username: {form.data.get("username")}')
+        # print(f'Username: {user.username}') # まだ認証前なので、userも存在しない
+        # print(f'Username: {form.data.get("username")}') # formにusernameがないので、form.data.get("username")はエラーになる
         print(f'email: {form.data.get("email")}')
         print(f'Password: {form.data.get("password")}')
         if form.is_valid():
@@ -191,10 +313,14 @@ def store_login_view(request):
             # print(f'backend: {user.backend}')
             # ユーザーの情報を出力してみる
             # print(f'Username: {user.username}')
-            if user is not None:
+            # userのmodelがMelimitStoreならログイン成功
+            if user.__class__.__name__ == 'MelimitStore':
                 login(request, user)
                 print('ログイン成功')
-                return redirect('store:store_base')
+                return redirect('store:index')
+            elif user.__class__.__name__ != 'MelimitStore':
+                print('ログイン失敗')
+                return redirect('store:store_login')
             else:
                 # フォームが無効な場合の処理をここに書く
                 print('pass')
@@ -203,8 +329,9 @@ def store_login_view(request):
         else:
             print(form.errors)
             print('rogin-error')
+            return redirect('store:store_login')
     else:
-        # form = MelimitStoreLoginForm()
+        form = MelimitStoreLoginForm()
 
         if 'backend' in request.session:
             del request.session['backend']
@@ -216,11 +343,13 @@ def store_login_view(request):
 
 # ログイン後の店舗管理画面
 def store_base_view(request):
+    print('view:store_base_view')
     mixin = MelimitModelMixin()
     mixin.request = request
     user = mixin.get_melimitmodel_user()
-    # お客さんがログインしようとしたときの処理
-    if user.__class__.__name__ == 'MelimitUser':
+    # melimitstore以外のユーザーを弾く
+    # if user.__class__.__name__ == 'MelimitUser':
+    if user.__class__.__name__ != 'MelimitStore':
         return redirect('user:omae_user')
     # user = request.user
     # store_id = request.session.get('store_id')
@@ -238,7 +367,7 @@ def store_base_view(request):
     print(f'site_url: {site_url}')
     print(f'user: {user}')
     print(f'model_name: {model_name}')
-    return render(request, 'store/base.html', {
+    return render(request, 'store/index.html', {
         'user': user,
         'model_name': model_name,
         'instance_name': instance_name,
@@ -297,32 +426,60 @@ def product_and_sale_list(request):
         print(sale.__dict__)
     return render(request, 'store/test2.html', {'products': products, 'sales': sales, 'user': user,})
 
+# 商品削除
+def product_and_sale_delete_view(request, pk):
+    print('削除ビュー')
+    if request.method == 'POST':
+        # pkを元にproductとsaleを取得する
+        product = get_object_or_404(Product, id=pk)
+        sale = get_object_or_404(Sale, product=product)
+        mixin = MelimitModelMixin()
+        mixin.request = request
+        user = mixin.get_melimitmodel_user()
+        print('削除postです')
+        print(f"product: {product}")
+        print(f"sale: {sale}")
+        print(f"user: {user}")
+        # 取得しているproductとsaleがログイン中のユーザーのものかを確認する
+        if product.store == user.melimitstore and sale.store == user.melimitstore:
+            product.delete()
+            print('削除完了')
+            return redirect('store:product-manage')
+    else:
+        return HttpResponseBadRequest()
+
+# 商品複数一括削除
 class ProductAndSaleDeleteView(View):
     def get(self, request, *args, **kwargs):
         product_ids = request.GET.getlist('product_ids')  # 選択した商品のIDを取得
         print(f"product_ids : {product_ids}")
         products = Product.objects.filter(id__in=product_ids)
+        sales = []
         for product in products:
-            sales = product.sale_set.all()  # Productに関連するSaleを取得
-            for sale in sales:
-                print(f"sale : {sale}")
+            product_sales = product.sale_set.all()  # Productに関連するSaleを取得
+            sales.extend(product_sales)  # Saleをリストに追加
         print(f"products : {products}")
         print(f"sales : {sales}")
         return render(request, 'store/test4.html', {'products': products})
 
     def post(self, request, *args, **kwargs):
         product_ids = request.POST.getlist('product_ids')  # 選択した商品のIDを取得
+        print(f"del_product_ids : {product_ids}")
         for product_id in product_ids:
+            print(f"delete : {product_id}")
             self.delete_product_and_sale(product_id)
         return redirect('store:test2')
 
     def delete_product_and_sale(self, product_id):
         # productモデルの削除
         product = get_object_or_404(Product, id=product_id)
+        print(f"del_product : {product}")
+        print(f"del_id : {product_id}")
         product.delete()
-        # saleモデルの削除
-        sale = get_object_or_404(Sale, product_id=product_id)
-        sale.delete()
+    # productはsaleの外部キーなので、productを削除するとsaleも削除される
+    # また、thresholdはsaleの外部キーなので、saleを削除するとthresholdも削除される
+    # そのため、productを削除すると関連するsaleとthresholdも削除される
+    # モデル定義でon_delete=models.CASCADEを指定しているため
 
 # productモデルの登録
 # 未使用
