@@ -31,4 +31,5 @@ urlpatterns = [
     path('guide_detail/', views.guide_detail, name='guide_detail'),
     path('guide/', views.guide, name='guide'),
     path('notice/', views.notice, name='notice'),
+    path('sdgs/', views.sdgs, name='sdgs'),
 ]

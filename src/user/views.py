@@ -380,3 +380,7 @@ def guide(request):
 # お知らせ一覧
 def notice(request):
     return render(request, 'user/notice.html')
+
+# MelimitとSDGs
+def sdgs(request):
+    return render(request, 'user/sdgs.html')
