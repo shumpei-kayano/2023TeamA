@@ -81,15 +81,19 @@
               </li>
               <li>
                   送料
-                  <span>0円</span>
+                  <span>100円</span>
               </li>
               <li class="total">
                   <p>
                   合計
-                  <span class="total">{{ all_price }}円</span>
+                  <span class="total">{{ all_price_100 }}円</span>
                   </p>
               </li>
+              {% if user.is_authenticated %}
               <a href={% url 'user:cash_register' %} class="btn--beige btn">レジに進む</a>
+              {% else %}
+              <a href="{% url 'account_login_kkkk' %}" class="btn--beige btn">レジに進むにはログインしてください</a>
+              {% endif %}
           </ul>
       </div>
   </section>

@@ -6,7 +6,7 @@
     <h2 class="register__title">注文確認</h2>
     {% comment %} {% for cart_item in cart_items %}
         {% if cart_item.sale_type == '一般商品' %} {% endcomment %}
-        
+        {% if cart_item_gen %}
             <div class="register__cart">
                 <h3 class="register__cart--general-title">一般購入</h3>
                 
@@ -24,12 +24,79 @@
                     <tbody>
                         {% for cart_item in cart_item_gen %}
                     {% comment %} {% for item in cart_items %} {% endcomment %}
+                            <tr>
+                                <td>
+                                    <img src={{ cart_item.sale_image.url }} alt="野菜"/>
+                                </td>
+                                <td>
+                                    {{ cart_item.sale }}
+                                    {% comment %} {{ item.product.name }} {% endcomment %}
+                                </td>
+                                <td>
+                                    {{ cart_item.sale_type }}
+                                    {% comment %} {{ item.product.category }} {% endcomment %}
+                                </td>
+                                <td>
+                                    {{ cart_item.sale_price }}円
+                                    {% comment %} {{ item.product.price }} {% endcomment %}
+                                </td>
+                                <td>
+                                    {{ cart_item.quantity }}個
+                                    {% comment %} {{ item.quantity }} {% endcomment %}
+                                </td>
+                                <td>
+                                    {{ cart_item.total_price }}円
+                                    {% comment %} {{ item.total_price }} {% endcomment %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                </table>
+                
+                <ul class="register__total">
+                    <p>合計金額</p>
+                    <li>
+                        小計
+                        <span>{{ total_gen }}円</span>
+                    </li>
+                    <li>
+                        送料
+                        <span>100円</span>
+                    </li>
+                    <li class="total">
+                        <p>
+                        合計
+                        <span>{{ total_gen_100 }}円</span>
+                        </p>
+                    </li>
+                </ul>
+                
+            </div>
+        
+        {% endif %}
+        {% comment %} {% else %} {% endcomment %}
+        {% if cart_item_mel %}
+            <div class="register__cart">
+                <h3 class="register__cart--joint-title">共同購入</h3>
+                <table class="cart__shopping-table">
+                    <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">商品</th>
+                        <th scope="col">種別</th>
+                        <th scope="col">価格</th>
+                        <th scope="col">数量</th>
+                        <th scope="col">小計</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% comment %} {% for item in cart_items %} {% endcomment %}
+                    {% for cart_item in cart_item_mel %}
                     <tr>
                         <td>
                             <img src="{% static 'assets/img/メリ光男.png' %}" alt="野菜"/>
                         </td>
                         <td>
-                            トマト
+                            {{cart_item.sale}}トマト
                             {% comment %} {{ item.product.name }} {% endcomment %}
                         </td>
                         <td>
@@ -51,70 +118,6 @@
                     </tr>
                     {% endfor %}
                 </table>
-                
-                <ul class="register__total">
-                    <p>合計金額</p>
-                    <li>
-                        小計
-                        <span>100円</span>
-                    </li>
-                    <li>
-                        送料
-                        <span>100円</span>
-                    </li>
-                    <li class="total">
-                        <p>
-                        合計
-                        <span>100円</span>
-                        </p>
-                    </li>
-                </ul>
-                
-            </div>
-        
-        {% for cart_item in cart_item_mel %}
-        {% comment %} {% else %} {% endcomment %}
-            <div class="register__cart">
-                <h3 class="register__cart--joint-title">共同購入</h3>
-                <table class="cart__shopping-table">
-                    <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col">商品</th>
-                        <th scope="col">種別</th>
-                        <th scope="col">価格</th>
-                        <th scope="col">数量</th>
-                        <th scope="col">小計</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% comment %} {% for item in cart_items %} {% endcomment %}
-                    <tr>
-                        <td>
-                            <img src="{% static 'assets/img/メリ光男.png' %}" alt="野菜"/>
-                        </td>
-                        <td>
-                            トマト
-                            {% comment %} {{ item.product.name }} {% endcomment %}
-                        </td>
-                        <td>
-                            一般購入商品
-                            {% comment %} {{ item.product.category }} {% endcomment %}
-                        </td>
-                        <td>
-                            100円
-                            {% comment %} {{ item.product.price }} {% endcomment %}
-                        </td>
-                        <td>
-                            1
-                            {% comment %} {{ item.quantity }} {% endcomment %}
-                        </td>
-                        <td>
-                            100円
-                            {% comment %} {{ item.total_price }} {% endcomment %}
-                        </td>
-                    </tr>
-                </table>
             </div>
             <ul class="register__total">
                 <p>合計金額</p>
@@ -133,7 +136,7 @@
                     </p>
                 </li>
             </ul>
-        {% endfor %}
+        
         {% comment %} {% endif %}
     {% endfor %} {% endcomment %}
     <p class="register__caution">※共同購入商品は目標個数に達しなかった場合、最終割引は適用されません。（定価からの割引は適用されます。）</p>
@@ -143,6 +146,7 @@
         <input type="checkbox" id="confirm-checkbox">
         <label for="confirm-checkbox">確認しました</label>
     </div>
+    {% endif %}
 </section>
 <section class="register__user-info">
     <h3 class="register__user-info-title">あなたの登録情報</h3>
@@ -153,8 +157,8 @@
             <p>電話番号</p>
         </div>
         <div class="register__user-info-detail">
-            <p class="register__user-info-value">メリ光男</p>
-            <p class="register__user-info-value">090-1234-5678</p>
+            <p class="register__user-info-value">{{ user.username }}</p>
+            <p class="register__user-info-value">{{ user.phone_number }}</p>
         </div>
         <a href="#" class="register__user-info-btn btn btn--gray">変更する</a>
     </div>
@@ -168,10 +172,10 @@
             <p>建物名</p>
         </div>
         <div class="register__user-info-detail">
-            <p class="register__user-info-value">123-4567</p>
-            <p class="register__user-info-value">東京都</p>
-            <p class="register__user-info-value">渋谷区</p>
-            <p class="register__user-info-value">1-2-3</p>
+            <p class="register__user-info-value">{{ user.postal_code }}</p>
+            <p class="register__user-info-value">{{ user.prefecture }}</p>
+            <p class="register__user-info-value">{{ user.city }}</p>
+            <p class="register__user-info-value">{{ user.address }}</p>
             <p class="register__user-info-value">メリ光ビル</p>
         </div>
         <a href="#" class="register__user-info-btn btn btn--gray">変更する</a>
@@ -187,18 +191,22 @@
     <h3 class="register__final-confirmation-title">最終確認</h3>
     <ul class="register__total">
         <p>合計金額</p>
+        {% if total_gen %}
         <li>
             一般購入
-            <span>100円</span>
+            <span>{{ total_gen_100 }}円</span>
         </li>
+        {% endif %}
+        {% if total_mel %}
         <li>
             共同購入
-            <span>100円</span>
+            <span>{{ total_mel_100 }}円</span>
         </li>
+        {% endif %}
         <li class="total">
             <p>
-            合計
-            <span>200円</span>
+            合計(一般+共同)
+            <span>{{ all_total }}円</span>
             </p>
         </li>
     </ul>

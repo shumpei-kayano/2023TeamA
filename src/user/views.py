@@ -373,8 +373,8 @@ def cart(request):
                 'quantity': quantity,
                 'total_price': sale.sale_price * quantity,
             })
-
-    return render(request, 'user/cart.html', {'cart_items': cart_items,'all_price':all_price})
+        all_price_100 = all_price + 100
+    return render(request, 'user/cart.html', {'cart_items': cart_items,'all_price':all_price,'all_price_100':all_price_100})
     # return render(request, 'user/cart.html')
 
 #お知らせ詳細
@@ -399,46 +399,75 @@ def pass_mail(request):
 
 # 注文確認
 def cash_register(request):
-    cart = request.session['cart']
-    cart_items = []
-    all_price = 0
-    #カートの各商品ごとにidと数量をループ
-    for pk, quantity in cart.items():
-        sale = get_object_or_404(Sale, id=pk)
-        #sale.pk商品の主キー(プライマリーキー)
-        print(sale.pk)
-        if sale.sale_type == 'general_sales':
-            sale_type = '一般商品'
-        else:
-            sale_type = '共同販売商品'
+    if request.user.is_authenticated:
+        user_id = request.user.id
+            # user_id = request.session.get('user_id')
+        print(f'user_id: {user_id}')
+            #MelimitUserオブジェクトにtasteが入っている
+        user = MelimitUser.objects.get(id=user_id)
+        #氏名 電話番号 住所 情報 郵便番号 都道府県 市区町村 番地 建物名
+    #ログインしていなかったらログインするように促す
+    #ログインしていたら下の処理をする
+        cart = request.session['cart']
+        cart_items = []
+        all_price = 0
+        #カートの各商品ごとにidと数量をループ
+        for pk, quantity in cart.items():
+            sale = get_object_or_404(Sale, id=pk)
+            #sale.pk商品の主キー(プライマリーキー)
+            print(sale.pk)
+            if sale.sale_type == 'general_sales':
+                sale_type = '一般商品'
+            else:
+                sale_type = '共同販売商品'
+            
+            all_price += sale.sale_price * quantity
+            #商品の商品名、種別(一般or共同)、一つ当たりの価格、数量、合計価格をリストに追加
+            cart_items.append({
+                'pk':sale.pk,
+                'sale_image': sale.product.product_image,
+                'sale': sale.product.product_name,
+                'sale_type':sale_type,
+                'sale_price':sale.sale_price,
+                'quantity': quantity,
+                'total_price': sale.sale_price * quantity,
+            })
+        #cart_itemsはカートの全商品
+        print(cart_items)
+        cart_item_gen = []
+        cart_item_mel = []
+        for i in cart_items:
+            print(i['sale_type'])
+            if i['sale_type'] == '一般商品':
+                cart_item_gen.append(i)
+            else:
+                cart_item_mel.append(i)
+        print('一般商品',cart_item_gen)
+        print('共同商品',cart_item_mel)
+        # sale_typeごとに分ける？
+        total_gen = 0
+        total_gen = sum(item['total_price'] for item in cart_item_gen)
+        total_gen_100 = sum(item['total_price'] for item in cart_item_gen) + 100
+        total_mel = 0
+        total_mel = sum(item['total_price'] for item in cart_item_mel)
+        total_mel_100 = sum(item['total_price'] for item in cart_item_mel) + 100
+        #total_gen が空の場合
+        all_total = 0
         
-        all_price += sale.sale_price * quantity
-        #商品の商品名、種別(一般or共同)、一つ当たりの価格、数量、合計価格をリストに追加
-        cart_items.append({
-            'pk':sale.pk,
-            'sale_image': sale.product.product_image,
-            'sale': sale.product.product_name,
-            'sale_type':sale_type,
-            'sale_price':sale.sale_price,
-            'quantity': quantity,
-            'total_price': sale.sale_price * quantity,
-        })
-    #cart_itemsはカートの全商品
-    print(cart_items)
-    cart_item_gen = []
-    cart_item_mel = []
-    for i in cart_items:
-        print(i['sale_type'])
-        if i['sale_type'] == '一般商品':
-            cart_item_gen.append(i)
+        if total_gen == 0:
+            print(1)
+            all_total = total_mel_100
+        #total_melが空の場合
+        elif total_mel == 0:
+            print(2)
+            all_total = total_gen_100
         else:
-            cart_item_mel.append(i)
-    print('一般商品',cart_item_gen)
-    print('共同商品',cart_item_mel)
-    # sale_typeごとに分ける？
-    
-    return render(request, 'user/cash-register.html',{'cart_items':cart_items,'cart_item_gen':cart_item_gen,'cart_item_mel':cart_item_mel})
-
+            print(3)
+            all_total = total_gen_100 + total_mel_100
+        print(all_total)
+        return render(request, 'user/cash-register.html',{'cart_items':cart_items,'cart_item_gen':cart_item_gen,'cart_item_mel':cart_item_mel,'total_gen':total_gen,'total_mel':total_mel,'total_gen_100':total_gen_100,'total_mel_100':total_mel_100,'user':user,'all_total':all_total})
+    else:
+        return render(request,)
 #新規登録
 def signup_choice(request):
     return render(request, 'user/signup-choice.html')
