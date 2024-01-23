@@ -1,0 +1,115 @@
+.sdgs-head {
+    position: absolute;
+    z-index: 1;  /* z-indexを1に設定して他の要素より前面に表示 */
+    left: 36%;
+    top: 38%;
+    font-size: 2em;
+}
+
+.sdgs13-head {
+    position: absolute;
+    z-index: 1;  /* z-indexを1に設定して他の要素より前面に表示 */
+    left: 36%;
+    top: 238%;
+    font-size: 2em;
+}
+
+
+.image-container {
+    position: relative;
+    z-index: 0;  /* z-indexを0に設定して他の要素より背面に表示 */
+}
+
+.transparent-image {
+    opacity: 0.1;
+    width: 100%;
+}
+
+.overlay-text {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #000;
+    font-size: 1rem;
+    letter-spacing: 1em;  /* 文字間隔を0.1emに設定 */
+    line-height: 4;  /* 行の高さを2に設定 */
+    margin-right: -4em;
+}
+
+.overlay-text2 {
+    position: absolute;
+    top: 137%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #000;
+    font-size: 1rem;
+    letter-spacing: 1em;  /* 文字間隔を0.1emに設定 */
+    line-height: 4;  /* 行の高さを2に設定 */
+}
+
+.overlay-text3 {
+    position: absolute;
+    top: 172%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #000;
+    font-size: 1rem;
+    letter-spacing: 1em;  /* 文字間隔を0.1emに設定 */
+    line-height: 4;  /* 行の高さを2に設定 */
+}
+
+.overlay-text4 {
+    position: absolute;
+    top: 34%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #000;
+    font-size: 1rem;
+    letter-spacing: 1em;  /* 文字間隔を0.1emに設定 */
+    line-height: 4;  /* 行の高さを2に設定 */
+}
+
+.overlay-text5 {
+    position: absolute;
+    top: 53%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #000;
+    font-size: 1rem;
+    letter-spacing: 1em;  /* 文字間隔を0.1emに設定 */
+    line-height: 4;  /* 行の高さを2に設定 */
+}
+
+.overlay-text6 {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #000;
+    font-size: 1rem;
+    letter-spacing: 1em;  /* 文字間隔を0.1emに設定 */
+    line-height: 4;  /* 行の高さを2に設定 */
+}
+
+.overlay-text7 {
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #000;
+    font-size: 1rem;
+    letter-spacing: 1em;  /* 文字間隔を0.1emに設定 */
+    line-height: 4;  /* 行の高さを2に設定 */
+}
+
+.overlay-text8 {
+    position: absolute;
+    top: 99%;
+    left: 82%;
+    transform: translate(-50%, -50%);
+    color: #000;
+    font-size: 0.7rem;
+    letter-spacing: 1em;  /* 文字間隔を0.1emに設定 */
+    line-height: 4;  /* 行の高さを2に設定 */
+}
