@@ -1,19 +1,20 @@
 .contact__btn-container {
     margin: 100px 0;
     display: flex;
+    flex-wrap: wrap-reverse;
     width: 100%;
     justify-content: space-around;
     // margin: 50px 0;
 
     @media (max-width: 768px) {
-        flex-direction: column;
+        margin: 0;
     }
 
     .contact-cfm-btn {
         text-align: center;
         width: 100%;
         button {
-            // margin: 50px 0;
+            margin: 50px 0;
             background-color: $main_color;
             color: $melimit-white;
             width: 30%;

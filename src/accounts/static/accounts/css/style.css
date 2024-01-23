@@ -634,14 +634,13 @@ h1 {
 
 header, footer {
   width: 100%;
+  padding: 0 5rem;
 }
 
 header {
   background-image: linear-gradient(180deg, #D4B985 0%, #FFFFFF 100%);
-  padding: 0 5rem;
 }
 header .user_name {
-  font-weight: bold;
   text-align: center;
   font-size: 0.5rem;
 }
@@ -651,53 +650,61 @@ header .user_name {
   }
 }
 
-.header_logo, .footer_logo {
-  width: 7.5rem;
-  object-fit: cover;
-}
 @media (max-width: 768px) {
   .header_logo, .footer_logo {
-    width: 5rem;
+    margin: 1.5rem auto;
   }
 }
 
 .header_upper {
-  font-size: 0.9rem;
+  font-weight: bold;
+  font-size: 0.75rem;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   padding-top: 0.1rem;
 }
-@media (max-width: 768px) {
-  .header_upper {
-    margin: 0 2rem;
-  }
-}
-.header_upper__nav {
-  padding-left: 5rem;
-}
 .header_upper__nav li {
   display: inline-block;
-  margin: 0 1rem;
   color: #252525;
+  padding: 0.5rem 1rem;
 }
 .header_upper__nav li:hover {
   opacity: 0.7;
 }
+.header_upper__menu {
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+}
 .header_upper__icon {
   display: flex;
-  justify-content: end;
-  align-items: center;
-  flex-wrap: wrap;
+}
+@media (max-width: 768px) {
+  .header_upper__icon {
+    flex-flow: column;
+    margin: 0 auto;
+  }
+}
+.header_upper__icon__line {
+  display: flex;
+  justify-content: space-around;
 }
 .header_upper__icon .header_icon {
   width: 2rem;
   object-fit: cover;
   margin: 0 1rem;
 }
+@media screen and (max-width: 768px) {
+  .header_upper__icon .header_icon {
+    margin: 0 auto;
+  }
+}
 
 .header_down {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
 }
@@ -708,7 +715,13 @@ header .user_name {
   width: 65%;
   padding-left: 0;
   display: flex;
+  flex-wrap: wrap-reverse;
   justify-content: space-between;
+}
+@media (max-width: 768px) {
+  .header_down__menu {
+    width: 100%;
+  }
 }
 .header_down__category {
   padding-left: 0;
@@ -728,14 +741,13 @@ header .user_name {
   opacity: 0.7;
 }
 .header_down__menu-btn {
-  font-size: 0.8rem;
   border-radius: 5px;
   text-align: center;
   display: inline-block;
   padding: 0.5rem 1rem;
 }
-.header_down__serch {
-  width: 40%;
+.header_down__search {
+  margin: 0 auto;
 }
 .header_down__search-input {
   height: 2.2rem;
@@ -782,13 +794,12 @@ body {
 }
 
 main {
-  max-width: 1200px;
+  background-color: #FFFFFF;
+  max-width: 90%;
   margin: 0 auto;
-  width: 87%;
 }
 @media (max-width: 768px) {
   main {
-    max-width: 100%;
     margin: 1rem auto;
   }
 }
@@ -831,6 +842,16 @@ button {
 }
 button:hover {
   opacity: 0.7;
+}
+
+::-webkit-scrollbar {
+  background: #EBEBEB;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #D4B985;
+  border-radius: 5px;
 }
 
 .login-container {

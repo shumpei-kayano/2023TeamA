@@ -23,7 +23,7 @@
     <header>
         <div class="header_upper">
             <h1>Melimit</h1>
-            <a href="{% url 'user:index' %}"><img src="{% static 'assets/img/Melimit.png' %}" alt="Melimit" class="header_logo"/></a>
+            <a href="{% url 'user:index' %}"  class="header_logo"><img src="{% static 'assets/img/Melimit.png' %}" alt="Melimit"/></a>
             <nav class="header_upper__nav">
                 <ul class="header_upper__menu">
                     <li><a href="{% url "user:what_melimit" %}">Melimitとは</a></li>
@@ -39,8 +39,10 @@
             </nav>
             <div class="header_upper__icon">
                 <p class="user_name">ようこそ、{% if user.is_authenticated %}{{ user.username }}さん{% else %}ゲストさん{% endif %}</p>
-                <a href="{% url "user:favorite" %}"><img class ="header_icon"src="{% static 'assets/img/love.png' %}" alt="love"></a>
-                <a href="{% url "user:cart" %}"><img class ="header_icon"src="{% static 'assets/img/cart.png' %}" alt="cart"></a>
+                <div class="header_upper__icon__line">
+                    <a href="{% url "user:favorite" %}"><img class ="header_icon"src="{% static 'assets/img/love.png' %}" alt="love"></a>
+                    <a href="{% url "user:cart" %}"><img class ="header_icon"src="{% static 'assets/img/cart.png' %}" alt="cart"></a>
+                </div>
             </div>
         </div>
         <div class="header_down">
