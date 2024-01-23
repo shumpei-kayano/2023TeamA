@@ -215,7 +215,7 @@
         <button type="submit" id="submit-button" class="btn btn--beige">注文を確定する</button>
     </div>
 </section>
-<script>
+{% comment %} <script>
     document.getElementById('submit-button').addEventListener('click', function(event) {
         if (document.getElementById('confirm-checkbox').checked) {
             window.location.href = "{% url 'user:order_completed' %}";
@@ -223,6 +223,11 @@
             event.preventDefault();
             alert('共同購入商品の注意事項をご確認ください。');
         }
+    });
+</script> {% endcomment %}
+<script>
+    document.getElementById('submit-button').addEventListener('click', function(event) {
+            window.location.href = "{% url 'user:order_completed' %}";
     });
 </script>
 {% endblock %}

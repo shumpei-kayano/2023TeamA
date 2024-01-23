@@ -356,7 +356,7 @@ def cart(request):
         for pk, quantity in cart.items():
             sale = get_object_or_404(Sale, id=pk)
             #sale.pk商品の主キー(プライマリーキー)
-            print(sale.pk)
+            print('sale.pk:',sale.pk)
             if sale.sale_type == 'general_sales':
                 sale_type = '一般商品'
             else:
@@ -465,6 +465,10 @@ def cash_register(request):
             print(3)
             all_total = total_gen_100 + total_mel_100
         print(all_total)
+        print(request.session)
+        #sessionの中身を全部表示
+        print(request.session['cart'].items())
+        
         return render(request, 'user/cash-register.html',{'cart_items':cart_items,'cart_item_gen':cart_item_gen,'cart_item_mel':cart_item_mel,'total_gen':total_gen,'total_mel':total_mel,'total_gen_100':total_gen_100,'total_mel_100':total_mel_100,'user':user,'all_total':all_total})
     else:
         return render(request,)
@@ -474,12 +478,39 @@ def signup_choice(request):
 
 def add_to_cart(request, pk):
     sale = get_object_or_404(Sale, id=pk)
+    #カート全体
+    # cart = request.session['cart']
+    #カート全体から商品すべてをループして該当のpkがあるか探す
+    
     cart = request.session.get('cart', {})
     quantity = int(request.POST.get('quantity'))
-    if pk in cart:
-        cart[pk] += quantity
-    else:
+    print('cart',cart.items())
+    #該当するpkなら個数を追加して更新 違うとき？ cart[pk]が空の時であって、cart[pk]が存在していないといけない
+    for item_pk, quantitys in cart.items():
+        print('item_pk',item_pk)
+        print(type(pk))
+        print('pk',pk)
+        print(type(item_pk))
+        if pk == int(item_pk):
+            pk = str(pk)
+            print('更新前cart[pk]',cart[pk])
+            cart[pk] += quantity
+            print('更新後cart[pk]:',cart[pk])
+            break
+    #item_pkだとfor外なのでlocal引数を使うなと言われる
+    pk = str(pk)
+    print('cart',cart)
+    if not pk in cart:
         cart[pk] = quantity
+        print('cart[pk]:',cart[pk])
+    request.session['cart'] = cart
+    # if pk in cart:
+    #     print('cart[pk]',cart.pk)
+    #     cart[pk] += quantity
+    # else:
+        
+    #     cart[pk] = quantity
+    #     print('cart[pk]',cart[pk])
     request.session['cart'] = cart
     #引数にproduct_idを渡している
     # return redirect('user:cart', product_id=product_id)
@@ -566,84 +597,6 @@ def notice(request):
 def sdgs(request):
     return render(request, 'user/sdgs.html')
 
-def add_to_cart(request, pk):
-    sale = get_object_or_404(Sale, id=pk)
-    cart = request.session.get('cart', {})
-    quantity = int(request.POST.get('quantity'))
-    if pk in cart:
-        cart[pk] += quantity
-    else:
-        cart[pk] = quantity
-    request.session['cart'] = cart
-    #引数にproduct_idを渡している
-    # return redirect('user:cart', product_id=product_id)
-    return redirect('user:cart')
-
-#カートの商品の個数を変更する
-def update_cart(request):
-    pk = request.POST.get('pk')
-    quantity = int(request.POST.get('quantity'))
-
-    cart = request.session.get('cart', {})
-    cart[pk] = cart.get(pk, 0) + quantity
-
-    request.session['cart'] = cart
-
-    # 新しいカートのデータを作成
-    cart_items = []
-    #カートの各商品ごとにidと数量をループ
-    for pk, quantity in cart.items():
-        sale = get_object_or_404(Sale, id=pk)
-        if sale.sale_type == 'general_sales':
-            sale_type = '一般商品'
-        else:
-            sale_type = '共同販売商品'
-        #商品の商品名、種別(一般or共同)、一つ当たりの価格、数量、合計価格をリストに追加
-        cart_items.append({
-            'pk':sale.pk,
-            'sale_image': sale.product.product_image.url,
-            'sale': sale.product.product_name,
-            'sale_type':sale_type,
-            'sale_price':sale.sale_price,
-            'quantity': quantity,
-            'total_price': sale.sale_price * quantity,
-        })
-
-
-    return JsonResponse({'cart_items': cart_items})
-
-#カートから商品を削除する
-def delete_cart(request):
-    pk = request.POST.get('pk')
-    print(pk)
-    print(11111)
-    cart = request.session.get('cart', {})
-    del cart[pk]
-    print(cart)
-    request.session['cart'] = cart
-
-    # 新しいカートのデータを作成
-    cart_items = []
-    #カートの各商品ごとにidと数量をループ
-    for pk, quantity in cart.items():
-        sale = get_object_or_404(Sale, id=pk)
-        if sale.sale_type == 'general_sales':
-            sale_type = '一般商品'
-        else:
-            sale_type = '共同販売商品'
-        #商品の商品名、種別(一般or共同)、一つ当たりの価格、数量、合計価格をリストに追加
-        cart_items.append({
-            'pk':sale.pk,
-            'sale_image': sale.product.product_image.url,
-            'sale': sale.product.product_name,
-            'sale_type':sale_type,
-            'sale_price':sale.sale_price,
-            'quantity': quantity,
-            'total_price': sale.sale_price * quantity,
-        })
-
-
-    return JsonResponse({'cart_items': cart_items})
 #ご利用ガイド（詳細）
 def guide_detail(request):
     return render(request, 'user/guide-detail.html')
@@ -696,24 +649,33 @@ def confirm_order(request, product_id):
     return render(request, 'user/03_kakuninn_test.html', context)
 
 # テスト/購入
-def order_product(request, product_id):
+def order_product(request):
     print('テスト/購入のビュー')
-    product = get_object_or_404(Product, id=product_id)
-    if request.method == 'POST':
-        print(f"customuser_ptr_id: {request.user.id}")
-        print(f"request.user.id: {request.user.id}")
+    cart = request.session['cart']
+    # cart_items = []
+    for pk, quantitys in cart.items():
+        # sale = get_object_or_404(Sale, id=pk)
+        product = get_object_or_404(Product, id=pk)
+        # if request.method == 'POST':
+        
         user = MelimitUser.objects.get(customuser_ptr_id=request.user.id)
-        print(f"userの中身: {user.__dict__}")
         store = product.store  # ProductモデルからMelimitStoreモデルのインスタンスを取得
         sale = Sale.objects.get(product_id=product.id)  # Saleモデルのインスタンスを取得
-        quantity = int(request.POST.get('quantity'))  # 送信された数量を取得
-        amount = product.product_price * quantity  # 合計金額を計算
-        weight = product.weight * quantity  # 合計重量を計算
+            # quantity = int(request.POST.get('quantity'))  # 送信された数量を取得
+        quantity = quantitys
+        amount = product.product_price * quantity
+        weight = product.weight * quantity 
         order = OrderHistory(sale=sale, product=product, orderhistory_store=store,orderhistory_user=user, amount=amount, quantity=quantity,)
         order.save()
-        return redirect('user:order_complete')
-    return render(request, 'user/02_tyuumonn_test.html', {'product': product})
-
+            #商品ごとにorder.saveを行う
+            #リダイレクト先について聞く　必要な情報、タイミング、order_completeと02の違い
+            # return redirect('user:order_complete')
+    #カートの商品のループが終わったらreturn
+    #カートの商品が入っているセッションを消す
+    del request.session['cart']
+    return render(request, 'user/order-completed.html')
+    # return render(request, 'user/02_tyuumonn_test.html', {'product': product})
+    # return render(request, 'user/order-completed.html')
 # テスト/完了画面
 def order_complete(request):
     return render(request, 'user/04_complete_test.html')

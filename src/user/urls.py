@@ -23,7 +23,7 @@ urlpatterns = [
     path('cart/', views.cart, name='cart'),
     path('notice-detail/', views.notice_detail, name='notice_detail'),
     path('history/', views.history, name='history'),
-    path('order_completed/', views.order_completed, name='order_completed'),
+    # path('order_completed/', views.order_completed, name='order_completed'),
     path('favorite/', views.favorite, name='favorite'),
     path('pass_mail/', views.pass_mail, name='pass_mail'),
     path('cash-register/', views.cash_register, name='cash_register'),
@@ -43,7 +43,8 @@ urlpatterns = [
     # 確認画面
     path('confirm/<int:product_id>/', views.confirm_order, name='confirm_order'),
     # 購入
-    path('order/<int:product_id>/', views.order_product, name='order_product'),
+    # path('order/<int:product_id>/', views.order_product, name='order_product'),
+    path('order/', views.order_product, name='order_completed'),
     # 購入完了
     path('complete/', views.order_complete, name='order_complete'),
 ]

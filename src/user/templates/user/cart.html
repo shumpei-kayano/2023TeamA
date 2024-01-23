@@ -26,7 +26,8 @@
                     <img src="{{ cart_item.sale_image.url }}" alt="{{ cart_item.sale }}"/>
                 </td>
                 <td>
-                    {{ cart_item.sale }}
+                  <a href="{% url 'user:general_products_detail' pk=cart_item.pk %}">{{ cart_item.sale }}</a>
+                    
                     {% comment %} {{ item.product.name }} {% endcomment %}
                 </td>
                 <td>
