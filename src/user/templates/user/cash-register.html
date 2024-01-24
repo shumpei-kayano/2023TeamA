@@ -93,26 +93,26 @@
                     {% for cart_item in cart_item_mel %}
                     <tr>
                         <td>
-                            <img src="{% static 'assets/img/メリ光男.png' %}" alt="野菜"/>
+                            <img src={{ cart_item.sale_image.url }} alt="野菜"/>
                         </td>
                         <td>
                             {{cart_item.sale}}トマト
                             {% comment %} {{ item.product.name }} {% endcomment %}
                         </td>
                         <td>
-                            一般購入商品
+                            {{ cart_item.sale_type }}
                             {% comment %} {{ item.product.category }} {% endcomment %}
                         </td>
                         <td>
-                            100円
+                            {{ cart_item.sale_price }}円
                             {% comment %} {{ item.product.price }} {% endcomment %}
                         </td>
                         <td>
-                            1
+                            {{ cart_item.quantity }}個
                             {% comment %} {{ item.quantity }} {% endcomment %}
                         </td>
                         <td>
-                            100円
+                            {{ cart_item.total_price }}円
                             {% comment %} {{ item.total_price }} {% endcomment %}
                         </td>
                     </tr>
@@ -123,7 +123,7 @@
                 <p>合計金額</p>
                 <li>
                     小計
-                    <span>100円</span>
+                    <span>{{ total_mel }}円</span>
                 </li>
                 <li>
                     送料
@@ -132,7 +132,7 @@
                 <li class="total">
                     <p>
                     合計
-                    <span>100円</span>
+                    <span>{{ total_mel_100 }}円</span>
                     </p>
                 </li>
             </ul>

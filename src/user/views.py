@@ -4,7 +4,7 @@ from django.contrib.auth import logout, authenticate, login
 from accounts.forms import MelimitStoreLoginForm
 from accounts.models import MelimitStore, MelimitUser
 from accounts.mixins import MelimitModelMixin
-from store.models import Sale, Product
+from store.models import Sale, Product,ThresholdCheck
 import random
 from django.db.models import Q
 from django.http import JsonResponse
@@ -148,7 +148,7 @@ def all_products_joint(request):
             #割引額を計算する
             discounted_amount = i.discount_amount
             #割引後の値段を計算
-            discounted_price = sale.sale_price *(100-i.discount_rate)/100
+            discounted_price = round(sale.sale_price * (100 - i.discount_rate) / 100)
             sale_info = {
                 'sale_pk':sale.pk,
                 'product_name':sale.product.product_name,
@@ -350,6 +350,7 @@ def cart(request):
         return render(request, 'user/cart.html')
     else:
         cart = request.session['cart']
+        print('cart',cart)
         cart_items = []
         all_price = 0
         #カートの各商品ごとにidと数量をループ
@@ -383,7 +384,25 @@ def notice_detail(request):
 
 # 注文詳細
 def history(request):
-    return render(request, 'user/history.html')
+    #注文履歴からデータを取得　ログインしているユーザーのpkと注文履歴のuserを比較し同じものを取得
+    #商品名
+    #商品画像
+    #カテゴリー
+    #商品の価格
+    #数量
+    #小計
+    #注文日時
+    #発送状況
+    user_id = request.user.id
+            # user_id = request.session.get('user_id')
+    print(f'user_id: {user_id}')
+            #MelimitUserオブジェクトにtasteが入っている
+    users = MelimitUser.objects.get(id=user_id)
+    print('users:',users)
+    order_history = OrderHistory.objects.filter(orderhistory_user=users)
+    for i in order_history:
+        print('order:',i,vars(i))
+    return render(request, 'user/history.html',{'users':users,'order_history':order_history})
 #注文完了
 def order_completed(request):
     return render(request, 'user/order-completed.html')
@@ -463,7 +482,7 @@ def cash_register(request):
             all_total = total_gen_100
         else:
             print(3)
-            all_total = total_gen_100 + total_mel_100
+            all_total = total_gen_100 + total_mel_100 - 100
         print(all_total)
         print(request.session)
         #sessionの中身を全部表示
@@ -484,7 +503,7 @@ def add_to_cart(request, pk):
     
     cart = request.session.get('cart', {})
     quantity = int(request.POST.get('quantity'))
-    print('cart',cart.items())
+    print('cart:',cart.items())
     #該当するpkなら個数を追加して更新 違うとき？ cart[pk]が空の時であって、cart[pk]が存在していないといけない
     for item_pk, quantitys in cart.items():
         print('item_pk',item_pk)
@@ -499,7 +518,7 @@ def add_to_cart(request, pk):
             break
     #item_pkだとfor外なのでlocal引数を使うなと言われる
     pk = str(pk)
-    print('cart',cart)
+    print('cart:add',cart)
     if not pk in cart:
         cart[pk] = quantity
         print('cart[pk]:',cart[pk])
@@ -653,24 +672,50 @@ def order_product(request):
     print('テスト/購入のビュー')
     cart = request.session['cart']
     # cart_items = []
+    buy_mels = []
     for pk, quantitys in cart.items():
+        print(type(pk))
         # sale = get_object_or_404(Sale, id=pk)
         product = get_object_or_404(Product, id=pk)
         # if request.method == 'POST':
-        
-        user = MelimitUser.objects.get(customuser_ptr_id=request.user.id)
-        store = product.store  # ProductモデルからMelimitStoreモデルのインスタンスを取得
-        sale = Sale.objects.get(product_id=product.id)  # Saleモデルのインスタンスを取得
-            # quantity = int(request.POST.get('quantity'))  # 送信された数量を取得
-        quantity = quantitys
-        amount = product.product_price * quantity
-        weight = product.weight * quantity 
-        order = OrderHistory(sale=sale, product=product, orderhistory_store=store,orderhistory_user=user, amount=amount, quantity=quantity,)
-        order.save()
+        sale = Sale.objects.get(product_id=pk)
+        if sale.sale_type == 'general_sales':
+            user = MelimitUser.objects.get(customuser_ptr_id=request.user.id)
+            store = product.store  # ProductモデルからMelimitStoreモデルのインスタンスを取得
+            sale = Sale.objects.get(product_id=product.id)  # Saleモデルのインスタンスを取得
+                # quantity = int(request.POST.get('quantity'))  # 送信された数量を取得
+            quantity = quantitys
+            amount = product.product_price * quantity
+            weight = product.weight * quantity 
+            order = OrderHistory(sale=sale, product=product, orderhistory_store=store,orderhistory_user=user, amount=amount, quantity=quantity,)
+            order.save()
+            # del cart[pk]
             #商品ごとにorder.saveを行う
             #リダイレクト先について聞く　必要な情報、タイミング、order_completeと02の違い
             # return redirect('user:order_complete')
+        elif sale.sale_type == 'melimit_sales':
+            user = MelimitUser.objects.get(customuser_ptr_id=request.user.id)
+            store = product.store
+            sale = Sale.objects.get(product_id=product.id)
+            thresholds = {}
+            #index out of range error発生
+            thresholds[sale.pk] = list(sale.threshold_set.all())
+            print(thresholds[sale.pk])
+            #閾値を出す 閾値が一つなのでループは一回
+            for i in thresholds[sale.pk]:
+                print(i.threshold)
+                check = ThresholdCheck(sale=sale,user=user,threshold=i,count=quantitys)
+                check.save()
+            buy_mel = {
+                'pk':pk,
+                'quantity': quantitys,
+            }
+            #共同だけを入れるセッションを作成する
+            buy_mels.append(buy_mel)
+    request.session['mel'] = buy_mels
+    print(request.session['mel'])
     #カートの商品のループが終わったらreturn
+    #セッションの共同に共同商品を入れる
     #カートの商品が入っているセッションを消す
     del request.session['cart']
     return render(request, 'user/order-completed.html')
@@ -679,3 +724,4 @@ def order_product(request):
 # テスト/完了画面
 def order_complete(request):
     return render(request, 'user/04_complete_test.html')
+

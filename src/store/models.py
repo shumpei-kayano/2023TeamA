@@ -1,7 +1,7 @@
 from django.db import models
 from accounts.models import MelimitStore
 from django.utils import timezone
-
+from accounts.models import *
 # Create your models here.
 
 # Djangoのchoicesフィールドでは、選択肢をタプルのリストとして定義します。
@@ -91,3 +91,27 @@ class Threshold(models.Model):
     # 割引率とsale_priceから割引額を計算する関数
     def discount_amount(self):
         return round(self.sale.sale_price * self.discount_rate / 100)
+    
+class ThresholdCheck(models.Model):
+    # 個数　カート　レジから セッション
+    count = models.IntegerField(verbose_name='個数')
+    #販売ID sale
+    sale = models.ForeignKey(Sale, on_delete=models.CASCADE)
+    #顧客ID 
+    user = models.ForeignKey(MelimitUser, on_delete=models.CASCADE)
+    #しきい値ID threshold
+    threshold = models.ForeignKey(Threshold, on_delete=models.CASCADE)
+    #金額 (sale_price - discount_amount) * 個数cnt
+    price = models.IntegerField(verbose_name='金額')
+    #注文日 
+    order_date = models.DateTimeField(default=timezone.now)
+    #閾値クリアフラグ クリアされたら切り替わり見えなくなる
+    is_threshold_clear = models.BooleanField(default=False)
+    def __str__(self):
+        return 
+        
+    # 計算　マイページに商品が行くたびに閾値をチェックする
+    def save(self, *args, **kwargs):
+        self.price = int((self.sale.sale_price - self.threshold.discount_amount()) * self.count)
+        self.sale.save()
+        super().save(*args, **kwargs)
