@@ -6,7 +6,12 @@
     &-content {
         text-align: center;
         font-size: 3rem;
+
+        @media (max-width: 768px) {
+            font-size: 2rem; // ここでサイズを調整します。適切なサイズに変更してください。
+        }
     }
+
     &-back {
         text-align: right;
     }
