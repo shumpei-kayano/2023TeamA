@@ -43,51 +43,25 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td class="order-number">20230130-01</td>
-            <td class="order-day">2023/02/05</td>
-            <td class="product-name">商品名が入ります</td>
-            <td class="quantity">100</td>
-            <td class="price">1,000円</td>
-            <td class="pay">有</td>
-            <td class="type">共同</td>
-          </tr>
-          <tr>
-            <td class="order-number">20230130-01</td>
-            <td class="order-day">2023/02/05</td>
-            <td class="product-name">商品名が入ります</td>
-            <td class="quantity">100</td>
-            <td class="price">1,000円</td>
-            <td class="pay">有</td>
-            <td class="type">共同</td>
-          </tr>
-          <tr>
-            <td class="order-number">20230130-01</td>
-            <td class="order-day">2023/02/05</td>
-            <td class="product-name">商品名が入ります</td>
-            <td class="quantity">100</td>
-            <td class="price">1,000円</td>
-            <td class="pay">有</td>
-            <td class="type">共同</td>
-          </tr>
-          <tr>
-            <td class="order-number">20230130-01</td>
-            <td class="order-day">2023/02/05</td>
-            <td class="product-name">商品名が入ります</td>
-            <td class="quantity">100</td>
-            <td class="price">1,000円</td>
-            <td class="pay">有</td>
-            <td class="type">共同</td>
-          </tr>
-          <tr>
-            <td class="order-number">20230130-01</td>
-            <td class="order-day">2023/02/05</td>
-            <td class="product-name">商品名が入ります</td>
-            <td class="quantity">100</td>
-            <td class="price">1,000円</td>
-            <td class="pay">有</td>
-            <td class="type">共同</td>
-          </tr>
+          {% for order_history in order_histories %}
+            <tr>
+              <td class="order-number">
+                <a href="{% url 'store:order-not-shipped-content' order_id=order_history.id %}">
+                  {{ order_history.id }}
+                </a>
+              </td>
+              <td class="order-day">{{ order_history.order_date }}</td>
+              <td class="product-name">{{ order_history.product.product_name }}</td>
+              <td class="quantity">{{ order_history.quantity }}</td>
+              <td class="price">{{ order_history.amount }}</td>
+              <td class="co2">{{ order_history.co2 }}</td>
+              <td class="type">{{ order_history.sale.get_sale_type_display }}</td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="7">発送済み注文履歴はありません。</td>
+            </tr>
+          {% endfor %}
         </tbody>
       </table>
     </div>

@@ -31,18 +31,52 @@ def index(request):
     # dataを全て表示する
     print(f"data : {data}")
     return render(request, 'store/index.html', {'data': data})
+
 # 発送済み注文履歴(modelは注文履歴モデル、発送済みフラグtrueのものを表示)
 def order_history_view(request):
-    return render(request, 'store/order-history.html')
+    # ログインしているユーザーの注文履歴を取得する
+    mixin = MelimitModelMixin()
+    mixin.request = request
+    store = mixin.get_melimitmodel_user()
+    order_histories = OrderHistory.objects.filter(orderhistory_store=store)
+    print(f"order_histories : {order_histories}")
+    # order_historiesからその"発送済みフラグ"がfalseのデータを全て取得する
+    order_histories = order_histories.filter(is_shipped=True)
+    return render(request, 'store/order-history.html', {'order_histories': order_histories,})
+
 # 発送済み注文履歴ページの中身
-def order_history_content_view(request):
-    return render(request, 'store/order-history-content.html')
+def order_history_content_view(request, order_id):
+    # URLから注文IDを取得し、そのIDに対応するOrderHistoryのインスタンスを取得する
+    order_history = get_object_or_404(OrderHistory, id=order_id)
+    return render(request, 'store/order-history-content.html', {'order_history': order_history,})
+
 # 未発送注文一覧ページ(modelは注文履歴モデル、発送済みフラグfalseのものを表示)
 def order_not_shipped_view(request):
-    return render(request, 'store/order-not-shipped.html')
+    # ログインしているユーザーの注文履歴を取得する
+    mixin = MelimitModelMixin()
+    mixin.request = request
+    store = mixin.get_melimitmodel_user()
+    order_histories = OrderHistory.objects.filter(orderhistory_store=store)
+    print(f"order_histories : {order_histories}")
+    # order_historiesからその"発送済みフラグ"がfalseのデータを全て取得する
+    order_histories = order_histories.filter(is_shipped=False)
+    return render(request, 'store/order-not-shipped.html', {'order_histories': order_histories,})
+
 # 未発送注文一覧ページの中身
-def order_not_shipped_content_view(request):
-    return render(request, 'store/order-not-shipped-content.html')
+def order_not_shipped_content_view(request, order_id):
+    # URLから注文IDを取得し、そのIDに対応するOrderHistoryのインスタンスを取得する
+    order_history = get_object_or_404(OrderHistory, id=order_id)
+    return render(request, 'store/order-not-shipped-content.html', {'order_history': order_history,})
+
+# 注文履歴を未発送から発送済みに変更する
+def order_not_shipped_to_shipped_view(request, order_id):
+    # URLから注文IDを取得し、そのIDに対応するOrderHistoryのインスタンスを取得する
+    order_history = get_object_or_404(OrderHistory, id=order_id)
+    # 注文履歴の発送済みフラグをtrueに変更する
+    order_history.is_shipped = True
+    order_history.save()
+    return redirect('store:order-not-shipped')
+
 # パスワード再設定用のメール送信ページ
 def pass_mail_view(request):
     return render(request, 'store/pass-mail.html')
