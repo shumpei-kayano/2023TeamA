@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'allauth.account', # 追加
     'allauth.socialaccount', # 追加
     'store',
+    'apscheduler', # 追加
 ]
 
 MIDDLEWARE = [
