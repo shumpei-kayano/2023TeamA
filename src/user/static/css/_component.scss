@@ -89,6 +89,7 @@
     &--img{
         width: 100%;
         object-fit: cover;
+        aspect-ratio: 2/1;
     }
     &--content{
         text-align: center;
