@@ -1,60 +1,61 @@
-.sdgs-head1 {
-    position: absolute;
-    z-index: 1;  /* z-indexを1に設定して他の要素より前面に表示 */
-    left: 36%;
-    top: 38%;
-    font-size: 2em;
-}
-
-.sdgs-head2 {
-    position: absolute;
-    z-index: 1;  /* z-indexを1に設定して他の要素より前面に表示 */
-    left: 36%;
-    top: 238%;
-    font-size: 2em;
+.section {
+    &-sdgs, &-sdgs2{
+        @media screen and (max-width: 1024px) {
+        background-size: 100%;
+        }
+    }
 }
 
 
-.image-container {
-    position: relative;
-    z-index: 0;  /* z-indexを0に設定して他の要素より背面に表示 */
+
+.sdgs {
+    &-head1,&-head2,&-text1,&-text2 {
+        text-align: center;
+    }
+    &-head1 {
+        font-size: 2.5rem;
+    }
+    &-head2 {
+        font-size: 2.5rem;
+    }
+    &-text1 {
+        font-size: 1.1rem;
+        letter-spacing: 0.6em;
+        line-height: 5.5;
+        width: 50%;
+        margin: 0 auto;
+
+        @media screen and (max-width: 1024px){
+            line-height: 2;
+            width: 90%;
+        }
+    }
+    &-text2 {
+        font-size: 1.1rem;
+        letter-spacing: 0.6em;
+        line-height: 5.8;
+        width: 50%;
+        margin: 0 auto;
+
+        @media screen and (max-width: 1024px){
+            line-height: 2;
+            width: 90%;
+        }
+    }
+    &-text3 {
+        position: relative; // 相対位置を指定
+        top: 3px; // 上に20px移動
+        text-align: right;
+
+        @media screen and (max-width: 1024px){
+            top: -20px;
+        }
+    }
 }
 
-.transparent-image {
-    opacity: 0.1;
-    width: 100%;
-}
-
-.overlay-text1 {
-    position: absolute;
-    top: 143%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #000;
-    font-size: 1.2rem;
-    letter-spacing: 1em;  /* 文字間隔を0.1emに設定 */
-    line-height: 4;  /* 行の高さを2に設定 */
-    margin-right: -4em;
-}
-
-.overlay-text2 {
-    position: absolute;
-    top: 354%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #000;
-    font-size: 1.2rem;
-    letter-spacing: 1em;  /* 文字間隔を0.1emに設定 */
-    line-height: 4;  /* 行の高さを2に設定 */
-}
-
-.overlay-text3 {
-    position: absolute;
-    top: 431%;
-    left: 84%;
-    transform: translate(-50%, -50%);
-    color: #000;
-    font-size: 1rem;
-    letter-spacing: 1em;  /* 文字間隔を0.1emに設定 */
-    line-height: 4;  /* 行の高さを2に設定 */
+.section {
+    &-sdgs, &-sdgs2{
+        background-color:rgba(255, 255, 255, 0.8);
+        background-blend-mode: lighten;
+    }
 }
