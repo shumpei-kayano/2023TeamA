@@ -2,6 +2,8 @@ from django.db import models
 from accounts.models import MelimitStore
 from django.utils import timezone
 from accounts.models import *
+from django.db.models import Sum
+
 # Create your models here.
 
 # Djangoのchoicesフィールドでは、選択肢をタプルのリストとして定義します。
@@ -107,11 +109,37 @@ class ThresholdCheck(models.Model):
     order_date = models.DateTimeField(default=timezone.now)
     #閾値クリアフラグ クリアされたら切り替わり見えなくなる
     is_threshold_clear = models.BooleanField(default=False)
-    def __str__(self):
-        return 
+    # def __str__(self):
+    #     return str(self.id)
         
     # 計算　マイページに商品が行くたびに閾値をチェックする
     def save(self, *args, **kwargs):
         self.price = int((self.sale.sale_price - self.threshold.discount_amount()) * self.count)
         self.sale.save()
         super().save(*args, **kwargs)
+        
+    #同じ販売IDの数を計算。閾値がクリアされたときの処理
+    def thresholds(self):
+        #表示期間切れの商品確認はスケジューラーで行う
+        #行数は人数
+        # th_ch = ThresholdCheck.objects.filter(sale=self.sale).count()
+        #辞書が返ってくる
+        #販売IDの数for文
+        #今のDB内の個数
+        sub_count = ThresholdCheck.objects.filter(sale=self.sale).aggregate(Sum('count'))['count__sum']
+        total_count = sub_count
+        print('total_count:',total_count)
+        print('閾値用個数：',self.threshold.threshold)
+        # return total_count
+        #閾値クリア時
+        if total_count > self.threshold.threshold:
+            print('total_count:',total_count)
+            print('閾値用個数：',self.threshold.threshold)
+            final_price = self.sale.sale_price - self.threshold.discount_amount()
+            #リロードで画面から消えるか要検証
+            th_ob = ThresholdCheck.objects.filter(sale=self.sale)
+            th_ob.update(is_threshold_clear=True)
+            return (final_price,th_ob)
+        else:
+            return (None,None)
+        # self.save()

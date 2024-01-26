@@ -340,6 +340,8 @@ def joint_products_detail(request,pk):
     #sale_infos[0]['store_name']は文字列なのでint型と比較できない
     #オブジェクトの中身、メソッド、属性の名前を出力できる
     # print(dir(sale.product.store))
+    #閾値の現在の個数を取得する
+    # check = ThresholdCheck(sale=sale,user=user,threshold=i,count=quantitys)
     return render(request, 'user/joint-products_detail.html', {'sale': sale,'sale_infos':sale_infos,'related_sales':related_sales})
 
 # カート
@@ -685,7 +687,7 @@ def order_product(request):
             sale = Sale.objects.get(product_id=product.id)  # Saleモデルのインスタンスを取得
                 # quantity = int(request.POST.get('quantity'))  # 送信された数量を取得
             quantity = quantitys
-            amount = product.product_price * quantity
+            amount = sale.sale_price * quantity
             weight = product.weight * quantity 
             order = OrderHistory(sale=sale, product=product, orderhistory_store=store,orderhistory_user=user, amount=amount, quantity=quantity,)
             order.save()
@@ -700,12 +702,39 @@ def order_product(request):
             thresholds = {}
             #index out of range error発生
             thresholds[sale.pk] = list(sale.threshold_set.all())
-            print(thresholds[sale.pk])
+            print('melの閾値:',thresholds[sale.pk])
             #閾値を出す 閾値が一つなのでループは一回
             for i in thresholds[sale.pk]:
-                print(i.threshold)
+                print('mel:',i.threshold)
                 check = ThresholdCheck(sale=sale,user=user,threshold=i,count=quantitys)
                 check.save()
+                # th,th_ob = check.thresholds()
+                # print(th)
+                print('check後',check.thresholds()[0])
+                if check.thresholds()[0] != None:
+                    print('閾値をクリアしました')
+                    #閾値をクリアした同じ商品の商品チェックのレコード数分forループ
+                    for i in check.thresholds()[1]:
+                        print('i:',i)
+                        amount = check.thresholds()[0]
+                        print(amount)
+                        #check.thresholdsからsale,product,store,user,amount,quantitysを取り出す
+                        sale = i.sale
+                        product = i.sale.product
+                        store =i.sale.store
+                        user = i.user
+                        # amount =
+                        quantitys = i.count
+                    #この状態だとクリアした商品が来るたびに注文履歴に行く、同じ履歴が何度も並ぶことになる
+                        # order = OrderHistory(sale=sale, product=product, orderhistory_store=store,orderhistory_user=user, amount=amount, quantity=quantitys,)
+                        # order.save()
+                        existing_order = OrderHistory.objects.filter(sale=sale, product=product, orderhistory_store=store, orderhistory_user=user, amount=amount, quantity=quantitys).first()
+                        # すでに存在するレコードがない場合のみ、新しいレコードを作成
+                        if not existing_order:
+                            order = OrderHistory(sale=sale, product=product, orderhistory_store=store, orderhistory_user=user, amount=amount, quantity=quantitys,)
+                            order.save()
+                else:
+                    print('Noneだよ')
             buy_mel = {
                 'pk':pk,
                 'quantity': quantitys,
@@ -713,7 +742,7 @@ def order_product(request):
             #共同だけを入れるセッションを作成する
             buy_mels.append(buy_mel)
     request.session['mel'] = buy_mels
-    print(request.session['mel'])
+    print('melのセッション',request.session['mel'])
     #カートの商品のループが終わったらreturn
     #セッションの共同に共同商品を入れる
     #カートの商品が入っているセッションを消す
