@@ -1204,16 +1204,33 @@ input:checked + .tab_class + .content_class {
   text-align: center;
   font-size: 1.5rem;
 }
+@media screen and (max-width: 768px) {
+  .notice-head {
+    justify-content: center;
+  }
+}
 .notice-top {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 11rem;
   margin-bottom: 5rem;
 }
+@media screen and (max-width: 768px) {
+  .notice-top {
+    justify-content: center;
+  }
+}
 .notice-top-image {
-  width: 500px;
-  height: 312px;
-  border: 1px solid #000;
+  width: 30%;
+  height: auto;
+}
+@media screen and (max-width: 768px) {
+  .notice-top-image {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 }
 .notice-top-text {
   display: flex;
@@ -1221,6 +1238,12 @@ input:checked + .tab_class + .content_class {
   margin-left: -2rem;
   text-align: center;
   margin-bottom: 10rem;
+}
+@media (max-width: 768px) {
+  .notice-top-text {
+    margin-top: -10rem;
+    margin-left: 0em;
+  }
 }
 
 .order-head {
