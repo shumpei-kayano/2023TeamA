@@ -14,6 +14,8 @@ from django.http import HttpResponseBadRequest
 from django.db.models import Sum
 from django.db.models.functions import TruncMonth
 from datetime import datetime
+from django.db.models import Sum
+from django.utils import timezone
 
 # Create your views here.
 def index(request):
@@ -27,7 +29,25 @@ def index(request):
     # store = MelimitStore.objects.get(user=user.customuser_ptr_id)
     # 同じ店舗のOrderHistoryを取得し、月ごとにCO2とamountを集計する
     data = OrderHistory.objects.filter(orderhistory_store_id=user.customuser_ptr_id).annotate(month=TruncMonth('order_date')).values('month').annotate(total_co2=Sum('co2'), total_amount=Sum('amount')).order_by('month')
+    # 現在の年、月、日を取得
+    current_year = timezone.now().year
+    current_month = timezone.now().month
+    current_day = timezone.now().day
+
+    # 年、月、日ごとの合計を取得
+    yearly_totals = OrderHistory.objects.filter(orderhistory_store_id=user.customuser_ptr_id, order_date__year=current_year).aggregate(Sum('amount'))
+    monthly_totals = OrderHistory.objects.filter(orderhistory_store_id=user.customuser_ptr_id, order_date__year=current_year, order_date__month=current_month).aggregate(Sum('amount'))
+    daily_totals = OrderHistory.objects.filter(orderhistory_store_id=user.customuser_ptr_id, order_date__year=current_year, order_date__month=current_month, order_date__day=current_day).aggregate(Sum('amount'))
+
+    # データをテンプレートに渡す
+    context = {
+        'yearly_totals': yearly_totals,
+        'monthly_totals': monthly_totals,
+        'daily_totals': daily_totals,
+    }
     print('インデックス')
+    # contextの中身を表示する
+    print(f"context : {context}")
     # dataを全て表示する
     print(f"data : {data}")
     return render(request, 'store/index.html', {'data': data})

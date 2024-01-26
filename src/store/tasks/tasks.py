@@ -7,5 +7,5 @@ def periodic_execution():# 任意の関数名
 
 def start():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(periodic_execution, 'cron', minute="*")
+    # scheduler.add_job(periodic_execution, 'cron', minute="*")
     scheduler.start()
