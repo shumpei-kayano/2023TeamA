@@ -16,6 +16,7 @@
     {% comment %} <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"> {% endcomment %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/style.css' %}">
+    <link rel="icon" href="{% static 'assets/img/logo.ico' %}">
     {% block js %}{% endblock js %}
     {% block css %}{% endblock css %}
 </head>
@@ -83,4 +84,14 @@
     }
 </script>
 </body>
+<script>
+    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+        someAsyncFunction(request).then(response => {
+            sendResponse(response);
+        });
+    
+        // 非同期応答を示すためにtrueを返す
+        return true;
+    });
+</script>
 </html>

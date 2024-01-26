@@ -1,9 +1,17 @@
 .detail1 {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 5rem;
     padding: 1rem 0;
+    @media screen and (max-width: 768px) {
+        gap: 1rem;
+    }
     &__left {
         width: 45%;
+        @media screen and (max-width: 768px){
+            width: 100%;
+        }
         #large-image-container img {
             aspect-ratio: 4/3;
             width: 100%;
@@ -25,26 +33,55 @@
     }
     &__right {
         width: 45%;
+        @media screen and (max-width: 768px){
+            width: 100%;
+        }
         &--upper{
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
+            @media screen and (max-width: 768px){
+                justify-content: center;
+            }
+            &1,&2 {
+                @media screen and (max-width: 768px){
+                    width: 100%;
+                }
+            }
         }
         &--center{
             padding-bottom: 1rem;
             border-bottom: 1px solid $melimit_gray;
+            @media screen and (max-width: 768px){
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
             .cnt{
                 font-weight: bold;
                 padding: 0.5rem;
                 }
             button{
-                margin: 0 0.5rem;
+                padding: 0.5rem 1rem;
+                margin: 0.5rem 0;
+                @media screen and (max-width: 768px){
+                        width: 100%;
+                        text-align: center;
+                    }
                 }
             }
         &--lower{
             display: flex;
             justify-content: space-between;
-        }
+            p {
+                @media screen and (max-width: 768px){
+                    width: 100%;
+                }
+            }
+            }
+            &2{
+                width: 50%;
+            }
     }
     &__title {
         margin-top: 0;
@@ -56,7 +93,6 @@
         font-weight: bold;
         text-align: center;
         &--text {
-            margin: 0;
             color: $melimit_white;
             background-color: $melimit_red;
             font-weight: bold;
@@ -64,9 +100,10 @@
         }
     }
     &__price {
-        color: $melimit_gray;
+        color: $melimit_white;
         text-decoration: line-through;
         text-align: center;
+        background-color: $main_color;
     }
     &__genre{
         padding: 0.5rem 2rem;
@@ -90,6 +127,10 @@
         border-radius: 0.3125rem;
     }
     &__text{
+        @media screen and (max-width: 768px){
+            width: 100%;
+            text-align: center;
+        }
         &-bd {
             font-weight: bold;
         }

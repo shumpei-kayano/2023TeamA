@@ -1414,61 +1414,6 @@ input:checked + .tab_class + .content_class {
   background-blend-mode: lighten;
 }
 
-.overlay-text4 {
-  position: absolute;
-  top: 34%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #000;
-  font-size: 1rem;
-  letter-spacing: 1em; /* 文字間隔を0.1emに設定 */
-  line-height: 4; /* 行の高さを2に設定 */
-}
-
-.overlay-text5 {
-  position: absolute;
-  top: 53%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #000;
-  font-size: 1rem;
-  letter-spacing: 1em; /* 文字間隔を0.1emに設定 */
-  line-height: 4; /* 行の高さを2に設定 */
-}
-
-.overlay-text6 {
-  position: absolute;
-  top: 70%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #000;
-  font-size: 1rem;
-  letter-spacing: 1em; /* 文字間隔を0.1emに設定 */
-  line-height: 4; /* 行の高さを2に設定 */
-}
-
-.overlay-text7 {
-  position: absolute;
-  top: 90%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #000;
-  font-size: 1rem;
-  letter-spacing: 1em; /* 文字間隔を0.1emに設定 */
-  line-height: 4; /* 行の高さを2に設定 */
-}
-
-.overlay-text8 {
-  position: absolute;
-  top: 99%;
-  left: 82%;
-  transform: translate(-50%, -50%);
-  color: #000;
-  font-size: 0.7rem;
-  letter-spacing: 1em; /* 文字間隔を0.1emに設定 */
-  line-height: 4; /* 行の高さを2に設定 */
-}
-
 .loading {
   position: fixed;
   top: 0;
@@ -1622,11 +1567,23 @@ input:checked + .tab_class + .content_class {
 
 .detail1 {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 5rem;
   padding: 1rem 0;
 }
+@media screen and (max-width: 768px) {
+  .detail1 {
+    gap: 1rem;
+  }
+}
 .detail1__left {
   width: 45%;
+}
+@media screen and (max-width: 768px) {
+  .detail1__left {
+    width: 100%;
+  }
 }
 .detail1__left #large-image-container img {
   aspect-ratio: 4/3;
@@ -1649,25 +1606,62 @@ input:checked + .tab_class + .content_class {
 .detail1__right {
   width: 45%;
 }
+@media screen and (max-width: 768px) {
+  .detail1__right {
+    width: 100%;
+  }
+}
 .detail1__right--upper {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 }
+@media screen and (max-width: 768px) {
+  .detail1__right--upper {
+    justify-content: center;
+  }
+}
+@media screen and (max-width: 768px) {
+  .detail1__right--upper1, .detail1__right--upper2 {
+    width: 100%;
+  }
+}
 .detail1__right--center {
   padding-bottom: 1rem;
   border-bottom: 1px solid #EBEBEB;
+}
+@media screen and (max-width: 768px) {
+  .detail1__right--center {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
 .detail1__right--center .cnt {
   font-weight: bold;
   padding: 0.5rem;
 }
 .detail1__right--center button {
-  margin: 0 0.5rem;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 0;
+}
+@media screen and (max-width: 768px) {
+  .detail1__right--center button {
+    width: 100%;
+    text-align: center;
+  }
 }
 .detail1__right--lower {
   display: flex;
   justify-content: space-between;
+}
+@media screen and (max-width: 768px) {
+  .detail1__right--lower p {
+    width: 100%;
+  }
+}
+.detail1__right2 {
+  width: 50%;
 }
 .detail1__title {
   margin-top: 0;
@@ -1680,16 +1674,16 @@ input:checked + .tab_class + .content_class {
   text-align: center;
 }
 .detail1__discount--text {
-  margin: 0;
   color: #FFFFFF;
   background-color: #F75050;
   font-weight: bold;
   text-align: center;
 }
 .detail1__price {
-  color: #EBEBEB;
+  color: #FFFFFF;
   text-decoration: line-through;
   text-align: center;
+  background-color: #D4B985;
 }
 .detail1__genre {
   padding: 0.5rem 2rem;
@@ -1711,6 +1705,12 @@ input:checked + .tab_class + .content_class {
   color: #FFFFFF;
   background-color: #F75050;
   border-radius: 0.3125rem;
+}
+@media screen and (max-width: 768px) {
+  .detail1__text {
+    width: 100%;
+    text-align: center;
+  }
 }
 .detail1__text-bd {
   font-weight: bold;

@@ -16,15 +16,10 @@
     <div class="section1__right">
         <div class="d-demo">
             <div class="d-demo__wrap">
-                {% with ''|center:2 as range %}
+                {% with ''|center:12 as range %}
                 {% for _ in range %}
                 <ul class="d-demo__list d-demo__list--left">
                     <li class="d-demo__item"><img src="{% static 'assets/img/メリ光男.png' %}" alt></li>
-                    <li class="d-demo__item"><img src="{% static 'assets/img/メリ光子.png' %}" alt></li>
-                    <li class="d-demo__item"><img src="{% static 'assets/img/メリ光男.png' %}" alt></li>
-                    <li class="d-demo__item"><img src="{% static 'assets/img/メリ光子.png' %}" alt></li>
-                    <li class="d-demo__item"><img src="{% static 'assets/img/メリ光男.png' %}" alt></li>
-                    <li class="d-demo__item"><img src="{% static 'assets/img/メリ光子.png' %}" alt></li>
                  </ul>
                 {% endfor %}
                 {% endwith %}
