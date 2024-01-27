@@ -67,8 +67,34 @@
             // 現在の年を取得
             var currentYear = new Date().getFullYear();
 
+            // 年、月、日ごとのデータ
+            var amount_data_year = {{ context_co2_amount.yearly_data_amount_list|safe }}; // 年単位のデータ
+            var amount_data_month = {{ context_co2_amount.monthly_data_amount_list|safe }}; // 月単位のデータ
+            var amount_data_day = {{ context_co2_amount.daily_data_amount_list|safe }}; // 日単位のデータ
+            var co2_data_year = {{ context_co2_amount.yearly_data_co2_list|safe }}; // 年単位のデータ
+            var co2_data_month = {{ context_co2_amount.monthly_data_co2_list|safe }}; // 月単位のデータ
+            var co2_data_day = {{ context_co2_amount.daily_data_co2_list|safe }}; // 日単位のデータ
+
+            // 現在のチャートタイプに基づいてデータを選択
+            var data_pro;
+            if (currentChartType_pro === 'year') {
+                data_pro = amount_data_year;
+            } else if (currentChartType_pro === 'month') {
+                data_pro = amount_data_month;
+            } else {
+                data_pro = amount_data_day;
+            }
+            var data_co2;
+            if (currentChartType_co2 === 'year') {
+                data_co2 = co2_data_year;
+            } else if (currentChartType_co2 === 'month') {
+                data_co2 = co2_data_month;
+            } else {
+                data_co2 = co2_data_day;
+            }
+
             // 店舗売上金額のデータ
-            var data_pro = [33, 19, 48, 25, 26, 34, 14, 35, 41, 26, 45, 35, 26, 34, 14, 35, 41]; // 仮のデータ(DBと紐づける)
+            {% comment %} var data_pro = [33, 19, 48, 25, 26, 34, 14, 35, 41, 26, 45, 35, 26, 34, 14, 35, 41]; // 仮のデータ(DBと紐づける) {% endcomment %}
             var width_pro = data_pro.length * xAxisLabelMinWidth;
             {% comment %} document.getElementById('chart_pro').style.width = width_pro + "px"; {% endcomment %}
             document.getElementById('chart_pro').style.width = "600px";
@@ -120,7 +146,7 @@
             });
 
             // CO2削減量のデータ
-            var data_co2 = [10, 5, 20, 15, 25, 12, 18, 8, 30, 22, 16, 28]; // 仮のデータ(DBと紐づける)
+            {% comment %} var data_co2 = [10, 5, 20, 15, 25, 12, 18, 8, 30, 22, 16, 28]; // 仮のデータ(DBと紐づける) {% endcomment %}
             var width_co2 = data_co2.length * xAxisLabelMinWidth;
             {% comment %} document.getElementById('chart_co2').style.width = width_co2 + "px"; {% endcomment %}
             document.getElementById('chart_co2').style.width = "600px";
@@ -172,12 +198,35 @@
             });
 
             // 切り替える関数
-            function toggleChart(type, chart) {
+            {% comment %} function toggleChart(type, chart) {
                 if (chart === 'pro') {
                     currentChartType_pro = type;
                     updateChart(myChart_pro, data_pro, type);
                 } else if (chart === 'co2') {
                     currentChartType_co2 = type;
+                    updateChart(myChart_co2, data_co2, type);
+                }
+            } {% endcomment %}
+            function toggleChart(type, chart) {
+                if (chart === 'pro') {
+                    currentChartType_pro = type;
+                    if (currentChartType_pro === 'year') {
+                        data_pro = amount_data_year;
+                    } else if (currentChartType_pro === 'month') {
+                        data_pro = amount_data_month;
+                    } else {
+                        data_pro = amount_data_day;
+                    }
+                    updateChart(myChart_pro, data_pro, type);
+                } else if (chart === 'co2') {
+                    currentChartType_co2 = type;
+                    if (currentChartType_co2 === 'year') {
+                        data_co2 = co2_data_year;
+                    } else if (currentChartType_co2 === 'month') {
+                        data_co2 = co2_data_month;
+                    } else {
+                        data_co2 = co2_data_day;
+                    }
                     updateChart(myChart_co2, data_co2, type);
                 }
             }

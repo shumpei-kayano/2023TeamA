@@ -36,7 +36,7 @@ urlpatterns = [
     # ログイン処理
     path('store_login/', views.store_login_view, name='store_login'),
     # ログイン後のベースページ
-    path('store_base/', views.store_base_view, name='store_base'),
+    # path('store_base/', views.store_base_view, name='store_base'),
     # パスワード再設定用のメール送信ページ
     path('pass-mail', views.pass_mail_view, name='pass_mail'),
     # 店舗情報設定ページ
