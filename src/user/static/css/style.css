@@ -1288,18 +1288,44 @@ input:checked + .tab_class + .content_class {
   margin-top: -3rem;
 }
 
+.signup-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+@media screen and (max-width: 768px) {
+  .signup-head {
+    font-size: 0.75rem;
+  }
+}
 .signup-bottom {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+}
+@media screen and (max-width: 768px) {
+  .signup-bottom {
+    justify-content: center;
+  }
 }
 .signup-option {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  margin-bottom: 1rem;
+}
+@media screen and (max-width: 768px) {
+  .signup-option {
+    margin-bottom: 2rem;
+  }
 }
 .signup-option .option-content {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 10px;
 }
 .signup-option .option-content p {
@@ -1307,15 +1333,15 @@ input:checked + .tab_class + .content_class {
   font-weight: bold;
   font-size: 1.5rem;
 }
-.signup-option .img-left {
-  margin-top: 1rem;
+@media screen and (max-width: 768px) {
+  .signup-option .option-content p {
+    margin: 0;
+  }
 }
-.signup-option .left {
-  margin-top: 0.8rem;
-}
-.signup-option img {
-  width: 200px;
+.signup-option .option-content img {
   height: auto;
+  width: 10rem;
+  aspect-ratio: 5/4;
 }
 .signup-detail {
   display: flex;
