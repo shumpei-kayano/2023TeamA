@@ -1,4 +1,4 @@
-{% extends "store/base.html" %} 
+{% extends "store/base.html" %}
 
 {% load static %}
 
@@ -14,7 +14,7 @@
     </div>
 
     <div class="title-product-manage">
-        <div class="product-manage-text">共同購入商品の新規登録（すべての項目を入力する必要があります）</div>
+        <div class="product-manage-text" style="background-color: #d485ba80; border-radius: 3px;">共同購入商品の新規登録(※すべての項目を入力する必要があります)</div>
         <img class="fibermanualrecordfilled-icon" alt="" src="{% static 'store/img/maru.png' %}" />
     </div>
 
@@ -33,7 +33,6 @@
             </div>
             <div class="product-name-box-input">
               {{ product_form.product_name }}
-              {% comment %} <input type="text" class="input-active" placeholder="商品名を入力してください" required/> {% endcomment %}
             </div>
           </div>
 
@@ -44,17 +43,6 @@
             </div>
             <div class="category-box-input">
               {{ product_form.product_category }}
-              {% comment %} <select class="input-active">
-                <option value="" disabled selected>カテゴリを選んでください</option>
-                <option value="beef">肉</option>
-                <option value="vege">野菜</option>
-                <option value="fruit">果物</option>
-                <option value="fish">魚</option>
-                <option value="shellfish">甲殻類</option>
-                <option value="desert">菓子</option>
-                <option value="carbo">米・パン・麺</option>
-                <option value="others">その他</option>
-              </select> {% endcomment %}
             </div>
           </div>
 
@@ -65,7 +53,10 @@
             </div>
             <div class="price-box-input">
               {{ sale_form.sale_price }}
-              {% comment %} <input type="number" class="input-active" placeholder="販売価格を入力してください（※半角数字）" required/> {% endcomment %}
+              {% if sale_form.sale_price.errors %}
+                {{ sale_form.sale_price.errors }}
+              {% endif %}
+              <div id="priceValidationError"></div>
             </div>
           </div>
 
@@ -76,7 +67,6 @@
             </div>
             <div class="listprice-box-input">
               {{ product_form.product_price }}
-              {% comment %} <input type="number" class="input-active" placeholder="定価を入力してください（※半角数字）" required/> {% endcomment %}
             </div>
           </div>
 
@@ -87,7 +77,6 @@
             </div>
             <div class="quantity-box-input">
               {{ threshold_form.threshold }}
-              {% comment %} <input type="number" class="input-active" placeholder="共同購入達成数量を入力してください（※半角数字）" required/> {% endcomment %}
             </div>
           </div>
 
@@ -98,7 +87,6 @@
             </div>
             <div class="discount-box-input">
               {{ threshold_form.discount_rate }}
-              {% comment %} <input type="number" class="input-active" placeholder="共同購入達成時の値引率を入力してください（※半角数字）" required/> {% endcomment %}
             </div>
           </div>
 
@@ -110,8 +98,8 @@
             <div class="period-box-input">
               <p>開始：</p>{{ sale_form.sale_start }}
               <p>～終了：</p>{{ sale_form.sale_end }}
-              {% comment %} <p>開始：</p><input type="datetime-local" id="startDateTime" class="input-active" placeholder="開始日時を入力してください" required/>
-              <p>～終了：</p><input type="datetime-local" id="endDateTime" class="input-active" placeholder="終了日時を入力してください" required/> {% endcomment %}
+              <div id="startValidationError"></div>
+              <div id="endValidationError"></div>
             </div>
           </div>
 
@@ -122,7 +110,6 @@
             </div>
             <div class="stock-box-input">
               {{ sale_form.stock }}
-              {% comment %} <input type="number" class="input-active" placeholder="在庫数を入力してください（※半角数字）" required/> {% endcomment %}
             </div>
           </div>
 
@@ -143,7 +130,6 @@
             </div>
             <div class="weight-box-input">
               {{ product_form.weight }}
-              {% comment %} <input type="number" class="input-active" placeholder="重量をg（グラム）で入力してください（※半角数字）" required/> {% endcomment %}
             </div>
           </div>
 
@@ -154,7 +140,7 @@
             </div>
             <div class="expiration-box-input">
               {{ sale_form.expiration_date }}
-              {% comment %} <input type="date" class="input-active" placeholder="賞味期限を入力してください" required/> {% endcomment %}
+              <div id="expirationValidationError"></div>
             </div>
           </div>
 
@@ -164,17 +150,8 @@
               <div class="title-text">画像</div>
             </div>
             <div class="image-box-input" style="height: 200px;">
-              
               {{ product_form.product_image }}
-              {% comment %} <input
-                type="file"
-                id="example"
-                class="input-active"
-                accept="image/*"
-                placeholder="画像を選択してください"
-                multiple
-                required /> {% endcomment %}
-                <div id="preview"></div>
+              <div id="preview"></div>
             </div>
           </div>
 
@@ -184,11 +161,7 @@
               <div class="title-text">商品説明</div>
             </div>
             <div class="description-box-input" style="height: 200px;">
-              {% comment %} <textarea
-                class="input-active" placeholder="商品説明を入力してください" required></textarea> {% endcomment %}
               {{ sale_form.description }}
-              {% comment %} <textarea
-                class="input-active" placeholder="商品説明を入力してください" required></textarea> {% endcomment %}
             </div>
           </div>
 
@@ -208,7 +181,7 @@
             </div>
             <div class="modal-button">
               <button class="modal-back" type="button">修正する</button>
-              <button class="modal-group" type"submit">この内容で新規登録する</button>
+              <button class="modal-group" type="submit">この内容で新規登録する</button>
             </div>
           </div>
         </div>
@@ -242,6 +215,13 @@
     const fileInput = document.getElementById('example');
     const handleFileSelect = () => {
       const files = fileInput.files;
+      const preview = document.getElementById('preview');
+
+      // クリア前にプレビューを削除
+      while (preview.firstChild) {
+        preview.removeChild(preview.firstChild);
+      }
+
       for (let i = 0; i < files.length; i++) {
         previewFile(files[i]);
       }
@@ -273,23 +253,119 @@
       submitButton.addEventListener('click', function (event) {
           event.preventDefault(); // フォームのデフォルトの動作を防止
   
+          // 価格のエラーメッセージをクリア
+          document.getElementById('priceValidationError').textContent = '';
+
           // 入力値を取得
-          const productName = document.querySelector('.product-name-box-input input').value;
-          const category = document.querySelector('.category-box-input select').value;
-          const price = document.querySelector('.price-box-input input').value + '円';
-          const listprice = document.querySelector('.listprice-box-input input').value + '円';
-          const quantity = document.querySelector('.quantity-box-input input').value + '個';
-          const discount = document.querySelector('.discount-box-input input').value + '%';
-          // 開始と終了の入力値を取得
-          const startDateTime = document.getElementById('startDateTime').value;
-          const endDateTime = document.getElementById('endDateTime').value;
-          const stock = document.querySelector('.stock-box-input input').value + '個';
-          const shipping = document.querySelector('.shipping-box-input input').value + '円';
-          const weight = document.querySelector('.weight-box-input input').value + 'g';
-          const expiration = document.querySelector('.expiration-box-input input').value;
-          const image = document.querySelector('.image-box-input input').value;
-          const description = document.querySelector('.description-box-input textarea').value;
-  
+          const productName = document.querySelector('.product-name-box-input input').value.trim();
+          const category = document.querySelector('.category-box-input select').value.trim();
+          const price = document.querySelector('.price-box-input input').value.trim();
+          const listprice = document.querySelector('.listprice-box-input input').value.trim();
+          const quantity = document.querySelector('.quantity-box-input input').value.trim();
+          const discount = document.querySelector('.discount-box-input input').value.trim();
+          const startDateTime = document.getElementById('startDateTime').value.trim();
+          const endDateTime = document.getElementById('endDateTime').value.trim();
+          const stock = document.querySelector('.stock-box-input input').value.trim();
+          const shipping = document.querySelector('.shipping-box-input input').value.trim();
+          const weight = document.querySelector('.weight-box-input input').value.trim();
+          const expiration = document.querySelector('.expiration-box-input input').value.trim();
+          const image = document.querySelector('.image-box-input input').value.trim();
+          const description = document.querySelector('.description-box-input textarea').value.trim();
+
+          // 未入力項目の確認
+          const emptyFields = [];
+
+          if (productName === '') {
+            emptyFields.push('商品名');
+          }
+          if (category === '') {
+            emptyFields.push('カテゴリ');
+          }
+          if (price === '') {
+            emptyFields.push('販売価格');
+          }
+          if (listprice === '') {
+            emptyFields.push('定価');
+          }
+          if (quantity === '') {
+            emptyFields.push('共同購入達成数量');
+          }
+          if (discount === '') {
+            emptyFields.push('共同購入達成時の値引率');
+          }
+          if (startDateTime === '' || endDateTime === '') {
+            emptyFields.push('表示期間');
+          }
+          if (stock === '') {
+            emptyFields.push('在庫数');
+          }
+          if (shipping === '') {
+            emptyFields.push('送料');
+          }
+          if (weight === '') {
+            emptyFields.push('重量');
+          }
+          if (expiration === '') {
+            emptyFields.push('賞味期限');
+          }
+          if (image === '') {
+            emptyFields.push('画像');
+          }
+          if (description === '') {
+            emptyFields.push('商品説明');
+          }
+
+          // 未入力項目がある場合、アラートを表示
+          if (emptyFields.length > 0) {
+            alert(`以下の項目が未入力です：${emptyFields.join(', ')}`);
+            return;
+          }
+
+          // 「販売価格」が「定価」よりも低いかの確認
+          const numericPrice = parseFloat(price);
+          const numericListPrice = parseFloat(listprice);
+          if (isNaN(numericPrice) || isNaN(numericListPrice) || numericPrice >= numericListPrice) {
+            alert('販売価格は定価よりも低く設定してください。');
+            return;
+          }
+
+          // 数値を入力する欄に小数点以下を受け付けない
+          if (price.indexOf('.') !== -1 || listprice.indexOf('.') !== -1 || quantity.indexOf('.') !== -1 || discount.indexOf('.') !== -1 || stock.indexOf('.') !== -1 || shipping.indexOf('.') !== -1 || weight.indexOf('.') !== -1) {
+            alert('数値を入力する欄に小数点以下は設定できません。');
+            return;
+          }
+
+          // 数値を入力する欄にマイナスを受け付けない
+          if (price.indexOf('-') !== -1 || listprice.indexOf('-') !== -1 || quantity.indexOf('-') !== -1 || discount.indexOf('-') !== -1 || stock.indexOf('-') !== -1 || shipping.indexOf('-') !== -1 || weight.indexOf('-') !== -1) {
+            alert('数値を入力する欄にマイナス(-)は設定できません。');
+            return;
+          }
+
+          // 表示期間の「開始」と「終了」が適切でない場合、アラートを表示
+          const startInput = document.getElementById('startDateTime');
+          const endInput = document.getElementById('endDateTime');
+
+          const startDate = new Date(startInput.value);
+          const endDate = new Date(endInput.value);
+
+          if (startDate < new Date() || endDate < new Date()) {
+            alert('表示期間は現在日時よりも過去の日時に設定できません。');
+            return;
+          }
+
+          if (endDate <= startDate) {
+            alert('表示期間の終了日時は開始日時よりも後の日時に設定してください。');
+            return;
+          }
+
+          // 賞味期限が現在日時よりも過去の場合、アラートを表示
+          const expirationInput = document.querySelector('.expiration-box-input input');
+          const expirationDate = new Date(expirationInput.value);
+          if (expirationDate < new Date()) {
+            alert('賞味期限は現在日時よりも過去の日時に設定できません。');
+            return;
+          }
+
           // 確認用の内容を作成
           const confirmationHTML = `
           <div class="con-product-name-box">
@@ -313,7 +389,7 @@
               <div class="con-title-text">販売価格</div>
             </div>
             <div class="con-product-name-box-input">
-              <p>${price}</p>
+              <p>${price} 円</p>
             </div>
           </div>
           <div class="con-category-box">
@@ -321,7 +397,7 @@
               <div class="con-title-text">定価</div>
             </div>
             <div class="con-product-name-box-input">
-              <p>${listprice}</p>
+              <p>${listprice} 円</p>
             </div>
           </div>
           <div class="con-category-box">
@@ -329,7 +405,7 @@
               <div class="con-title-text">共同購入達成数量</div>
             </div>
             <div class="con-product-name-box-input">
-              <p>${quantity}</p>
+              <p>${quantity} 個</p>
             </div>
           </div>
           <div class="con-category-box">
@@ -337,7 +413,7 @@
               <div class="con-title-text">共同購入達成時の値引率</div>
             </div>
             <div class="con-product-name-box-input">
-              <p>${discount}</p>
+              <p>${discount} ％</p>
             </div>
           </div>
           <div class="con-category-box">
@@ -345,7 +421,7 @@
               <div class="con-title-text">表示期間</div>
             </div>
             <div class="con-product-name-box-input">
-              <p>開始：${startDateTime}</p>
+              <p>開始：${startDateTime} </p>
               <p>～終了：${endDateTime}</p>
             </div>
           </div>
@@ -354,7 +430,7 @@
               <div class="con-title-text">在庫数</div>
             </div>
             <div class="con-product-name-box-input">
-              <p>${stock}</p>
+              <p>${stock} 個</p>
             </div>
           </div>
           <div class="con-category-box">
@@ -362,7 +438,7 @@
               <div class="con-title-text">送料</div>
             </div>
             <div class="con-product-name-box-input">
-              <p>${shipping}</p>
+              <p>${shipping} 円</p>
             </div>
           </div>
           <div class="con-category-box">
@@ -370,7 +446,7 @@
               <div class="con-title-text">重量</div>
             </div>
             <div class="con-product-name-box-input">
-              <p>${weight}</p>
+              <p>${weight} g(グラム)</p>
             </div>
           </div>
           <div class="con-category-box">
