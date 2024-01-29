@@ -13,7 +13,7 @@
     background-color: var(--color-whitesmoke-100);
     border-bottom: 1px solid var(--color-gainsboro-100);
     box-sizing: border-box;
-    width: 992px;
+    width: 990px;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
@@ -129,7 +129,7 @@
     position: absolute;
     top: 100px;
     right: 10%;
-    left: 63.2%;
+    left: 70%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -300,7 +300,8 @@ a {
     margin-top: 3px;
   }
   tbody tr {
-    border-bottom: 1px solid var(--color-gainsboro-100);
+    // border-bottom: 1px solid var(--color-gainsboro-100);
+    border-bottom: #aaa 1px solid;
     width: 992px;
   }
   tbody td {

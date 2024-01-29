@@ -13,7 +13,7 @@
         <div class="order-manage">発送済み注文履歴</div>
       </div>
 
-      <div class="search-group">
+      {% comment %} <div class="search-group">
         <div class="search-box">
           <div class="input">
             <div class="placeholder">検索キーワード</div>
@@ -22,6 +22,12 @@
         </div>
         <div class="button-search">
           <div class="search">絞り込み</div>
+        </div>
+      </div> {% endcomment %}
+
+      <div class="search-group">
+        <div class="search-box">
+          <input type="search" id="searchInput" oninput="filterTable()" placeholder="検索 (全角スペースで区切ると複数検索できます)" div class="input">
         </div>
       </div>
 
@@ -42,7 +48,7 @@
             <td class="head-type">販売種別</td>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="tableBody">
           {% for order_history in order_histories %}
             <tr>
               <td class="order-number">
@@ -65,4 +71,63 @@
         </tbody>
       </table>
     </div>
+
+    <script>
+      // 行をクリックしたら詳細ページに遷移する
+      document.addEventListener("DOMContentLoaded", function () {
+          var rows = document.querySelectorAll(".clickable-row");
+          rows.forEach(function (row) {
+              row.addEventListener("click", function () {
+                  var href = row.getAttribute("data-href");
+                  if (href) {
+                      window.location.href = href;
+                  }
+              });
+          });
+      });
+  
+      // 検索機能
+      function filterTable() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("tableBody");
+        tr = table.getElementsByTagName("tr");
+  
+        var keywords = filter.split("　"); // 全角スペースでキーワードを分割
+  
+        for (i = 0; i < tr.length; i++) {
+            var display = "none";
+            var keywordMatch = true; // すべてのキーワードに一致するかを示すフラグ
+  
+            for (var k = 0; k < keywords.length; k++) {
+                keywordMatch = false;
+  
+                for (var j = 0; j < tr[i].cells.length; j++) {
+                    td = tr[i].cells[j];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+  
+                        // 各セルでキーワードが見つかったらフラグを立てる
+                        if (txtValue.toUpperCase().indexOf(keywords[k]) > -1) {
+                            keywordMatch = true;
+                            break;
+                        }
+                    }
+                }
+  
+                // 一つでもキーワードに一致しない場合はその行を非表示にする
+                if (!keywordMatch) {
+                    break;
+                }
+            }
+  
+            if (keywordMatch) {
+                display = "";
+            }
+            
+            tr[i].style.display = display;
+        }
+    }
+  </script>
 {% endblock %}
