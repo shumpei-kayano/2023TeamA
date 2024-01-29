@@ -760,3 +760,5 @@ def order_product(request):
 def order_complete(request):
     return render(request, 'user/04_complete_test.html')
 
+def error_view(request):
+    return render(request, 'user/04_complete_test.html')
