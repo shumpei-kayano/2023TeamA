@@ -624,22 +624,6 @@ def notice(request):
 def sdgs(request):
     return render(request, 'user/sdgs.html')
 
-#ご利用ガイド（詳細）
-def guide_detail(request):
-    return render(request, 'user/guide-detail.html')
-
-#ご利用ガイド
-def guide(request):
-    return render(request, 'user/guide.html')
-
-# お知らせ一覧
-def notice(request):
-    return render(request, 'user/notice.html')
-
-# MelimitとSDGs
-def sdgs(request):
-    return render(request, 'user/sdgs.html')
-
 # テスト/商品一覧表示
 def product_list(request):
     print('テスト/商品一覧表示のビュー')
@@ -755,7 +739,6 @@ def order_product(request):
     del request.session['cart']
     return render(request, 'user/order-completed.html')
     # return render(request, 'user/02_tyuumonn_test.html', {'product': product})
-    # return render(request, 'user/order-completed.html')
 # テスト/完了画面
 def order_complete(request):
     return render(request, 'user/04_complete_test.html')
