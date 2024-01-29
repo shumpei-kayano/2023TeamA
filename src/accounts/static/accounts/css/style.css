@@ -591,6 +591,7 @@ header .user_name {
   padding-left: 0;
   display: flex;
   flex-wrap: wrap-reverse;
+  align-items: center;
   justify-content: space-between;
 }
 @media (max-width: 768px) {
@@ -599,7 +600,16 @@ header .user_name {
   }
 }
 .header_down__category {
-  padding-left: 0;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
+  padding: 0.75rem;
+}
+.header_down__category option {
+  font-weight: bold;
+  background: #FFFFFF;
+  color: #252525;
 }
 .header_down__menu-container {
   padding-left: 0;
@@ -622,7 +632,7 @@ header .user_name {
   padding: 0.5rem 1rem;
 }
 .header_down__search {
-  margin: 0 auto;
+  margin: 1rem 0;
 }
 .header_down__search-input {
   height: 2.2rem;

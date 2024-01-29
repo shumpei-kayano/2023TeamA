@@ -624,6 +624,10 @@ def notice(request):
 def sdgs(request):
     return render(request, 'user/sdgs.html')
 
+# カテゴリー別商品一覧
+def category_products(request):
+    return render(request, 'user/category-products.html')
+
 # テスト/商品一覧表示
 def product_list(request):
     print('テスト/商品一覧表示のビュー')
