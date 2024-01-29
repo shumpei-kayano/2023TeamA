@@ -71,9 +71,9 @@ class MelimitStoreRegistrationForm(forms.ModelForm):
             }),
             'password': forms.PasswordInput(attrs={
                 'class': 'store-create-input-active',
-                'placeholder': 'パスワードを入力してください（半角）',
+                'placeholder': 'パスワードを入力してください（半角英数字）',
                 'required': True,
-                'pattern': '^(?=.*?[a-z])(?=.*?\d)[a-z\d]{8,20}$',
+                'pattern': '^(?=.*?[a-z])(?=.*?\d)[a-z\d]{8,24}$',
                 'name': 'password',
             }),
             # 'password_confirm': forms.PasswordInput(attrs={
@@ -106,7 +106,7 @@ class MelimitStoreRegistrationForm(forms.ModelForm):
             'phone_number': forms.TextInput(attrs={
                 'class': 'store-create-input-active',
                 'pattern': '^[0-9]{10,11}$',
-                'placeholder': '電話番号（半角数字）を入力してください（ハイフン不要）',
+                'placeholder': '電話番号（半角数字）を市外局番から入力してください（ハイフン不要）',
                 'name': 'phone_number',
             }),
             'store_image': forms.FileInput(attrs={
@@ -126,7 +126,7 @@ class MelimitStoreRegistrationForm(forms.ModelForm):
             widget=forms.PasswordInput(attrs={
                 'class': 'store-create-input-active',
                 'pattern': '^(?=.*?[a-z])(?=.*?\d)[a-z\d]{8,20}$',
-                'placeholder': 'パスワードを再入力してください（半角）',
+                'placeholder': 'パスワードを再入力してください（半角英数字）',
                 'name': 'password_confirm',
             }),
             label='Confirm password'
