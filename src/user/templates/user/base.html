@@ -16,6 +16,7 @@
     {% comment %} <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"> {% endcomment %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/style.css' %}">
+    <link rel="icon" href="{% static 'assets/img/logo.ico' %}">
     {% block js %}{% endblock js %}
     {% block css %}{% endblock css %}
 </head>
@@ -23,7 +24,7 @@
     <header>
         <div class="header_upper">
             <h1>Melimit</h1>
-            <a href="{% url 'user:index' %}"><img src="{% static 'assets/img/Melimit.png' %}" alt="Melimit" class="header_logo"/></a>
+            <a href="{% url 'user:index' %}"  class="header_logo"><img src="{% static 'assets/img/Melimit.png' %}" alt="Melimit"/></a>
             <nav class="header_upper__nav">
                 <ul class="header_upper__menu">
                     <li><a href="{% url "user:what_melimit" %}">Melimitとは</a></li>
@@ -39,15 +40,17 @@
             </nav>
             <div class="header_upper__icon">
                 <p class="user_name">ようこそ、{% if user.is_authenticated %}{{ user.username }}さん{% else %}ゲストさん{% endif %}</p>
-                <a href="{% url "user:favorite" %}"><img class ="header_icon"src="{% static 'assets/img/love.png' %}" alt="love"></a>
-                <a href="{% url "user:cart" %}"><img class ="header_icon"src="{% static 'assets/img/cart.png' %}" alt="cart"></a>
+                <div class="header_upper__icon__line">
+                    <a href="{% url "user:favorite" %}"><img class ="header_icon"src="{% static 'assets/img/love.png' %}" alt="love"></a>
+                    <a href="{% url "user:cart" %}"><img class ="header_icon"src="{% static 'assets/img/cart.png' %}" alt="cart"></a>
+                </div>
             </div>
         </div>
         <div class="header_down">
             <div class="header_down__menu">
                 <div class="">
                     <ul class="header_down__category">
-                        <li><a class="btn--beige header_down__menu-btn" onclick="toggleCategory()">カテゴリー▼</a></li>
+                        <li><a class="btn--beige header_down__menu-btn" onclick="toggleCategory()">カテゴリーからさがす▼</a></li>
                         <li class="hidden"><a class="btn--beige header_down__menu-btn">肉</a></li>
                         <li class="hidden"><a class="btn--beige header_down__menu-btn">野菜</a></li>
                         <li class="hidden"><a class="btn--beige header_down__menu-btn">果物</a></li>
@@ -55,8 +58,8 @@
                     </ul>
                 </div>
                 <ul class="header_down__menu-container">
-                    <li><a class="btn--blue header_down__menu-btn" href="{% url "user:all_products_general" %}">一般購入商品を見る</a></li>
-                    <li><a class="btn--pink header_down__menu-btn" href="{% url "user:all_products_joint" %}">共同購入商品を見る</a></li>
+                    <li><a class="btn--blue header_down__menu-btn" href="{% url "user:all_products_general" %}">一般購入商品をさがす</a></li>
+                    <li><a class="btn--pink header_down__menu-btn" href="{% url "user:all_products_joint" %}">共同購入商品をさがす</a></li>
                 </ul>
             </div>
             <div class="header_down__search">
@@ -81,4 +84,14 @@
     }
 </script>
 </body>
+<script>
+    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+        someAsyncFunction(request).then(response => {
+            sendResponse(response);
+        });
+    
+        // 非同期応答を示すためにtrueを返す
+        return true;
+    });
+</script>
 </html>

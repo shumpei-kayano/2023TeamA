@@ -30,7 +30,7 @@
                     {% comment %} if 閾値をクリアしていたら下を表示 {% endcomment %}
                     {% else %}
                     <h3 class="detail1__discount">¥閾値クリア前の値段 税込）</h3>
-                    <p class="detail1__discount--text">クリア前の%OFF</p>
+                    <p class="detail1__discount--text">定価から00%OFF</p>
                     {% endif %}
                     <p class="detail1__price">¥{{ sales.sale_price }}（税込）</p>
                     </div>
@@ -39,19 +39,25 @@
                     {% if sales.stock > 0 %}
                     <p class="detail1__soldout">在庫あり</p>
                     {% else %}
-                    <p class="detail1__soldout">在庫なし</p>
+                    {% comment %} <p class="detail1__soldout">在庫なし</p>えｘ {% endcomment %}
                     {% endif %}
                 </div>
             </div>
             <div class="detail1__right--center">
                 {% comment %} 閾値について {% endcomment %}
                 <div class="progress-bar">
-                    <div class="step completed">A</div>
-                    <div class="step completed">B</div>
-                    <div class="step">C</div>
-                    <!-- 必要なだけステップを追加 -->
+                    <div class="progress-bar__completed" style="width: 0%;"></div>
+                    <p>00%<br>達成</p>
                 </div>
-                {% comment %} <p><meter class="detail1__meter" min="0" max="100" value="100">a</meter></p> {% endcomment %}
+                {% comment %} 達成したらイラン {% endcomment %}
+                <p class="detail1__text">現在の個数：00個/達成の個数：00個</p>
+                {% comment %} endif {% endcomment %}
+                <p class="detail1__text-bd">あと00個注文で、</p>
+                {% comment %} if {% endcomment %}
+                <p class="detail1__text-bd">現在価格から00%OFFに！</p>
+                {% comment %} else {% endcomment %}
+                <p class="detail1__text-bd">達成しました！</p>
+                {% comment %} endif {% endcomment %}
                 <p class="detail1__text">{{ sales.description }}商品説明商品説明商品説明商品説明商品説明商品説明商品説明商品説明</p>
                 <form action="{% url 'user:add_to_cart' sales.sale_pk %}" method="post">
                     {% csrf_token %}
@@ -69,7 +75,9 @@
                     <p class="detail1__text-bd">数量</p>
                 </div>
                 <div class="detail1__right--lower2">
-                    <p class="detail1__text">{{ sales.sale_start }}〜{{ sales.sale_end }}</p>
+                    <p class="detail1__text">
+                        {% comment %} {{ sales.sale_start }}〜 {% endcomment %}
+                        {{ sales.sale_end }}まで</p>
                     <p class="detail1__text">¥100（税込）</p>
                     <p class="detail1__text">{{ sales.stock }}個</p>
                 </div>
@@ -88,9 +96,9 @@
             <label class="tab_class" for="tab2">店舗情報</label>
             <div class="content_class">
                 <h4 class="detail2__title">店舗情報</h4>
-                <p class="detail2__text">店舗名：{{ sales.store_name }}
-                <p class="detail2__text">店舗連絡メールアドレス：{{ sales.email }}
-                <a href="{{ sales.site_url }}" class="detail2__text">店舗のURL:{{ sale.store.site_url }}</a>
+                <p class="detail2__text">店舗名：{{ sales.store_name }}</p>
+                <p class="detail2__text">店舗連絡メールアドレス：{{ sales.email }}</p>
+                <p><a href="{{ sales.site_url }}" class="detail2__text">店舗のURL:{{ sale.store.site_url }}</a></p>
             </div>
             <input type="radio" name="tab_name" id="tab3" >
             <label class="tab_class" for="tab3">送料情報</label>

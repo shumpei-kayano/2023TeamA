@@ -10,21 +10,16 @@
 <section class="section1 mgt-10">
     <div class="section1__left">
         <a href="{% url 'user:guide' %}" class="btn--beige btn--big">ご利用ガイド</a>
-        <a class="btn--beige btn--big mgt-10">MelimitとSDGs</a>
-        <a class="btn--beige btn--big mgt-10">食品ロスとは</a>
+        <a href="{% url 'user:sdgs' %}" class="btn--beige btn--big mgt-10">MelimitとSDGs</a>
+        <a href="{% url 'user:sdgs' %}#sdgs-head2" class="btn--beige btn--big mgt-10">食品ロスとは</a>
     </div>
     <div class="section1__right">
         <div class="d-demo">
             <div class="d-demo__wrap">
-                {% with ''|center:2 as range %}
+                {% with ''|center:12 as range %}
                 {% for _ in range %}
                 <ul class="d-demo__list d-demo__list--left">
                     <li class="d-demo__item"><img src="{% static 'assets/img/メリ光男.png' %}" alt></li>
-                    <li class="d-demo__item"><img src="{% static 'assets/img/メリ光子.png' %}" alt></li>
-                    <li class="d-demo__item"><img src="{% static 'assets/img/メリ光男.png' %}" alt></li>
-                    <li class="d-demo__item"><img src="{% static 'assets/img/メリ光子.png' %}" alt></li>
-                    <li class="d-demo__item"><img src="{% static 'assets/img/メリ光男.png' %}" alt></li>
-                    <li class="d-demo__item"><img src="{% static 'assets/img/メリ光子.png' %}" alt></li>
                  </ul>
                 {% endfor %}
                 {% endwith %}
@@ -329,7 +324,7 @@
     <h2 class="section__title">お知らせ</h2>
     <div class="item--list">
         <div class="item--card card--notice">
-            <a href="{% url "user:notice_detail" %}">
+            <a href="{% url "user:notice_detail1" %}">
                 <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
                 <div class="card--content">
                     <p><span class="card--date-category">2020/00/00</span><span class="card--date-category">カテゴリー</span></p>
@@ -339,7 +334,7 @@
             </a>
         </div>
         <div class="item--card card--notice">
-            <a href="#">
+            <a href="{% url "user:notice_detail2" %}">
                 <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
                 <div class="card--content">
                     <p><span class="card--date-category">2020/00/00</span><span class="card--date-category">カテゴリー</span></p>
@@ -349,7 +344,7 @@
             </a>
         </div>
         <div class="item--card card--notice">
-            <a href="#">
+            <a href="{% url "user:notice_detail3" %}">
                 <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
                 <div class="card--content">
                     <p><span class="card--date-category">2020/00/00</span><span class="card--date-category">カテゴリー</span></p>
@@ -358,6 +353,7 @@
                 </div>
             </a>
         </div>
-        <a href="{% url "user:notice" %}" class="btn--beige btn--middle mgt-10">お知らせ一覧</a>
+    </div>
+    <a href="{% url "user:notice" %}" class="btn--beige btn--middle mgt-10">お知らせ一覧</a>
 </section>
 {% endblock %}

@@ -381,8 +381,14 @@ def cart(request):
     # return render(request, 'user/cart.html')
 
 #お知らせ詳細
-def notice_detail(request):
-    return render(request, 'user/notice-detail.html')
+def notice_detail1(request):
+    return render(request, 'user/notice-detail1.html')
+
+def notice_detail2(request):
+    return render(request, 'user/notice-detail2.html')
+
+def notice_detail3(request):
+    return render(request, 'user/notice-detail3.html')
 
 # 注文詳細
 def history(request):
