@@ -525,3 +525,7 @@ def notice(request):
 # MelimitとSDGs
 def sdgs(request):
     return render(request, 'user/sdgs.html')
+
+# カテゴリー別商品一覧
+def category_products(request):
+    return render(request, 'user/category-products.html')

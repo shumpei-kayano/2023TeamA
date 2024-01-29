@@ -79,13 +79,23 @@ header {
     padding-left: 0;
     display: flex;
     flex-wrap: wrap-reverse;
+    align-items: center;
     justify-content: space-between;
     @media (max-width: 768px) {
       width: 100%;
     }
   }
   &__category {
-    padding-left: 0;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    padding: 0.75rem;
+    option {
+      font-weight: bold;
+      background: $melimit_white;
+      color: $melimit_black;
+    }
   }
   &__menu-container {
     padding-left: 0;
@@ -112,7 +122,7 @@ header {
     padding: 0.5rem 1rem;
   }
   &__search {
-    margin: 0 auto;
+    margin: 1rem 0;
   }
   &__search-input {
     height: 2.2rem;

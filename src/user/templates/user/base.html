@@ -48,15 +48,13 @@
         </div>
         <div class="header_down">
             <div class="header_down__menu">
-                <div class="">
-                    <ul class="header_down__category">
-                        <li><a class="btn--beige header_down__menu-btn" onclick="toggleCategory()">カテゴリーからさがす▼</a></li>
-                        <li class="hidden"><a class="btn--beige header_down__menu-btn">肉</a></li>
-                        <li class="hidden"><a class="btn--beige header_down__menu-btn">野菜</a></li>
-                        <li class="hidden"><a class="btn--beige header_down__menu-btn">果物</a></li>
-                        <li class="hidden"><a class="btn--beige header_down__menu-btn">海産</a></li>
-                    </ul>
-                </div>
+                <select class="header_down__category btn--beige">
+                    <option value="0">カテゴリーからさがす▼</option>
+                    <option value="1">肉</option>
+                    <option value="2">野菜</option>
+                    <option value="3">果物</option>
+                    <option value="4">海産</option>
+                </select>
                 <ul class="header_down__menu-container">
                     <li><a class="btn--blue header_down__menu-btn" href="{% url "user:all_products_general" %}">一般購入商品をさがす</a></li>
                     <li><a class="btn--pink header_down__menu-btn" href="{% url "user:all_products_joint" %}">共同購入商品をさがす</a></li>
@@ -85,13 +83,22 @@
 </script>
 </body>
 <script>
-    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-        someAsyncFunction(request).then(response => {
-            sendResponse(response);
+    function handleSelectChange(event) {
+        var selectedValue = event.target.value;
+        if (selectedValue != "0") {
+            window.location.href = "/category-products/?category=" + selectedValue;
+        }
+    }
+    document.querySelector('.header_down__category').addEventListener('change', handleSelectChange);
+
+    // chrome.runtimeが利用可能である場合のみリスナーを追加
+    if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.onMessage) {
+        chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+            someAsyncFunction(request).then(response => {
+                sendResponse(response);
+            });
+            // 非同期応答を示すためにtrueを返す
+            return true;
         });
-    
-        // 非同期応答を示すためにtrueを返す
-        return true;
-    });
+    }
 </script>
-</html>
