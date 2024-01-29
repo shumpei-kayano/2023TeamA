@@ -12,11 +12,13 @@ urlpatterns = [
     # 発送済み注文履歴ページ
     path('order-history', views.order_history_view, name='order-history'),
     # 発送済み注文履歴ページの中身
-    path('order-history-content', views.order_history_content_view, name='order-history-content'),
+    path('order-history-content/<int:order_id>/', views.order_history_content_view, name='order-history-content'),
     # 未発送注文一覧ページ
     path('order-not-shipped', views.order_not_shipped_view, name='order-not-shipped'),
     # 未発送注文一覧ページの中身
-    path('order-not-shipped-content', views.order_not_shipped_content_view, name='order-not-shipped-content'),
+    path('order-not-shipped-content/<int:order_id>/', views.order_not_shipped_content_view, name='order-not-shipped-content'),
+    # 未発送から発送済みに変更
+    path('order-not-shipped-to-shipped/<int:order_id>/', views.order_not_shipped_to_shipped_view, name='order-not-shipped-to-shipped'),
     # 商品管理一覧ページ
     path('product-manage', views.product_manage_view, name='product-manage'),
     # 商品新規登録ページ
@@ -34,7 +36,7 @@ urlpatterns = [
     # ログイン処理
     path('store_login/', views.store_login_view, name='store_login'),
     # ログイン後のベースページ
-    path('store_base/', views.store_base_view, name='store_base'),
+    # path('store_base/', views.store_base_view, name='store_base'),
     # パスワード再設定用のメール送信ページ
     path('pass-mail', views.pass_mail_view, name='pass_mail'),
     # 店舗情報設定ページ

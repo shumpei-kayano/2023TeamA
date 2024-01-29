@@ -1,4 +1,4 @@
-{% extends "store/base.html" %}
+{% extends "store/base.html" %} 
 
 {% load static %}
 
@@ -27,23 +27,26 @@
           <table>
             <tr class="consumer-table-con">
               <th class="info-label">注文番号</th>
-              <td class="info-value">20231212</td>
+              <td class="info-value">{{ order_history.id }}</td>
             </tr>
             <tr class="consumer-table-con">
               <th class="info-label">名前</th>
-              <td class="info-value">山田 太郎</td>
+              <td class="info-value">{{ order_history.orderhistory_user.username }}</td>
             </tr>
             <tr class="consumer-table-con">
               <th class="info-label">メールアドレス</th>
-              <td class="info-value">taro.yamada@sample.com</td>
+              <td class="info-value">{{ order_history.orderhistory_user.email }}</td>
             </tr>
             <tr class="consumer-table-con">
               <th class="info-label">電話番号</th>
-              <td class="info-value">080-0000-0000</td>
+              <td class="info-value">{{ order_history.orderhistory_user.phone_number }}</td>
             </tr>
             <tr class="consumer-table-con">
                 <th class="info-label">住所</th>
-                <td class="info-value">〒000-0000　東京都 渋谷区 本町2丁目1-1</td>
+                <td class="info-value">{{ order_history.orderhistory_user.postal_code }}</td>
+                <td class="info-value">{{ order_history.orderhistory_user.prefecture }}</td>
+                <td class="info-value">{{ order_history.orderhistory_user.city }}</td>
+                <td class="info-value">{{ order_history.orderhistory_user.address }}</td>
             </tr>
           </table>
         </div>
@@ -59,39 +62,39 @@
           <table style="margin-bottom: 1000px;">
             <tr class="consumer-table-con">
               <th class="info-label">注文日</th>
-              <td class="info-value">2022/12/18</td>
+              <td class="info-value">{{ order_history.order_date }}</td>
             </tr>
             <tr class="consumer-table-con">
               <th class="info-label">商品名</th>
-              <td class="info-value">ほわー</td>
+              <td class="info-value">{{ order_history.product.product_name }}</td>
             </tr>
             <tr class="consumer-table-con">
               <th class="info-label">数量</th>
-              <td class="info-value">100個</td>
+              <td class="info-value">{{ order_history.quantity }} 個</td>
             </tr>
             <tr class="consumer-table-con">
               <th class="info-label">販売価格</th>
-              <td class="info-value">1,000円</td>
+              <td class="info-value">{{ order_history.sale.sale_price }} 円</td>
             </tr>
             <tr class="consumer-table-con">
               <th class="info-label">合計金額</th>
-              <td class="info-value">100,000円</td>
+              <td class="info-value">{{ order_history.amount }} 円</td>
             </tr>
             <tr class="consumer-table-con">
               <th class="info-label">支払い方法</th>
-              <td class="info-value">クレジットカード</td>
+              <td class="info-value">※現在は着払いのみに対応。</td>
             </tr>
             <tr class="consumer-table-con">
               <th class="info-label">CO2排出削減量</th>
-              <td class="info-value">100g</td>
+              <td class="info-value">{{ order_history.co2 }} g</td>
             </tr>
             <tr class="consumer-table-con">
               <th class="info-label">配送日</th>
-              <td class="info-value">2022/12/20</td>
+              <td class="info-value">配送日</td>
             </tr>
             <tr class="consumer-table-con">
               <th class="info-label">販売種別</th>
-              <td class="info-value">共同</td>
+              <td class="info-value">{{ order_history.sale.get_sale_type_display }}</td>
             </tr>
           </table>
         </div>

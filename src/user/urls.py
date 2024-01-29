@@ -49,4 +49,6 @@ urlpatterns = [
     path('order/', views.order_product, name='order_completed'),
     # 購入完了
     path('complete/', views.order_complete, name='order_complete'),
+    # エラー
+    path('error/', views.error_view, name='error'),
 ]

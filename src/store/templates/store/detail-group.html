@@ -2,9 +2,7 @@
 
 {% load static %}
 
-{% block title %}
-  共同購入商品の詳細
-{% endblock %}
+{% block title %}共同購入商品の詳細{% endblock %}
 
 {% block contents %}
   <div class="product-manage__container">
@@ -49,7 +47,7 @@
               <div class="title-text">販売価格</div>
             </div>
             <div class="price-box-input">
-              <span>{{ sale.sale_price }}</span>
+              <span>{{ sale.sale_price }} 円</span>
             </div>
           </div>
 
@@ -59,7 +57,7 @@
               <div class="title-text">定価</div>
             </div>
             <div class="listprice-box-input">
-              <span>{{ sale.product.product_price }}</span>
+              <span>{{ sale.product.product_price }} 円</span>
             </div>
           </div>
 
@@ -69,7 +67,7 @@
               <div class="title-text">共同購入達成数量</div>
             </div>
             <div class="quantity-box-input">
-              <span>{{ threshold.threshold }}</span>
+              <span>{{ threshold.threshold }} 個</span>
             </div>
           </div>
 
@@ -79,7 +77,7 @@
               <div class="title-text">共同購入達成時の値引率</div>
             </div>
             <div class="discount-box-input">
-              <span>{{ threshold.discount_rate }}</span>
+              <span>{{ threshold.discount_rate }} ％</span>
             </div>
           </div>
 
@@ -99,7 +97,7 @@
               <div class="title-text">在庫数</div>
             </div>
             <div class="stock-box-input">
-              <span>{{ sale.stock }}</span>
+              <span>{{ sale.stock }} 個</span>
             </div>
           </div>
 
@@ -119,7 +117,7 @@
               <div class="title-text">重量</div>
             </div>
             <div class="weight-box-input">
-              <span>{{ sale.product.weight }} グラム</span>
+              <span>{{ sale.product.weight }} g(グラム)</span>
             </div>
           </div>
 
@@ -181,7 +179,7 @@
                   </div>
                   <div class="modal-button">
                     <button class="modal-back" type="button">もどる</button>
-                    <button class="modal-group" type"submit">削除する</button>
+                    <button class="modal-group" type="submit">削除する</button>
                   </div>
                 </form>
             </div>
@@ -229,7 +227,7 @@
               const startDateTime = document.querySelector('.period-box-input span').textContent;
               const stock = document.querySelector('.stock-box-input span').textContent + '個';
               const shipping = document.querySelector('.shipping-box-input span').textContent + '円';
-              const weight = document.querySelector('.weight-box-input span').textContent + 'g';
+              const weight = document.querySelector('.weight-box-input span').textContent + 'g(グラム)';
               const expiration = document.querySelector('.expiration-box-input span').textContent;
               const image = document.querySelector('.image-box-input img').src;
               const description = document.querySelector('.description-box-input span').textContent;
