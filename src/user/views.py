@@ -20,7 +20,7 @@ def index(request):
         # ログインしているのがユーザーか
         if request.user.user_type == 'melimit_user' :
             user_id = request.user.id
-            # user_id = request.session.get('user_id')
+            # user_id = request.session.get(''user_id')
             print(f'user_id: {user_id}')
             #MelimitUserオブジェクトにtasteが入っている
             user = MelimitUser.objects.get(id=user_id)
@@ -28,7 +28,10 @@ def index(request):
             user_taste = user.taste  # ユーザーの好みを取得
             print(user_taste)
             matching_sales = Sale.objects.filter(product__product_category=user_taste).order_by('?')[:3]  # ユーザーの好みに合った商品をランダムに3つ取得
-            print(matching_sales)
+            print('mat:',matching_sales)
+            for i in matching_sales:
+                print('i.pk:',i.pk)
+            
             # matching_sales = Sale.objects.filter(product__product_category=user_taste)  # ユーザーの好みに合った商品を取得
             # random_sale = random.choice(matching_sales)  # ランダムに1つの商品を選択
             categories = Product.TASTE_CHOICES #商品をカテゴリーごとに取得
@@ -45,6 +48,72 @@ def index(request):
         categories = Product.TASTE_CHOICES
         sales_by_category = {category[0]: Sale.objects.filter(product__product_category=category[0]) for category in categories}
         # return render(request, 'sales_list.html', {'sales_by_category': sales_by_category})
+        #全商品のうちランダムに三つ取得 allだと使用ごとに中身が変わるのでfilter
+        #printが呼び出されるたびにランダムが実施されるのでリストにすることでsalesの時点で固定化する
+        #sales_randomsにはオブジェクトが３つ入る
+        sales_randoms = list(Sale.objects.filter().order_by('?')[:3])
+        print('1', sales_randoms)
+        print('2', sales_randoms)
+        #type = melのときに閾値を取得する　複数の時にどのように取得するか　共同一覧の時は専用の引数に必要な情報をすべて入れた 一般はそのまま取得できる
+        #一般と共同の情報が混ざっているときの取得方法
+        #salesの中身を新しい変数に入れていく　
+        #一般ならそのまま格納
+        #共同なら閾値、閾値チェックの情報を取得しまとめる（共同一覧と同じ方法)
+        # 全体を入れる
+        sales_random = []
+        #閾値を取り出すため
+        thresholds = {}
+        # iはsaleオブジェクト
+        for i in sales_randoms:
+            if i.sale_type == 'general_sales':
+                print('general_salesです')
+                #一般の必要な情報、名前、画像、割引率、販売額
+                sale = {
+                    'name':i.product.product_name,
+                    'image':i.product.product_image,
+                    'discount_rate':i.discount_rate(),
+                    'sale_price':i.sale_price,
+                }
+                sales_random.append(sale)
+            else:
+                print('melimit_salesです') 
+                #商品の閾値を取得し引数をpkにして変数に格納
+                thresholds[i.pk] = list(i.threshold_set.all())
+                print(thresholds[sale.pk])
+                #商品にある閾値すべてが出るのでforループ 閾値が一つなので問題ない
+                for u in thresholds[sale.pk]:
+                    print(u.threshold)
+                    print(i.sale_price)
+                    print(u.discount_rate)
+                    #discount_amount 割引額
+                    print(u.discount_amount())
+                    #割引額を計算する
+                    discounted_amount = u.discount_amount
+                    #割引後の値段を計算
+                    discounted_price = round(sale.sale_price * (100 - u.discount_rate) / 100)
+                #共同の必要な情報、名前、画像、閾値の割引率、販売額、閾値クリア後の値段、閾値クリアに必要な個数、現在の個数
+                    sale = {
+                        'name':,
+                        'image':,
+                        'th_discount_rate':,
+                        'sale_price':,
+                        'discounted_price':,
+                        'threshold':,
+                        'count':,
+                    }
+                    sales_random.append(sale)
+        #閾値を出す 閾値が一つなのでループは一回
+                
+            
+                            #商品情報と閾値情報、割引後の値段等を一括りにするsale_infos
+                # for sale in sales:
+                #     print(sale)
+                #     print(sale.threshold_set.all())
+                #     thresholds[sale.pk] = list(sale.threshold_set.all())
+                #     print(thresholds[sale.pk])
+                    #閾値を出す 閾値が一つなのでループは一回
+                    # for i in thresholds[sale.pk]:
+                        
         return render(request, 'user/index.html', {'sales_by_category': sales_by_category})
     # print('index_________')
     # print(request.user.user_id)

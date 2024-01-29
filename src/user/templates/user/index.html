@@ -57,7 +57,7 @@
                             {% if forloop.counter <= 3 %}
                                 {% if random_sale.sale_type == 'general_sales' %}
                                     <div class="item--card card--blue">
-                                        <a href="#">
+                                        <a href="{% url 'user:general_products_detail' pk=random_sale.pk %}">
                                             
                                             <img src="{{ random_sale.product.product_image.url }}" alt="{{ random_sale.product.product_name }}" class="card--img">
                                             <p class="discount">ひとつめ {{ random_sale.discount_rate }}％</p>
@@ -70,7 +70,7 @@
                                 {% comment %} 商品が共同の場合 {% endcomment %}
                                 {% else %}
                                     <div class="item--card card--pink">
-                                        <a href="#">
+                                        <a href="{% url 'user:joint_products_detail' pk=random_sale.pk %}">
                                             <img src="{{ random_sale.product.product_image.url }}" alt="{{ random_sale.product.product_name }}" class="card--img">
                                             <p class="discount">{{ random_sale.discount_rate }}％</p>
                                             <div class="card--content">
@@ -194,39 +194,48 @@
                         {% endfor %}
                     {% else %}
                         {% comment %} ログインしていないときのランダム商品 {% endcomment %}
-                        <div class="item--card card--blue">
-                            <a href="#">
-                                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                                <p class="discount">00%OFF</p>
-                                <div class="card--content">
-                                    <h3 class="card--title">オオハラ水産</h3>
-                                    <h4 class="card--discount">￥100,000（税込）</h4>
+                        {% for sale in sales %}
+                            {% if sale.sale_type == 'general_sales' %}
+                                <div class="item--card card--blue">
+                                    <a href="{% url 'user:general_products_detail' pk=sale.pk %}">
+                                        <img src="{{ sale.product.product_image.url }}" alt="{{ sale.product.product_name }}" class="card--img">
+                                        <p class="discount">{{ sale.discount_rate }}%OFF</p>
+                                        <div class="card--content">
+                                            <h3 class="card--title">{{ rsale.product.product_name }}</h3>
+                                            <h4 class="card--discount">￥{{ sale.sale_price }}（税込）</h4>
+                                        </div>
+                                    </a>
                                 </div>
-                            </a>
-                        </div>
-                        <div class="item--card card--pink">
-                            <a href="#">
-                                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                                <p class="discount">MAX00%OFF</p>
-                                <div class="card--content">
-                                    <h3 class="card--title">大原製菓</h3>
-                                    <meter low="69" high="80" max="100" value="84">B</meter>
-                                    <p class="card--text">あと00人達成で</p>
-                                    <p class="card--price">￥100,000（税込）</p>
-                                    <h4 class="card--discount">￥100,000（税込）</h4>
+                            {% else %}
+                                <div class="item--card card--pink">
+                                    <a href="#">
+                                        <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+                                        <p class="discount">MAX00%OFF</p>
+                                        <div class="card--content">
+                                            <h3 class="card--title">大原製菓</h3>
+                                            <meter low="69" high="80" max="100" value="84">B</meter>
+                                            <p class="card--text">あと00人達成で</p>
+                                            <p class="card--price">￥100,000（税込）</p>
+                                            <h4 class="card--discount">￥100,000（税込）</h4>
+                                        </div>
+                                    </a>
                                 </div>
-                            </a>
-                        </div>
-                        <div class="item--card card--blue">
-                            <a href="#">
-                                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                                <p class="discount">00%OFF</p>
-                                <div class="card--content">
-                                    <h3 class="card--title">おおはら精肉店</h3>
-                                    <h4 class="card--discount">￥100,000（税込）</h4>
+                                <div class="item--card card--pink">
+                                    <a href="{% url 'user:joint_products_detail' pk=sale.pk %}">
+                                        <img src="{{ sale.product.product_image.url }}" alt="{{ sale.product.product_name }}" class="card--img">
+                                        <p class="discount">{{ sale.discount_rate }}％</p>
+                                        <div class="card--content">
+                                            <h3 class="card--title">{{ sale.product.product_name }}</h3>
+                                            <meter low="69" high="80" max="100" value="84">B</meter>
+                                            <p class="card--text">あと00人達成で</p>
+                                            <p class="card--price">{{ sale.sale_price }}(税込)</p>
+                                            {% comment %} 割引後の値段 {% endcomment %}
+                                            <h4 class="card--discount">￥100,000（税込）</h4>
+                                        </div>
+                                    </a>
                                 </div>
-                            </a>
-                        </div>
+                            {% endif %}
+                        {% endfor %}
                     {% endif %}
             </div>
             <a class="btn--beige btn--middle mgt-10">すべての商品を見る</a>
