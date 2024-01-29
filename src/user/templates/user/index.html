@@ -188,6 +188,7 @@
                             {% endif %} {% endcomment %}
                         {% endfor %}
                     {% else %}
+                        {% comment %} ログインしていないときのランダム商品 {% endcomment %}
                         <div class="item--card card--blue">
                             <a href="#">
                                 <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">

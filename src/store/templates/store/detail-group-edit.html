@@ -17,7 +17,7 @@
     </div>
 
     <div class="title-product-manage">
-        <div class="product-manage-text">共同購入商品の編集中です（すべての項目を入力する必要があります）</div>
+        <div class="product-manage-text">共同購入商品の編集中です(※すべての項目を入力する必要があります)</div>
         <img class="fibermanualrecordfilled-icon" alt="" src="{% static 'store/img/maru.png' %}" />
     </div>
 
@@ -56,6 +56,7 @@
               </div>
               <div class="price-box-input">
                 {{ sale_form.sale_price }}
+              <div id="priceValidationError"></div> <!-- js用id -->
               </div>
             </div>
   
@@ -97,6 +98,8 @@
               <div class="period-box-input">
                 <p>開始：</p>{{ sale_form.sale_start }}
                 <p>～終了：</p>{{ sale_form.sale_end }}
+                <div id="startValidationError"></div> <!-- js用id -->
+                <div id="endValidationError"></div> <!-- js用id -->
               </div>
             </div>
   
@@ -126,7 +129,7 @@
                 <div class="title-text">重量</div>
               </div>
               <div class="weight-box-input">
-                {{ product_form.weight }} グラム
+                {{ product_form.weight }} g(グラム)
               </div>
             </div>
   
@@ -137,18 +140,21 @@
               </div>
               <div class="expiration-box-input">
                 {{ sale_form.expiration_date }}
+              <div id="expirationValidationError"></div> <!-- js用id -->
               </div>
             </div>
   
             <!-- 画像の選択欄 -->
             <div class="category-box" style="height: 200px;">
               <div class="category-box-title">
-                <div class="title-text">画像</div>
+                  <div class="title-text">画像</div>
               </div>
               <div class="image-box-input" style="height: 200px;">
-                <img src="{{ product.product_image.url }}" alt="{{ product.product_name }}" height="160">
-                {{ product_form.product_image }}
-                <div id="preview"></div>
+                  <!-- 現在の画像を表示 -->
+                  <img src="{{ product.product_image.url }}" alt="{{ product.product_name }}" style="height: auto; width: 200px;" id="currentImage">
+                  {{ product_form.product_image }}
+                  <!-- 新しい画像をプレビュー -->
+                  <div id="preview"></div> <!-- js用id -->
               </div>
             </div>
   
@@ -178,7 +184,7 @@
               </div>
               <div class="modal-button">
                 <button class="modal-back" type="button">修正する</button>
-                <button class="modal-group" type"submit">編集を完了する</button>
+                <button class="modal-group" type="submit">編集を完了する</button>
               </div>
             </div>
           </div>
@@ -191,32 +197,47 @@
       function previewFile(file) {
         // プレビュー画像を追加する要素
         const preview = document.getElementById('preview');
-      
+
+        // 現在の画像を削除
+        const currentImage = document.getElementById('currentImage');
+        if (currentImage) {
+            currentImage.remove();
+        }
+
         // FileReaderオブジェクトを作成
         const reader = new FileReader();
-      
+
         // ファイルが読み込まれたときに実行する
         reader.onload = function (e) {
-          const imageUrl = e.target.result; // 画像のURLはevent.target.resultで呼び出せる
-          const img = document.createElement("img"); // img要素を作成
-          img.src = imageUrl; // 画像のURLをimg要素にセット
-          preview.appendChild(img); // #previewの中に追加
+            const imageUrl = e.target.result; // 画像のURLはevent.target.resultで呼び出せる
+            const img = document.createElement("img"); // img要素を作成
+            img.src = imageUrl; // 画像のURLをimg要素にセット
+            img.alt = "New Image"; // 新しい画像の代替テキスト
+            img.style.height = "auto"; // 新しい画像の高さ
+            img.style.width = "200px"; // 新しい画像の幅
+            preview.appendChild(img); // #previewの中に追加
         }
-      
+
         // ファイルを読み込む
         reader.readAsDataURL(file);
       }
-  
+
       // <input>でファイルが選択されたときの処理
       const fileInput = document.getElementById('example');
       const handleFileSelect = () => {
         const files = fileInput.files;
+        const preview = document.getElementById('preview');
+
+        // クリア前にプレビューを削除
+        while (preview.firstChild) {
+            preview.removeChild(preview.firstChild);
+        }
+
         for (let i = 0; i < files.length; i++) {
-          previewFile(files[i]);
+            previewFile(files[i]);
         }
       }
       fileInput.addEventListener('change', handleFileSelect);
-  
   
       // モーダルの処理
       document.addEventListener('DOMContentLoaded', function () {
@@ -241,132 +262,228 @@
         // 「編集内容を確認する」ボタンのクリックイベント
         submitButton.addEventListener('click', function (event) {
             event.preventDefault(); // フォームのデフォルトの動作を防止
-    
-            // 入力値を取得
-            const productName = document.querySelector('.product-name-box-input input').value;
-            const category = document.querySelector('.category-box-input select').value;
-            const price = document.querySelector('.price-box-input input').value + '円';
-            const listprice = document.querySelector('.listprice-box-input input').value + '円';
-            const quantity = document.querySelector('.quantity-box-input input').value + '個';
-            const discount = document.querySelector('.discount-box-input input').value + '%';
-            // 開始と終了の入力値を取得
-            const startDateTime = document.getElementById('startDateTime').value;
-            const endDateTime = document.getElementById('endDateTime').value;
-            const stock = document.querySelector('.stock-box-input input').value + '個';
-            const shipping = document.querySelector('.shipping-box-input input').value + '円';
-            const weight = document.querySelector('.weight-box-input input').value + 'g';
-            const expiration = document.querySelector('.expiration-box-input input').value;
-            const image = document.querySelector('.image-box-input input').value;
-            const description = document.querySelector('.description-box-input textarea').value;
-    
-            // 確認用の内容を作成
-            const confirmationHTML = `
-            <div class="con-product-name-box">
-              <div class="con-product-name-box-title">
-                <div class="con-title-text">商品名</div>
-              </div>
-              <div class="con-product-name-box-input">
-                <p>${productName}</p>
-              </div>
+
+            // 価格のエラーメッセージをクリア
+            document.getElementById('priceValidationError').textContent = '';
+
+          // 入力値を取得
+          const productName = document.querySelector('.product-name-box-input input').value.trim();
+          const category = document.querySelector('.category-box-input select').value.trim();
+          const price = document.querySelector('.price-box-input input').value.trim();
+          const listprice = document.querySelector('.listprice-box-input input').value.trim();
+          const quantity = document.querySelector('.quantity-box-input input').value.trim();
+          const discount = document.querySelector('.discount-box-input input').value.trim();
+          const startDateTime = document.getElementById('startDateTime').value.trim();
+          const endDateTime = document.getElementById('endDateTime').value.trim();
+          const stock = document.querySelector('.stock-box-input input').value.trim();
+          const shipping = document.querySelector('.shipping-box-input input').value.trim();
+          const weight = document.querySelector('.weight-box-input input').value.trim();
+          const expiration = document.querySelector('.expiration-box-input input').value.trim();
+          const image = document.querySelector('.image-box-input input').value.trim();
+          const description = document.querySelector('.description-box-input textarea').value.trim();
+
+          // 未入力項目の確認
+          const emptyFields = [];
+
+          if (productName === '') {
+            emptyFields.push('商品名');
+          }
+          if (category === '') {
+            emptyFields.push('カテゴリ');
+          }
+          if (price === '') {
+            emptyFields.push('販売価格');
+          }
+          if (listprice === '') {
+            emptyFields.push('定価');
+          }
+          if (quantity === '') {
+            emptyFields.push('共同購入達成数量');
+          }
+          if (discount === '') {
+            emptyFields.push('共同購入達成時の値引率');
+          }
+          if (startDateTime === '' || endDateTime === '') {
+            emptyFields.push('表示期間');
+          }
+          if (stock === '') {
+            emptyFields.push('在庫数');
+          }
+          if (shipping === '') {
+            emptyFields.push('送料');
+          }
+          if (weight === '') {
+            emptyFields.push('重量');
+          }
+          if (expiration === '') {
+            emptyFields.push('賞味期限');
+          }
+          if (image === '') {
+            emptyFields.push('画像');
+          }
+          if (description === '') {
+            emptyFields.push('商品説明');
+          }
+
+          // 未入力項目がある場合、アラートを表示
+          if (emptyFields.length > 0) {
+            alert(`以下の項目が未入力です：${emptyFields.join(', ')}`);
+            return;
+          }
+
+          // 「販売価格」が「定価」よりも低いかの確認
+          const numericPrice = parseFloat(price);
+          const numericListPrice = parseFloat(listprice);
+          if (isNaN(numericPrice) || isNaN(numericListPrice) || numericPrice >= numericListPrice) {
+            alert('販売価格は定価よりも低く設定してください。');
+            return;
+          }
+
+          // 数値を入力する欄に小数点以下を受け付けない
+          if (price.indexOf('.') !== -1 || listprice.indexOf('.') !== -1 || quantity.indexOf('.') !== -1 || discount.indexOf('.') !== -1 || stock.indexOf('.') !== -1 || shipping.indexOf('.') !== -1 || weight.indexOf('.') !== -1) {
+            alert('数値を入力する欄に小数点以下は設定できません。');
+            return;
+          }
+
+          // 数値を入力する欄にマイナスを受け付けない
+          if (price.indexOf('-') !== -1 || listprice.indexOf('-') !== -1 || quantity.indexOf('-') !== -1 || discount.indexOf('-') !== -1 || stock.indexOf('-') !== -1 || shipping.indexOf('-') !== -1 || weight.indexOf('-') !== -1) {
+            alert('数値を入力する欄にマイナス(-)は設定できません。');
+            return;
+          }
+
+          // 表示期間の「開始」と「終了」が適切でない場合、アラートを表示
+          const startInput = document.getElementById('startDateTime');
+          const endInput = document.getElementById('endDateTime');
+
+          const startDate = new Date(startInput.value);
+          const endDate = new Date(endInput.value);
+
+          if (startDate < new Date() || endDate < new Date()) {
+            alert('表示期間は現在日時よりも過去の日時に設定できません。');
+            return;
+          }
+
+          if (endDate <= startDate) {
+            alert('表示期間の終了日時は開始日時よりも後の日時に設定してください。');
+            return;
+          }
+
+          // 賞味期限が現在日時よりも過去の場合、アラートを表示
+          const expirationInput = document.querySelector('.expiration-box-input input');
+          const expirationDate = new Date(expirationInput.value);
+          if (expirationDate < new Date()) {
+            alert('賞味期限は現在日時よりも過去の日時に設定できません。');
+            return;
+          }
+
+          // 確認用の内容を作成
+          const confirmationHTML = `
+          <div class="con-product-name-box">
+            <div class="con-product-name-box-title">
+              <div class="con-title-text">商品名</div>
             </div>
-            <div class="con-category-box">
-              <div class="con-category-box-title">
-                <div class="con-title-text">カテゴリ</div>
-              </div>
-              <div class="con-product-name-box-input">
-                <p>${category}</p>
-              </div>
+            <div class="con-product-name-box-input">
+              <p>${productName}</p>
             </div>
-            <div class="con-category-box">
-              <div class="con-category-box-title">
-                <div class="con-title-text">販売価格</div>
-              </div>
-              <div class="con-product-name-box-input">
-                <p>${price}</p>
-              </div>
+          </div>
+          <div class="con-category-box">
+            <div class="con-category-box-title">
+              <div class="con-title-text">カテゴリ</div>
             </div>
-            <div class="con-category-box">
-              <div class="con-category-box-title">
-                <div class="con-title-text">定価</div>
-              </div>
-              <div class="con-product-name-box-input">
-                <p>${listprice}</p>
-              </div>
+            <div class="con-product-name-box-input">
+              <p>${category}</p>
             </div>
-            <div class="con-category-box">
-              <div class="con-category-box-title">
-                <div class="con-title-text">共同購入達成数量</div>
-              </div>
-              <div class="con-product-name-box-input">
-                <p>${quantity}</p>
-              </div>
+          </div>
+          <div class="con-category-box">
+            <div class="con-category-box-title">
+              <div class="con-title-text">販売価格</div>
             </div>
-            <div class="con-category-box">
-              <div class="con-category-box-title">
-                <div class="con-title-text">共同購入達成時の値引率</div>
-              </div>
-              <div class="con-product-name-box-input">
-                <p>${discount}</p>
-              </div>
+            <div class="con-product-name-box-input">
+              <p>${price} 円</p>
             </div>
-            <div class="con-category-box">
-              <div class="con-category-box-title">
-                <div class="con-title-text">表示期間</div>
-              </div>
-              <div class="con-product-name-box-input">
-                <p>開始：${startDateTime}</p>
-                <p>～終了：${endDateTime}</p>
-              </div>
+          </div>
+          <div class="con-category-box">
+            <div class="con-category-box-title">
+              <div class="con-title-text">定価</div>
             </div>
-            <div class="con-category-box">
-              <div class="con-category-box-title">
-                <div class="con-title-text">在庫数</div>
-              </div>
-              <div class="con-product-name-box-input">
-                <p>${stock}</p>
-              </div>
+            <div class="con-product-name-box-input">
+              <p>${listprice} 円</p>
             </div>
-            <div class="con-category-box">
-              <div class="con-category-box-title">
-                <div class="con-title-text">送料</div>
-              </div>
-              <div class="con-product-name-box-input">
-                <p>${shipping}</p>
-              </div>
+          </div>
+          <div class="con-category-box">
+            <div class="con-category-box-title">
+              <div class="con-title-text">共同購入達成数量</div>
             </div>
-            <div class="con-category-box">
-              <div class="con-category-box-title">
-                <div class="con-title-text">重量</div>
-              </div>
-              <div class="con-product-name-box-input">
-                <p>${weight}</p>
-              </div>
+            <div class="con-product-name-box-input">
+              <p>${quantity} 個</p>
             </div>
-            <div class="con-category-box">
-              <div class="con-category-box-title">
-                <div class="con-title-text">賞味期限</div>
-              </div>
-              <div class="con-product-name-box-input">
-                <p>${expiration}</p>
-              </div>
+          </div>
+          <div class="con-category-box">
+            <div class="con-category-box-title">
+              <div class="con-title-text">共同購入達成時の値引率</div>
             </div>
-            <div class="con-category-box">
-              <div class="con-category-box-title">
-                <div class="con-title-text">画像</div>
-              </div>
-              <div class="con-product-name-box-input">
-                <p>${image}</p>
-              </div>
+            <div class="con-product-name-box-input">
+              <p>${discount} ％</p>
             </div>
-            <div class="con-category-box">
-              <div class="con-category-box-title">
-                <div class="con-title-text">商品説明</div>
-              </div>
-              <div class="con-product-name-box-input">
-                <p>${description}</p>
-              </div>
+          </div>
+          <div class="con-category-box">
+            <div class="con-category-box-title">
+              <div class="con-title-text">表示期間</div>
             </div>
-          `;
+            <div class="con-product-name-box-input">
+              <p>開始：${startDateTime} </p>
+              <p>～終了：${endDateTime}</p>
+            </div>
+          </div>
+          <div class="con-category-box">
+            <div class="con-category-box-title">
+              <div class="con-title-text">在庫数</div>
+            </div>
+            <div class="con-product-name-box-input">
+              <p>${stock} 個</p>
+            </div>
+          </div>
+          <div class="con-category-box">
+            <div class="con-category-box-title">
+              <div class="con-title-text">送料</div>
+            </div>
+            <div class="con-product-name-box-input">
+              <p>${shipping} 円</p>
+            </div>
+          </div>
+          <div class="con-category-box">
+            <div class="con-category-box-title">
+              <div class="con-title-text">重量</div>
+            </div>
+            <div class="con-product-name-box-input">
+              <p>${weight} g(グラム)</p>
+            </div>
+          </div>
+          <div class="con-category-box">
+            <div class="con-category-box-title">
+              <div class="con-title-text">賞味期限</div>
+            </div>
+            <div class="con-product-name-box-input">
+              <p>${expiration}</p>
+            </div>
+          </div>
+          <div class="con-category-box">
+            <div class="con-category-box-title">
+              <div class="con-title-text">画像</div>
+            </div>
+            <div class="con-product-name-box-input">
+              <p>${image}</p>
+            </div>
+          </div>
+          <div class="con-category-box">
+            <div class="con-category-box-title">
+              <div class="con-title-text">商品説明</div>
+            </div>
+            <div class="con-product-name-box-input">
+              <p>${description}</p>
+            </div>
+          </div>
+        `;
     
             confirmationContent.innerHTML = confirmationHTML;
             showModal();

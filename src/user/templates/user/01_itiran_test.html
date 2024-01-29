@@ -1,0 +1,11 @@
+<!-- templates/product_list.html -->
+<p>ログイン中のユーザー名: {{ user.username }}</p>
+{% for sale in sales %}
+    <div>
+        <h2>商品名：{{ sale.product.product_name }}</h2>
+        <p>単価：{{ sale.product.product_price }}</p>
+        <p>販売店：{{ sale.product.store }}</p>
+        <p>在庫数：{{ sale.stock }}</p>
+        <a href="{% url 'user:select_product' sale.product.id %}">Order</a>
+    </div>
+{% endfor %}

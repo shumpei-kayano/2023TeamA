@@ -18,16 +18,22 @@
             <div class="ue-title">
                 <div class="ue-text">店舗の新規会員登録</div>
             </div>
-
+                {% if form.errors %}
+                    <div class="alert alert-danger">
+                        <ul>
+                        {% for field, error in form.errors.items %}
+                            <li><strong>{{ field }}:</strong> {{ error|join:", " }}</li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
 
             <div class="store-create-main">
                 <div class="store-create-title">
                     <div class="nakami-text">※店舗の新規会員登録を行います。以下の項目を入力してください。</div>
                 </div>
-
                 <div class="store-create-container">
-                    <form method="POST" enctype="multipart/form-data">
-                        {% csrf_token %}
+                    
                         <div class="store-create-box" style="border-top: 1px solid var(--color-gainsboro-100);">
                             <div class="store-create-box-title">
                                 <div class="store-title-text">店舗名</div>
@@ -37,7 +43,9 @@
                                 {% comment %} 20文字以内の正規表現 {% endcomment %}
                                 {% comment %} pattern="^.{1,20}$"
                                 placeholder="店舗名を入力してください"> {% endcomment %}
+                                <div class="store-create-input-active">
                                 {{ form.username }}
+                                </div>
                             </div>
                         </div>
 
@@ -50,6 +58,9 @@
                                 {% comment %} 15文字以内の正規表現 {% endcomment %}
                                 {% comment %} pattern="^.{1,15}$"
                                 placeholder="店舗責任者名を入力してください"> {% endcomment %}
+                                <div class="store-create-input-active">
+
+                                </div>
                             </div>
                         </div>
 
@@ -62,6 +73,9 @@
                                 {% comment %} 全角カタカナの正規表現 {% endcomment %}
                                 {% comment %} pattern="^[ァ-ンヴー]+$ , [\u30A1-\u30FF]*"
                                 placeholder="店舗責任者名（フリガナ）を入力してください"> {% endcomment %}
+                                <div class="store-create-input-active">
+
+                                </div>
                             </div>
                         </div>
 
@@ -74,7 +88,9 @@
                                 {% comment %} 半角数字7文字の正規表現 {% endcomment %}
                                 {% comment %} pattern="^[0-9]{7}$"
                                 placeholder="郵便番号（半角数字）を入力してください（ハイフン不要）"> {% endcomment %}
+                                <div class="store-create-input-active">
                                 {{ form.postal_code }}
+                                </div>
                             </div>
                         </div>
 
@@ -85,9 +101,15 @@
                             <div class="store-create-box-input">
                                 {% comment %} <input type="text" class="store-create-input-active" required
                                 placeholder="所在地を入力してください"> {% endcomment %}
-                                都道府県{{ form.prefecture}}
-                                市町村{{ form.city}}
-                                住所{{ form.address }}
+                                <div class="store-create-input-active">
+                                    都道府県{{ form.prefecture}}
+                                </div>
+                                <div class="store-create-input-active">
+                                    市町村{{ form.city}}
+                                </div>
+                                <div class="store-create-input-active">
+                                    番地以降{{ form.address }}
+                                </div>
                             </div>
                         </div>
 
@@ -100,7 +122,9 @@
                                 {% comment %} 半角数字10文字or11文字の正規表現 {% endcomment %}
                                 {% comment %} pattern="^[0-9]{10,11}$"
                                 placeholder="電話番号（半角数字）を入力してください（ハイフン不要）"> {% endcomment %}
+                                <div class="store-create-input-active">
                                 {{ form.phone_number }}
+                                </div>
                             </div>
                         </div>
 
@@ -112,7 +136,9 @@
                                 {% comment %} <input type="email" class="store-create-input-active" required
                                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                                 placeholder="メールアドレスを入力してください（半角）"> {% endcomment %}
+                                <div class="store-create-input-active">
                                 {{ form.email }}
+                                </div>
                             </div>
                         </div>
 
@@ -125,8 +151,12 @@
                                 {% comment %} 半角英数字8文字以上、20文字以下の正規表現 {% endcomment %}
                                 {% comment %} pattern="^(?=.*?[a-z])(?=.*?\d)[a-z\d]{8,20}$"
                                 placeholder="パスワードを入力してください（半角）"> {% endcomment %}
-                                pass{{ form.password }}
-                                確認{{ form.password_confirm }}
+                                <div class="store-create-input-active">
+                                    pass{{ form.password }}
+                                </div>
+                                <div class="store-create-input-active">
+                                    確認{{ form.password_confirm }}
+                                </div>
                             </div>
                         </div>
 
@@ -137,7 +167,9 @@
                             <div class="store-create-box-input">
                                 {% comment %} <input type="url" class="store-create-input-active"
                                 placeholder="WebサイトのURLがある場合は入力してください（半角）"> {% endcomment %}
+                                <div class="store-create-input-active">
                                 {{ form.site_url }}
+                                </div>
                             </div>
                         </div>
 
@@ -146,18 +178,21 @@
                             <a href="store-info-edit" class="btn-store-create" style="color: #FFF;">確認して登録する</a>
                         </div>
 
-                    </form>
+                    
                 </div>
             </div>
 
             <div id="myModal" class="modal">
                 <div class="store-modal-content">
                     <span class="close">&times;</span>
-                    <div id="modal-content-display"></div>
-                    <div class="store-modal-btn">
-                        <button class="btn-modal-edit">修正する</button>
-                        <button class="btn-modal-confirm">店舗を登録する</button>
-                    </div>
+                    <form id="modal-form" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div id="modal-content-display"></div>
+                        <div class="store-modal-btn">
+                            <button class="btn-modal-edit">修正する</button>
+                            <button class="btn-modal-confirm">店舗を登録する</button>
+                        </div>
+                    </form>
                 </div>
             </div>
           
@@ -170,12 +205,19 @@
                 // モーダルと表示領域を取得
                 const modal = document.getElementById('myModal');
                 const modalContent = document.getElementById('modal-content-display');
+                const modalForm = document.getElementById('modal-form');
             
                 // 入力値を表示するためのHTMLコンテンツを作成
                 let content = '<div class="modal-title-store">店舗の新規登録確認画面</div><div class="store-modal-ul"><ul>';
             
                 inputs.forEach(input => {
                     content += `<div class="store-modal-li"><li><div class="store-modal-li-hidari">${input.parentElement.previousElementSibling.querySelector('.store-title-text').textContent}</div> <div class="store-modal-li-migi">${input.value}</div></li></div>`;
+                    // 各入力値をhidden inputとしてフォームに追加
+                    const hiddenInput = document.createElement('input');
+                    hiddenInput.type = 'hidden';
+                    hiddenInput.name = input.name;
+                    hiddenInput.value = input.value;
+                    modalForm.appendChild(hiddenInput);
                 });
             
                 content += '</ul></div>';
@@ -210,6 +252,7 @@
             // 修正するボタンをクリックした際の処理
             const editButton = document.querySelector('.btn-modal-edit');
             editButton.addEventListener('click', function() {
+                event.preventDefault(); // デフォルトの送信を防ぐ
                 const modal = document.getElementById('myModal');
                 modal.style.display = 'none'; // モーダルを非表示にする
             });
@@ -220,7 +263,7 @@
                 const modal = document.getElementById('myModal');
                 modal.style.display = 'none'; // モーダルを非表示にする
                 alert('店舗の新規登録が完了しました！'); // アラートを表示
-                window.location.href = 'store-info'; // store-info.htmlに遷移
+                // window.location.href = 'store-info'; // store-info.htmlに遷移
             });
             
             </script>
