@@ -34,7 +34,8 @@ class Product(models.Model):
 
     #weightに0.4をかける関数
     def CO2(self):
-        return str(self.weight * 0.4) + 'kg'
+        # return str(self.weight * 0.4) + 'kg'
+        return self.weight * 0.4
 
     def __str__(self):
         return self.product_name
@@ -60,7 +61,6 @@ class Sale(models.Model):
     description = models.TextField(verbose_name='商品の説明')
     # 一般商品か、共同販売商品か選択するchoiceフィールド、選択肢は共同販売商品、一般商品
     sale_type = models.CharField("販売タイプ", max_length=20, choices=SALE_CHOICES, blank=True)
-    
     # 注文履歴modelに設定する
     # 発送状況(登録時は未発送)
     # DjangoのBooleanFieldは、データベースレベルではTINYINT型として表現されます。その値は0（False）または1（True）になります。
