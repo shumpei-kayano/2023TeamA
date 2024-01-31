@@ -2,6 +2,7 @@
 {% load static %}
 {% block title %}{% endblock title %}
 {% block content %}
+{% load priceslice_filters %}
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
             var urlParams = new URLSearchParams(window.location.search);
@@ -15,6 +16,8 @@
                 categoryName = '果物';
             } else if (category === '4') {
                 categoryName = '海産';
+            } else if (category === '5') {
+                categoryName = 'その他';
             }
             // ページのタイトルを設定
             document.title = categoryName;
@@ -39,14 +42,15 @@
         </form>
         <div class="item--list">
             {% comment %} {% for sale in sales_by_choices.general_sales %} {% endcomment %}
-            {% for sale in sales %}
+            {% comment %} 一般商品の実装 {% endcomment %}
+            {% for product in products %}
                 <div class="item--card card--blue">
-                    <a href="{% url 'user:general_products_detail' pk=sale.pk %}">
-                        <img src="{{ sale.product.product_image.url }}" alt="{{ sale.product.product_name }}" class="card--img">
-                        <p class="discount">{{ sale.discount_rate }}％OFF</p>
+                    <a href="{% url 'user:general_products_detail' pk=product.pk %}">
+                        <img src="{{ product.image.url }}" alt="{{ product.product_name }}" class="card--img">
+                        <p class="discount">{{ product.rate }}％OFF</p>
                         <div class="card--content">
-                            <h3 class="card--title">{{ sale.product.product_name }}</h3>
-                            <h4 class="card--discount">￥{{ sale.sale_price }}(税込)</h4>
+                            <h3 class="card--title">{{ product.product_name }}</h3>
+                            <h4 class="card--discount">￥{{ product.price|to_currency }}(税込)</h4>
                         </div>
                     </a>
                 </div>

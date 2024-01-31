@@ -3934,14 +3934,14 @@ ul {
   border: 1px solid #888;
   width: 60%;
   overflow: auto;
-  height: 220%;
+  height: 190%;
   color: #333;
   border-radius: 5px;
 }
 
 .store-modal-btn {
   position: relative;
-  top: 95%;
+  top: 1040px;
 }
 
 @media screen and (max-width: 1000px) {

@@ -626,7 +626,103 @@ def sdgs(request):
 
 # カテゴリー別商品一覧
 def category_products(request):
-    return render(request, 'user/category-products.html')
+    category = request.GET.get('category')
+    #商品が一般か共同かわける必要あり
+    #pk
+    #画像
+    #値引き率
+    #商品名
+    #販売価格
+    #productからsaleを取り出す必要あり
+    #categoryは1~4の数字str?
+    if category == '1':
+        category = 'meat'
+    elif category == '2':
+        category = 'vegetables'
+    elif category == '3':
+        category = 'fruit'
+    elif category == '4':
+        category = 'fish'
+    elif category == '5':
+        category = 'other'
+    print('category:',category)
+    product_detail = []
+    #カテゴリー別に商品を取得。（一般、共同両方入っている）
+    products = Product.objects.filter(product_category=category)
+    for product in products:
+        #1商品当たりのsaleの情報を取得
+        print('set.all:',product.sale_set.all())
+        sales = product.sale_set.all()
+        print('sales:',sales)
+        #一般商品のみ適応　共同商品にも対応できるように
+        for sale in sales:
+            print(sale)
+            print(sale.sale_type)
+            print('rate:',sale.discount_rate())
+            if sale.sale_type == 'general_sales':
+                detail = {
+                    #pk
+                    #画像
+                    #値引き率
+                    #商品名
+                    #販売価格
+                    'pk':product.pk,
+                    'image':product.product_image,
+                    'rate':sale.discount_rate(),
+                    'product_name':product.product_name,
+                    'price':sale.sale_price,
+                }
+            elif sale.sale_type == 'melimit_sales':
+                print('商品がメリミット')
+                threshold_all = sale.threshold_set.all()
+                print('saleから閾値もでるとりだし',threshold_all)
+                for threshold in threshold_all:
+                    print('閾値をとりだすぞ')
+                    print('閾値ひとつのはず',threshold)
+                    #何も登録していないと空のオブジェクトが出る
+                    #空の時の処理を想定しないといけない
+                    threshold_checks = threshold.thresholdcheck_set.all()
+                    print('閾値チェックもでるのはず',threshold_checks)
+                    if not threshold_checks:
+                        #空の時、個数を０で判断するように
+                        print("No threshold checks found, meow!")
+                    else:
+                        for check in threshold_checks:
+                            #中身があるとき、個数を取り出して合計して判断
+                            print(check)
+                    for check in threshold_checks:
+                        print('閾値チェックだぞ')
+                        print('check_all:',check)
+                    print('閾値もでる？',threshold)
+                    print('閾値全部',threshold.threshold)
+                    
+                    #なにもとれない！！！！！！！
+                    
+                    #saleモデルからcheckモデルの内容を取得しよう
+                    detail = {
+                        #pk
+                        #画像
+                        #値引き率
+                        #商品名
+                        #販売価格
+                        #閾値クリア後の割引率
+                        #クリア後の値段
+                        #閾値個数
+                        #現在の閾値個数 チェックモデルから
+                        
+                        'pk':product.pk,
+                        'image':product.product_image,
+                        'rate':sale.discount_rate(),
+                        'product_name':product.product_name,
+                        'price':sale.sale_price,
+                        'threshold_rate':threshold.discount_rate,
+                        'final_price':threshold.discount_amount(),
+                        'threshold':threshold.threshold,
+                        # 'threshold_now':,
+                    }
+        product_detail.append(detail)
+    return render(request, 'user/category-products.html', {'products': product_detail})
+    # return render(request, 'user/category-products.html')
 
 # テスト/商品一覧表示
 def product_list(request):
