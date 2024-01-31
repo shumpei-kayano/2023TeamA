@@ -23,8 +23,7 @@
 <body>
     <header>
         <div class="header_upper">
-            <h1>Melimit</h1>
-            <a href="{% url 'user:index' %}"  class="header_logo"><img src="{% static 'assets/img/Melimit.png' %}" alt="Melimit"/></a>
+            <h1><a href="{% url 'user:index' %}"  class="header_logo"><img src="{% static 'assets/img/Melimit.png' %}" alt="Melimit"/></a></h1>
             <nav class="header_upper__nav">
                 <ul class="header_upper__menu">
                     <li><a href="{% url "user:what_melimit" %}">Melimitとは</a></li>

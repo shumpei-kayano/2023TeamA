@@ -27,39 +27,30 @@
     </div>
 </section>
 
-<div class="item--list">
-    <div class="item--card card--notice">
-        <a href="{% url "user:notice_detail1" %}">
-            <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-            <div class="card--content">
-                <p><span class="card--date-category">2020/00/00</span><span class="card--date-category">カテゴリー</span></p>
-                <h3 class="card--title">Card Title</h3>
-                <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
-            </div>
-        </a>
-    </div>
-    <div class="item--card card--notice">
-        <a href="#">
-            <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-            <div class="card--content">
-                <p><span class="card--date-category">2020/00/00</span><span class="card--date-category">カテゴリー</span></p>
-                <h3 class="card--title">Card Title</h3>
-                <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
-            </div>
-        </a>
-    </div>
-    <div class="item--card card--notice">
-        <a href="#">
-            <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-            <div class="card--content">
-                <p><span class="card--date-category">2020/00/00</span><span class="card--date-category">カテゴリー</span></p>
-                <h3 class="card--title">Card Title</h3>
-                <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
-            </div>
-        </a>
+<section class="notice-bottom">
+    <div class="item--list">
+        <div class="item--card card--notice">
+            <a href="{% url "user:notice_detail1" %}">
+                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+                <div class="card--content">
+                    <p><span class="card--date-category">2020/00/00</span><span class="card--date-category">カテゴリー</span></p>
+                    <h5 class="card--title">Melimit設立から1ヶ月</h5>
+                    <p class="card--text">皆様へ、私たちはこの度、ECサイトの設立から1ヶ月が経過しましたので、進捗報告をさせていただきます。</p>
+                </div>
+            </a>
+        </div>
+        <div class="item--card card--notice">
+            <a href="{% url "user:notice_detail2" %}">
+                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+                <div class="card--content">
+                    <p><span class="card--date-category">2020/00/00</span><span class="card--date-category">カテゴリー</span></p>
+                    <h5 class="card--title">ブロッコリー大量入荷のお知らせ</h5>
+                    <p class="card--text">この度、大量の新鮮なブロッコリーが入荷いたしましたことをお知らせいたします。</p>
+                </div>
+            </a>
+        </div>
     </div>
     <a href="{% url "user:notice" %}" class="btn--beige btn--middle mgt-10">お知らせ一覧</a>
 </section>
-</div>
 
 {% endblock %}

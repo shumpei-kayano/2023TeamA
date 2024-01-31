@@ -503,13 +503,14 @@ textarea,
   position: absolute;
 }
 
-h1 {
-  display: none;
-}
-
 header, footer {
   width: 100%;
   padding: 0 6%;
+}
+@media screen and (max-width: 768px) {
+  header, footer {
+    font-size: 1rem;
+  }
 }
 
 header {
@@ -525,6 +526,10 @@ header .user_name {
   }
 }
 
+.header_logo:hover, .footer_logo:hover {
+  opacity: 1;
+  cursor: pointer;
+}
 @media (max-width: 768px) {
   .header_logo, .footer_logo {
     margin: 1.5rem auto;
@@ -646,9 +651,10 @@ header .user_name {
 
 footer {
   background-color: #EBEBEB;
-  padding: 2rem;
-  font-size: 0.8rem;
+  padding-top: 2rem;
   color: #FFFFFF;
+  font-weight: bold;
+  font-size: 0.75rem;
 }
 
 .footer_upper {
@@ -1087,7 +1093,7 @@ button:hover {
   margin: 1rem 0;
 }
 .mypage__container {
-  flex-basis: calc(50% - 1rem);
+  flex-basis: calc(33% - 1rem);
   background-color: #EBEBEB;
   border-radius: 5px;
   margin: 0.5rem;

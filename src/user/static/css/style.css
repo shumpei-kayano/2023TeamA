@@ -503,13 +503,14 @@ textarea,
   position: absolute;
 }
 
-h1 {
-  display: none;
-}
-
 header, footer {
   width: 100%;
   padding: 0 6%;
+}
+@media screen and (max-width: 768px) {
+  header, footer {
+    font-size: 1rem;
+  }
 }
 
 header {
@@ -525,6 +526,10 @@ header .user_name {
   }
 }
 
+.header_logo:hover, .footer_logo:hover {
+  opacity: 1;
+  cursor: pointer;
+}
 @media (max-width: 768px) {
   .header_logo, .footer_logo {
     margin: 1.5rem auto;
@@ -646,9 +651,10 @@ header .user_name {
 
 footer {
   background-color: #EBEBEB;
-  padding: 2rem;
-  font-size: 0.8rem;
+  padding-top: 2rem;
   color: #FFFFFF;
+  font-weight: bold;
+  font-size: 0.75rem;
 }
 
 .footer_upper {
@@ -829,8 +835,11 @@ button:hover {
   aspect-ratio: 2/1;
 }
 .card--content {
-  text-align: center;
-  padding: 10% 0;
+  padding: 2.5%;
+  height: 10rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .card--content meter {
   width: 80%;
@@ -1209,8 +1218,6 @@ input:checked + .tab_class + .content_class {
 
 .notice-head {
   font-weight: bold;
-  margin-top: 5rem;
-  margin-bottom: 5rem;
   text-align: center;
   font-size: 1.5rem;
 }
@@ -1223,7 +1230,6 @@ input:checked + .tab_class + .content_class {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 11rem;
   margin-bottom: 5rem;
 }
 @media screen and (max-width: 768px) {
@@ -1232,7 +1238,7 @@ input:checked + .tab_class + .content_class {
   }
 }
 .notice-top-image {
-  width: 30%;
+  width: 45%;
   height: auto;
 }
 @media screen and (max-width: 768px) {
@@ -1243,17 +1249,20 @@ input:checked + .tab_class + .content_class {
   }
 }
 .notice-top-text {
+  width: 55%;
   display: flex;
   flex-direction: column;
-  margin-left: -2rem;
   text-align: center;
-  margin-bottom: 10rem;
 }
 @media (max-width: 768px) {
   .notice-top-text {
-    margin-top: -10rem;
+    width: 90%;
     margin-left: 0em;
   }
+}
+.notice-bottom {
+  text-align: center;
+  margin-bottom: 1rem;
 }
 
 .order-head {
@@ -1798,6 +1807,9 @@ input:checked + .tab_class + .content_class {
   padding: 1rem 0;
 }
 
+.cart__upper {
+  margin-bottom: 1rem;
+}
 .cart__title {
   margin-bottom: 20px;
   color: #333;
