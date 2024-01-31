@@ -1,5 +1,6 @@
 {% extends 'user/base.html' %}
 {% load static %}
+{% load priceslice_filters %}
 {% block title %}トップページ{% endblock %}
 {% block js %}{% endblock %}
 {% block css %}{% endblock %}
@@ -52,20 +53,20 @@
                             {% if forloop.counter <= 3 %}
                                 {% if random_sale.sale_type == 'general_sales' %}
                                     <div class="item--card card--blue">
-                                        <a href="#">
+                                        <a href="{% url 'user:general_products_detail' pk=random_sale.pk %}">
                                             
                                             <img src="{{ random_sale.product.product_image.url }}" alt="{{ random_sale.product.product_name }}" class="card--img">
                                             <p class="discount">ひとつめ {{ random_sale.discount_rate }}％</p>
                                             <div class="card--content">
                                                 <h3 class="card--title">{{ random_sale.product.product_name }}</h3>
-                                                <h5 class="card--discount">￥{{ random_sale.sale_price }}(税込)</h5>
+                                                <h4 class="card--discount">￥{{ random_sale.sale_price|to_currency }}(税込)</h4>
                                             </div>
                                         </a>
                                     </div>
                                 {% comment %} 商品が共同の場合 {% endcomment %}
                                 {% else %}
                                     <div class="item--card card--pink">
-                                        <a href="#">
+                                        <a href="{% url 'user:joint_products_detail' pk=random_sale.pk %}">
                                             <img src="{{ random_sale.product.product_image.url }}" alt="{{ random_sale.product.product_name }}" class="card--img">
                                             <p class="discount">{{ random_sale.discount_rate }}％</p>
                                             <div class="card--content">
