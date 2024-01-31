@@ -21,9 +21,11 @@ urlpatterns = [
     path('all-products/general/general-products_detail/<int:pk>', views.general_products_detail, name='general_products_detail'),
     path('all-products/joint/joint-products_detail/<int:pk>', views.joint_products_detail, name='joint_products_detail'),
     path('cart/', views.cart, name='cart'),
-    path('notice-detail/', views.notice_detail, name='notice_detail'),
+    path('notice-detail1/', views.notice_detail1, name='notice_detail1'),
+    path('notice-detail2/', views.notice_detail2, name='notice_detail2'),
+    path('notice-detail3/', views.notice_detail3, name='notice_detail3'),
     path('history/', views.history, name='history'),
-    path('order_completed/', views.order_completed, name='order_completed'),
+    # path('order_completed/', views.order_completed, name='order_completed'),
     path('favorite/', views.favorite, name='favorite'),
     path('pass_mail/', views.pass_mail, name='pass_mail'),
     path('cash-register/', views.cash_register, name='cash_register'),
@@ -32,4 +34,22 @@ urlpatterns = [
     path('guide/', views.guide, name='guide'),
     path('notice/', views.notice, name='notice'),
     path('sdgs/', views.sdgs, name='sdgs'),
+    path('cart/<int:pk>', views.add_to_cart, name='add_to_cart'),
+    path('update_cart/',views.update_cart,name='update_cart'),
+    path('delete_item/',views.delete_cart, name='delete_cart'),
+    path('category-products/', views.category_products, name='category_products'),
+    # テスト用
+    # 一覧表示
+    path('products/', views.product_list, name='product_list'),
+    # 購入数選択
+    path('select/<int:product_id>/', views.select_product, name='select_product'),
+    # 確認画面
+    path('confirm/<int:product_id>/', views.confirm_order, name='confirm_order'),
+    # 購入
+    # path('order/<int:product_id>/', views.order_product, name='order_product'),
+    path('order/', views.order_product, name='order_completed'),
+    # 購入完了
+    path('complete/', views.order_complete, name='order_complete'),
+    # エラー
+    path('error/', views.error_view, name='error'),
 ]

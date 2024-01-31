@@ -1,64 +1,78 @@
 // へッダー・フッターの共通CSSを記述
-h1{
-  display: none;
-}
 header , footer {
   width: 100%;
+  padding: 0 6%;
+  @media screen and (max-width: 768px){
+    font-size: 1rem;
+  }
 }
+
 header {
   .user_name {
     text-align: center;
     font-size: 0.5rem;
   }
   background-image: linear-gradient(180deg, $main_color 0%, $melimit_white 100%);
-  padding: 0 5rem;
   @media (max-width: 768px) {
     padding: 0 2rem;
   }
 }
 .header_logo,.footer_logo {
-  width: 7.5rem;
-  object-fit: cover;
+  &:hover {
+    opacity: 1;
+    cursor: pointer;
+}
   @media (max-width: 768px) {
-    width: 5rem;
+    margin: 1.5rem auto;
   }
 }
 .header_upper {
   font-weight: bold;
   font-size: 0.75rem;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   padding-top: 0.1rem;
-  @media (max-width: 768px) {
-      margin: 0 2rem;
-  }
   &__nav{
-    padding-left: 5rem;
     li {
       display: inline-block;
-      margin: 0 1rem;
       color: $melimit_black;
+      padding: 0.5rem 1rem;
       &:hover {
         opacity: 0.7;
       }
     }
   }
+  &__menu {
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+  }
   &__icon {
     display: flex;
-    justify-content:end;
-    align-items: center;
-    flex-wrap: wrap;
+    @media (max-width: 768px) {
+      flex-flow: column;
+      margin: 0 auto;
+    }
+    &__line {
+      display: flex;
+      justify-content: space-around;
+    }
     .header_icon {
       width: 2rem;
       object-fit: cover;
       margin: 0 1rem;
+      @media screen and (max-width: 768px) {
+        margin: 0 auto;
+      }
     }
   }
 }
 
 .header_down {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   .hidden {
@@ -68,10 +82,24 @@ header {
     width: 65%;
     padding-left: 0;
     display: flex;
+    flex-wrap: wrap-reverse;
+    align-items: center;
     justify-content: space-between;
+    @media (max-width: 768px) {
+      width: 100%;
+    }
   }
   &__category {
-    padding-left: 0;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    padding: 0.75rem;
+    option {
+      font-weight: bold;
+      background: $melimit_white;
+      color: $melimit_black;
+    }
   }
   &__menu-container {
     padding-left: 0;
@@ -92,14 +120,13 @@ header {
     }
   }
   &__menu-btn {
-    font-size: 0.8rem;
     border-radius: 5px;
     text-align: center;
     display: inline-block;
     padding: 0.5rem 1rem;
   }
-  &__serch {
-    width: 40%;
+  &__search {
+    margin: 1rem 0;
   }
   &__search-input {
     height: 2.2rem;
@@ -114,10 +141,11 @@ header {
 
 footer {
   background-color: $melimit_gray;
-  padding: 2rem;
+  padding-top: 2rem;
   // text-align: left;
-  font-size: 0.8rem;
   color: $melimit_white;
+  font-weight: bold;
+  font-size: 0.75rem;
 }
 
 .footer_upper {
@@ -145,16 +173,14 @@ body {
   font-family: 'Noto Sans JP', sans-serif;
   color: $melimit_black;
   background-color: $melimit_white;
-  margin: 0 auto;
+  margin: 0 auto
 }
 main{
   background-color: $melimit_white;
-  max-width: 1200px;
+  max-width: 90%;
   margin: 0 auto;
-  width: 87%;
 
 @media (max-width: 768px) {
-  max-width: 100%;
   margin: 1rem auto;
 }
 }

@@ -75,8 +75,10 @@
                 {{ request.session.registration_data.taste }}
             </span>
         </div>
+        <div class="signup__btn-group">
                 <button class="btn btn--beige" type="submit">登録</button>
+                <a class="btn btn--gray" href="{% url 'accounts:user_touroku' %}">キャンセル</a>
+        </div>
         </form>
-        <a class="btn btn--gray" href="{% url 'accounts:user_touroku' %}">キャンセル</a>
     </div>
 {% endblock %}

@@ -119,18 +119,19 @@
   }
 }
 .shipment {
-  position: absolute;
   top: 850px;
   left: 265px;
   background-color: var(--color);
   border-left: 5px solid var(--color-black);
   box-sizing: border-box;
-  width: 992px;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
   padding: 8px;
+  position: relative; /* positionをrelativeに変更 */
+  width: 100%; /* 画面幅いっぱいに */
+  flex-wrap: wrap; /* 画面が狭い場合に折り返すために追加 */
 }
 
 .shipment-btn {
@@ -160,17 +161,16 @@
 }
 
 .shipment-modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .shipment-modal-content {
@@ -178,9 +178,11 @@
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 60%;
-  height: 60%;
+  width: 80%; /* 画面が狭い場合に適切な幅に変更 */
+  max-width: 600px; /* 画面が広い場合に過度な幅にならないように制限 */
+  height: auto; /* 高さを自動調整 */
   border-radius: 5px;
+  box-sizing: border-box; /* box-sizingを追加 */
 }
 
 .close {
@@ -198,40 +200,43 @@
 }
 
 .shipment-modal-label {
-  position: absolute;
-  top: 210px;
-  left: 400px;
+  position: relative; /* positionをrelativeに変更 */
+  top: auto; /* 固定された位置を削除 */
+  left: auto; /* 固定された位置を削除 */
   font-size: var(--font-size-sm);
 }
 
 .shipment-modal-input {
   position: relative;
-  top: 60px;
-  left: 15%;
+  top: auto; /* 固定された位置を削除 */
+  left: auto; /* 固定された位置を削除 */
   background-color: var(--color);
   border: 1px solid var(--color-gainsboro-100);
   box-sizing: border-box;
   border-radius: 2px;
-  width: 500px;
+  width: 100%; /* 画面幅いっぱいに */
   height: 50px;
   padding: 10px;
   cursor: pointer;
 }
 
+.shipment-modal-btn {
+  text-align: center;
+}
+
 .shipment-modal-btn-con {
-  position: absolute;
   font-size: medium;
-  top: 320px;
   border-radius: var(--br-9xs);
   background-color: var(--color-black);
+  top: auto;
   width: 200px;
-  left: 42%;
   font-weight: bold;
   box-sizing: border-box;
   cursor: pointer;
   border: none;
   padding: 15px;
   color: #fff;
+  margin-top: 20px; /* 適切なスペースを追加 */
 }
 
 .shipment-modal-btn-con:hover {
@@ -488,6 +493,17 @@ tbody td {
   font-family: var(--font-noto-sans);
 }
 
+@media screen and (max-width: 800px) {
+  .search-group {
+    position: relative;
+    left: -42.5%;
+    top: 40px;
+  }
+  .table-order-history {
+    transform: scale(0.8);
+    transform-origin: left top;
+  }
+}
 .consumer-info-naiyou {
   position: absolute;
   top: 350px;
@@ -845,11 +861,15 @@ thead {
   background-color: var(--color-whitesmoke-100);
   border-bottom: 1px solid var(--color-gainsboro-100);
   box-sizing: border-box;
-  width: 992px;
+  width: 990px;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
   font-weight: bold;
+}
+
+thead td {
+  padding: var(--padding-base);
 }
 
 .head-product-number,
@@ -887,17 +907,6 @@ thead {
   width: 120px;
 }
 
-tbody tr {
-  border-bottom: 1px solid var(--color-gainsboro-100);
-  width: 992px;
-}
-
-tbody td {
-  padding: var(--padding-base);
-  gap: var(--gap-5xl);
-  cursor: pointer;
-}
-
 #checkbox {
   margin: 5px;
 }
@@ -920,14 +929,12 @@ tbody td {
   width: 140px;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .product-name {
   width: 230px;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .inventory,
@@ -948,7 +955,6 @@ tbody td {
   position: relative;
   justify-content: center;
   text-align: center;
-  padding: var(--padding-base);
   gap: var(--gap-5xl);
   box-sizing: border-box;
   flex-direction: row;
@@ -987,7 +993,7 @@ tbody td {
   position: absolute;
   top: 100px;
   right: 10%;
-  left: 63.2%;
+  left: 70%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -1179,6 +1185,33 @@ a {
   margin-top: 3px;
 }
 
+tbody tr {
+  border-bottom: #aaa 1px solid;
+  width: 992px;
+}
+
+tbody td {
+  padding: 0px;
+  gap: var(--gap-5xl);
+  cursor: pointer;
+}
+
+@media screen and (max-width: 800px) {
+  .table-product-manage {
+    transform: scale(0.8);
+    transform-origin: left;
+    top: 170px;
+  }
+  .create-btn-blue, .create-btn-pink {
+    top: 200px;
+  }
+  .create-btn-blue {
+    left: 265px;
+  }
+  .create-btn-pink {
+    left: 520px;
+  }
+}
 .product-manage-text {
   position: absolute;
   top: 0;
@@ -3481,6 +3514,48 @@ select {
   margin: 10px;
 }
 
+/* レスポンシブ対応 */
+@media screen and (max-width: 800px) {
+  .product-name-box, .category-box {
+    width: 80%;
+    width: 100%;
+    height: 90px;
+    text-align: left;
+    flex-direction: column;
+    margin-bottom: 10px;
+    border-style: none;
+  }
+  .product-name-box-title, .category-box-title {
+    width: 100%;
+    text-align: left;
+    border-bottom: none;
+  }
+  .product-name-box-input, .category-box-input, .price-box-input, .listprice-box-input, .quantity-box-input, .discount-box-input, .period-box-input, .stock-box-input, .shipping-box-input, .weight-box-input, .expiration-box-input, .image-box-input, .description-box-input {
+    width: 100%;
+    margin-right: auto;
+    border-bottom: none;
+  }
+  .group-purchase-button, .general-purchase-button {
+    position: relative;
+    left: 0px;
+  }
+  .product-delete-button, .group-product-button, .general-product-button {
+    transform: scale(0.7);
+  }
+  .product-delete-button {
+    position: relative;
+    bottom: -55px;
+    left: -50px;
+  }
+  .group-edit-button {
+    left: 180px;
+    top: 94%;
+  }
+  .general-edit-button {
+    left: 180px;
+    top: 93%;
+  }
+}
 .ue-title {
   top: 10%;
   left: 300px;
@@ -3721,6 +3796,27 @@ select {
   padding: var(--padding-xs) var(--padding-base);
 }
 
+/* レスポンシブ対応 */
+@media screen and (max-width: 800px) {
+  .store-info-box {
+    width: 100%;
+    height: 90px;
+    text-align: left;
+    flex-direction: column;
+    margin-bottom: 10px;
+    border-style: none;
+  }
+  .store-info-box-title {
+    width: 100%;
+    text-align: left;
+  }
+  .store-info-box-input {
+    margin-right: auto;
+  }
+  .store-info-button {
+    margin-right: 50%;
+  }
+}
 .store-input-active {
   overflow: hidden;
   width: 700px;
@@ -3838,7 +3934,7 @@ ul {
   border: 1px solid #888;
   width: 60%;
   overflow: auto;
-  height: 170%;
+  height: 220%;
   color: #333;
   border-radius: 5px;
 }

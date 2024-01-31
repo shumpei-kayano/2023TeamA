@@ -63,3 +63,27 @@
     align-items: flex-start;
     padding: var(--padding-xs) var(--padding-base);
 }
+
+
+/* レスポンシブ対応 */
+@media screen and (max-width: 800px) {
+    .store-info-box {
+        width: 100%;
+        height: 90px;
+        text-align: left;
+        flex-direction: column;
+        margin-bottom: 10px;
+        border-style: none;
+    }
+    .store-info-box-title {
+        width: 100%;
+        // height: 60px;
+        text-align: left;
+    }
+    .store-info-box-input {
+        margin-right: auto;
+    }
+    .store-info-button {
+        margin-right: 50%;
+    }
+}

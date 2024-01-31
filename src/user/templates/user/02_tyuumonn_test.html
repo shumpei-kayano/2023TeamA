@@ -1,0 +1,40 @@
+{% load math_filters %}
+{% comment %} <!-- templates/select_product.html -->
+<h2>{{ product.product_name }}</h2>
+<p>Price per item: {{ product.product_price }}</p>
+<form method="post" action="{% url 'user:confirm_order' product.id %}">
+    {% csrf_token %}
+    Quantity: <input type="number" id="quantity" name="quantity" value="1" min="1" onchange="updateTotal()">
+    <p>Total: <span id="total">{{ product.product_price }}</span></p>
+    <button type="submit">Confirm Order</button>
+</form>
+
+<script>
+function updateTotal() {
+    var price = {{ product.product_price }};
+    var quantity = document.getElementById('quantity').value;
+    document.getElementById('total').innerText = price * quantity;
+}
+</script> {% endcomment %}
+
+<!-- templates/select_product.html -->
+<h2>{{ product.product_name }}</h2>
+<p>単価: {{ product.product_price }}</p>
+<p>CO2削減量(一商品あたり): {{ product.weight|multiply:0.4 }}</p>
+<form method="post" action="{% url 'user:confirm_order' product.id %}">
+    {% csrf_token %}
+    購入個数: <input type="number" id="quantity" name="quantity" value="1" min="1" max="{{ product.sale.stock }}" onchange="updateTotalAndCO2()">
+    <p>合計金額: <span id="total">{{ product.product_price }}</span></p>
+    <p>合計CO2削減量: <span id="total_co2">{{ product.weight|multiply:0.4 }}</span></p>
+    <button type="submit">注文確認</button>
+</form>
+
+<script>
+function updateTotalAndCO2() {
+    var price = {{ product.product_price }};
+    var co2PerItem = {{ product.weight|multiply:0.4 }};
+    var quantity = document.getElementById('quantity').value;
+    document.getElementById('total').innerText = price * quantity;
+    document.getElementById('total_co2').innerText = co2PerItem * quantity;
+}
+</script>

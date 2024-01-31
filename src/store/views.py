@@ -6,26 +6,205 @@ from django.shortcuts import render, redirect, get_object_or_404
 from accounts.forms import MelimitStoreLoginForm
 from django.contrib.auth import authenticate, login
 from .models import Product, Sale, Threshold
+from user.models import OrderHistory
+from accounts.models import MelimitStore
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import View
 from django.http import HttpResponseBadRequest
+from django.db.models import Sum
+from django.db.models.functions import TruncYear, TruncMonth, TruncDay, ExtractYear
+from datetime import datetime, timedelta
+from django.utils import timezone
+from dateutil.relativedelta import relativedelta
 
 # Create your views here.
 def index(request):
+    # ログインしているユーザーを取得する
+    mixin = MelimitModelMixin()
+    mixin.request = request
+    user = mixin.get_melimitmodel_user()
+    # modelからデータを取得する
+    print(f"user : {user.__dict__}")
+    print(f"user.customuser_ptr_id : {user.customuser_ptr_id}")
+    # store = MelimitStore.objects.get(user=user.customuser_ptr_id)
+
+    # 更新ボタンが押されたか、またはセッションデータが存在しない場合にデータを取得
+    if 'update' in request.POST or 'context_co2_amount' not in request.session:
+        # 現在の年、月、日を取得
+        now = timezone.now()
+
+        # 4年前から現在までの年間のデータを取得
+        yearly_data = OrderHistory.objects.filter(
+            orderhistory_store_id=user.customuser_ptr_id, 
+            order_date__year__gte=now.year-4
+        ).annotate(
+            year=ExtractYear('order_date')
+        ).values(
+            'year'
+        ).annotate(
+            total_co2=Sum('co2'), 
+            total_amount=Sum('amount')
+        ).order_by('year')
+        print(f"最初のyearly_data : {yearly_data}")
+        # relativedeltaを使用した方が、年の計算が楽になるかもしれない
+        # yearly_data_dict = {year: {'total_co2': 0, 'total_amount': 0} for year in range(now.year-4, now.year+1)}
+        # relativedeltaを使用して、年の計算を行う
+        yearly_data_dict = {}
+        for i in range(4, -1, -1):
+            year = (now - relativedelta(years=i)).year
+            yearly_data_dict[year] = {'total_co2': 0, 'total_amount': 0}
+        print(f"空のyearly_data_dict : {yearly_data_dict}")
+        for data in yearly_data:
+            yearly_data_dict[data['year']] = {'total_co2': data['total_co2'], 'total_amount': data['total_amount']}
+        print(f"yearly_data_dict : {yearly_data_dict}")
+        print(f"yearly_data_dict[2020]['total_co2'] : {yearly_data_dict[2020]['total_co2']}")
+        # yearly_data_dictの'total_co2'リストと'total_amount'リストを作成
+        yearly_data_co2_list = [data['total_co2'] for year, data in yearly_data_dict.items()]
+        # 要素を全て整数型に変換
+        yearly_data_co2_list = list(map(int, yearly_data_co2_list))
+        print(f"yearly_data_co2_list : {yearly_data_co2_list}")
+        yearly_data_amount_list = [data['total_amount'] for year, data in yearly_data_dict.items()]
+        # 要素を全て整数型に変換
+        yearly_data_amount_list = list(map(int, yearly_data_amount_list))
+        print(f"yearly_data_amount_list : {yearly_data_amount_list}")
+        # yearly_data_list = [{'year': year, 'total_co2': data['total_co2'], 'total_amount': data['total_amount']} for year, data in yearly_data_dict.items()]
+        # print(f"yearly_data_list : {yearly_data_list}")
+
+        # 1年前から現在までの月間のデータを取得
+        monthly_data = OrderHistory.objects.filter(
+            orderhistory_store_id=user.customuser_ptr_id, 
+            order_date__gte=now-timedelta(days=365)
+            ).annotate(
+                month=TruncMonth('order_date')
+            ).values(
+                'month'
+            ).annotate(
+                total_co2=Sum('co2'), 
+                total_amount=Sum('amount')
+            ).order_by('month')
+        print(f"最初のmonthly_data : {monthly_data}")
+        monthly_data_dict = {}
+        # 今月を最後の要素として過去11ヶ月分のデータを格納する空の辞書を作成
+        # relativedeltaを使用した方が、月の計算が楽になるかもしれない
+        # for month in range(now.month-11, now.month+1):
+        #     if month <= 0:
+        #         month += 12
+        #     monthly_data_dict[month] = {'total_co2': 0, 'total_amount': 0}
+        # relativedeltaを使用して、月の計算を行う
+        # 記述によっては数年前の等の計算も自動で行ってくれるはず
+        for i in range(11, -1, -1):
+            month = (now - relativedelta(months=i)).month
+            monthly_data_dict[month] = {'total_co2': 0, 'total_amount': 0}
+        print(f"空のmonthly_data_dict : {monthly_data_dict}")
+        for data in monthly_data:
+            monthly_data_dict[data['month'].month] = {'total_co2': data['total_co2'], 'total_amount': data['total_amount']}
+        print(f"monthly_data_dict : {monthly_data_dict}")
+        # monthly_data_dictの'total_co2'リストと'total_amount'リストを作成
+        monthly_data_co2_list = [data['total_co2'] for month, data in monthly_data_dict.items()]
+        # 要素を全て整数型に変換
+        monthly_data_co2_list = list(map(int, monthly_data_co2_list))
+        print(f"monthly_data_co2_list : {monthly_data_co2_list}")
+        monthly_data_amount_list = [data['total_amount'] for month, data in monthly_data_dict.items()]
+        # 要素を全て整数型に変換
+        monthly_data_amount_list = list(map(int, monthly_data_amount_list))
+        print(f"monthly_data_amount_list : {monthly_data_amount_list}")
+
+        # 1週間前から現在までの日間のデータを取得
+        daily_data = OrderHistory.objects.filter(
+            orderhistory_store_id=user.customuser_ptr_id, 
+            order_date__gte=now-timedelta(days=7)
+            ).annotate(
+                day=TruncDay('order_date')
+                ).values(
+                    'day'
+                ).annotate(
+                    total_co2=Sum('co2'), 
+                    total_amount=Sum('amount')
+                ).order_by('day')
+        print(f"最初のdaily_data : {daily_data}")
+        # 今日を最後の要素として過去6日分のデータを格納する空の辞書を作成
+        daily_data_dict = {}
+        # timedelta(days=i)でi日前の日付を取得、月初めや閏年の場合は自動で調整される
+        for i in range(6, -1, -1):
+            day = (now - timedelta(days=i)).day
+            daily_data_dict[day] = {'total_co2': 0, 'total_amount': 0}
+        print(f"空のdaily_data_dict : {daily_data_dict}")
+        for data in daily_data:
+            daily_data_dict[data['day'].day] = {'total_co2': data['total_co2'], 'total_amount': data['total_amount']}
+        print(f"daily_data_dict : {daily_data_dict}")
+        # daily_data_dictの'total_co2'リストと'total_amount'リストを作成
+        daily_data_co2_list = [data['total_co2'] for day, data in daily_data_dict.items()]
+        # 要素を全て整数型に変換
+        daily_data_co2_list = list(map(int, daily_data_co2_list))
+        print(f"daily_data_co2_list : {daily_data_co2_list}")
+        daily_data_amount_list = [data['total_amount'] for day, data in daily_data_dict.items()]
+        # 要素を全て整数型に変換
+        daily_data_amount_list = list(map(int, daily_data_amount_list))
+        print(f"daily_data_amount_list : {daily_data_amount_list}")
+
+        context_co2_amount = {
+            'yearly_data_co2_list': yearly_data_co2_list,
+            'yearly_data_amount_list': yearly_data_amount_list,
+            'monthly_data_co2_list': monthly_data_co2_list,
+            'monthly_data_amount_list': monthly_data_amount_list,
+            'daily_data_co2_list': daily_data_co2_list,
+            'daily_data_amount_list': daily_data_amount_list,
+        }
+        # セッションにデータを保存
+        request.session['context_co2_amount'] = context_co2_amount
+        print(f"セッションに保存したcontext_co2_amount : {context_co2_amount}")
+    else:
+        # セッションからデータを取得
+        context_co2_amount = request.session['context_co2_amount']
+        print(f"セッションから取得したcontext_co2_amount : {context_co2_amount}")
     print('インデックス')
-    return render(request, 'store/index.html')
+    return render(request, 'store/index.html', {'user': user, 'context_co2_amount': context_co2_amount,})
+
 # 発送済み注文履歴(modelは注文履歴モデル、発送済みフラグtrueのものを表示)
 def order_history_view(request):
-    return render(request, 'store/order-history.html')
+    # ログインしているユーザーの注文履歴を取得する
+    mixin = MelimitModelMixin()
+    mixin.request = request
+    store = mixin.get_melimitmodel_user()
+    order_histories = OrderHistory.objects.filter(orderhistory_store=store)
+    print(f"order_histories : {order_histories}")
+    # order_historiesからその"発送済みフラグ"がfalseのデータを全て取得する
+    order_histories = order_histories.filter(is_shipped=True)
+    return render(request, 'store/order-history.html', {'order_histories': order_histories,})
+
 # 発送済み注文履歴ページの中身
-def order_history_content_view(request):
-    return render(request, 'store/order-history-content.html')
+def order_history_content_view(request, order_id):
+    # URLから注文IDを取得し、そのIDに対応するOrderHistoryのインスタンスを取得する
+    order_history = get_object_or_404(OrderHistory, id=order_id)
+    return render(request, 'store/order-history-content.html', {'order_history': order_history,})
+
 # 未発送注文一覧ページ(modelは注文履歴モデル、発送済みフラグfalseのものを表示)
 def order_not_shipped_view(request):
-    return render(request, 'store/order-not-shipped.html')
+    # ログインしているユーザーの注文履歴を取得する
+    mixin = MelimitModelMixin()
+    mixin.request = request
+    store = mixin.get_melimitmodel_user()
+    order_histories = OrderHistory.objects.filter(orderhistory_store=store)
+    print(f"order_histories : {order_histories}")
+    # order_historiesからその"発送済みフラグ"がfalseのデータを全て取得する
+    order_histories = order_histories.filter(is_shipped=False)
+    return render(request, 'store/order-not-shipped.html', {'order_histories': order_histories,})
+
 # 未発送注文一覧ページの中身
-def order_not_shipped_content_view(request):
-    return render(request, 'store/order-not-shipped-content.html')
+def order_not_shipped_content_view(request, order_id):
+    # URLから注文IDを取得し、そのIDに対応するOrderHistoryのインスタンスを取得する
+    order_history = get_object_or_404(OrderHistory, id=order_id)
+    return render(request, 'store/order-not-shipped-content.html', {'order_history': order_history,})
+
+# 注文履歴を未発送から発送済みに変更する
+def order_not_shipped_to_shipped_view(request, order_id):
+    # URLから注文IDを取得し、そのIDに対応するOrderHistoryのインスタンスを取得する
+    order_history = get_object_or_404(OrderHistory, id=order_id)
+    # 注文履歴の発送済みフラグをtrueに変更する
+    order_history.is_shipped = True
+    order_history.save()
+    return redirect('store:order-not-shipped')
+
 # パスワード再設定用のメール送信ページ
 def pass_mail_view(request):
     return render(request, 'store/pass-mail.html')
@@ -318,18 +497,19 @@ def store_login_view(request):
                 login(request, user)
                 print('ログイン成功')
                 return redirect('store:index')
-            elif user.__class__.__name__ != 'MelimitStore':
-                print('ログイン失敗')
-                return redirect('store:store_login')
+            # elif user.__class__.__name__ != 'MelimitStore':
+            #     print('ログイン失敗')
+            #     # 店舗側以外のユーザーがログインしようとした場合は、エラーメッセージを表示する
+            #     form.add_error(None, '店舗の方以外はログインできません。')  # ユーザーが認証できない場合のエラーメッセージ
             else:
                 # フォームが無効な場合の処理をここに書く
                 print('pass')
                 form.add_error(None, 'メールアドレスまたはパスワードが間違っています。')  # ユーザーが認証できない場合のエラーメッセージ
-                return render(request, 'account/store_login.html', {'form': form})
+                # return render(request, 'account/store_login.html', {'form': form})
         else:
             print(form.errors)
             print('rogin-error')
-            return redirect('store:store_login')
+        return render(request, 'account/store_login.html', {'form': form})
     else:
         form = MelimitStoreLoginForm()
 
@@ -342,6 +522,7 @@ def store_login_view(request):
         return render(request, 'account/store_login.html', {'form': form})
 
 # ログイン後の店舗管理画面
+# indexを使用している為、未使用
 def store_base_view(request):
     print('view:store_base_view')
     mixin = MelimitModelMixin()

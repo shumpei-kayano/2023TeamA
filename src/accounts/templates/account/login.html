@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="login-container">
-<h1>ログインフォーム</h1>
+<h2>ログインフォーム</h2>
 
 <form class="login-form" method="POST" action="{% url 'account_login_kkkk' %}">
   {% csrf_token %}
@@ -13,16 +13,16 @@
   <p class="to-forgot-pass"><a href="{% url 'accounts:password_reset' %}">パスワードを忘れた場合</a></p>
 
   <div class="login-btn-container">
-    <button class="btn--beige login-btn" type="submit">ログイン</button>
+    <button class="btn--beige btn" type="submit">ログイン</button>
   </div>
 </form>
 <div class="login-bottom-container">
   <!-- 店舗ログインページへ -->
   <h2 class="link-title">売り手の方（店舗）はこちら</h2>
-  <p class="to-store-login"><a href="{% url "store_login" %}">店舗ログインページへ</a></p>
+  <p class="to-store-login"><a href="{% url 'store:store_login' %}">店舗ログインページへ</a></p> 
 
   <!-- 新規登録ページへ -->
-  <h2 class="link-title">会員登録がまだの方はこちら</h2>
+  <h3 class="link-title">会員登録がまだの方はこちら</h3>
   <p class="here-signup"><a href="{% url "accounts:create_root" %}">新規会員登録（無料）</a></p>
 
   <!-- Melimitとは -->

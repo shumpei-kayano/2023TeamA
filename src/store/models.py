@@ -1,6 +1,8 @@
 from django.db import models
 from accounts.models import MelimitStore
 from django.utils import timezone
+from accounts.models import *
+from django.db.models import Sum
 
 # Create your models here.
 
@@ -41,6 +43,7 @@ class Sale(models.Model):
     SALE_CHOICES = (
         ('general_sales', '一般商品'),
         ('melimit_sales', '共同販売商品'),
+        # 文字数を揃える必要あり
     )
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -90,3 +93,53 @@ class Threshold(models.Model):
     # 割引率とsale_priceから割引額を計算する関数
     def discount_amount(self):
         return round(self.sale.sale_price * self.discount_rate / 100)
+    
+class ThresholdCheck(models.Model):
+    # 個数　カート　レジから セッション
+    count = models.IntegerField(verbose_name='個数')
+    #販売ID sale
+    sale = models.ForeignKey(Sale, on_delete=models.CASCADE)
+    #顧客ID 
+    user = models.ForeignKey(MelimitUser, on_delete=models.CASCADE)
+    #しきい値ID threshold
+    threshold = models.ForeignKey(Threshold, on_delete=models.CASCADE)
+    #金額 (sale_price - discount_amount) * 個数cnt
+    price = models.IntegerField(verbose_name='金額')
+    #注文日 
+    order_date = models.DateTimeField(default=timezone.now)
+    #閾値クリアフラグ クリアされたら切り替わり見えなくなる
+    is_threshold_clear = models.BooleanField(default=False)
+    # def __str__(self):
+    #     return str(self.id)
+        
+    # 計算　マイページに商品が行くたびに閾値をチェックする
+    def save(self, *args, **kwargs):
+        self.price = int((self.sale.sale_price - self.threshold.discount_amount()) * self.count)
+        self.sale.save()
+        super().save(*args, **kwargs)
+        
+    #同じ販売IDの数を計算。閾値がクリアされたときの処理
+    def thresholds(self):
+        #表示期間切れの商品確認はスケジューラーで行う
+        #行数は人数
+        # th_ch = ThresholdCheck.objects.filter(sale=self.sale).count()
+        #辞書が返ってくる
+        #販売IDの数for文
+        #今のDB内の個数
+        sub_count = ThresholdCheck.objects.filter(sale=self.sale).aggregate(Sum('count'))['count__sum']
+        total_count = sub_count
+        print('total_count:',total_count)
+        print('閾値用個数：',self.threshold.threshold)
+        # return total_count
+        #閾値クリア時
+        if total_count > self.threshold.threshold:
+            print('total_count:',total_count)
+            print('閾値用個数：',self.threshold.threshold)
+            final_price = self.sale.sale_price - self.threshold.discount_amount()
+            #リロードで画面から消えるか要検証
+            th_ob = ThresholdCheck.objects.filter(sale=self.sale)
+            th_ob.update(is_threshold_clear=True)
+            return (final_price,th_ob)
+        else:
+            return (None,None)
+        # self.save()

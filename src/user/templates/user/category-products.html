@@ -1,0 +1,56 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% block title %}{% endblock title %}
+{% block content %}
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            var urlParams = new URLSearchParams(window.location.search);
+            var category = urlParams.get('category');
+            var categoryName = '';
+            if (category === '1') {
+                categoryName = '肉';
+            } else if (category === '2') {
+                categoryName = '野菜';
+            } else if (category === '3') {
+                categoryName = '果物';
+            } else if (category === '4') {
+                categoryName = '海産';
+            }
+            // ページのタイトルを設定
+            document.title = categoryName;
+
+            // h2タグにカテゴリ名を設定
+            var categoryTitleElement = document.getElementById('category-title');
+            categoryTitleElement.textContent = categoryName + 'の商品';
+        });
+    </script>
+    <section>
+        <!-- h2タグにIDを追加 -->
+        <h2 id="category-title" class="center"></h2>
+        <form>
+            <label>
+                sort by&colon;
+                <select class="product-sort">
+                    <option>新規商品</option>
+                    <option>価格順（昇順）</option>
+                    <option>価格順（降順）</option>
+                </select>
+            </label>
+        </form>
+        <div class="item--list">
+            {% comment %} {% for sale in sales_by_choices.general_sales %} {% endcomment %}
+            {% for sale in sales %}
+                <div class="item--card card--blue">
+                    <a href="{% url 'user:general_products_detail' pk=sale.pk %}">
+                        <img src="{{ sale.product.product_image.url }}" alt="{{ sale.product.product_name }}" class="card--img">
+                        <p class="discount">{{ sale.discount_rate }}％OFF</p>
+                        <div class="card--content">
+                            <h3 class="card--title">{{ sale.product.product_name }}</h3>
+                            <h4 class="card--discount">￥{{ sale.sale_price }}(税込)</h4>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock content %}

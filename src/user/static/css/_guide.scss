@@ -7,14 +7,16 @@
         font-size: 30px;
     }
 
-    &-one {
+    &-one, &-two, &-three {
         display: flex;
         justify-content: space-between;
         align-items: center;
+
         h3 {
             font-size: 60px;
             flex: 1;
         }
+
         img {
             width: 500px;
             height: auto;
@@ -24,33 +26,25 @@
 
     &-two {
         width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
         background-color: $main_color;
-        img {
-            width: 500px;
-            height: auto;
-            border-radius: 50%;
-        }
-        h3 {
-            font-size: 60px;
-            flex: 1;
-        }
     }
 
-    &-three {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        h3 {
-            font-size: 60px;
-            flex: 1;
+    @media (max-width: 600px) {
+        &-one, &-two, &-three {
+            flex-direction: column;
+            flex-wrap: wrap;
+            align-items: normal;
+
+            h3 {
+                font-size: 30px;
+            }
+
+            img {
+                width: 100%;
+            }
         }
-        img {
-            width: 500px;
-            height: auto;
-            border-radius: 50%;
+        &-two {
+            flex-direction: column-reverse;
         }
     }
 }

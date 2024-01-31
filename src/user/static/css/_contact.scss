@@ -2,7 +2,6 @@
     &-container {
         width: 87%;
         margin: 2rem auto;
-
         @media (max-width: 768px) {
             width: 100%;
         }
@@ -22,6 +21,9 @@
     &__form-group {
         margin-bottom: 50px;
         position: relative;
+        @media screen and (max-width: 768px) {
+            margin: 0;
+        }
 
         @media (max-width: 768px) {
             margin-bottom: 30px;
@@ -40,6 +42,13 @@
                 width: 10%;
                 padding: 0.5rem 0;
                 margin-right: 2rem;
+                @media (max-width: 768px) {
+                    position: static;
+                    display: block;
+                    width: 100%;
+                    padding: 0;
+                    margin: 0;
+                }
             }
         }
         input, textarea {
@@ -52,14 +61,19 @@
             line-height: 1.5;
             position: relative;
             top: -2rem;
+            margin-left: 5rem;
 
             @media (max-width: 768px) {
                 top: 0;
+                margin-left: 0;
             }
         }
         label {
             margin: 15rem;
             line-height: 1.5;
+            @media screen and (max-width: 768px) {
+                margin: 0;
+            }
         }
         .contact__input-group {
             position: absolute;

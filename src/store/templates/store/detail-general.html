@@ -50,7 +50,7 @@
               <div class="title-text">販売価格</div>
           </div>
           <div class="price-box-input">
-              <span>{{ sale.sale_price }}</span>
+              <span>{{ sale.sale_price }} 円</span>
           </div>
           </div>
 
@@ -60,7 +60,7 @@
               <div class="title-text">定価</div>
           </div>
           <div class="listprice-box-input">
-              <span>{{ sale.product.product_price }}</span>
+              <span>{{ sale.product.product_price }} 円</span>
           </div>
           </div>
 
@@ -70,7 +70,7 @@
               <div class="title-text">表示期間</div>
           </div>
           <div class="period-box-input">
-              <span>開始：{{ sale.sale_end }}　～　終了：{{ sale.sale_end }}</span>
+              <span>開始：{{ sale.sale_end }} ～ 終了：{{ sale.sale_end }}</span>
           </div>
           </div>
 
@@ -80,7 +80,7 @@
               <div class="title-text">在庫数</div>
           </div>
           <div class="stock-box-input">
-              <span>{{ sale.stock }}</span>
+              <span>{{ sale.stock }} 個</span>
           </div>
           </div>
 
@@ -100,7 +100,7 @@
               <div class="title-text">重量</div>
           </div>
           <div class="weight-box-input">
-              <span>{{ sale.product.weight }}　グラム</span>
+              <span>{{ sale.product.weight }} g(グラム)</span>
           </div>
           </div>
 
@@ -136,7 +136,7 @@
 
           <!-- リンク3種類 -->
           <div class="general-product-button">
-              <a href="#!" class="btn-product">実際の商品ページを見る</a>
+              <a href="#!" class="btn-product" style="color: #fff">実際の商品ページを見る</a>
           </div>
 
           <div class="product-delete-button">
@@ -145,7 +145,7 @@
 
           <div class="general-edit-button">
               {% comment %} <a href="#!" class="btn-edit">商品を編集する</a> {% endcomment %}
-              <a href="{% url 'store:detail-general-edit' sale.product.pk %}" class="btn-edit">商品を編集する</a>
+              <a href="{% url 'store:detail-general-edit' sale.product.pk %}" class="btn-edit" style="color: #fff">商品を編集する</a>
           </div>
       </div>
       </form>
@@ -206,7 +206,7 @@
           const startDateTime = document.querySelector('.period-box-input span').textContent;
           const stock = document.querySelector('.stock-box-input span').textContent + '個';
           const shipping = document.querySelector('.shipping-box-input span').textContent + '円';
-          const weight = document.querySelector('.weight-box-input span').textContent + 'g';
+          const weight = document.querySelector('.weight-box-input span').textContent + 'g(グラム)';
           const expiration = document.querySelector('.expiration-box-input span').textContent;
           const image = document.querySelector('.image-box-input img').src;
           const description = document.querySelector('.description-box-input span').textContent;

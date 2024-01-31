@@ -228,3 +228,16 @@
     color: var(--color-black);
     font-family: var(--font-noto-sans);
   }
+
+
+  @media screen and (max-width: 800px) {
+    .search-group {
+      position: relative;
+      left: -42.5%;
+      top: 40px;
+    }
+    .table-order-history {
+      transform:scale(0.8);
+      transform-origin:left top;
+    }
+  }

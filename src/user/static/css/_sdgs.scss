@@ -1,0 +1,61 @@
+.section {
+    &-sdgs, &-sdgs2{
+        @media screen and (max-width: 1024px) {
+        background-size: 100%;
+        }
+    }
+}
+
+
+
+.sdgs {
+    &-head1,&-head2,&-text1,&-text2 {
+        text-align: center;
+    }
+    &-head1 {
+        font-size: 2.5rem;
+    }
+    &-head2 {
+        font-size: 2.5rem;
+    }
+    &-text1 {
+        font-size: 1.1rem;
+        letter-spacing: 0.6em;
+        line-height: 5.5;
+        width: 50%;
+        margin: 0 auto;
+
+        @media screen and (max-width: 1024px){
+            line-height: 2;
+            width: 90%;
+        }
+    }
+    &-text2 {
+        font-size: 1.1rem;
+        letter-spacing: 0.6em;
+        line-height: 5.8;
+        width: 50%;
+        margin: 0 auto;
+
+        @media screen and (max-width: 1024px){
+            line-height: 2;
+            width: 90%;
+        }
+    }
+    &-text3 {
+        position: relative; // 相対位置を指定
+        top: 3px; // 上に20px移動
+        text-align: right;
+
+        @media screen and (max-width: 1024px){
+            top: -20px;
+        }
+    }
+}
+
+.section {
+    &-sdgs, &-sdgs2{
+        background-color:rgba(255, 255, 255, 0.8);
+        background-blend-mode: lighten;
+    }
+}

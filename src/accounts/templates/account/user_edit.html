@@ -2,6 +2,7 @@
 {% block title %}お客様情報変更{% endblock %}
 {% block content %}
 <h2 class="signup-title">お客様情報変更</h2>
+<p class="to-forgot-pass"><a href="{% url 'accounts:password_reset' %}">パスワードの変更はこちら</a></p>
 <div class="signup-container">
     <form method="POST" class="signup">
         {% csrf_token %}
@@ -10,13 +11,6 @@
             {{ form.email.label_tag }}
             <span class="signup__input-group">
                 {{ form.email }}
-            </span>
-        </div>
-        <div class="signup__form-group">
-            <span class="required">必須</span>
-            {{ form.password_confirm.label_tag }}
-            <span class="signup__input-group">
-                {{ form.password_confirm }}
             </span>
         </div>
         <div class="signup__form-group">

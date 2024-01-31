@@ -1,0 +1,26 @@
+{% comment %} <!-- templates/confirm_order.html -->
+<h2>Confirm Order</h2>
+<p>Product: {{ product.product_name }}</p>
+<p>Quantity: {{ quantity }}</p>
+<p>Total: {{ total }}</p>
+<form method="post" action="{% url 'user:order_product' product.id %}">
+    {% csrf_token %}
+    <input type="hidden" name="quantity" value="{{ quantity }}">
+    <button type="submit">Order</button>
+</form> {% endcomment %}
+
+<!-- templates/confirm_order.html -->
+<h2>注文内容</h2>
+<p>購入者: {{ user.username }}</p>
+<p>販売店: {{ store }}</p>
+<p>商品名: {{ product.product_name }}</p>
+<p>単価: {{ product.product_price }}</p>
+<p>購入個数: {{ quantity }}</p>
+<p>合計金額: {{ total }}</p>
+{% comment %} <p>Sale: {{ sale.sale_name }}</p> {% endcomment %}
+<p>削減co2: {{ co2 }}</p>
+<form method="post" action="{% url 'user:order_product' product.id %}">
+    {% csrf_token %}
+    <input type="hidden" name="quantity" value="{{ quantity }}">
+    <button type="submit">この内容で注文する</button>
+</form>

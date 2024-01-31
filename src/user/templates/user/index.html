@@ -10,21 +10,16 @@
 <section class="section1 mgt-10">
     <div class="section1__left">
         <a href="{% url 'user:guide' %}" class="btn--beige btn--big">ご利用ガイド</a>
-        <a class="btn--beige btn--big mgt-10">MelimitとSDGs</a>
-        <a class="btn--beige btn--big mgt-10">食品ロスとは</a>
+        <a href="{% url 'user:sdgs' %}" class="btn--beige btn--big mgt-10">MelimitとSDGs</a>
+        <a href="{% url 'user:sdgs' %}#sdgs-head2" class="btn--beige btn--big mgt-10">食品ロスとは</a>
     </div>
     <div class="section1__right">
         <div class="d-demo">
             <div class="d-demo__wrap">
-                {% with ''|center:2 as range %}
+                {% with ''|center:12 as range %}
                 {% for _ in range %}
                 <ul class="d-demo__list d-demo__list--left">
                     <li class="d-demo__item"><img src="{% static 'assets/img/メリ光男.png' %}" alt></li>
-                    <li class="d-demo__item"><img src="{% static 'assets/img/メリ光子.png' %}" alt></li>
-                    <li class="d-demo__item"><img src="{% static 'assets/img/メリ光男.png' %}" alt></li>
-                    <li class="d-demo__item"><img src="{% static 'assets/img/メリ光子.png' %}" alt></li>
-                    <li class="d-demo__item"><img src="{% static 'assets/img/メリ光男.png' %}" alt></li>
-                    <li class="d-demo__item"><img src="{% static 'assets/img/メリ光子.png' %}" alt></li>
                  </ul>
                 {% endfor %}
                 {% endwith %}
@@ -63,7 +58,7 @@
                                             <p class="discount">ひとつめ {{ random_sale.discount_rate }}％</p>
                                             <div class="card--content">
                                                 <h3 class="card--title">{{ random_sale.product.product_name }}</h3>
-                                                <h4 class="card--discount">￥{{ random_sale.sale_price }}(税込)</h4>
+                                                <h5 class="card--discount">￥{{ random_sale.sale_price }}(税込)</h5>
                                             </div>
                                         </a>
                                     </div>
@@ -78,7 +73,7 @@
                                                 <meter low="69" high="80" max="100" value="84">B</meter>
                                                 <p class="card--text">あと00人達成で</p>
                                                 <p class="card--price">{{ random_sale.sale_price }}(税込)</p>
-                                                <h4 class="card--discount">￥100,000（税込）</h4>
+                                                <h5 class="card--discount">￥100,000（税込）</h5>
                                             </div>
                                         </a>
                                     </div>
@@ -96,7 +91,7 @@
                                             <p class="discount">ひとつめ {{ random_sale.discount_rate }}％</p>
                                             <div class="card--content">
                                                 <h3 class="card--title">{{ random_sale.product.product_name }}</h3>
-                                                <h4 class="card--discount">￥{{ random_sale.sale_price }}(税込)</h4>
+                                                <h5 class="card--discount">￥{{ random_sale.sale_price }}(税込)</h5>
                                             </div>
                                         </a>
                                     </div>
@@ -111,7 +106,7 @@
                                             <meter low="69" high="80" max="100" value="84">B</meter>
                                             <p class="card--text">あと00人達成で</p>
                                             <p class="card--price">{{ random_sale.sale_price }}(税込)</p>
-                                            <h4 class="card--discount">￥100,000（税込）</h4>
+                                            <h5 class="card--discount">￥100,000（税込）</h5>
                                         </div>
                                     </a>
                                 </div>
@@ -123,7 +118,7 @@
                                             <p class="discount">ひとつめ {{ random_sale.discount_rate }}％</p>
                                             <div class="card--content">
                                                 <h3 class="card--title">{{ random_sale.product.product_name }}</h3>
-                                                <h4 class="card--discount">￥{{ random_sale.sale_price }}(税込)</h4>
+                                                <h5 class="card--discount">￥{{ random_sale.sale_price }}(税込)</h5>
                                             </div>
                                         </a>
                                     </div>
@@ -137,7 +132,7 @@
                                                     <meter low="69" high="80" max="100" value="84">B</meter> それぞれの値を商品チェックモデルから参照する　フロントに確認
                                                     <p class="card--text">あと00人達成で</p> 商品チェックモデルから総量を算出
                                                     <p class="card--price">{{ random_sale.sale_price }}(税込)</p>
-                                                    <h4 class="card--discount">￥100,000（税込）</h4>　割引額はモデルにあるのでprice-割引額を算出
+                                                    <h5 class="card--discount">￥100,000（税込）</h5>　割引額はモデルにあるのでprice-割引額を算出
                                                 </div>
                                             </a>
                                         </div>
@@ -151,7 +146,7 @@
                                             <p class="discount">00%OFF {{ sale.discount_rate }}％</p>
                                             <div class="card--content">
                                                 <h3 class="card--title">{{ sale.product.product_name }}</h3>
-                                                <h4 class="card--discount">￥{{ sale.sale_price }}(税込)</h4>
+                                                <h5 class="card--discount">￥{{ sale.sale_price }}(税込)</h5>
                                                 {% if sale.sale_type == 'general_sales' %}
                                                     <!-- 一般商品の場合の表示 -->
                                                 {% else %}
@@ -174,7 +169,7 @@
                                             <meter low="69" high="80" max="100" value="84">B</meter>
                                             <p class="card--text">あと00人達成で</p>
                                             <p class="card--price">￥100,000（税込）</p>
-                                            <h4 class="card--discount">￥100,000（税込）</h4>
+                                            <h5 class="card--discount">￥100,000（税込）</h5>
                                         </div>
                                     </a>
                                 </div>
@@ -186,20 +181,21 @@
                                             <p class="discount">３つめ {{ random_sale.discount_rate }}％</p>
                                             <div class="card--content">
                                                 <h3 class="card--title">{{ random_sale.product.product_name }}</h3>
-                                                <h4 class="card--discount">￥{{ random_sale.sale_price }}(税込)</h4>
+                                                <h5 class="card--discount">￥{{ random_sale.sale_price }}(税込)</h5>
                                             </div>
                                         </a>
                                     </div> 
                             {% endif %} {% endcomment %}
                         {% endfor %}
                     {% else %}
+                        {% comment %} ログインしていないときのランダム商品 {% endcomment %}
                         <div class="item--card card--blue">
                             <a href="#">
                                 <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
                                 <p class="discount">00%OFF</p>
                                 <div class="card--content">
                                     <h3 class="card--title">オオハラ水産</h3>
-                                    <h4 class="card--discount">￥100,000（税込）</h4>
+                                    <h5 class="card--discount">￥100,000（税込）</h5>
                                 </div>
                             </a>
                         </div>
@@ -212,7 +208,7 @@
                                     <meter low="69" high="80" max="100" value="84">B</meter>
                                     <p class="card--text">あと00人達成で</p>
                                     <p class="card--price">￥100,000（税込）</p>
-                                    <h4 class="card--discount">￥100,000（税込）</h4>
+                                    <h5 class="card--discount">￥100,000（税込）</h5>
                                 </div>
                             </a>
                         </div>
@@ -222,7 +218,7 @@
                                 <p class="discount">00%OFF</p>
                                 <div class="card--content">
                                     <h3 class="card--title">おおはら精肉店</h3>
-                                    <h4 class="card--discount">￥100,000（税込）</h4>
+                                    <h5 class="card--discount">￥100,000（税込）</h5>
                                 </div>
                             </a>
                         </div>
@@ -252,7 +248,7 @@
                                 <p class="discount">ひとつめ {{ sale.discount_rate }}％</p>
                                 <div class="card--content">
                                     <h3 class="card--title">{{ sale.product.product_name }}</h3>
-                                    <h4 class="card--discount">￥{{ sale.sale_price }}(税込)</h4>
+                                    <h5 class="card--discount">￥{{ sale.sale_price }}(税込)</h5>
                                 </div>
                             </a>
                         </div>
@@ -273,7 +269,7 @@
                                 <p class="discount">ひとつめ {{ random_sale.discount_rate }}％</p>
                                 <div class="card--content">
                                     <h3 class="card--title">{{ sale.product.product_name }}</h3>
-                                    <h4 class="card--discount">￥{{ sale.sale_price }}(税込)</h4>
+                                    <h5 class="card--discount">￥{{ sale.sale_price }}(税込)</h5>
                                 </div>
                             </a>
                         </div>
@@ -294,7 +290,7 @@
                                 <p class="discount">ひとつめ {{ random_sale.discount_rate }}％</p>
                                 <div class="card--content">
                                     <h3 class="card--title">{{ sale.product.product_name }}</h3>
-                                    <h4 class="card--discount">￥{{ sale.sale_price }}(税込)</h4>
+                                    <h5 class="card--discount">￥{{ sale.sale_price }}(税込)</h5>
                                 </div>
                             </a>
                         </div>
@@ -315,7 +311,7 @@
                                 <p class="discount">ひとつめ {{ random_sale.discount_rate }}％</p>
                                 <div class="card--content">
                                     <h3 class="card--title">{{ sale.product.product_name }}</h3>
-                                    <h4 class="card--discount">￥{{ sale.sale_price }}(税込)</h4>
+                                    <h5 class="card--discount">￥{{ sale.sale_price }}(税込)</h5>
                                 </div>
                             </a>
                         </div>
@@ -328,35 +324,36 @@
     <h2 class="section__title">お知らせ</h2>
     <div class="item--list">
         <div class="item--card card--notice">
-            <a href="{% url "user:notice_detail" %}">
+            <a href="{% url "user:notice_detail1" %}">
                 <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
                 <div class="card--content">
-                    <p><span class="card--date-category">2020/00/00</span><span class="card--date-category">カテゴリー</span></p>
-                    <h3 class="card--title">Card Title</h3>
-                    <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+                    <p><span class="card--date-category">2024/2/1</span><span class="card--date-category">カテゴリー</span></p>
+                    <h5 class="card--title">Melimit設立から1ヶ月</h5>
+                    <p class="card--text">皆様へ、私たちはこの度、ECサイトの設立から1ヶ月が経過しましたので、進捗報告をさせていただきます。</p>
                 </div>
             </a>
         </div>
         <div class="item--card card--notice">
-            <a href="#">
+            <a href="{% url "user:notice_detail2" %}">
                 <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
                 <div class="card--content">
-                    <p><span class="card--date-category">2020/00/00</span><span class="card--date-category">カテゴリー</span></p>
-                    <h3 class="card--title">Card Title</h3>
-                    <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+                    <p><span class="card--date-category">2024/1/29</span><span class="card--date-category">カテゴリー</span></p>
+                    <h5 class="card--title">ブロッコリー大量入荷のお知らせ</h5>
+                    <p class="card--text">この度、大量の新鮮なブロッコリーが入荷いたしましたことをお知らせいたします。</p>
                 </div>
             </a>
         </div>
         <div class="item--card card--notice">
-            <a href="#">
+            <a href="{% url "user:notice_detail3" %}">
                 <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
                 <div class="card--content">
-                    <p><span class="card--date-category">2020/00/00</span><span class="card--date-category">カテゴリー</span></p>
-                    <h3 class="card--title">Card Title</h3>
-                    <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+                    <p><span class="card--date-category">2024/1/10</span><span class="card--date-category">カテゴリー</span></p>
+                    <h5 class="card--title">Melimitに売り手として参加しませんか？</h5>
+                    <p class="card--text">Melimitは、新たな売り手を募集しております!</p>
                 </div>
             </a>
         </div>
-        <a href="{% url "user:notice" %}" class="btn--beige btn--middle mgt-10">お知らせ一覧</a>
+    </div>
+    <a href="{% url "user:notice" %}" class="btn--beige btn--middle mgt-10">お知らせ一覧</a>
 </section>
 {% endblock %}

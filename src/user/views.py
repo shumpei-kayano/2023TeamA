@@ -1,12 +1,16 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, authenticate, login
 from accounts.forms import MelimitStoreLoginForm
 from accounts.models import MelimitStore, MelimitUser
 from accounts.mixins import MelimitModelMixin
-from store.models import Sale, Product
+from store.models import Sale, Product,ThresholdCheck
 import random
 from django.db.models import Q
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+# orderhistoryをimportする
+from .models import OrderHistory
 # Create your views here.
 # @login_required
 def index(request):
@@ -144,7 +148,7 @@ def all_products_joint(request):
             #割引額を計算する
             discounted_amount = i.discount_amount
             #割引後の値段を計算
-            discounted_price = sale.sale_price *(100-i.discount_rate)/100
+            discounted_price = round(sale.sale_price * (100 - i.discount_rate) / 100)
             sale_info = {
                 'sale_pk':sale.pk,
                 'product_name':sale.product.product_name,
@@ -336,19 +340,77 @@ def joint_products_detail(request,pk):
     #sale_infos[0]['store_name']は文字列なのでint型と比較できない
     #オブジェクトの中身、メソッド、属性の名前を出力できる
     # print(dir(sale.product.store))
+    #閾値の現在の個数を取得する
+    # check = ThresholdCheck(sale=sale,user=user,threshold=i,count=quantitys)
     return render(request, 'user/joint-products_detail.html', {'sale': sale,'sale_infos':sale_infos,'related_sales':related_sales})
 
 # カート
+#セッションからカートを取得し、詳細情報をデータベースから取得する
 def cart(request):
-    return render(request, 'user/cart.html')
+    #request.session['cart']が存在するかどうかのif
+    if 'cart' not in request.session:
+        return render(request, 'user/cart.html')
+    else:
+        cart = request.session['cart']
+        print('cart',cart)
+        cart_items = []
+        all_price = 0
+        #カートの各商品ごとにidと数量をループ
+        for pk, quantity in cart.items():
+            sale = get_object_or_404(Sale, id=pk)
+            #sale.pk商品の主キー(プライマリーキー)
+            print('sale.pk:',sale.pk)
+            if sale.sale_type == 'general_sales':
+                sale_type = '一般商品'
+            else:
+                sale_type = '共同販売商品'
+            
+            all_price += sale.sale_price * quantity
+            #商品の商品名、種別(一般or共同)、一つ当たりの価格、数量、合計価格をリストに追加
+            cart_items.append({
+                'pk':sale.pk,
+                'sale_image': sale.product.product_image,
+                'sale': sale.product.product_name,
+                'sale_type':sale_type,
+                'sale_price':sale.sale_price,
+                'quantity': quantity,
+                'total_price': sale.sale_price * quantity,
+            })
+        all_price_100 = all_price + 100
+    return render(request, 'user/cart.html', {'cart_items': cart_items,'all_price':all_price,'all_price_100':all_price_100})
+    # return render(request, 'user/cart.html')
 
 #お知らせ詳細
-def notice_detail(request):
-    return render(request, 'user/notice-detail.html')
+def notice_detail1(request):
+    return render(request, 'user/notice-detail1.html')
+
+def notice_detail2(request):
+    return render(request, 'user/notice-detail2.html')
+
+def notice_detail3(request):
+    return render(request, 'user/notice-detail3.html')
 
 # 注文詳細
 def history(request):
-    return render(request, 'user/history.html')
+    #注文履歴からデータを取得　ログインしているユーザーのpkと注文履歴のuserを比較し同じものを取得
+    #商品名
+    #商品画像
+    #カテゴリー
+    #商品の価格
+    #数量
+    #小計
+    #注文日時
+    #発送状況
+    user_id = request.user.id
+            # user_id = request.session.get('user_id')
+    print(f'user_id: {user_id}')
+            #MelimitUserオブジェクトにtasteが入っている
+    users = MelimitUser.objects.get(id=user_id)
+    print('users:',users)
+    order_history = OrderHistory.objects.filter(orderhistory_user=users)
+    for i in order_history:
+        print('order:',i,vars(i))
+    return render(request, 'user/history.html',{'users':users,'order_history':order_history})
 #注文完了
 def order_completed(request):
     return render(request, 'user/order-completed.html')
@@ -364,11 +426,188 @@ def pass_mail(request):
 
 # 注文確認
 def cash_register(request):
-    return render(request, 'user/cash-register.html')
+    if request.user.is_authenticated:
+        user_id = request.user.id
+            # user_id = request.session.get('user_id')
+        print(f'user_id: {user_id}')
+            #MelimitUserオブジェクトにtasteが入っている
+        user = MelimitUser.objects.get(id=user_id)
+        #氏名 電話番号 住所 情報 郵便番号 都道府県 市区町村 番地 建物名
+    #ログインしていなかったらログインするように促す
+    #ログインしていたら下の処理をする
+        cart = request.session['cart']
+        cart_items = []
+        all_price = 0
+        #カートの各商品ごとにidと数量をループ
+        for pk, quantity in cart.items():
+            sale = get_object_or_404(Sale, id=pk)
+            #sale.pk商品の主キー(プライマリーキー)
+            print(sale.pk)
+            if sale.sale_type == 'general_sales':
+                sale_type = '一般商品'
+            else:
+                sale_type = '共同販売商品'
+            
+            all_price += sale.sale_price * quantity
+            #商品の商品名、種別(一般or共同)、一つ当たりの価格、数量、合計価格をリストに追加
+            cart_items.append({
+                'pk':sale.pk,
+                'sale_image': sale.product.product_image,
+                'sale': sale.product.product_name,
+                'sale_type':sale_type,
+                'sale_price':sale.sale_price,
+                'quantity': quantity,
+                'total_price': sale.sale_price * quantity,
+            })
+        #cart_itemsはカートの全商品
+        print(cart_items)
+        cart_item_gen = []
+        cart_item_mel = []
+        for i in cart_items:
+            print(i['sale_type'])
+            if i['sale_type'] == '一般商品':
+                cart_item_gen.append(i)
+            else:
+                cart_item_mel.append(i)
+        print('一般商品',cart_item_gen)
+        print('共同商品',cart_item_mel)
+        # sale_typeごとに分ける？
+        total_gen = 0
+        total_gen = sum(item['total_price'] for item in cart_item_gen)
+        total_gen_100 = sum(item['total_price'] for item in cart_item_gen) + 100
+        total_mel = 0
+        total_mel = sum(item['total_price'] for item in cart_item_mel)
+        total_mel_100 = sum(item['total_price'] for item in cart_item_mel) + 100
+        #total_gen が空の場合
+        all_total = 0
+        
+        if total_gen == 0:
+            print(1)
+            all_total = total_mel_100
+        #total_melが空の場合
+        elif total_mel == 0:
+            print(2)
+            all_total = total_gen_100
+        else:
+            print(3)
+            all_total = total_gen_100 + total_mel_100 - 100
+        print(all_total)
+        print(request.session)
+        #sessionの中身を全部表示
+        print(request.session['cart'].items())
+        
+        return render(request, 'user/cash-register.html',{'cart_items':cart_items,'cart_item_gen':cart_item_gen,'cart_item_mel':cart_item_mel,'total_gen':total_gen,'total_mel':total_mel,'total_gen_100':total_gen_100,'total_mel_100':total_mel_100,'user':user,'all_total':all_total})
+    else:
+        return render(request,)
 #新規登録
 def signup_choice(request):
     return render(request, 'user/signup-choice.html')
 
+def add_to_cart(request, pk):
+    sale = get_object_or_404(Sale, id=pk)
+    #カート全体
+    # cart = request.session['cart']
+    #カート全体から商品すべてをループして該当のpkがあるか探す
+    
+    cart = request.session.get('cart', {})
+    quantity = int(request.POST.get('quantity'))
+    print('cart:',cart.items())
+    #該当するpkなら個数を追加して更新 違うとき？ cart[pk]が空の時であって、cart[pk]が存在していないといけない
+    for item_pk, quantitys in cart.items():
+        print('item_pk',item_pk)
+        print(type(pk))
+        print('pk',pk)
+        print(type(item_pk))
+        if pk == int(item_pk):
+            pk = str(pk)
+            print('更新前cart[pk]',cart[pk])
+            cart[pk] += quantity
+            print('更新後cart[pk]:',cart[pk])
+            break
+    #item_pkだとfor外なのでlocal引数を使うなと言われる
+    pk = str(pk)
+    print('cart:add',cart)
+    if not pk in cart:
+        cart[pk] = quantity
+        print('cart[pk]:',cart[pk])
+    request.session['cart'] = cart
+    # if pk in cart:
+    #     print('cart[pk]',cart.pk)
+    #     cart[pk] += quantity
+    # else:
+        
+    #     cart[pk] = quantity
+    #     print('cart[pk]',cart[pk])
+    request.session['cart'] = cart
+    #引数にproduct_idを渡している
+    # return redirect('user:cart', product_id=product_id)
+    return redirect('user:cart')
+
+#カートの商品の個数を変更する
+def update_cart(request):
+    pk = request.POST.get('pk')
+    quantity = int(request.POST.get('quantity'))
+
+    cart = request.session.get('cart', {})
+    cart[pk] = cart.get(pk, 0) + quantity
+
+    request.session['cart'] = cart
+
+    # 新しいカートのデータを作成
+    cart_items = []
+    #カートの各商品ごとにidと数量をループ
+    for pk, quantity in cart.items():
+        sale = get_object_or_404(Sale, id=pk)
+        if sale.sale_type == 'general_sales':
+            sale_type = '一般商品'
+        else:
+            sale_type = '共同販売商品'
+        #商品の商品名、種別(一般or共同)、一つ当たりの価格、数量、合計価格をリストに追加
+        cart_items.append({
+            'pk':sale.pk,
+            'sale_image': sale.product.product_image.url,
+            'sale': sale.product.product_name,
+            'sale_type':sale_type,
+            'sale_price':sale.sale_price,
+            'quantity': quantity,
+            'total_price': sale.sale_price * quantity,
+        })
+
+
+    return JsonResponse({'cart_items': cart_items})
+
+#カートから商品を削除する
+def delete_cart(request):
+    pk = request.POST.get('pk')
+    print(pk)
+    print(11111)
+    cart = request.session.get('cart', {})
+    del cart[pk]
+    print(cart)
+    request.session['cart'] = cart
+
+    # 新しいカートのデータを作成
+    cart_items = []
+    #カートの各商品ごとにidと数量をループ
+    for pk, quantity in cart.items():
+        sale = get_object_or_404(Sale, id=pk)
+        if sale.sale_type == 'general_sales':
+            sale_type = '一般商品'
+        else:
+            sale_type = '共同販売商品'
+        #商品の商品名、種別(一般or共同)、一つ当たりの価格、数量、合計価格をリストに追加
+        cart_items.append({
+            'pk':sale.pk,
+            'sale_image': sale.product.product_image.url,
+            'sale': sale.product.product_name,
+            'sale_type':sale_type,
+            'sale_price':sale.sale_price,
+            'quantity': quantity,
+            'total_price': sale.sale_price * quantity,
+        })
+
+
+    return JsonResponse({'cart_items': cart_items})
 #ご利用ガイド（詳細）
 def guide_detail(request):
     return render(request, 'user/guide-detail.html')
@@ -384,3 +623,129 @@ def notice(request):
 # MelimitとSDGs
 def sdgs(request):
     return render(request, 'user/sdgs.html')
+
+# カテゴリー別商品一覧
+def category_products(request):
+    return render(request, 'user/category-products.html')
+
+# テスト/商品一覧表示
+def product_list(request):
+    print('テスト/商品一覧表示のビュー')
+    products = Product.objects.all()
+    sales = Sale.objects.all()
+    return render(request, 'user/01_itiran_test.html', {'products': products, 'sales': sales,})
+
+# テスト/商品選択
+def select_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    # productインスタンスからSaleインスタンスを取得
+    sale = Sale.objects.get(product_id=product.id)
+    return render(request, 'user/02_tyuumonn_test.html', {'product': product, 'sale': sale})
+
+# テスト/注文確認
+def confirm_order(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    quantity = request.POST.get('quantity')
+    total = product.product_price * int(quantity)
+    store = product.store  # ProductモデルからMelimitStoreモデルのインスタンスを取得
+    sale = Sale.objects.get(product_id=product.id)  # Saleモデルのインスタンスを取得
+    quantity = int(request.POST.get('quantity'))  # 送信された数量を取得
+    # amount = product.product_price * quantity  # 合計金額を計算
+    co2 = product.weight * 0.4 * quantity  # 合計重量を計算
+    # コンテキストに必要なデータを格納
+    context = {
+        'product': product,
+        'quantity': quantity,
+        'total': total,
+        'store': store,
+        'sale': sale,
+        'co2': co2,
+    }
+    return render(request, 'user/03_kakuninn_test.html', context)
+
+# テスト/購入
+def order_product(request):
+    print('テスト/購入のビュー')
+    cart = request.session['cart']
+    # cart_items = []
+    buy_mels = []
+    for pk, quantitys in cart.items():
+        print(type(pk))
+        # sale = get_object_or_404(Sale, id=pk)
+        product = get_object_or_404(Product, id=pk)
+        # if request.method == 'POST':
+        sale = Sale.objects.get(product_id=pk)
+        if sale.sale_type == 'general_sales':
+            user = MelimitUser.objects.get(customuser_ptr_id=request.user.id)
+            store = product.store  # ProductモデルからMelimitStoreモデルのインスタンスを取得
+            sale = Sale.objects.get(product_id=product.id)  # Saleモデルのインスタンスを取得
+                # quantity = int(request.POST.get('quantity'))  # 送信された数量を取得
+            quantity = quantitys
+            amount = sale.sale_price * quantity
+            weight = product.weight * quantity 
+            order = OrderHistory(sale=sale, product=product, orderhistory_store=store,orderhistory_user=user, amount=amount, quantity=quantity,)
+            order.save()
+            # del cart[pk]
+            #商品ごとにorder.saveを行う
+            #リダイレクト先について聞く　必要な情報、タイミング、order_completeと02の違い
+            # return redirect('user:order_complete')
+        elif sale.sale_type == 'melimit_sales':
+            user = MelimitUser.objects.get(customuser_ptr_id=request.user.id)
+            store = product.store
+            sale = Sale.objects.get(product_id=product.id)
+            thresholds = {}
+            #index out of range error発生
+            thresholds[sale.pk] = list(sale.threshold_set.all())
+            print('melの閾値:',thresholds[sale.pk])
+            #閾値を出す 閾値が一つなのでループは一回
+            for i in thresholds[sale.pk]:
+                print('mel:',i.threshold)
+                check = ThresholdCheck(sale=sale,user=user,threshold=i,count=quantitys)
+                check.save()
+                # th,th_ob = check.thresholds()
+                # print(th)
+                print('check後',check.thresholds()[0])
+                if check.thresholds()[0] != None:
+                    print('閾値をクリアしました')
+                    #閾値をクリアした同じ商品の商品チェックのレコード数分forループ
+                    for i in check.thresholds()[1]:
+                        print('i:',i)
+                        amount = check.thresholds()[0]
+                        print(amount)
+                        #check.thresholdsからsale,product,store,user,amount,quantitysを取り出す
+                        sale = i.sale
+                        product = i.sale.product
+                        store =i.sale.store
+                        user = i.user
+                        # amount =
+                        quantitys = i.count
+                    #この状態だとクリアした商品が来るたびに注文履歴に行く、同じ履歴が何度も並ぶことになる
+                        # order = OrderHistory(sale=sale, product=product, orderhistory_store=store,orderhistory_user=user, amount=amount, quantity=quantitys,)
+                        # order.save()
+                        existing_order = OrderHistory.objects.filter(sale=sale, product=product, orderhistory_store=store, orderhistory_user=user, amount=amount, quantity=quantitys).first()
+                        # すでに存在するレコードがない場合のみ、新しいレコードを作成
+                        if not existing_order:
+                            order = OrderHistory(sale=sale, product=product, orderhistory_store=store, orderhistory_user=user, amount=amount, quantity=quantitys,)
+                            order.save()
+                else:
+                    print('Noneだよ')
+            buy_mel = {
+                'pk':pk,
+                'quantity': quantitys,
+            }
+            #共同だけを入れるセッションを作成する
+            buy_mels.append(buy_mel)
+    request.session['mel'] = buy_mels
+    print('melのセッション',request.session['mel'])
+    #カートの商品のループが終わったらreturn
+    #セッションの共同に共同商品を入れる
+    #カートの商品が入っているセッションを消す
+    del request.session['cart']
+    return render(request, 'user/order-completed.html')
+    # return render(request, 'user/02_tyuumonn_test.html', {'product': product})
+# テスト/完了画面
+def order_complete(request):
+    return render(request, 'user/04_complete_test.html')
+
+def error_view(request):
+    return render(request, 'user/04_complete_test.html')

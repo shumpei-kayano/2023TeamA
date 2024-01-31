@@ -9,7 +9,7 @@ from django.urls import reverse
 import logging
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
-from .forms import MelimitStoreRegistrationForm, MelimitStoreLoginForm, MelimitUserLoginForm, MelimitUserRegistrationForm
+from .forms import MelimitStoreRegistrationForm, MelimitStoreLoginForm, MelimitUserLoginForm, MelimitUserRegistrationForm, CustomPasswordResetForm
 from django.views.generic.edit import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import MelimitStore, MelimitUser
@@ -140,7 +140,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView, MelimitModelMixin):
     model = MelimitUser
     form_class = MelimitUserRegistrationForm
     template_name = 'account/user_edit.html'
-    success_url = reverse_lazy('user:index')
+    success_url = reverse_lazy('accounts:mypage')
 
     def get_object(self, queryset=None):
         user = self.get_melimitmodel_user()
@@ -167,7 +167,6 @@ def StoreCreateView(request):
     if request.method == 'POST':
         print('店舗登録post')
         form = MelimitStoreRegistrationForm(request.POST)
-        print(f'フォームエラー: {form.errors}')
         if form.is_valid():
             request.user = form.save()
             print(f'request.user: {request.user.__dict__}')
@@ -192,7 +191,11 @@ def StoreCreateView(request):
             #     'model_name': request.session['model_name'],
             #     'instance_name': request.session['instance_name']
             # })
-            return redirect('store:store_login')
+            return redirect('store:index')
+        else:
+            print('店舗登録失敗')
+            print(f'失敗フォームエラー: {form.errors}')
+            return render(request, 'store/store-create.html', {'form': form})
     # POSTでない場合は空のフォームを生成(最初のページ表示時)
     else:
         form = MelimitStoreRegistrationForm()
@@ -249,13 +252,18 @@ class PasswordChangeDone(LoginRequiredMixin,PasswordChangeDoneView):
     """パスワード変更しました"""
     template_name = 'account/password_change_done.html'
 
+
 # --- ここから追加
 class PasswordReset(PasswordResetView):
+    form_class = CustomPasswordResetForm
     # オーバーライドもとに email_template_name = "registration/password_reset_email.html"があり、変える必要あり
     # どんな内容のメールを送るのかの設定
     """パスワード変更用URLの送付ページ"""
     # subject_template_name = 'accounts/mail_template/reset/subject.txt'
     # email_template_name = 'accounts/mail_template/reset/message.txt'
+    
+    #メアドがデータベースに存在するか確認必須！！！！！！！！
+    
     email_template_name = 'account/password_email.html'
 
     template_name = 'account/password_reset_form.html'
