@@ -1601,7 +1601,7 @@ input:checked + .tab_class + .content_class {
   list-style: none;
 }
 .section1 .d-demo__list--left {
-  animation: infinity-scroll-left 95s infinite linear 0.5s both;
+  animation: infinity-scroll-left 115s infinite linear 0.5s both;
 }
 .section1 .d-demo__item {
   width: 16.6666666667vw;
