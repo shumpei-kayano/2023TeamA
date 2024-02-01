@@ -49,7 +49,12 @@
                 <div class="card--content">
                     <h3 class="card--title">大原製菓</h3>
                     <meter low="69" high="80" max="100" value="84">B</meter>
-                    <p class="card--text">あと00人達成で</p>
+                    {% comment %} 達成前 {% endcomment %}
+                    {% comment %} <p class="card--text">あと00人達成で</p>
+                    <p class="card--price">￥100,000（税込）</p>
+                    <h4 class="card--discount">￥100,000（税込）</h4> {% endcomment %}
+                    {% comment %} 達成後 {% endcomment %}
+                    <p class="card--text">達成しました！</p>
                     <p class="card--price">￥100,000（税込）</p>
                     <h4 class="card--discount">￥100,000（税込）</h4>
                 </div>

@@ -172,10 +172,19 @@
     </div>
     <div class="register__user-info-content">
         <p class="register__user-info-subtitle">お支払方法</p>
-        <div class="register__user-info-detail">
-            <p class="register__user-info-value">クレジットカード</p>
+        <div class="register__user-info-label">
+            <p>クレジットカード番号</p>
+            <p>セキュリティコード</p>
+            <p>有効期限</p>
         </div>
-        <a href="#" class="register__user-info-btn btn btn--gray">変更する</a>
+        <div class="register__user-info-detail">
+            <form action="#" method="post">
+                <input type="text" name="card_number" id="card_number" placeholder="0000-0000-0000-0000" pattern="\d{4}-?\d{4}-?\d{4}-?\d{4}" maxlength="19" required>
+                <input type="text" name="security_code" id="security_code" placeholder="000" pattern="\d{3,4}" maxlength="4" required>
+                <input type="text" name="expiration_date" id="expiration_date" placeholder="00/00" pattern="\d{2}/?\d{2}" maxlength="5" required>
+            </form>
+        </div>
+    </div>
 </section>
 <section class="register__final-confirmation">
     <h3 class="register__final-confirmation-title">最終確認</h3>
