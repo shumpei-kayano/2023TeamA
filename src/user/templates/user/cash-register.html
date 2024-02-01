@@ -138,15 +138,25 @@
             </ul>
         
         {% comment %} {% endif %}
-    {% endfor %} {% endcomment %}
-    <p class="register__caution">※共同購入商品は目標個数に達しなかった場合、最終割引は適用されません。（定価からの割引は適用されます。）</p>
-    <p class="register__caution">また、発送日時も前後する場合があります。</p>
-    <p class="register__caution">必ず<a href="#">melimitご利用ガイド</a>をご一読ください。</p>
-    <div class="register__confirm">
-        <input type="checkbox" id="confirm-checkbox">
-        <label for="confirm-checkbox">確認しました</label>
-    </div>
-    {% endif %}
+        {% endfor %} {% endcomment %}
+            <p class="register__caution">※共同購入商品は目標個数に達しなかった場合、最終割引は適用されません。（定価からの割引は適用されます。）</p>
+            <p class="register__caution">また、発送日時も前後する場合があります。</p>
+            <p class="register__caution">必ず<a href="#">melimitご利用ガイド</a>をご一読ください。</p>
+            <div class="register__confirm">
+                <input type="checkbox" id="confirm-checkbox">
+                <label for="confirm-checkbox">確認しました</label>
+            </div>
+            {% comment %} <script> submit-buttonが一番最後にあるためなんやねんそれってなって動かない
+                document.getElementById('submit-button').addEventListener('click', function(event) {
+                    if (document.getElementById('confirm-checkbox').checked) {
+                        window.location.href = "{% url 'user:order_completed' %}";
+                    } else {
+                        event.preventDefault();
+                        alert('共同購入商品の注意事項をご確認ください。');
+                    }
+                });
+            </script> {% endcomment %}
+        {% endif %}
 </section>
 <section class="register__user-info">
     <h3 class="register__user-info-title">あなたの登録情報</h3>
@@ -214,20 +224,15 @@
         <a href="{% url 'user:cart' %}" class="btn btn--gray">戻る</a>
         <button type="submit" id="submit-button" class="btn btn--beige">注文を確定する</button>
     </div>
-</section>
-{% comment %} <script>
-    document.getElementById('submit-button').addEventListener('click', function(event) {
-        if (document.getElementById('confirm-checkbox').checked) {
-            window.location.href = "{% url 'user:order_completed' %}";
-        } else {
-            event.preventDefault();
-            alert('共同購入商品の注意事項をご確認ください。');
-        }
-    });
-</script> {% endcomment %}
-<script>
-    document.getElementById('submit-button').addEventListener('click', function(event) {
-            window.location.href = "{% url 'user:order_completed' %}";
-    });
-</script>
+
+    {% comment %} <script>
+        document.getElementById('submit-button').addEventListener('click', function(event) {
+            if (document.getElementById('confirm-checkbox').checked) {
+                window.location.href = "{% url 'user:order_completed' %}";
+            } else {
+                event.preventDefault();
+                alert('共同購入商品の注意事項をご確認ください。');
+            }
+        });
+    </script> {% endcomment %}
 {% endblock %}

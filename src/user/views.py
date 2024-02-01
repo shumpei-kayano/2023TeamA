@@ -41,11 +41,14 @@ def index(request):
         else:
             return redirect('user:omae_store')
     else:
+        #ログインしていないとき
+        #ランダムに３件取得する
+        random_sales = Sale.objects.order_by('?')[:3]
         # 商品をカテゴリーごとに取得
         categories = Product.TASTE_CHOICES
         sales_by_category = {category[0]: Sale.objects.filter(product__product_category=category[0]) for category in categories}
         # return render(request, 'sales_list.html', {'sales_by_category': sales_by_category})
-        return render(request, 'user/index.html', {'sales_by_category': sales_by_category})
+        return render(request, 'user/index.html', {'sales_by_category': sales_by_category, 'random_sales':random_sales,})
     # print('index_________')
     # print(request.user.user_id)
     # return render(request, 'user/index.html')
@@ -635,6 +638,7 @@ def category_products(request):
     #販売価格
     #productからsaleを取り出す必要あり
     #categoryは1~4の数字str?
+    count = 0
     if category == '1':
         category = 'meat'
     elif category == '2':
@@ -671,6 +675,7 @@ def category_products(request):
                     'rate':sale.discount_rate(),
                     'product_name':product.product_name,
                     'price':sale.sale_price,
+                    'sale_type':sale.sale_type,
                 }
             elif sale.sale_type == 'melimit_sales':
                 print('商品がメリミット')
@@ -685,11 +690,14 @@ def category_products(request):
                     print('閾値チェックもでるのはず',threshold_checks)
                     if not threshold_checks:
                         #空の時、個数を０で判断するように
+                        count = 0
                         print("No threshold checks found, meow!")
                     else:
                         for check in threshold_checks:
-                            #中身があるとき、個数を取り出して合計して判断
-                            print(check)
+                            #中身があるとき、個数を取り出して合計して判断 sale.pkで閾値チェックモデル化からsumで数量を取得
+                            count = check.sum_count()
+                            print('check:',check)
+                            print('count:',count)
                     for check in threshold_checks:
                         print('閾値チェックだぞ')
                         print('check_all:',check)
@@ -697,7 +705,8 @@ def category_products(request):
                     print('閾値全部',threshold.threshold)
                     
                     #なにもとれない！！！！！！！
-                    
+                    at_count = threshold.threshold -count
+                    print('at_count:',at_count)
                     #saleモデルからcheckモデルの内容を取得しよう
                     detail = {
                         #pk
@@ -709,16 +718,18 @@ def category_products(request):
                         #クリア後の値段
                         #閾値個数
                         #現在の閾値個数 チェックモデルから
-                        
+                        #閾値をクリアしているか確認→クリア後が表記変わるため　countとthresholdを比較するだけで行けそう？どこで比較するか
                         'pk':product.pk,
                         'image':product.product_image,
                         'rate':sale.discount_rate(),
                         'product_name':product.product_name,
                         'price':sale.sale_price,
                         'threshold_rate':threshold.discount_rate,
-                        'final_price':threshold.discount_amount(),
+                        'clear_price':threshold.discount_amount(),
                         'threshold':threshold.threshold,
-                        # 'threshold_now':,
+                        'threshold_now':count,
+                        'sale_type':sale.sale_type,
+                        'at_count':at_count,
                     }
         product_detail.append(detail)
     return render(request, 'user/category-products.html', {'products': product_detail})

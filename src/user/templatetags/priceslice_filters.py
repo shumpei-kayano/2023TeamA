@@ -19,3 +19,8 @@ register = template.Library()
 @register.filter
 def to_currency(value):
     return "{:,}".format(value)
+
+@register.filter
+def meter_value(value, arg):
+    #valueをargで割る
+    return round(value / float(arg))
