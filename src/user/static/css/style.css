@@ -839,8 +839,9 @@ button:hover {
   padding: 2.5%;
   text-align: center;
 }
-.card--content meter {
-  width: 80%;
+.card--content .progress-bar {
+  height: 10px;
+  margin: 0.5em 0;
 }
 .card--title {
   margin: 0;
@@ -980,6 +981,19 @@ input:checked + .tab_class + .content_class {
   color: #F75050;
   font-size: 0.75rem;
   font-weight: bold;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 20px;
+  background-color: #f3f3f3;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.progress-bar__completed {
+  background-color: #4caf50;
+  height: 100%;
+  float: left;
 }
 
 /* Form Layout */
@@ -1803,18 +1817,6 @@ input:checked + .tab_class + .content_class {
 }
 .detail1__text-bd {
   font-weight: bold;
-}
-.detail1 .progress-bar {
-  width: 100%;
-  height: 20px;
-  background-color: #f3f3f3;
-  border-radius: 5px;
-  overflow: hidden;
-}
-.detail1 .progress-bar__completed {
-  background-color: #4caf50;
-  height: 100%;
-  float: left;
 }
 
 .detail2 {
