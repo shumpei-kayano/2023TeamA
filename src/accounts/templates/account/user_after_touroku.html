@@ -1,0 +1,5 @@
+<h1>ユーザーが登録した後の画面です</h1>
+<p>こんにちは、{{ user.username }}さん</p>
+    {% comment %} <p>モデル名：{{ user.__class__.__name__ }}</p> {% endcomment %}
+    <p>ユーザータイプ：{{ user.user_type }}</p>
+    <a href="{% url 'accounts:user_edit' %}">情報変更</a>

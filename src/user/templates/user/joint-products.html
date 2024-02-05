@@ -1,0 +1,163 @@
+{% extends 'user/base.html' %}
+{% block title %}共同購入商品{% endblock %}
+{% load static %}
+{% block content %}
+{% load priceslice_filters %}
+<section>
+    <h2 class="center">共同購入商品</h2>
+    <form>
+        <label>
+            sort by&colon;
+            <select class="product-sort">
+                <option>新規商品</option>
+                <option>価格順（昇順）</option>
+                <option>価格順（降順）</option>
+            </select>
+        </label>
+    </form>
+    <div class="item--list">
+        {% comment %} 3 {% endcomment %}
+        {% for sale in sale_infos %}
+        {% comment %} 3 {% endcomment %}
+            {% comment %} {% for sale_pk,threshold_list in thresholds.items %} {% endcomment %}
+            {% comment %} 1 {% endcomment %}
+            {% comment %} {% for threshold in threshold_list %} {% endcomment %}
+            {% comment %} {% with thresholds|get_item:sale.pk as threshold_list %} {% endcomment %}
+                {% comment %} {% for threshold in threshold_list %} {% endcomment %}
+                    <div class="item--card card--pink">
+                        <a href="{% url 'user:joint_products_detail' pk=sale.sale_pk %}">
+                            <img src="{{ sale.product_image.url }}" alt="{{ sale.product_name }}" class="card--img">
+                            <p class="discount">{{ sale.discount_rate }}%OFF</p>
+                            <div class="card--content">
+                                <h3 class="card--title">{{ sale.product_name }}</h3>
+                                <meter low={{ sale.threshold}} high={{ sale.threshold}} max="100" value="80">B</meter>
+                                <p class="card--text">あと{{ sale.}}人達成で</p>
+                                <p class="card--price">￥{{ sale.sale_price }}（税込）</p>
+                                <h4 class="card--discount">￥{{ sale.discounted_price }}</h4>
+                            </div>
+                        </a>
+                    </div>
+                {% comment %} {% endfor %} {% endcomment %}
+            {% comment %} {% endwith %} {% endcomment %}
+                {% comment %} {% endfor %} {% endcomment %}
+            {% comment %} {% endfor %} {% endcomment %}
+        {% endfor %}
+        <div class="item--card card--pink">
+            <a href="#">
+                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+                <p class="discount">MAX00%OFF</p>
+                <div class="card--content">
+                    <h3 class="card--title">大原製菓</h3>
+                    <meter low="69" high="80" max="100" value="84">B</meter>
+                    <p class="card--text">あと00人達成で</p>
+                    <p class="card--price">￥100,000（税込）</p>
+                    <h4 class="card--discount">￥100,000（税込）</h4>
+                </div>
+            </a>
+        </div>
+        <div class="item--card card--pink">
+            <a href="#">
+                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+                <p class="discount">MAX00%OFF</p>
+                <div class="card--content">
+                    <h3 class="card--title">大原製菓</h3>
+                    <meter low="69" high="80" max="100" value="84">B</meter>
+                    <p class="card--text">あと00人達成で</p>
+                    <p class="card--price">￥100,000（税込）</p>
+                    <h4 class="card--discount">￥100,000（税込）</h4>
+                </div>
+            </a>
+        </div>
+        <div class="item--card card--pink">
+            <a href="#">
+                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+                <p class="discount">MAX00%OFF</p>
+                <div class="card--content">
+                    <h3 class="card--title">大原製菓</h3>
+                    <meter low="69" high="80" max="100" value="84">B</meter>
+                    <p class="card--text">あと00人達成で</p>
+                    <p class="card--price">￥100,000（税込）</p>
+                    <h4 class="card--discount">￥100,000（税込）</h4>
+                </div>
+            </a>
+        </div>
+        <div class="item--card card--pink">
+            <a href="#">
+                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+                <p class="discount">MAX00%OFF</p>
+                <div class="card--content">
+                    <h3 class="card--title">大原製菓</h3>
+                    <meter low="69" high="80" max="100" value="84">B</meter>
+                    <p class="card--text">あと00人達成で</p>
+                    <p class="card--price">￥100,000（税込）</p>
+                    <h4 class="card--discount">￥100,000（税込）</h4>
+                </div>
+            </a>
+        </div>
+        <div class="item--card card--pink">
+            <a href="#">
+                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+                <p class="discount">MAX00%OFF</p>
+                <div class="card--content">
+                    <h3 class="card--title">大原製菓</h3>
+                    <meter low="69" high="80" max="100" value="84">B</meter>
+                    <p class="card--text">あと00人達成で</p>
+                    <p class="card--price">￥100,000（税込）</p>
+                    <h4 class="card--discount">￥100,000（税込）</h4>
+                </div>
+            </a>
+        </div>
+        <div class="item--card card--pink">
+            <a href="#">
+                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+                <p class="discount">MAX00%OFF</p>
+                <div class="card--content">
+                    <h3 class="card--title">大原製菓</h3>
+                    <meter low="69" high="80" max="100" value="84">B</meter>
+                    <p class="card--text">あと00人達成で</p>
+                    <p class="card--price">￥100,000（税込）</p>
+                    <h4 class="card--discount">￥100,000（税込）</h4>
+                </div>
+            </a>
+        </div>        <div class="item--card card--pink">
+            <a href="#">
+                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+                <p class="discount">MAX00%OFF</p>
+                <div class="card--content">
+                    <h3 class="card--title">大原製菓</h3>
+                    <meter low="69" high="80" max="100" value="84">B</meter>
+                    <p class="card--text">あと00人達成で</p>
+                    <p class="card--price">￥100,000（税込）</p>
+                    <h4 class="card--discount">￥100,000（税込）</h4>
+                </div>
+            </a>
+        </div>
+        <div class="item--card card--pink">
+            <a href="#">
+                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+                <p class="discount">MAX00%OFF</p>
+                <div class="card--content">
+                    <h3 class="card--title">大原製菓</h3>
+                    <meter low="69" high="80" max="100" value="84">B</meter>
+                    <p class="card--text">あと00人達成で</p>
+                    <p class="card--price">￥100,000（税込）</p>
+                    <h4 class="card--discount">￥100,000（税込）</h4>
+                </div>
+            </a>
+        </div>
+        <div class="item--card card--pink">
+            <a href="#">
+                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+                <p class="discount">MAX00%OFF</p>
+                <div class="card--content">
+                    <h3 class="card--title">大原製菓</h3>
+                    <meter low="69" high="80" max="100" value="84">B</meter>
+                    <p class="card--text">あと00人達成で</p>
+                    <p class="card--price">￥100,000（税込）</p>
+                    <h4 class="card--discount">￥100,000（税込）</h4>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

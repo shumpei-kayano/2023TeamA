@@ -1,0 +1,32 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="guide-head">
+    <h2>ご利用ガイド</h2>
+    <hr>
+
+    <div class="guide-one">
+        <a href="{% url 'user:guide_detail' %}">
+        <h3>大きな見出し</h3>
+        </a>
+        <img src="{% static 'assets/img/book.jpg' %}" alt="book">
+        </div>
+
+    <div class="guide-two">
+        <img src="{% static 'assets/img/book.jpg' %}" alt="book">
+        <a href="{% url 'user:guide_detail' %}">
+        <h3>大きな見出し</h3>
+        </a>
+    </div>
+
+    <div class="guide-three">
+        <a href="{% url 'user:guide_detail' %}">
+        <h3>大きな見出し</h3>
+        </a>
+        <img src="{% static 'assets/img/book.jpg' %}" alt="book">
+    </div>
+
+    <hr>
+</div>
+{% endblock %}

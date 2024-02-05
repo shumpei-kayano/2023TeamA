@@ -1,0 +1,84 @@
+{% extends 'user/base.html' %}
+{% block title %}新規登録フォーム | 確認{% endblock title %}
+{% block content %}
+<h2 class="signup-title">以下の情報で登録します。よろしいですか？</h2>
+<div class="signup-container">
+        <form method="POST" action="{% url 'accounts:touroku_success' %}">
+            {% csrf_token %}
+        <div class="signup__form-group">
+            <span class="required">必須</span>
+            {{ form.email.label_tag }}
+            <span class="signup__input-group">
+                {{ request.session.registration_data.email }}
+            </span>
+        </div>
+        {% comment %} <div class="signup__form-group">
+            <span class="required">必須</span>
+            {{ form.password.label_tag }}
+            <span class="signup__input-group">
+                {{ request.session.registration_data.password }}
+            </span>
+        </div>
+        <div class="signup__form-group">
+            <span class="required">必須</span>
+            {{ form.password_confirm.label_tag }}
+            <span class="signup__input-group">
+                {{ request.session.registration_data.password_confirm }}
+            </span>
+        </div> {% endcomment %}
+        <div class="signup__form-group">
+            <span class="required">必須</span>
+            {{ form.username.label_tag }}
+            <span class="signup__input-group">
+                {{ request.session.registration_data.username }}
+            </span>
+        </div>
+        <div class="signup__form-group">
+            <span class="required">必須</span>
+            {{ form.postal_code.label_tag }}
+            <span class="signup__input-group">
+                {{ request.session.registration_data.postal_code }}
+            </span>
+        </div>
+        <div class="signup__form-group">
+            <span class="required">必須</span>
+            {{ form.prefecture.label_tag }}
+            <span class="signup__input-group">
+                {{ request.session.registration_data.prefecture }}
+            </span>
+        </div>
+        <div class="signup__form-group">
+            <span class="required">必須</span>
+            {{ form.city.label_tag }}
+            <span class="signup__input-group">
+                {{ request.session.registration_data.city }}
+            </span>
+        </div>
+        <div class="signup__form-group">
+            <span class="required">必須</span>
+            {{ form.address.label_tag }}
+            <span class="signup__input-group">
+                {{ request.session.registration_data.address }}
+            </span>
+        </div>
+        <div class="signup__form-group">
+            <span class="required">必須</span>
+            {{ form.phone_number.label_tag }}
+            <span class="signup__input-group">
+                {{ request.session.registration_data.phone_number }}
+            </span>
+        </div>
+        <div class="signup__form-group">
+            <span class="any">任意</span>
+            {{ form.taste.label_tag }}
+            <span class="signup__input-group">
+                {{ request.session.registration_data.taste }}
+            </span>
+        </div>
+        <div class="signup__btn-group">
+                <button class="btn btn--beige" type="submit">登録</button>
+                <a class="btn btn--gray" href="{% url 'accounts:user_touroku' %}">キャンセル</a>
+        </div>
+        </form>
+    </div>
+{% endblock %}

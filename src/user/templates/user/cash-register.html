@@ -1,0 +1,238 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% block title %}注文確認{% endblock %}
+{% block content %}
+<section class="register">
+    <h2 class="register__title">注文確認</h2>
+    {% comment %} {% for cart_item in cart_items %}
+        {% if cart_item.sale_type == '一般商品' %} {% endcomment %}
+        {% if cart_item_gen %}
+            <div class="register__cart">
+                <h3 class="register__cart--general-title">一般購入</h3>
+                
+                <table class="cart__shopping-table">
+                    <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">商品</th>
+                        <th scope="col">種別</th>
+                        <th scope="col">価格</th>
+                        <th scope="col">数量</th>
+                        <th scope="col">小計</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for cart_item in cart_item_gen %}
+                    {% comment %} {% for item in cart_items %} {% endcomment %}
+                            <tr>
+                                <td>
+                                    <img src={{ cart_item.sale_image.url }} alt="野菜"/>
+                                </td>
+                                <td>
+                                    {{ cart_item.sale }}
+                                    {% comment %} {{ item.product.name }} {% endcomment %}
+                                </td>
+                                <td>
+                                    {{ cart_item.sale_type }}
+                                    {% comment %} {{ item.product.category }} {% endcomment %}
+                                </td>
+                                <td>
+                                    {{ cart_item.sale_price }}円
+                                    {% comment %} {{ item.product.price }} {% endcomment %}
+                                </td>
+                                <td>
+                                    {{ cart_item.quantity }}個
+                                    {% comment %} {{ item.quantity }} {% endcomment %}
+                                </td>
+                                <td>
+                                    {{ cart_item.total_price }}円
+                                    {% comment %} {{ item.total_price }} {% endcomment %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                </table>
+                
+                <ul class="register__total">
+                    <p>合計金額</p>
+                    <li>
+                        小計
+                        <span>{{ total_gen }}円</span>
+                    </li>
+                    <li>
+                        送料
+                        <span>100円</span>
+                    </li>
+                    <li class="total">
+                        <p>
+                        合計
+                        <span>{{ total_gen_100 }}円</span>
+                        </p>
+                    </li>
+                </ul>
+                
+            </div>
+        
+        {% endif %}
+        {% comment %} {% else %} {% endcomment %}
+        {% if cart_item_mel %}
+            <div class="register__cart">
+                <h3 class="register__cart--joint-title">共同購入</h3>
+                <table class="cart__shopping-table">
+                    <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">商品</th>
+                        <th scope="col">種別</th>
+                        <th scope="col">価格</th>
+                        <th scope="col">数量</th>
+                        <th scope="col">小計</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% comment %} {% for item in cart_items %} {% endcomment %}
+                    {% for cart_item in cart_item_mel %}
+                    <tr>
+                        <td>
+                            <img src={{ cart_item.sale_image.url }} alt="野菜"/>
+                        </td>
+                        <td>
+                            {{cart_item.sale}}トマト
+                            {% comment %} {{ item.product.name }} {% endcomment %}
+                        </td>
+                        <td>
+                            {{ cart_item.sale_type }}
+                            {% comment %} {{ item.product.category }} {% endcomment %}
+                        </td>
+                        <td>
+                            {{ cart_item.sale_price }}円
+                            {% comment %} {{ item.product.price }} {% endcomment %}
+                        </td>
+                        <td>
+                            {{ cart_item.quantity }}個
+                            {% comment %} {{ item.quantity }} {% endcomment %}
+                        </td>
+                        <td>
+                            {{ cart_item.total_price }}円
+                            {% comment %} {{ item.total_price }} {% endcomment %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <ul class="register__total">
+                <p>合計金額</p>
+                <li>
+                    小計
+                    <span>{{ total_mel }}円</span>
+                </li>
+                <li>
+                    送料
+                    <span>100円</span>
+                </li>
+                <li class="total">
+                    <p>
+                    合計
+                    <span>{{ total_mel_100 }}円</span>
+                    </p>
+                </li>
+            </ul>
+        
+        {% comment %} {% endif %}
+        {% endfor %} {% endcomment %}
+            <p class="register__caution">※共同購入商品は目標個数に達しなかった場合、最終割引は適用されません。（定価からの割引は適用されます。）</p>
+            <p class="register__caution">また、発送日時も前後する場合があります。</p>
+            <p class="register__caution">必ず<a href="#">melimitご利用ガイド</a>をご一読ください。</p>
+            <div class="register__confirm">
+                <input type="checkbox" id="confirm-checkbox">
+                <label for="confirm-checkbox">確認しました</label>
+            </div>
+            {% comment %} <script> submit-buttonが一番最後にあるためなんやねんそれってなって動かない
+                document.getElementById('submit-button').addEventListener('click', function(event) {
+                    if (document.getElementById('confirm-checkbox').checked) {
+                        window.location.href = "{% url 'user:order_completed' %}";
+                    } else {
+                        event.preventDefault();
+                        alert('共同購入商品の注意事項をご確認ください。');
+                    }
+                });
+            </script> {% endcomment %}
+        {% endif %}
+</section>
+<section class="register__user-info">
+    <h3 class="register__user-info-title">あなたの登録情報</h3>
+    <div class="register__user-info-content">
+        <p class="register__user-info-subtitle">お客様情報</p>
+        <div class="register__user-info-label">
+            <p>氏名</p>
+            <p>電話番号</p>
+        </div>
+        <div class="register__user-info-detail">
+            <p class="register__user-info-value">{{ user.username }}</p>
+            <p class="register__user-info-value">{{ user.phone_number }}</p>
+        </div>
+        <a href="#" class="register__user-info-btn btn btn--gray">変更する</a>
+    </div>
+    <div class="register__user-info-content">
+        <p class="register__user-info-subtitle">住所情報</p>
+        <div class="register__user-info-label">
+            <p>郵便番号</p>
+            <p>都道府県</p>
+            <p>市区町村</p>
+            <p>番地</p>
+            <p>建物名</p>
+        </div>
+        <div class="register__user-info-detail">
+            <p class="register__user-info-value">{{ user.postal_code }}</p>
+            <p class="register__user-info-value">{{ user.prefecture }}</p>
+            <p class="register__user-info-value">{{ user.city }}</p>
+            <p class="register__user-info-value">{{ user.address }}</p>
+            <p class="register__user-info-value">メリ光ビル</p>
+        </div>
+        <a href="#" class="register__user-info-btn btn btn--gray">変更する</a>
+    </div>
+    <div class="register__user-info-content">
+        <p class="register__user-info-subtitle">お支払方法</p>
+        <div class="register__user-info-detail">
+            <p class="register__user-info-value">クレジットカード</p>
+        </div>
+        <a href="#" class="register__user-info-btn btn btn--gray">変更する</a>
+</section>
+<section class="register__final-confirmation">
+    <h3 class="register__final-confirmation-title">最終確認</h3>
+    <ul class="register__total">
+        <p>合計金額</p>
+        {% if total_gen %}
+        <li>
+            一般購入
+            <span>{{ total_gen_100 }}円</span>
+        </li>
+        {% endif %}
+        {% if total_mel %}
+        <li>
+            共同購入
+            <span>{{ total_mel_100 }}円</span>
+        </li>
+        {% endif %}
+        <li class="total">
+            <p>
+            合計(一般+共同)
+            <span>{{ all_total }}円</span>
+            </p>
+        </li>
+    </ul>
+    <div class="register__final-confirmation-btn">
+        <a href="{% url 'user:cart' %}" class="btn btn--gray">戻る</a>
+        <button type="submit" id="submit-button" class="btn btn--beige">注文を確定する</button>
+    </div>
+
+    {% comment %} <script>
+        document.getElementById('submit-button').addEventListener('click', function(event) {
+            if (document.getElementById('confirm-checkbox').checked) {
+                window.location.href = "{% url 'user:order_completed' %}";
+            } else {
+                event.preventDefault();
+                alert('共同購入商品の注意事項をご確認ください。');
+            }
+        });
+    </script> {% endcomment %}
+{% endblock %}

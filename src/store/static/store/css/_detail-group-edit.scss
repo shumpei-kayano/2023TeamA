@@ -1,0 +1,481 @@
+.product-manage-text {
+    position: absolute;
+    top: 0;
+    left: 36px;
+    line-height: 150%;
+    font-weight: bold;
+}
+.fibermanualrecordfilled-icon {
+    position: absolute;
+    top: 5px;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    overflow: hidden;
+}
+.title-product-manage {
+    position: absolute;
+    top: 100px;
+    left: 264px;
+    width: 1040px;
+    height: 30px;
+    font-size: var(--font-size-xl);
+}
+.product-manage {
+    position: relative;
+    line-height: 100%;
+    text-transform: capitalize;
+}
+.product-manage__container,
+.topic-path {
+  background-color: var(--color);
+}
+.topic-path {
+  position: absolute;
+  border-top: 1px solid var(--color-gainsboro-100);
+  top: 56px;
+  left: 240px;
+  width: 1040px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-5xs);
+  box-sizing: border-box;
+  gap: var(--gap-5xs);
+  font-size: var(--typography-caption-size);
+}
+.product-manage__container {
+  // position: relative;
+  width: 100%;
+  // height: 720px;
+  height: 100%;
+  overflow-x: hidden;
+  text-align: left;
+  font-size: var(--typography-body1-size);
+  color: var(--color-black);
+  position: absolute;
+}
+
+
+
+.title-text {
+  position: relative;
+  line-height: 100%;
+  font-weight: bold;
+  }
+  .group-purchase-button,
+  .product-name-box-title {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .group-purchase-button {
+    position: absolute;
+    top: 100%;
+    left: 350px;
+    margin: 50px;
+    border-radius: var(--br-9xs);
+    background-color: var(--color4);
+    justify-content: center;
+    cursor: pointer;
+  }
+  .product-name-box-title {
+    align-self: stretch;
+    background-color: var(--color-whitesmoke-100);
+    width: 240px;
+    justify-content: flex-start;
+    padding: var(--padding-xs) var(--padding-base);
+  }
+  .placeholder {
+    flex: 1;
+    position: relative;
+    line-height: 150%;
+  }
+  .input-active {
+    align-self: stretch;
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px;
+  }
+  .product-name-box-input {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .product-name-box-input {
+    flex-direction: row;
+    color: var(--color3);
+  }
+  .category-box-title,
+  .product-name-box {
+    border-bottom: 1px solid var(--color-gainsboro-100);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .product-name-box {
+    border-top: 1px solid var(--color-gainsboro-100);
+    width: 992px;
+  }
+  .product-name-box-title,
+  .category-box-title {
+    align-self: stretch;
+    background-color: var(--color-whitesmoke-100);
+    width: 240px;
+    padding: var(--padding-xs) var(--padding-base);
+  }
+  .product-name-box,
+  .category-box,
+  .category-box-input {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  .category-box-input {
+    flex: 1;
+    border-bottom: 1px solid var(--color-gainsboro-100);
+    align-items: flex-start;
+    padding: var(--padding-xs) var(--padding-base);
+    color: var(--color3);
+    font-family: var(--typography-body1);
+  }
+  .product-name-box-input {
+    flex: 1;
+    align-items: flex-start;
+    padding: var(--padding-xs) var(--padding-base);
+    color: var(--color3);
+    font-family: var(--typography-body1);
+  }
+  .product-name-box,
+  .category-box {
+    width: 992px;
+    align-items: center;
+  }
+  .price-box-input,
+  .listprice-box-input,
+  .quantity-box-input,
+  .discount-box-input,
+  .period-box-input,
+  .stock-box-input,
+  .shipping-box-input,
+  .weight-box-input,
+  .expiration-box-input,
+  .image-box-input,
+  .description-box-input  {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .price-box-input,
+  .listprice-box-input,
+  .quantity-box-input,
+  .discount-box-input,
+  .period-box-input,
+  .stock-box-input,
+  .shipping-box-input,
+  .weight-box-input,
+  .expiration-box-input,
+  .image-box-input,
+  .description-box-input {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex: 1;
+    border-bottom: 1px solid var(--color-gainsboro-100);
+    flex-direction: row;
+    padding: var(--padding-xs) var(--padding-base);
+    color: var(--color3);
+  }
+  .group-purchase-input {
+    position: absolute;
+    top: 177px;
+    left: 264px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+    color: var(--color-black);
+  }
+  .group-purchase-create {
+    background-color: var(--color);
+    width: 100%;
+    text-align: center;
+    font-size: var(--typography-body1-size);
+    color: var(--color);
+  }
+
+
+  input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    transform: scale(1.5); /* サイズを変更する */
+  }
+  #preview img {
+    width: 200px;
+    margin: 10px;
+    border: solid 1px silver;
+  }
+.btn-conf {
+  border: none; /* 枠線を削除 */
+  background: none; /* 背景を削除（必要に応じて変更）*/
+  padding: 20px 30px;
+  font-size: 16px;
+  color: #fff;
+  font-weight: bold; /* テキストを太字にする */
+  cursor: pointer; /* カーソルをポインターに変更（クリック可能な要素として示すため） */
+}
+.btn-conf:hover {
+  border-radius: var(--br-9xs);
+  background-color:#f136b3;
+}
+textarea{
+  height:180px;
+  resize:vertical;
+}
+select {
+  color: #666;
+}
+
+
+
+
+.con-title-text {
+  position: relative;
+  line-height: 100%;
+}
+.con-product-name-box-title {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.con-product-name-box-title {
+  align-self: stretch;
+  background-color: var(--color-whitesmoke-100);
+  width: 240px;
+  justify-content: flex-start;
+  padding: var(--padding-xs) var(--padding-base);
+}
+.con-product-name-box-input {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-left: 10px;
+}
+.con-category-box-title,
+.con-product-name-box {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+.con-product-name-box {
+  border-top: 1px solid var(--color-gainsboro-100);
+  width: 100%;
+}
+.con-product-name-box-title,
+.con-category-box-title {
+  font-weight: bold; /* テキストを太字にする */
+  align-self: stretch;
+  background-color: var(--color-whitesmoke-100);
+  width: 240px;
+  padding: var(--padding-xs) var(--padding-base);
+}
+.con-product-name-box,
+.con-category-box,
+.con-category-box-input {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.con-category-box-input {
+  flex: 1;
+  align-items: flex-start;
+  font-family: var(--typography-body1);
+}
+.con-product-name-box-input {
+  flex: 1;
+  align-items: flex-start;
+  font-family: var(--typography-body1);
+}
+.con-product-name-box,
+.con-category-box {
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  width: 100%;
+  align-items: center;
+}
+.con-price-box-input,
+.con-quantity-box-input,
+.con-discount-box-input,
+.con-period-box-input,
+.con-stock-box-input,
+.con-shipping-box-input,
+.con-weight-box-input,
+.con-expiration-box-input,
+.con-image-box-input,
+.con-description-box-input {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  flex-direction: row;
+}
+
+
+
+/* モーダルのスタイル */
+.modal {
+  display: none; /* 最初は非表示 */
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4); /* 背景を半透明にする */
+}
+/* モーダルのコンテンツ */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto; /* 上下左右中央に配置 */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 70%;
+  overflow: auto;
+  height: 100%;
+  color: #333;
+  border-radius: 5px;
+}
+/* 閉じるボタン */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 40px;
+  font-weight: bold;
+}
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+.modal-button {
+  border-radius: var(--br-9xs);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  margin: 30px;
+  box-sizing: border-box;
+  text-align: center;
+}
+.modal-back {
+  border: none; /* 枠線を削除 */
+  border-radius: var(--br-9xs);
+  width: 200px;
+  height: 50px;
+  font-size: 16px;
+  font-weight: bold; /* テキストを太字にする */
+  background-color: var(--color-gainsboro-100);
+  cursor: pointer;
+}
+.modal-back:hover {
+  border-radius: var(--br-9xs);
+  background-color: #edd5a8;
+}
+.modal-group {
+  border: none; /* 枠線を削除 */
+  border-radius: var(--br-9xs);
+  width: 200px;
+  height: 50px;
+  font-size: 16px;
+  color: #fff;
+  font-weight: bold; /* テキストを太字にする */
+  background-color: var(--color4);
+  cursor: pointer;
+}
+.modal-group:hover {
+  border-radius: var(--br-9xs);
+  background-color: #f136b3;
+}
+.modal-title {
+  float: left;
+  border-left: 5px solid var(--color-black);
+  align-items: flex-start;
+  padding: var(--padding-xs) var(--padding-xl);
+  font-size: var(--font-size-xl);
+  font-weight: bold; /* テキストを太字にする */
+}
+
+.product-name-box-input span,
+.category-box-input span,
+.price-box-input span,
+.listprice-box-input span,
+.quantity-box-input span,
+.discount-box-input span,
+.period-box-input span,
+.stock-box-input span,
+.shipping-box-input span,
+.weight-box-input span,
+.expiration-box-input span,
+.image-box-input span,
+.description-box-input span {
+  margin: 10px;
+}
+
+/* レスポンシブ対応 */
+@media screen and (max-width: 800px) {
+  .product-name-box, .category-box {
+    width: 80%;
+    width: 100%;
+
+    height: 90px;
+    text-align: left;
+    flex-direction: column;
+    margin-bottom: 10px;
+    border-style: none;
+  }
+  .product-name-box-title, .category-box-title {
+    width: 100%;
+    text-align: left;
+    border-bottom: none;
+  }
+  .product-name-box-input, .category-box-input, .price-box-input, .listprice-box-input, .quantity-box-input, .discount-box-input, .period-box-input, .stock-box-input, .shipping-box-input, .weight-box-input, .expiration-box-input, .image-box-input, .description-box-input {
+    width: 100%;
+    margin-right: auto;
+    border-bottom: none;
+  }
+  .group-purchase-button, .general-purchase-button {
+    position: relative;
+    left: 0px;
+  }
+  .product-delete-button, .group-product-button, .general-product-button {
+    transform: scale(0.7);
+  }
+  .product-delete-button {
+    position: relative;
+    bottom: -55px;
+    left: -50px;
+  }
+  .group-edit-button {
+    left: 180px;
+    top: 94%;
+  }
+  .general-edit-button {
+    left: 180px;
+    top: 93%;
+  }
+}

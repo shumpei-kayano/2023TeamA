@@ -1,0 +1,15 @@
+.product-sort {
+    text-align: center;
+    padding: 1%;
+    border: none;
+    border-radius: 5px;
+    background: $melimit_gray;
+    color: $melimit_black;
+    font-size: 1rem;
+    font-family: 'Noto Sans JP', sans-serif;
+    option{
+        text-align: center;
+        background: $melimit_white;
+        color: $melimit_black;
+    }
+}

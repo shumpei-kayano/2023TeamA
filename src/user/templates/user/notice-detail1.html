@@ -1,0 +1,60 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% block title %}お知らせ{% endblock %}
+{% block content %}
+<section class="notice-head">
+<h2>お知らせ</h2>
+</section>
+
+<section class="notice-top">
+    <div class="notice-top-image">
+        <img src="{% static 'assets/img/satou1.png' %}" >
+    </div>
+        <div class="notice-top-text">
+        <h3>Melimit設立から1ヶ月</h3>
+        <p>皆様へ、私たちはこの度、ECサイトの設立から1ヶ月が経過しましたので、進捗報告をさせていただきます。
+            Melimitの売上は順調に推移しており、1ヶ月間で130万円の売上を達成しました。特に、ブロッコリーの売れ行きが好調であり、顧客からのフィードバックも好評を得ています。
+            新規顧客の獲得にも成功し、1ヶ月間で724名の新規顧客を獲得しました。また、既存顧客からのリピート率も高く、サイトの信頼性が高まっていることを示しています。
+            顧客からのフィードバックを元に、サイトの使いやすさや機能性の向上に取り組んでいます。今後も顧客ニーズに合わせたサイト改善を継続して行ってまいります。
+            一方で、配送遅延や在庫管理の課題などもありますが、迅速に改善策を講じることで顧客満足度の向上に努めます。また、今後は新たな商品ラインナップの拡充や海外展開など、さらなる成長に向けた戦略を検討していきます。
+            以上が、Melimit設立1ヶ月の進捗報告となります。今後とも皆様のご支援とご協力を賜りますよう、何卒よろしくお願い申し上げます。</p>
+        </div>
+    </div>
+</section>
+
+<div class="item--list">
+    <div class="item--card card--notice">
+        <a href="{% url "user:notice_detail1" %}">
+            <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+            <div class="card--content">
+                <p><span class="card--date-category">2020/00/00</span><span class="card--date-category">カテゴリー</span></p>
+                <h3 class="card--title">Card Title</h3>
+                <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+            </div>
+        </a>
+    </div>
+    <div class="item--card card--notice">
+        <a href="#">
+            <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+            <div class="card--content">
+                <p><span class="card--date-category">2020/00/00</span><span class="card--date-category">カテゴリー</span></p>
+                <h3 class="card--title">Card Title</h3>
+                <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+            </div>
+        </a>
+    </div>
+    <div class="item--card card--notice">
+        <a href="#">
+            <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+            <div class="card--content">
+                <p><span class="card--date-category">2020/00/00</span><span class="card--date-category">カテゴリー</span></p>
+                <h3 class="card--title">Card Title</h3>
+                <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+            </div>
+        </a>
+    </div>
+    <a href="{% url "user:notice" %}" class="btn--beige btn--middle mgt-10">お知らせ一覧</a>
+</section>
+</div>
+
+{% endblock %}

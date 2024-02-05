@@ -1,0 +1,80 @@
+{% extends 'user/base.html' %}
+{% block title %}お知らせ一覧{% endblock %}
+{% load static %}
+{% block content %}
+{% load ueno_filters %}
+<section>
+    <h2 class="center">お知らせ一覧</h2>
+    <form>
+        <label>
+            sort by&colon;
+            <select class="product-sort">
+                <option>新しい順</option>
+                <option>古い順</option>
+            </select>
+        </label>
+    </form>
+    <div class="item--list">
+        <div class="item--card card--notice">
+            <a href="{% url "user:notice_detail" %}">
+                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+                <div class="card--content">
+                    <p><span class="card--date-category">2020/00/00</span><span class="card--date-category">カテゴリー</span></p>
+                    <h3 class="card--title">Card Title</h3>
+                    <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+                </div>
+            </a>
+        </div>
+        <div class="item--card card--notice">
+            <a href="#">
+                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+                <div class="card--content">
+                    <p><span class="card--date-category">2020/00/00</span><span class="card--date-category">カテゴリー</span></p>
+                    <h3 class="card--title">Card Title</h3>
+                    <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+                </div>
+            </a>
+        </div>
+        <div class="item--card card--notice">
+            <a href="#">
+                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+                <div class="card--content">
+                    <p><span class="card--date-category">2020/00/00</span><span class="card--date-category">カテゴリー</span></p>
+                    <h3 class="card--title">Card Title</h3>
+                    <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+                </div>
+            </a>
+        </div>
+        <div class="item--card card--notice">
+            <a href="{% url "user:notice" %}">
+                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+                <div class="card--content">
+                    <p><span class="card--date-category">2020/00/00</span><span class="card--date-category">カテゴリー</span></p>
+                    <h3 class="card--title">Card Title</h3>
+                    <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+                </div>
+            </a>
+        </div>
+        <div class="item--card card--notice">
+            <a href="#">
+                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+                <div class="card--content">
+                    <p><span class="card--date-category">2020/00/00</span><span class="card--date-category">カテゴリー</span></p>
+                    <h3 class="card--title">Card Title</h3>
+                    <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+                </div>
+            </a>
+        </div>
+        <div class="item--card card--notice">
+            <a href="#">
+                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+                <div class="card--content">
+                    <p><span class="card--date-category">2020/00/00</span><span class="card--date-category">カテゴリー</span></p>
+                    <h3 class="card--title">Card Title</h3>
+                    <p class="card--text">This is a description of the card. It contains information about the content of the card.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

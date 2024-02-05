@@ -1,0 +1,94 @@
+.explain-top__section1 {
+    display: flex;
+    flex-direction: row;
+    margin: 134px 0;  // 上下にマージンを追加する
+    @media screen and (max-width: 767px) {
+        display: block;
+        margin:  0;  // 上にマージンを追加する
+    }
+    &_left {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 1.2em;  // 文字を大きくする
+        margin-top: 20px;  // 上にマージンを追加する
+        // transform: translateX(-29px);  // 左に50px移動する
+        @media screen and (max-width: 767px) {
+            flex: none;
+        }
+        .merit {
+            font-size: 2.4em;  // 文字を大きくする
+        transform: translateX(-34px);  // 左に50px移動する
+    }
+        .limit {
+            font-size: 2.4em;  // 文字を大きくする
+            transform: translateX(27px);  // 左に50px移動する
+        }
+        .cross {
+            font-size: 1.5em;  // "✕"の文字サイズを調整する
+        }
+    }
+    &_right {
+        flex: 1;
+        line-height: 2.5;  // 行間を1.5に設定する
+        @media screen and (max-width: 767px) {
+            flex: none;
+        }
+    }
+}
+
+
+.explain-top__section2 {
+    display: flex;
+    flex-direction: row-reverse;
+    margin: 134px 0;  // 上下にマージンを追加する
+    @media screen and (max-width: 767px) {
+        display: block;
+        margin: 1rem 0;  // 上にマージンを追加する
+    }
+    &_left {
+        flex: 1;
+        font-size: 3em;  // 文字を大きくする
+        margin-top: 119px;  // 上にマージンを追加する
+        text-align: center;  // 文字を中央に配置する
+        @media screen and (max-width: 767px) {
+            margin-top: 0;
+            flex: none;
+        }
+    }
+    &_right {
+        flex: 1;
+        line-height: 2.5;  // 行間を1.5に設定する
+        @media screen and (max-width: 767px) {
+            flex: none;
+        }
+    }
+}
+
+.explain-top__section3 {
+    margin: 134px 0;  // 上下にマージンを追加する
+    display: flex;
+    flex-direction: row;
+    @media screen and (max-width: 767px) {
+        display: block;
+        margin: 1rem 0;  // 上にマージンを追加する
+    }
+    &_left {
+        flex: 1;
+        font-size: 3em;  // 文字を大きくする
+        margin-top: 40px;  // 上にマージンを追加する
+        text-align: center;
+        @media screen and (max-width: 767px) {
+            margin-top: 0;
+            flex: none;
+        }
+    }
+    &_right {
+        flex: 1;
+        line-height: 2.5;  // 行間を1.5に設定する
+        @media screen and (max-width: 767px) {
+            flex: none;
+        }
+    }
+}

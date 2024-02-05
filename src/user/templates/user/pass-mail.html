@@ -1,0 +1,17 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% block content %}
+<section class="pass-head">
+    <h2>パスワード再設定用のメールを送信しました！</h2>
+</section>
+
+<div class="pass-bottom">
+    <img src="{% static 'assets/img/メリ光子.png' %}" alt="メリ光子">
+    <p>メールをご確認ください</p>
+    <img src="{% static 'assets/img/メリ光男.png' %}" alt="メリ光男">
+</div>
+
+<div class="pass-btn">
+<a href="{% url 'user:login' %}" class="btn btn--beige">ログインページへ戻る</a>
+</div>
+{% endblock %}

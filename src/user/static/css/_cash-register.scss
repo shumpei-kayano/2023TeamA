@@ -1,0 +1,89 @@
+.register {
+    .cart__shopping-table {
+        margin-bottom: 0;
+    }
+    &__title{
+        text-align: center;
+        padding-bottom: 20px;
+    }
+    &__cart {
+        &--general {
+            &-title {
+                padding-left : 1rem;
+                background-color: $melimit-lightblue;
+            }
+        }
+        &--joint {
+            &-title {
+                padding-left : 1rem;
+                background-color: $melimit-lightpink;
+            }
+        }
+    }
+    &__total {
+        padding: 1em;
+        p {
+            font-weight: bold;
+        }
+        li {
+            margin-bottom: 0.5em;
+        }
+        li.total{
+            border-top: 1px solid $melimit_black;
+        }
+        span {
+            float: right;
+            color: $melimit_red;
+        }
+    }
+    &__caution {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 0.8em;
+        color: $melimit_red;
+    }
+    &__confirm {
+        text-align: center;
+        label {
+            font-weight: bold;
+        }
+        input {
+            vertical-align: middle;
+        }
+    }
+    &__user-info {
+        &-title {
+            padding-left : 1rem;
+            background-color: $main_color;
+        }
+        &-content {
+            display: flex;
+            justify-content: space-between;
+            text-align: center;
+            vertical-align: middle;
+            border-top: 1px solid $melimit_gray;
+            border-bottom: 1px solid $melimit_gray;
+            padding: 1em;
+        }
+        &-label {
+            p {
+                font-weight: bold;
+            }
+        }
+        &-subtitle, &-btn {
+            margin: auto 0;
+        }
+    }
+    &__final-confirmation {
+        margin-bottom: 1rem;
+        &-title {
+            padding-left : 1rem;
+            background-color: $melimit_gray;
+        }
+        &-btn {
+            display: flex;
+            justify-content: space-evenly;
+            padding: 1em;
+        }
+    }
+}

@@ -1,0 +1,28 @@
+.pass {
+    &-head {
+        font-size: 1rem;
+        text-align: center;
+    }
+
+    &-bottom {
+        font-size: 1.5rem;
+        text-align: center;
+        margin-top: -1rem;
+        margin-bottom: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2px; /* 画像とテキストの間隔を調整 */
+
+        img {
+            width: 150px;
+            height: auto;
+        }
+    }
+
+    &-btn {
+        text-align: center;
+        margin-bottom: 2rem;
+        margin-top: -3rem;
+    }
+}

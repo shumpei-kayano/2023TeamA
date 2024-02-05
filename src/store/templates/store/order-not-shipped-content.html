@@ -1,0 +1,160 @@
+{% extends "store/base.html" %}
+
+{% load static %}
+
+{% block title %}未発送注文一覧詳細{% endblock %}
+
+{% block contents %}
+
+    {% comment %} <div class="order-history__container"> {% endcomment %}
+      <div class="topic-path">
+        <div class="order-manage">注文管理</div>
+        <img class="searchfilled-icon" alt="" src="{% static 'store/img/keyboardarrowright_mini.png' %}" />
+        <div class="order-manage">未発送注文一覧詳細</div>
+        <img class="searchfilled-icon" alt="" src="{% static 'store/img/keyboardarrowright_mini.png' %}" />
+        <div class="order-manage">詳細</div>
+      </div>
+    {% comment %} </div> {% endcomment %}
+
+
+    <div class="oeder-history-contents">
+        <!-- ここから購入した人の情報 -->
+        <!-- どの項目が必要か？ -->
+        <div class="consumer-info">
+          <div class="consumer-info-title">購入者情報</div>
+        </div>
+        <div class="consumer-info-con">
+          <table>
+            <tr class="consumer-table-con">
+              <th class="info-label">注文番号</th>
+              <td class="info-value">{{ order_history.id }}</td>
+            </tr>
+            <tr class="consumer-table-con">
+              <th class="info-label">名前</th>
+              <td class="info-value">{{ order_history.orderhistory_user.username }}</td>
+            </tr>
+            <tr class="consumer-table-con">
+              <th class="info-label">メールアドレス</th>
+              <td class="info-value">{{ order_history.orderhistory_user.email }}</td>
+            </tr>
+            <tr class="consumer-table-con">
+              <th class="info-label">電話番号</th>
+              <td class="info-value">{{ order_history.orderhistory_user.phone_number }}</td>
+            </tr>
+            <tr class="consumer-table-con">
+                <th class="info-label">住所</th>
+                <td class="info-value">{{ order_history.orderhistory_user.postal_code }}</td>
+                <td class="info-value">{{ order_history.orderhistory_user.prefecture }}</td>
+                <td class="info-value">{{ order_history.orderhistory_user.city }}</td>
+                <td class="info-value">{{ order_history.orderhistory_user.address }}</td>
+            </tr>
+          </table>
+        </div>
+  
+  
+  
+        <!-- ここから購入内容 -->
+        <!-- どの項目が必要か？ -->
+        <div class="consumer-info-naiyou">
+          <div class="consumer-info-title">購入内容</div>
+        </div>
+        <div class="consumer-naiyou-con">
+          <table style="margin-bottom: 1000px;">
+            <tr class="consumer-table-con">
+              <th class="info-label">注文日</th>
+              <td class="info-value">{{ order_history.order_date }}</td>
+            </tr>
+            <tr class="consumer-table-con">
+              <th class="info-label">商品名</th>
+              <td class="info-value">{{ order_history.product.product_name }}</td>
+            </tr>
+            <tr class="consumer-table-con">
+              <th class="info-label">数量</th>
+              <td class="info-value">{{ order_history.quantity }} 個</td>
+            </tr>
+            <tr class="consumer-table-con">
+              <th class="info-label">販売価格</th>
+              <td class="info-value">{{ order_history.sale.sale_price }} 円</td>
+            </tr>
+            <tr class="consumer-table-con">
+              <th class="info-label">合計金額</th>
+              <td class="info-value">{{ order_history.amount }} 円</td>
+            </tr>
+            <tr class="consumer-table-con">
+              <th class="info-label">支払い方法</th>
+              <td class="info-value">※現在は着払いのみに対応。</td>
+            </tr>
+            <tr class="consumer-table-con">
+              <th class="info-label">CO2排出削減量</th>
+              <td class="info-value">{{ order_history.co2 }} g</td>
+            </tr>
+            <tr class="consumer-table-con">
+              <th class="info-label">販売種別</th>
+              <td class="info-value">{{ order_history.sale.get_sale_type_display }}</td>
+            </tr>
+          </table>
+        </div>
+
+
+        <div class="shipment">
+            <div class="consumer-info-title">※発送が完了したら「発送完了」ボタンを押してください</div>
+        </div>
+        <div class="shipment-btn">
+            <button class="shipment-btn-con">発送完了</button>
+        </div>
+        <div id="shipmentModal" class="shipment-modal">
+            <div class="shipment-modal-content">
+                <span class="close">&times;</span>
+                <span class="modal-title">発送日を入力して発送完了ボタンを押してください</span>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="shipment-modal-con">
+                    {% comment %} <div class="shipment-modal-label">発送日</div> {% endcomment %}
+                    {% comment %} <input class="shipment-modal-input" type="date" name="shipment_date" value=""> {% endcomment %}
+                    <input class="shipment-modal-input" type="date" name="shipment_date" id="shipment_date" value="">
+                    </div>
+                    <div class="shipment-modal-btn">
+                    <button class="shipment-modal-btn-con" type="submit" name="shipment">発送完了</button>
+                    </div>
+                </form>
+            </div>
+          </div>
+
+          <script>
+            var shipmentmodal = document.getElementById("shipmentModal");
+            var shipmentbtn = document.querySelector(".shipment-btn-con");
+            var shipmentspan = document.getElementsByClassName("close")[0];
+            var shipmentDateInput = document.getElementById("shipment_date"); // 発送日の入力フィールド
+        
+            // ボタンをクリックしたときにモーダルを開く
+            shipmentbtn.onclick = function() {
+                shipmentmodal.style.display = "block";
+            }
+        
+            // × をクリックしたときにモーダルを閉じる
+            shipmentspan.onclick = function() {
+                shipmentmodal.style.display = "none";
+            }
+        
+            window.addEventListener('click', function(event) {
+              if (event.target === shipmentmodal) {
+                  shipmentmodal.style.display = 'none';
+              }
+            });
+            
+
+
+        
+            // 発送完了ボタンを押したときの処理
+            document.querySelector(".shipment-modal-btn-con").addEventListener("click", function(event) {
+                event.preventDefault(); // デフォルトのsubmitイベントをキャンセル
+                if (shipmentDateInput.value === "") { // 発送日が空の場合
+                    alert("発送日を入力してからボタンを押してください。");
+                } else {
+                    alert("購入者に発送完了通知を行いました");
+                    window.location.href = "{% url 'store:order-not-shipped-to-shipped' order_id=order_history.id %}";
+                }
+            });
+        </script>
+        
+{% endblock %}

@@ -1,0 +1,151 @@
+{% extends "store/base.html" %}
+
+{% load static %}
+
+{% block title %}商品管理一覧{% endblock %}
+
+{% block contents %}
+
+    <div class="product-manage__container">
+      <div class="topic-path">
+        <div class="product-manage">商品管理</div>
+        <img class="searchfilled-icon" alt="" src="{% static 'store/img/keyboardarrowright_mini.png' %}" />
+        <div class="product-manage">商品管理一覧</div>
+      </div>
+
+      {% comment %} js追加のため元々のはコメントアウト
+      <div class="search-group">
+        <div class="search-box">
+          <div class="input">
+            <div class="placeholder">検索キーワード</div>
+            <img class="searchfilled-icon" alt="" src="{% static 'store/img/search.png' %}" />
+          </div>
+        </div>
+        <div class="button-search">
+          <div class="search">絞り込み</div>
+        </div>
+      </div> {% endcomment %}
+
+      <div class="search-group">
+        <div class="search-box">
+          <input type="search" id="searchInput" oninput="filterTable()" placeholder="検索 (全角スペースで区切ると複数検索できます)" div class="input">
+        </div>
+      </div>
+
+      <div class="title-product-manage" style="width: 30%;">
+        <div class="product-manage-text">商品管理一覧</div>
+        <img class="fibermanualrecordfilled-icon" alt="" src="{% static 'store/img/maru.png' %}" />
+      </div>
+
+      {% comment %} <a href="{% url 'store:product_manage' %}" class="create__btn create-btn--blue"> {% endcomment %}
+      <a href="{% url 'store:create-general-purchase' %}" class="create-btn-blue">
+        <img class="create-btn-icon" alt="" src="{% static 'store/img/new.png' %}" />
+        <span class="create-btn-text">一般購入商品新規登録</span>
+      </a>
+      <a href="{% url 'store:create-group-purchase' %}" class="create-btn-pink">
+        <img class="create-btn-icon" alt="" src="{% static 'store/img/new.png' %}" />
+        <span class="create-btn-text">共同購入商品新規登録</span>
+      </a>
+
+      <form method="get" action="{% url 'store:product_and_sale_delete' %}">
+        {% csrf_token %}
+
+      {% comment %} 一括削除は必要ないかもしれないのでコメントアウト
+      <div class="bulk-deletion">
+        <button type="submit" class="custom-button">
+          <img class="dustbox-icon" alt="" src="{% static 'store/img/dustbox.png' %}" />
+          <span class="button-text">削除</span>
+        </button>
+      </div> {% endcomment %}
+
+      <table class="table-product-manage">
+        <thead>
+          <tr>
+            <td class="head-product-number">商品コード</td>
+            <td class="head-product-name">商品名</td>
+            <td class="head-price">販売価格</td>
+            <td class="head-inventory">在庫数</td>
+            <td class="head-period">表示期間</td>
+            <td class="head-category">カテゴリ</td>
+            <td class="head-type">販売種別</td>
+          </tr>
+        </thead>
+        {% comment %} <tbody> {% endcomment %}
+        <tbody id="tableBody">
+          {% for sale in sales %}
+            <tr class="clickable-row" data-href="{% url 'store:sale_detail' sale.pk %}" {% if sale.get_sale_type_display == '共同販売商品' %}style="background-color: #d485ba30;"{% elif sale.get_sale_type_display == '一般商品' %}style="background-color: #85a8d430;"{% endif %}>
+            {% comment %} <tr class="clickable-row" data-href="{% url 'store:sale_detail' sale.pk %}"> {% endcomment %}
+              <td class="product-number">{{ sale.id }}</td>
+              {% comment %} <td class="product-number"><input type="checkbox" id="checkbox">{{ sale.id }}</td> {% endcomment %}
+              <td class="product-name">{{ sale.product.product_name }}</td>
+              <td class="price">{{ sale.sale_price }}</td>
+              <td class="inventory">{{ sale.stock }}</td>
+              <td class="period">{{ sale.remaining_time }}</td>
+              <td class="category">{{ sale.product.get_product_category_display }}</td>
+              <td class="type">{{ sale.get_sale_type_display }}</td>
+              {% comment %} <td class="type" {% if sale.get_sale_type_display == '共同販売商品' %} style="background-color: #FFB6C180;"{% elif sale.get_sale_type_display == '一般商品' %}style="background-color: #a0d8ef80;"{% endif %}>{{ sale.get_sale_type_display }}</td> {% endcomment %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </form>
+  </div>
+  <script>
+    // 行をクリックしたら詳細ページに遷移する
+    document.addEventListener("DOMContentLoaded", function () {
+        var rows = document.querySelectorAll(".clickable-row");
+        rows.forEach(function (row) {
+            row.addEventListener("click", function () {
+                var href = row.getAttribute("data-href");
+                if (href) {
+                    window.location.href = href;
+                }
+            });
+        });
+    });
+
+    // 検索機能
+    function filterTable() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("searchInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("tableBody");
+      tr = table.getElementsByTagName("tr");
+
+      var keywords = filter.split("　"); // 全角スペースでキーワードを分割
+
+      for (i = 0; i < tr.length; i++) {
+          var display = "none";
+          var keywordMatch = true; // すべてのキーワードに一致するかを示すフラグ
+
+          for (var k = 0; k < keywords.length; k++) {
+              keywordMatch = false;
+
+              for (var j = 0; j < tr[i].cells.length; j++) {
+                  td = tr[i].cells[j];
+                  if (td) {
+                      txtValue = td.textContent || td.innerText;
+
+                      // 各セルでキーワードが見つかったらフラグを立てる
+                      if (txtValue.toUpperCase().indexOf(keywords[k]) > -1) {
+                          keywordMatch = true;
+                          break;
+                      }
+                  }
+              }
+
+              // 一つでもキーワードに一致しない場合はその行を非表示にする
+              if (!keywordMatch) {
+                  break;
+              }
+          }
+
+          if (keywordMatch) {
+              display = "";
+          }
+          
+          tr[i].style.display = display;
+      }
+  }
+</script>
+{% endblock %}

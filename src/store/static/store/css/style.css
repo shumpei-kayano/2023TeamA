@@ -1,0 +1,4885 @@
+@charset "UTF-8";
+.top-page-content {
+  position: absolute;
+  top: 70px;
+  width: 1040px;
+}
+
+.order-status {
+  position: fixed;
+  top: 115px;
+  left: 22%;
+  background-color: var(--color-whitesmoke-100);
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  box-sizing: border-box;
+  width: 280px;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 30px;
+  text-align: center;
+}
+
+.order-status-title {
+  font-weight: bold;
+}
+
+.order-status-nakami {
+  position: absolute;
+  top: 60px;
+  left: 0px;
+}
+
+.order-status-koumoku {
+  width: 280px;
+  height: 50px;
+  display: flex;
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  align-items: center;
+  padding: 30px;
+  justify-content: space-between;
+}
+
+.chartWrapper {
+  position: fixed;
+  top: 70px;
+  left: 50%;
+}
+
+.chart-toggle-pro {
+  position: relative;
+  left: 1040px;
+  top: 5px;
+  cursor: pointer;
+}
+
+.chart-toggle-co2 {
+  position: relative;
+  left: 1040px;
+  top: 240px;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 1280px) {
+  .main-container {
+    transform: scale(1);
+    transform-origin: top;
+  }
+}
+@media only screen and (max-width: 1000px) {
+  .order-status, .chartWrapper, .chart-toggle-pro, .chart-toggle-co2 {
+    transform: scale(0.8);
+    transform-origin: top;
+  }
+  .chartWrapper {
+    position: fixed;
+    top: 400px;
+    left: 20%;
+  }
+  .chart-toggle-pro {
+    position: relative;
+    left: 45%;
+    top: 330px;
+  }
+  .chart-toggle-co2 {
+    position: relative;
+    left: 45%;
+    top: 510px;
+  }
+}
+@media only screen and (max-width: 800px) {
+  .order-status {
+    transform: scale(0.7);
+    transform-origin: top;
+    position: fixed;
+    left: 20%;
+  }
+  .chartWrapper {
+    transform: scale(0.7);
+    transform-origin: top;
+    position: fixed;
+    top: 400px;
+    left: 20%;
+  }
+  .chart-toggle-pro {
+    transform: scale(0.7);
+    transform-origin: top;
+    position: relative;
+    left: 35%;
+    top: 330px;
+  }
+  .chart-toggle-co2 {
+    transform: scale(0.7);
+    transform-origin: top;
+    position: relative;
+    left: 35%;
+    top: 485px;
+  }
+}
+.shipment {
+  top: 850px;
+  left: 265px;
+  background-color: var(--color);
+  border-left: 5px solid var(--color-black);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 8px;
+  position: relative; /* positionをrelativeに変更 */
+  width: 100%; /* 画面幅いっぱいに */
+  flex-wrap: wrap; /* 画面が狭い場合に折り返すために追加 */
+}
+
+.shipment-btn {
+  position: absolute;
+  top: 880px;
+  left: 50%;
+  margin: 50px;
+  border-radius: var(--br-9xs);
+  background-color: #333;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.shipment-btn-con {
+  border: none;
+  background: none;
+  padding: 20px 30px;
+  font-size: 16px;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.shipment-btn-con:hover {
+  background-color: #bbb;
+  border-radius: var(--br-9xs);
+}
+
+.shipment-modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.shipment-modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* 画面が狭い場合に適切な幅に変更 */
+  max-width: 600px; /* 画面が広い場合に過度な幅にならないように制限 */
+  height: auto; /* 高さを自動調整 */
+  border-radius: 5px;
+  box-sizing: border-box; /* box-sizingを追加 */
+}
+
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.shipment-modal-label {
+  position: relative; /* positionをrelativeに変更 */
+  top: auto; /* 固定された位置を削除 */
+  left: auto; /* 固定された位置を削除 */
+  font-size: var(--font-size-sm);
+}
+
+.shipment-modal-input {
+  position: relative;
+  top: auto; /* 固定された位置を削除 */
+  left: auto; /* 固定された位置を削除 */
+  background-color: var(--color);
+  border: 1px solid var(--color-gainsboro-100);
+  box-sizing: border-box;
+  border-radius: 2px;
+  width: 100%; /* 画面幅いっぱいに */
+  height: 50px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.shipment-modal-btn {
+  text-align: center;
+}
+
+.shipment-modal-btn-con {
+  font-size: medium;
+  border-radius: var(--br-9xs);
+  background-color: var(--color-black);
+  top: auto;
+  width: 200px;
+  font-weight: bold;
+  box-sizing: border-box;
+  cursor: pointer;
+  border: none;
+  padding: 15px;
+  color: #fff;
+  margin-top: 20px; /* 適切なスペースを追加 */
+}
+
+.shipment-modal-btn-con:hover {
+  background-color: #bbb;
+  border-radius: var(--br-9xs);
+}
+
+.table-order-history {
+  position: absolute;
+  top: 204px;
+  left: 264px;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 992px;
+  border-collapse: collapse;
+  display: flex;
+  justify-content: flex-start;
+}
+
+thead {
+  background-color: var(--color-whitesmoke-100);
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  box-sizing: border-box;
+  width: 992px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  font-weight: bold;
+}
+
+.head-order-number,
+.head-order-day,
+.head-product-name,
+.head-quantity,
+.head-price,
+.head-pay,
+.head-type {
+  position: relative;
+  line-height: 120%;
+  display: inline-block;
+  text-align: center;
+}
+
+.head-order-number,
+.head-order-day {
+  width: 140px;
+}
+
+.head-product-name {
+  width: 230px;
+}
+
+.head-quantity,
+.head-type {
+  width: 120px;
+}
+
+.head-price {
+  width: 120px;
+}
+
+.head-pay {
+  width: 120px;
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  width: 992px;
+}
+
+tbody td {
+  padding: var(--padding-base);
+  gap: var(--gap-5xl);
+  cursor: pointer;
+}
+
+.order-number,
+.order-day,
+.product-name,
+.quantity,
+.price,
+.pay,
+.type {
+  position: relative;
+  line-height: 180%;
+  justify-content: center;
+  text-align: center;
+}
+
+.order-number,
+.order-day {
+  width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.product-name {
+  width: 230px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.quantity,
+.type {
+  width: 120px;
+}
+
+.price {
+  width: 120px;
+}
+
+.pay {
+  width: 120px;
+}
+
+/* tdの共通のスタイル定義 */
+.table-order-history td {
+  position: relative;
+  justify-content: center;
+  text-align: center;
+  padding: var(--padding-base);
+  gap: var(--gap-5xl);
+  box-sizing: border-box;
+  flex-direction: row;
+  align-items: center;
+}
+
+.placeholder {
+  flex: 1;
+  position: relative;
+  line-height: 100%;
+}
+
+.searchfilled-icon {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.input {
+  align-self: stretch;
+  border-radius: var(--br-9xs);
+  background-color: var(--color);
+  border: 1px solid var(--color-lightgray);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-base);
+  gap: var(--gap-base);
+}
+
+.search-box {
+  position: absolute;
+  height: 6.67%;
+  width: 26.8%;
+  top: 13.89%;
+  right: 10%;
+  bottom: 79.44%;
+  left: 63.2%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  color: var(--color3);
+}
+
+.search {
+  position: relative;
+  line-height: 100%;
+  font-weight: bold;
+}
+
+.button-search {
+  position: absolute;
+  top: 100px;
+  left: 1160px;
+  border-radius: var(--br-9xs);
+  background-color: var(--color);
+  border: 1px solid var(--color-lightgray);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-base);
+  text-align: center;
+  cursor: pointer;
+}
+
+.order-history-text {
+  position: absolute;
+  top: 0;
+  left: 36px;
+  line-height: 150%;
+  font-weight: bold;
+}
+
+.fibermanualrecordfilled-icon {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+}
+
+.title-order-history {
+  position: absolute;
+  top: 100px;
+  left: 264px;
+  width: 196px;
+  height: 30px;
+  font-size: var(--font-size-xl);
+}
+
+.order-manage {
+  position: relative;
+  line-height: 100%;
+  text-transform: capitalize;
+}
+
+.order-history__container,
+.topic-path {
+  background-color: var(--color);
+}
+
+.topic-path {
+  position: absolute;
+  border-top: 1px solid var(--color-gainsboro-100);
+  top: 56px;
+  left: 240px;
+  width: 1040px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-5xs);
+  box-sizing: border-box;
+  gap: var(--gap-5xs);
+  font-size: var(--typography-caption-size);
+}
+
+.order-history__container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  text-align: left;
+  font-size: var(--typography-body1-size);
+  color: var(--color-black);
+  font-family: var(--font-noto-sans);
+}
+
+@media screen and (max-width: 800px) {
+  .search-group {
+    position: relative;
+    left: -42.5%;
+    top: 40px;
+  }
+  .table-order-history {
+    transform: scale(0.8);
+    transform-origin: left top;
+  }
+}
+.consumer-info-naiyou {
+  position: absolute;
+  top: 350px;
+  left: 265px;
+  background-color: var(--color);
+  border-left: 5px solid var(--color-black);
+  box-sizing: border-box;
+  width: 992px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 8px;
+}
+
+.consumer-table-con {
+  width: 992px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.info-label {
+  background-color: var(--color-whitesmoke-100);
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  box-sizing: border-box;
+  width: 240px;
+  flex-direction: row;
+  padding: var(--padding-xs) var(--padding-base);
+}
+
+.consumer-naiyou-con,
+.consumer-info-con,
+.info-label,
+.info-value {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.info-value {
+  flex: 1;
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  flex-direction: row;
+  padding: var(--padding-xs) var(--padding-base);
+}
+
+.consumer-naiyou-con,
+.consumer-info-con {
+  position: absolute;
+  left: 264px;
+  flex-direction: column;
+  font-size: var(--typography-body1-size);
+}
+
+.consumer-info-con {
+  top: 50px;
+}
+
+.consumer-naiyou-con {
+  top: 400px;
+}
+
+.consumer-info-title {
+  flex: 1;
+  position: relative;
+  line-height: 150%;
+}
+
+.consumer-info {
+  position: absolute;
+  top: 0px;
+  left: 264px;
+  background-color: var(--color);
+  border-left: 5px solid var(--color-black);
+  box-sizing: border-box;
+  width: 992px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 8px;
+}
+
+.oeder-history-contents {
+  position: relative;
+  overflow: scroll;
+  width: 100%;
+  height: 100%;
+  top: 100px;
+  text-align: left;
+  font-size: var(--font-size-xl);
+  color: var(--color-black);
+}
+
+.table-order-history {
+  position: absolute;
+  top: 204px;
+  left: 264px;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 992px;
+  border-collapse: collapse;
+  display: flex;
+  justify-content: flex-start;
+}
+
+thead {
+  background-color: var(--color-whitesmoke-100);
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  box-sizing: border-box;
+  width: 992px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  font-weight: bold;
+}
+
+.head-order-number,
+.head-order-day,
+.head-product-name,
+.head-quantity,
+.head-price,
+.head-co2,
+.head-type {
+  position: relative;
+  line-height: 120%;
+  display: inline-block;
+  text-align: center;
+}
+
+.head-order-number,
+.head-order-day {
+  width: 140px;
+}
+
+.head-product-name {
+  width: 230px;
+}
+
+.head-quantity,
+.head-type {
+  width: 120px;
+}
+
+.head-price {
+  width: 120px;
+}
+
+.head-co2 {
+  width: 120px;
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  width: 992px;
+}
+
+tbody td {
+  padding: var(--padding-base);
+  gap: var(--gap-5xl);
+  cursor: pointer;
+}
+
+.order-number,
+.order-day,
+.product-name,
+.quantity,
+.price,
+.co2,
+.type {
+  position: relative;
+  line-height: 180%;
+  justify-content: center;
+  text-align: center;
+}
+
+.order-number,
+.order-day {
+  width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.product-name {
+  width: 230px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.quantity,
+.type {
+  width: 120px;
+}
+
+.price {
+  width: 120px;
+}
+
+.co2 {
+  width: 120px;
+}
+
+/* tdの共通のスタイル定義 */
+.table-order-history td {
+  position: relative;
+  justify-content: center;
+  text-align: center;
+  padding: var(--padding-base);
+  gap: var(--gap-5xl);
+  box-sizing: border-box;
+  flex-direction: row;
+  align-items: center;
+}
+
+.placeholder {
+  flex: 1;
+  position: relative;
+  line-height: 100%;
+}
+
+.searchfilled-icon {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.input {
+  align-self: stretch;
+  border-radius: var(--br-9xs);
+  background-color: var(--color);
+  border: 1px solid var(--color-lightgray);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-base);
+  gap: var(--gap-base);
+}
+
+.search-box {
+  position: absolute;
+  top: 100px;
+  right: 10%;
+  left: 63.2%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  color: var(--color3);
+}
+
+.search {
+  position: relative;
+  line-height: 100%;
+  font-weight: bold;
+}
+
+.button-search {
+  position: absolute;
+  top: 100px;
+  left: 1160px;
+  border-radius: var(--br-9xs);
+  background-color: var(--color);
+  border: 1px solid var(--color-lightgray);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-base);
+  text-align: center;
+  cursor: pointer;
+}
+
+.order-history-text {
+  position: absolute;
+  top: 0;
+  left: 36px;
+  line-height: 150%;
+  font-weight: bold;
+}
+
+.fibermanualrecordfilled-icon {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+}
+
+.title-order-history {
+  position: absolute;
+  top: 100px;
+  left: 264px;
+  width: 196px;
+  height: 30px;
+  font-size: var(--font-size-xl);
+}
+
+.order-manage {
+  position: relative;
+  line-height: 100%;
+  text-transform: capitalize;
+}
+
+.order-history__container,
+.topic-path {
+  background-color: var(--color);
+}
+
+.topic-path {
+  position: absolute;
+  border-top: 1px solid var(--color-gainsboro-100);
+  top: 56px;
+  left: 240px;
+  width: 1040px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-5xs);
+  box-sizing: border-box;
+  gap: var(--gap-5xs);
+  font-size: var(--typography-caption-size);
+}
+
+.order-history__container {
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  font-size: var(--typography-body1-size);
+  color: var(--color-black);
+  font-family: var(--font-noto-sans);
+}
+
+.table-product-manage {
+  position: absolute;
+  top: 204px;
+  left: 264px;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 992px;
+  border-collapse: collapse;
+  display: flex;
+  justify-content: flex-start;
+}
+
+thead {
+  background-color: var(--color-whitesmoke-100);
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  box-sizing: border-box;
+  width: 990px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  font-weight: bold;
+}
+
+thead td {
+  padding: var(--padding-base);
+}
+
+.head-product-number,
+.head-product-name,
+.head-price,
+.head-inventory,
+.head-period,
+.head-category,
+.head-type {
+  position: relative;
+  line-height: 120%;
+  display: inline-block;
+  text-align: center;
+}
+
+.head-product-number,
+.head-period {
+  width: 140px;
+}
+
+.head-product-name {
+  width: 230px;
+}
+
+.head-inventory,
+.head-type {
+  width: 120px;
+}
+
+.head-price {
+  width: 120px;
+}
+
+.head-category {
+  width: 120px;
+}
+
+#checkbox {
+  margin: 5px;
+}
+
+.product-number,
+.product-name,
+.price,
+.inventory,
+.period,
+.category,
+.type {
+  position: relative;
+  line-height: 180%;
+  justify-content: center;
+  text-align: center;
+}
+
+.product-number,
+.period {
+  width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-name {
+  width: 230px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.inventory,
+.type {
+  width: 120px;
+}
+
+.price {
+  width: 120px;
+}
+
+.category {
+  width: 120px;
+}
+
+/* tdの共通のスタイル定義 */
+.table-product-manage td {
+  position: relative;
+  justify-content: center;
+  text-align: center;
+  gap: var(--gap-5xl);
+  box-sizing: border-box;
+  flex-direction: row;
+  align-items: center;
+}
+
+.placeholder {
+  flex: 1;
+  position: relative;
+  line-height: 100%;
+}
+
+.searchfilled-icon {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.input {
+  align-self: stretch;
+  border-radius: var(--br-9xs);
+  background-color: var(--color);
+  border: 1px solid var(--color-lightgray);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-base);
+  gap: var(--gap-base);
+  height: 49.33px;
+}
+
+.search-box {
+  position: absolute;
+  top: 100px;
+  right: 10%;
+  left: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  color: var(--color3);
+}
+
+.search {
+  position: relative;
+  line-height: 100%;
+  font-weight: bold;
+}
+
+.button-search {
+  position: absolute;
+  top: 100px;
+  left: 1160px;
+  border-radius: var(--br-9xs);
+  background-color: var(--color);
+  border: 1px solid var(--color-lightgray);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-base);
+  text-align: center;
+  cursor: pointer;
+}
+
+.product-manage-text {
+  position: absolute;
+  top: 0;
+  left: 36px;
+  line-height: 150%;
+  font-weight: bold;
+}
+
+.fibermanualrecordfilled-icon {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+}
+
+.title-product-manage {
+  position: absolute;
+  top: 100px;
+  left: 264px;
+  width: 196px;
+  height: 30px;
+  font-size: var(--font-size-xl);
+}
+
+.product-manage {
+  position: relative;
+  line-height: 100%;
+  text-transform: capitalize;
+}
+
+.product-manage__container,
+.topic-path {
+  background-color: var(--color);
+}
+
+.topic-path {
+  position: absolute;
+  border-top: 1px solid var(--color-gainsboro-100);
+  top: 56px;
+  left: 240px;
+  width: 1040px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-5xs);
+  box-sizing: border-box;
+  gap: var(--gap-5xs);
+  font-size: var(--typography-caption-size);
+}
+
+.product-manage__container {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  text-align: left;
+  font-size: var(--typography-body1-size);
+  color: var(--color-black);
+  position: absolute;
+}
+
+.create-btn-blue {
+  position: absolute;
+  display: flex;
+  top: 160px;
+  left: 297px;
+  width: 200px;
+  height: 35px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 4px;
+  background: #85A8D4;
+  cursor: pointer;
+}
+
+.create-btn-blue:hover {
+  background-color: #2faff4;
+}
+
+.create-btn-pink {
+  position: absolute;
+  display: flex;
+  top: 160px;
+  left: 541px;
+  width: 200px;
+  height: 35px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 4px;
+  background: #D485BA;
+  cursor: pointer;
+}
+
+.create-btn-pink:hover {
+  background-color: #f136b3;
+}
+
+.create-btn-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  margin: 5px;
+}
+
+.create-btn-text {
+  color: #FFF;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  line-height: 100%; /* 16px */
+  font-weight: bold;
+}
+
+a {
+  text-decoration: none;
+}
+
+.bulk-deletion {
+  position: absolute;
+  top: 160px;
+  left: 1175px;
+  border-radius: var(--br-9xs);
+  background-color: var(--color-gainsboro-100);
+  width: 66.67px;
+  height: 31px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  cursor: pointer;
+  text-align: center;
+}
+
+.custom-button {
+  border: none; /* 枠線を削除 */
+  background: none; /* 背景を削除（必要に応じて変更）*/
+  padding: 3px; /* パディングを削除 */
+  display: flex; /* 内容を横並びに配置 */
+  align-items: center; /* 中央揃え */
+  cursor: pointer; /* カーソルをポインターに変更（クリック可能な要素として示すため） */
+}
+
+.bulk-deletion:hover {
+  background-color: #edd5a8;
+}
+
+.dustbox-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.button-text {
+  font-weight: bold; /* テキストを太字にする */
+  margin-top: 3px;
+}
+
+tbody tr {
+  border-bottom: #aaa 1px solid;
+  width: 992px;
+}
+
+tbody td {
+  padding: 0px;
+  gap: var(--gap-5xl);
+  cursor: pointer;
+}
+
+@media screen and (max-width: 800px) {
+  .table-product-manage {
+    transform: scale(0.8);
+    transform-origin: left;
+    top: 170px;
+  }
+  .create-btn-blue, .create-btn-pink {
+    top: 200px;
+  }
+  .create-btn-blue {
+    left: 265px;
+  }
+  .create-btn-pink {
+    left: 520px;
+  }
+}
+.product-manage-text {
+  position: absolute;
+  top: 0;
+  left: 36px;
+  line-height: 150%;
+  font-weight: bold;
+}
+
+.fibermanualrecordfilled-icon {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+}
+
+.title-product-manage {
+  position: absolute;
+  top: 100px;
+  left: 264px;
+  width: 1040px;
+  height: 30px;
+  font-size: var(--font-size-xl);
+}
+
+.product-manage {
+  position: relative;
+  line-height: 100%;
+  text-transform: capitalize;
+}
+
+.product-manage__container,
+.topic-path {
+  background-color: var(--color);
+}
+
+.topic-path {
+  position: absolute;
+  border-top: 1px solid var(--color-gainsboro-100);
+  top: 56px;
+  left: 240px;
+  width: 1040px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-5xs);
+  box-sizing: border-box;
+  gap: var(--gap-5xs);
+  font-size: var(--typography-caption-size);
+}
+
+.product-manage__container {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  text-align: left;
+  font-size: var(--typography-body1-size);
+  color: var(--color-black);
+  position: absolute;
+}
+
+.title-text {
+  position: relative;
+  line-height: 100%;
+  font-weight: bold;
+}
+
+.general-purchase-button,
+.product-name-box-title {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.general-purchase-button {
+  position: absolute;
+  top: 100%;
+  left: 350px;
+  margin: 50px;
+  border-radius: var(--br-9xs);
+  background-color: var(--color5);
+  justify-content: center;
+  cursor: pointer;
+}
+
+.product-name-box-title {
+  align-self: stretch;
+  background-color: var(--color-whitesmoke-100);
+  width: 240px;
+  justify-content: flex-start;
+  padding: var(--padding-xs) var(--padding-base);
+}
+
+.placeholder {
+  flex: 1;
+  position: relative;
+  line-height: 150%;
+}
+
+.input-active {
+  align-self: stretch;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 10px;
+}
+
+.product-name-box-input {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.product-name-box-input {
+  flex-direction: row;
+  color: var(--color3);
+}
+
+.category-box-title,
+.product-name-box {
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.product-name-box {
+  border-top: 1px solid var(--color-gainsboro-100);
+  width: 992px;
+}
+
+.product-name-box-title,
+.category-box-title {
+  align-self: stretch;
+  background-color: var(--color-whitesmoke-100);
+  width: 240px;
+  padding: var(--padding-xs) var(--padding-base);
+}
+
+.product-name-box,
+.category-box,
+.category-box-input {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.category-box-input {
+  flex: 1;
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  align-items: flex-start;
+  padding: var(--padding-xs) var(--padding-base);
+  color: var(--color3);
+  font-family: var(--typography-body1);
+}
+
+.product-name-box-input {
+  flex: 1;
+  align-items: flex-start;
+  padding: var(--padding-xs) var(--padding-base);
+  color: var(--color3);
+  font-family: var(--typography-body1);
+}
+
+.product-name-box,
+.category-box {
+  width: 992px;
+  align-items: center;
+}
+
+.price-box-input,
+.listprice-box-input,
+.quantity-box-input,
+.discount-box-input,
+.period-box-input,
+.stock-box-input,
+.shipping-box-input,
+.weight-box-input,
+.expiration-box-input,
+.image-box-input,
+.description-box-input {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.price-box-input,
+.listprice-box-input,
+.quantity-box-input,
+.discount-box-input,
+.period-box-input,
+.stock-box-input,
+.shipping-box-input,
+.weight-box-input,
+.expiration-box-input,
+.image-box-input,
+.description-box-input {
+  flex: 1;
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  flex-direction: row;
+  padding: var(--padding-xs) var(--padding-base);
+  color: var(--color3);
+}
+
+.group-purchase-input {
+  position: absolute;
+  top: 177px;
+  left: 264px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+  color: var(--color-black);
+}
+
+.group-purchase-create {
+  background-color: var(--color);
+  width: 100%;
+  text-align: center;
+  font-size: var(--typography-body1-size);
+  color: var(--color);
+}
+
+input[type=datetime-local]::-webkit-calendar-picker-indicator,
+input[type=date]::-webkit-calendar-picker-indicator {
+  transform: scale(1.5); /* サイズを変更する */
+}
+
+#preview img {
+  width: 200px;
+  margin: 10px;
+  border: solid 1px silver;
+}
+
+.general-btn-conf {
+  border: none; /* 枠線を削除 */
+  background: none; /* 背景を削除（必要に応じて変更）*/
+  padding: 20px 30px;
+  font-size: 16px;
+  color: #fff;
+  font-weight: bold; /* テキストを太字にする */
+  cursor: pointer; /* カーソルをポインターに変更（クリック可能な要素として示すため） */
+}
+
+.general-btn-conf:hover {
+  border-radius: var(--br-9xs);
+  background-color: #2faff4;
+}
+
+textarea {
+  height: 180px;
+  resize: vertical;
+}
+
+select {
+  color: #666;
+}
+
+.con-title-text {
+  position: relative;
+  line-height: 100%;
+}
+
+.con-product-name-box-title {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.con-product-name-box-title {
+  align-self: stretch;
+  background-color: var(--color-whitesmoke-100);
+  width: 240px;
+  justify-content: flex-start;
+  padding: var(--padding-xs) var(--padding-base);
+}
+
+.con-product-name-box-input {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-left: 10px;
+}
+
+.con-category-box-title,
+.con-product-name-box {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.con-product-name-box {
+  border-top: 1px solid var(--color-gainsboro-100);
+  width: 100%;
+}
+
+.con-product-name-box-title,
+.con-category-box-title {
+  font-weight: bold; /* テキストを太字にする */
+  align-self: stretch;
+  background-color: var(--color-whitesmoke-100);
+  width: 240px;
+  padding: var(--padding-xs) var(--padding-base);
+}
+
+.con-product-name-box,
+.con-category-box,
+.con-category-box-input {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.con-category-box-input {
+  flex: 1;
+  align-items: flex-start;
+  font-family: var(--typography-body1);
+}
+
+.con-product-name-box-input {
+  flex: 1;
+  align-items: flex-start;
+  font-family: var(--typography-body1);
+}
+
+.con-product-name-box,
+.con-category-box {
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  width: 100%;
+  align-items: center;
+}
+
+.con-price-box-input,
+.con-quantity-box-input,
+.con-discount-box-input,
+.con-period-box-input,
+.con-stock-box-input,
+.con-shipping-box-input,
+.con-weight-box-input,
+.con-expiration-box-input,
+.con-image-box-input,
+.con-description-box-input {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  flex-direction: row;
+}
+
+/* モーダルのスタイル */
+.modal {
+  display: none; /* 最初は非表示 */
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4); /* 背景を半透明にする */
+}
+
+/* モーダルのコンテンツ */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto; /* 上下左右中央に配置 */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 70%;
+  overflow: auto;
+  height: 100%;
+  color: #333;
+  border-radius: 5px;
+}
+
+/* 閉じるボタン */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-button {
+  border-radius: var(--br-9xs);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  margin: 30px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.modal-back {
+  border: none; /* 枠線を削除 */
+  border-radius: var(--br-9xs);
+  width: 200px;
+  height: 50px;
+  font-size: 16px;
+  font-weight: bold; /* テキストを太字にする */
+  background-color: var(--color-gainsboro-100);
+  cursor: pointer;
+}
+
+.modal-back:hover {
+  border-radius: var(--br-9xs);
+  background-color: #edd5a8;
+}
+
+.modal-general {
+  border: none; /* 枠線を削除 */
+  border-radius: var(--br-9xs);
+  width: 200px;
+  height: 50px;
+  font-size: 16px;
+  color: #fff;
+  font-weight: bold; /* テキストを太字にする */
+  background-color: var(--color5);
+  cursor: pointer;
+}
+
+.modal-general:hover {
+  border-radius: var(--br-9xs);
+  background-color: #2faff4;
+}
+
+.modal-title {
+  float: left;
+  border-left: 5px solid var(--color-black);
+  align-items: flex-start;
+  padding: var(--padding-xs) var(--padding-xl);
+  font-size: var(--font-size-xl);
+  font-weight: bold; /* テキストを太字にする */
+}
+
+.product-manage-text {
+  position: absolute;
+  top: 0;
+  left: 36px;
+  line-height: 150%;
+  font-weight: bold;
+}
+
+.fibermanualrecordfilled-icon {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+}
+
+.title-product-manage {
+  position: absolute;
+  top: 100px;
+  left: 264px;
+  width: 1040px;
+  height: 30px;
+  font-size: var(--font-size-xl);
+}
+
+.product-manage {
+  position: relative;
+  line-height: 100%;
+  text-transform: capitalize;
+}
+
+.product-manage__container,
+.topic-path {
+  background-color: var(--color);
+}
+
+.topic-path {
+  position: absolute;
+  border-top: 1px solid var(--color-gainsboro-100);
+  top: 56px;
+  left: 240px;
+  width: 1040px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-5xs);
+  box-sizing: border-box;
+  gap: var(--gap-5xs);
+  font-size: var(--typography-caption-size);
+}
+
+.product-manage__container {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  text-align: left;
+  font-size: var(--typography-body1-size);
+  color: var(--color-black);
+  position: absolute;
+}
+
+.title-text {
+  position: relative;
+  line-height: 100%;
+  font-weight: bold;
+}
+
+.group-purchase-button,
+.product-name-box-title {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.group-purchase-button {
+  position: absolute;
+  top: 100%;
+  left: 350px;
+  margin: 50px;
+  border-radius: var(--br-9xs);
+  background-color: var(--color4);
+  justify-content: center;
+  cursor: pointer;
+}
+
+.product-name-box-title {
+  align-self: stretch;
+  background-color: var(--color-whitesmoke-100);
+  width: 240px;
+  justify-content: flex-start;
+  padding: var(--padding-xs) var(--padding-base);
+}
+
+.placeholder {
+  flex: 1;
+  position: relative;
+  line-height: 150%;
+}
+
+.input-active {
+  align-self: stretch;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 10px;
+}
+
+.product-name-box-input {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.product-name-box-input {
+  flex-direction: row;
+  color: var(--color3);
+}
+
+.category-box-title,
+.product-name-box {
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.product-name-box {
+  border-top: 1px solid var(--color-gainsboro-100);
+  width: 992px;
+}
+
+.product-name-box-title,
+.category-box-title {
+  align-self: stretch;
+  background-color: var(--color-whitesmoke-100);
+  width: 240px;
+  padding: var(--padding-xs) var(--padding-base);
+}
+
+.product-name-box,
+.category-box,
+.category-box-input {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.category-box-input {
+  flex: 1;
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  align-items: flex-start;
+  padding: var(--padding-xs) var(--padding-base);
+  color: var(--color3);
+  font-family: var(--typography-body1);
+}
+
+.product-name-box-input {
+  flex: 1;
+  align-items: flex-start;
+  padding: var(--padding-xs) var(--padding-base);
+  color: var(--color3);
+  font-family: var(--typography-body1);
+}
+
+.product-name-box,
+.category-box {
+  width: 992px;
+  align-items: center;
+}
+
+.price-box-input,
+.listprice-box-input,
+.quantity-box-input,
+.discount-box-input,
+.period-box-input,
+.stock-box-input,
+.shipping-box-input,
+.weight-box-input,
+.expiration-box-input,
+.image-box-input,
+.description-box-input {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.price-box-input,
+.listprice-box-input,
+.quantity-box-input,
+.discount-box-input,
+.period-box-input,
+.stock-box-input,
+.shipping-box-input,
+.weight-box-input,
+.expiration-box-input,
+.image-box-input,
+.description-box-input {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  flex-direction: row;
+  padding: var(--padding-xs) var(--padding-base);
+  color: var(--color3);
+}
+
+.group-purchase-input {
+  position: absolute;
+  top: 177px;
+  left: 264px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+  color: var(--color-black);
+}
+
+.group-purchase-create {
+  background-color: var(--color);
+  width: 100%;
+  text-align: center;
+  font-size: var(--typography-body1-size);
+  color: var(--color);
+}
+
+input[type=datetime-local]::-webkit-calendar-picker-indicator,
+input[type=date]::-webkit-calendar-picker-indicator {
+  transform: scale(1.5); /* サイズを変更する */
+}
+
+#preview img {
+  width: 200px;
+  margin: 10px;
+  border: solid 1px silver;
+}
+
+.btn-conf {
+  border: none; /* 枠線を削除 */
+  background: none; /* 背景を削除（必要に応じて変更）*/
+  padding: 20px 30px;
+  font-size: 16px;
+  color: #fff;
+  font-weight: bold; /* テキストを太字にする */
+  cursor: pointer; /* カーソルをポインターに変更（クリック可能な要素として示すため） */
+}
+
+.btn-conf:hover {
+  border-radius: var(--br-9xs);
+  background-color: #f136b3;
+}
+
+textarea {
+  height: 180px;
+  resize: vertical;
+}
+
+select {
+  color: #666;
+}
+
+.con-title-text {
+  position: relative;
+  line-height: 100%;
+}
+
+.con-product-name-box-title {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.con-product-name-box-title {
+  align-self: stretch;
+  background-color: var(--color-whitesmoke-100);
+  width: 240px;
+  justify-content: flex-start;
+  padding: var(--padding-xs) var(--padding-base);
+}
+
+.con-product-name-box-input {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-left: 10px;
+}
+
+.con-category-box-title,
+.con-product-name-box {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.con-product-name-box {
+  border-top: 1px solid var(--color-gainsboro-100);
+  width: 100%;
+}
+
+.con-product-name-box-title,
+.con-category-box-title {
+  font-weight: bold; /* テキストを太字にする */
+  align-self: stretch;
+  background-color: var(--color-whitesmoke-100);
+  width: 240px;
+  padding: var(--padding-xs) var(--padding-base);
+}
+
+.con-product-name-box,
+.con-category-box,
+.con-category-box-input {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.con-category-box-input {
+  flex: 1;
+  align-items: flex-start;
+  font-family: var(--typography-body1);
+}
+
+.con-product-name-box-input {
+  flex: 1;
+  align-items: flex-start;
+  font-family: var(--typography-body1);
+}
+
+.con-product-name-box,
+.con-category-box {
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  width: 100%;
+  align-items: center;
+}
+
+.con-price-box-input,
+.con-quantity-box-input,
+.con-discount-box-input,
+.con-period-box-input,
+.con-stock-box-input,
+.con-shipping-box-input,
+.con-weight-box-input,
+.con-expiration-box-input,
+.con-image-box-input,
+.con-description-box-input {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  flex-direction: row;
+}
+
+/* モーダルのスタイル */
+.modal {
+  display: none; /* 最初は非表示 */
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4); /* 背景を半透明にする */
+}
+
+/* モーダルのコンテンツ */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto; /* 上下左右中央に配置 */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 70%;
+  overflow: auto;
+  height: 100%;
+  color: #333;
+  border-radius: 5px;
+}
+
+/* 閉じるボタン */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-button {
+  border-radius: var(--br-9xs);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  margin: 30px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.modal-back {
+  border: none; /* 枠線を削除 */
+  border-radius: var(--br-9xs);
+  width: 200px;
+  height: 50px;
+  font-size: 16px;
+  font-weight: bold; /* テキストを太字にする */
+  background-color: var(--color-gainsboro-100);
+  cursor: pointer;
+}
+
+.modal-back:hover {
+  border-radius: var(--br-9xs);
+  background-color: #edd5a8;
+}
+
+.modal-group {
+  border: none; /* 枠線を削除 */
+  border-radius: var(--br-9xs);
+  width: 200px;
+  height: 50px;
+  font-size: 16px;
+  color: #fff;
+  font-weight: bold; /* テキストを太字にする */
+  background-color: var(--color4);
+  cursor: pointer;
+}
+
+.modal-group:hover {
+  border-radius: var(--br-9xs);
+  background-color: #f136b3;
+}
+
+.modal-title {
+  float: left;
+  border-left: 5px solid var(--color-black);
+  align-items: flex-start;
+  padding: var(--padding-xs) var(--padding-xl);
+  font-size: var(--font-size-xl);
+  font-weight: bold; /* テキストを太字にする */
+}
+
+span {
+  color: var(--color-black);
+}
+
+.title-text {
+  position: relative;
+  line-height: 100%;
+}
+
+.general-edit-button,
+.product-name-box-title {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.general-edit-button {
+  position: absolute;
+  top: 97%;
+  left: 55%;
+  margin: 50px;
+  border-radius: var(--br-9xs);
+  background-color: var(--color5);
+  justify-content: center;
+  cursor: pointer;
+}
+
+.product-delete-button {
+  position: absolute;
+  top: 98%;
+  left: 20%;
+  margin: 50px;
+  border-radius: var(--br-9xs);
+  background-color: var(--color-gainsboro-100);
+  width: 150px;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  cursor: pointer;
+  text-align: center;
+}
+
+.btn-delete {
+  border: none; /* 枠線を削除 */
+  background: none; /* 背景を削除（必要に応じて変更）*/
+  padding: 3px; /* パディングを削除 */
+  display: flex; /* 内容を横並びに配置 */
+  align-items: center; /* 中央揃え */
+  cursor: pointer; /* カーソルをポインターに変更（クリック可能な要素として示すため） */
+}
+
+.product-delete-button:hover {
+  background-color: #edd5a8;
+}
+
+.dustbox-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.general-product-button {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: absolute;
+  top: -100px;
+  right: 0%;
+  margin: 30px;
+  border-radius: var(--br-9xs);
+  background-color: var(--color5);
+  justify-content: center;
+  cursor: pointer;
+}
+
+.btn-product {
+  border: none; /* 枠線を削除 */
+  background: none; /* 背景を削除（必要に応じて変更）*/
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  font-weight: bold; /* テキストを太字にする */
+  cursor: pointer; /* カーソルをポインターに変更（クリック可能な要素として示すため） */
+}
+
+.general-product-button .btn-product:hover {
+  border-radius: var(--br-9xs);
+  background-color: #2faff4;
+}
+
+.btn-edit {
+  border: none; /* 枠線を削除 */
+  background: none; /* 背景を削除（必要に応じて変更）*/
+  padding: 20px 30px;
+  font-size: 16px;
+  color: #fff;
+  font-weight: bold; /* テキストを太字にする */
+  cursor: pointer; /* カーソルをポインターに変更（クリック可能な要素として示すため） */
+}
+
+.general-edit-button .btn-edit:hover {
+  border-radius: var(--br-9xs);
+  background-color: #2faff4;
+}
+
+.product-name-box-title {
+  align-self: stretch;
+  background-color: var(--color-whitesmoke-100);
+  width: 240px;
+  justify-content: flex-start;
+  padding: var(--padding-xs) var(--padding-base);
+}
+
+.product-name-box-input {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  color: var(--color3);
+  align-items: center;
+  padding: var(--padding-xs) var(--padding-base);
+  height: 70px;
+}
+
+.category-box-title,
+.product-name-box {
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.product-name-box {
+  border-top: 1px solid var(--color-gainsboro-100);
+  width: 992px;
+}
+
+.product-name-box-title,
+.category-box-title {
+  align-self: stretch;
+  background-color: var(--color-whitesmoke-100);
+  width: 240px;
+  padding: var(--padding-xs) var(--padding-base);
+}
+
+.product-name-box,
+.category-box,
+.category-box-input {
+  display: flex;
+  flex-direction: row;
+}
+
+.category-box-input {
+  flex: 1;
+  align-items: center;
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  padding: var(--padding-xs) var(--padding-base);
+  color: var(--color3);
+  height: 70px;
+}
+
+.product-name-box,
+.category-box {
+  width: 992px;
+  align-items: center;
+  height: 70px;
+}
+
+.price-box-input,
+.listprice-box-input,
+.quantity-box-input,
+.discount-box-input,
+.period-box-input,
+.stock-box-input,
+.shipping-box-input,
+.weight-box-input,
+.expiration-box-input,
+.image-box-input,
+.description-box-input {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  flex-direction: row;
+  padding: var(--padding-xs) var(--padding-base);
+  color: var(--color3);
+  height: 70px;
+}
+
+.group-purchase-input {
+  position: absolute;
+  top: 177px;
+  left: 264px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  color: var(--color-black);
+}
+
+.group-purchase-create {
+  background-color: var(--color);
+  width: 100%;
+  text-align: center;
+  font-size: var(--typography-body1-size);
+  color: var(--color);
+}
+
+input[type=datetime-local]::-webkit-calendar-picker-indicator,
+input[type=date]::-webkit-calendar-picker-indicator {
+  transform: scale(1.5); /* サイズを変更する */
+}
+
+#preview img {
+  width: 200px;
+  margin: 10px;
+  border: solid 1px silver;
+}
+
+span {
+  color: var(--color-black);
+}
+
+.title-text {
+  position: relative;
+  line-height: 100%;
+}
+
+.group-edit-button,
+.product-name-box-title {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.group-edit-button {
+  position: absolute;
+  top: 97%;
+  left: 55%;
+  margin: 50px;
+  border-radius: var(--br-9xs);
+  background-color: var(--color4);
+  justify-content: center;
+  cursor: pointer;
+}
+
+.product-delete-button {
+  position: absolute;
+  top: 98%;
+  left: 20%;
+  margin: 50px;
+  border-radius: var(--br-9xs);
+  background-color: var(--color-gainsboro-100);
+  width: 150px;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  cursor: pointer;
+  text-align: center;
+}
+
+.btn-delete {
+  border: none; /* 枠線を削除 */
+  background: none; /* 背景を削除（必要に応じて変更）*/
+  padding: 3px; /* パディングを削除 */
+  display: flex; /* 内容を横並びに配置 */
+  align-items: center; /* 中央揃え */
+  cursor: pointer; /* カーソルをポインターに変更（クリック可能な要素として示すため） */
+}
+
+.product-delete-button:hover {
+  background-color: #edd5a8;
+}
+
+.dustbox-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.group-product-button {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: absolute;
+  top: -100px;
+  right: 0%;
+  margin: 30px;
+  border-radius: var(--br-9xs);
+  background-color: var(--color4);
+  justify-content: center;
+  cursor: pointer;
+}
+
+.btn-product {
+  border: none; /* 枠線を削除 */
+  background: none; /* 背景を削除（必要に応じて変更）*/
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  font-weight: bold; /* テキストを太字にする */
+  cursor: pointer; /* カーソルをポインターに変更（クリック可能な要素として示すため） */
+}
+
+.group-product-button .btn-product:hover {
+  border-radius: var(--br-9xs);
+  background-color: #f136b3;
+}
+
+.btn-edit {
+  border: none; /* 枠線を削除 */
+  background: none; /* 背景を削除（必要に応じて変更）*/
+  padding: 20px 30px;
+  font-size: 16px;
+  color: #fff;
+  font-weight: bold; /* テキストを太字にする */
+  cursor: pointer; /* カーソルをポインターに変更（クリック可能な要素として示すため） */
+}
+
+.group-edit-button .btn-edit:hover {
+  border-radius: var(--br-9xs);
+  background-color: #f136b3;
+}
+
+.product-name-box-title {
+  align-self: stretch;
+  background-color: var(--color-whitesmoke-100);
+  width: 240px;
+  justify-content: flex-start;
+  padding: var(--padding-xs) var(--padding-base);
+}
+
+.product-name-box-input {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  color: var(--color3);
+  align-items: center;
+  padding: var(--padding-xs) var(--padding-base);
+  height: 70px;
+}
+
+.category-box-title,
+.product-name-box {
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.product-name-box {
+  border-top: 1px solid var(--color-gainsboro-100);
+  width: 992px;
+}
+
+.product-name-box-title,
+.category-box-title {
+  align-self: stretch;
+  background-color: var(--color-whitesmoke-100);
+  width: 240px;
+  padding: var(--padding-xs) var(--padding-base);
+}
+
+.product-name-box,
+.category-box,
+.category-box-input {
+  display: flex;
+  flex-direction: row;
+}
+
+.category-box-input {
+  flex: 1;
+  align-items: center;
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  padding: var(--padding-xs) var(--padding-base);
+  color: var(--color3);
+  height: 70px;
+}
+
+.product-name-box,
+.category-box {
+  width: 992px;
+  align-items: center;
+  height: 70px;
+}
+
+.price-box-input,
+.listprice-box-input,
+.quantity-box-input,
+.discount-box-input,
+.period-box-input,
+.stock-box-input,
+.shipping-box-input,
+.weight-box-input,
+.expiration-box-input,
+.image-box-input,
+.description-box-input {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  flex-direction: row;
+  padding: var(--padding-xs) var(--padding-base);
+  color: var(--color3);
+  height: 70px;
+}
+
+.group-purchase-input {
+  position: absolute;
+  top: 177px;
+  left: 264px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  color: var(--color-black);
+}
+
+.group-purchase-create {
+  background-color: var(--color);
+  width: 100%;
+  text-align: center;
+  font-size: var(--typography-body1-size);
+  color: var(--color);
+}
+
+input[type=datetime-local]::-webkit-calendar-picker-indicator,
+input[type=date]::-webkit-calendar-picker-indicator {
+  transform: scale(1.5); /* サイズを変更する */
+}
+
+#preview img {
+  width: 200px;
+  margin: 10px;
+  border: solid 1px silver;
+}
+
+.product-manage-text {
+  position: absolute;
+  top: 0;
+  left: 36px;
+  line-height: 150%;
+  font-weight: bold;
+}
+
+.fibermanualrecordfilled-icon {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+}
+
+.title-product-manage {
+  position: absolute;
+  top: 100px;
+  left: 264px;
+  width: 1040px;
+  height: 30px;
+  font-size: var(--font-size-xl);
+}
+
+.product-manage {
+  position: relative;
+  line-height: 100%;
+  text-transform: capitalize;
+}
+
+.product-manage__container,
+.topic-path {
+  background-color: var(--color);
+}
+
+.topic-path {
+  position: absolute;
+  border-top: 1px solid var(--color-gainsboro-100);
+  top: 56px;
+  left: 240px;
+  width: 1040px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-5xs);
+  box-sizing: border-box;
+  gap: var(--gap-5xs);
+  font-size: var(--typography-caption-size);
+}
+
+.product-manage__container {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  text-align: left;
+  font-size: var(--typography-body1-size);
+  color: var(--color-black);
+  position: absolute;
+}
+
+.title-text {
+  position: relative;
+  line-height: 100%;
+  font-weight: bold;
+}
+
+.general-purchase-button,
+.product-name-box-title {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.general-purchase-button {
+  position: absolute;
+  top: 100%;
+  left: 350px;
+  margin: 50px;
+  border-radius: var(--br-9xs);
+  background-color: var(--color5);
+  justify-content: center;
+  cursor: pointer;
+}
+
+.product-name-box-title {
+  align-self: stretch;
+  background-color: var(--color-whitesmoke-100);
+  width: 240px;
+  justify-content: flex-start;
+  padding: var(--padding-xs) var(--padding-base);
+}
+
+.placeholder {
+  flex: 1;
+  position: relative;
+  line-height: 150%;
+}
+
+.input-active {
+  align-self: stretch;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 10px;
+}
+
+.product-name-box-input {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.product-name-box-input {
+  flex-direction: row;
+  color: var(--color3);
+}
+
+.category-box-title,
+.product-name-box {
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.product-name-box {
+  border-top: 1px solid var(--color-gainsboro-100);
+  width: 992px;
+}
+
+.product-name-box-title,
+.category-box-title {
+  align-self: stretch;
+  background-color: var(--color-whitesmoke-100);
+  width: 240px;
+  padding: var(--padding-xs) var(--padding-base);
+}
+
+.product-name-box,
+.category-box,
+.category-box-input {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.category-box-input {
+  flex: 1;
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  align-items: flex-start;
+  padding: var(--padding-xs) var(--padding-base);
+  color: var(--color3);
+  font-family: var(--typography-body1);
+}
+
+.product-name-box-input {
+  flex: 1;
+  align-items: flex-start;
+  padding: var(--padding-xs) var(--padding-base);
+  color: var(--color3);
+  font-family: var(--typography-body1);
+}
+
+.product-name-box,
+.category-box {
+  width: 992px;
+  align-items: center;
+}
+
+.price-box-input,
+.listprice-box-input,
+.quantity-box-input,
+.discount-box-input,
+.period-box-input,
+.stock-box-input,
+.shipping-box-input,
+.weight-box-input,
+.expiration-box-input,
+.image-box-input,
+.description-box-input {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.price-box-input,
+.listprice-box-input,
+.quantity-box-input,
+.discount-box-input,
+.period-box-input,
+.stock-box-input,
+.shipping-box-input,
+.weight-box-input,
+.expiration-box-input,
+.image-box-input,
+.description-box-input {
+  flex: 1;
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  flex-direction: row;
+  padding: var(--padding-xs) var(--padding-base);
+  color: var(--color3);
+}
+
+.group-purchase-input {
+  position: absolute;
+  top: 177px;
+  left: 264px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+  color: var(--color-black);
+}
+
+.group-purchase-create {
+  background-color: var(--color);
+  width: 100%;
+  text-align: center;
+  font-size: var(--typography-body1-size);
+  color: var(--color);
+}
+
+input[type=datetime-local]::-webkit-calendar-picker-indicator,
+input[type=date]::-webkit-calendar-picker-indicator {
+  transform: scale(1.5); /* サイズを変更する */
+}
+
+#preview img {
+  width: 200px;
+  margin: 10px;
+  border: solid 1px silver;
+}
+
+.general-btn-conf {
+  border: none; /* 枠線を削除 */
+  background: none; /* 背景を削除（必要に応じて変更）*/
+  padding: 20px 30px;
+  font-size: 16px;
+  color: #fff;
+  font-weight: bold; /* テキストを太字にする */
+  cursor: pointer; /* カーソルをポインターに変更（クリック可能な要素として示すため） */
+}
+
+.general-btn-conf:hover {
+  border-radius: var(--br-9xs);
+  background-color: #2faff4;
+}
+
+textarea {
+  height: 180px;
+  resize: vertical;
+}
+
+select {
+  color: #666;
+}
+
+.con-title-text {
+  position: relative;
+  line-height: 100%;
+}
+
+.con-product-name-box-title {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.con-product-name-box-title {
+  align-self: stretch;
+  background-color: var(--color-whitesmoke-100);
+  width: 240px;
+  justify-content: flex-start;
+  padding: var(--padding-xs) var(--padding-base);
+}
+
+.con-product-name-box-input {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-left: 10px;
+}
+
+.con-category-box-title,
+.con-product-name-box {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.con-product-name-box {
+  border-top: 1px solid var(--color-gainsboro-100);
+  width: 100%;
+}
+
+.con-product-name-box-title,
+.con-category-box-title {
+  font-weight: bold; /* テキストを太字にする */
+  align-self: stretch;
+  background-color: var(--color-whitesmoke-100);
+  width: 240px;
+  padding: var(--padding-xs) var(--padding-base);
+}
+
+.con-product-name-box,
+.con-category-box,
+.con-category-box-input {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.con-category-box-input {
+  flex: 1;
+  align-items: flex-start;
+  font-family: var(--typography-body1);
+}
+
+.con-product-name-box-input {
+  flex: 1;
+  align-items: flex-start;
+  font-family: var(--typography-body1);
+}
+
+.con-product-name-box,
+.con-category-box {
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  width: 100%;
+  align-items: center;
+}
+
+.con-price-box-input,
+.con-quantity-box-input,
+.con-discount-box-input,
+.con-period-box-input,
+.con-stock-box-input,
+.con-shipping-box-input,
+.con-weight-box-input,
+.con-expiration-box-input,
+.con-image-box-input,
+.con-description-box-input {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  flex-direction: row;
+}
+
+/* モーダルのスタイル */
+.modal {
+  display: none; /* 最初は非表示 */
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4); /* 背景を半透明にする */
+}
+
+/* モーダルのコンテンツ */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto; /* 上下左右中央に配置 */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 70%;
+  overflow: auto;
+  height: 100%;
+  color: #333;
+  border-radius: 5px;
+}
+
+/* 閉じるボタン */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-button {
+  border-radius: var(--br-9xs);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  margin: 30px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.modal-back {
+  border: none; /* 枠線を削除 */
+  border-radius: var(--br-9xs);
+  width: 200px;
+  height: 50px;
+  font-size: 16px;
+  font-weight: bold; /* テキストを太字にする */
+  background-color: var(--color-gainsboro-100);
+  cursor: pointer;
+}
+
+.modal-back:hover {
+  border-radius: var(--br-9xs);
+  background-color: #edd5a8;
+}
+
+.modal-general {
+  border: none; /* 枠線を削除 */
+  border-radius: var(--br-9xs);
+  width: 200px;
+  height: 50px;
+  font-size: 16px;
+  color: #fff;
+  font-weight: bold; /* テキストを太字にする */
+  background-color: var(--color5);
+  cursor: pointer;
+}
+
+.modal-general:hover {
+  border-radius: var(--br-9xs);
+  background-color: #2faff4;
+}
+
+.modal-title {
+  float: left;
+  border-left: 5px solid var(--color-black);
+  align-items: flex-start;
+  padding: var(--padding-xs) var(--padding-xl);
+  font-size: var(--font-size-xl);
+  font-weight: bold; /* テキストを太字にする */
+}
+
+.product-manage-text {
+  position: absolute;
+  top: 0;
+  left: 36px;
+  line-height: 150%;
+  font-weight: bold;
+}
+
+.fibermanualrecordfilled-icon {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+}
+
+.title-product-manage {
+  position: absolute;
+  top: 100px;
+  left: 264px;
+  width: 1040px;
+  height: 30px;
+  font-size: var(--font-size-xl);
+}
+
+.product-manage {
+  position: relative;
+  line-height: 100%;
+  text-transform: capitalize;
+}
+
+.product-manage__container,
+.topic-path {
+  background-color: var(--color);
+}
+
+.topic-path {
+  position: absolute;
+  border-top: 1px solid var(--color-gainsboro-100);
+  top: 56px;
+  left: 240px;
+  width: 1040px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-5xs);
+  box-sizing: border-box;
+  gap: var(--gap-5xs);
+  font-size: var(--typography-caption-size);
+}
+
+.product-manage__container {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  text-align: left;
+  font-size: var(--typography-body1-size);
+  color: var(--color-black);
+  position: absolute;
+}
+
+.title-text {
+  position: relative;
+  line-height: 100%;
+  font-weight: bold;
+}
+
+.group-purchase-button,
+.product-name-box-title {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.group-purchase-button {
+  position: absolute;
+  top: 100%;
+  left: 350px;
+  margin: 50px;
+  border-radius: var(--br-9xs);
+  background-color: var(--color4);
+  justify-content: center;
+  cursor: pointer;
+}
+
+.product-name-box-title {
+  align-self: stretch;
+  background-color: var(--color-whitesmoke-100);
+  width: 240px;
+  justify-content: flex-start;
+  padding: var(--padding-xs) var(--padding-base);
+}
+
+.placeholder {
+  flex: 1;
+  position: relative;
+  line-height: 150%;
+}
+
+.input-active {
+  align-self: stretch;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 10px;
+}
+
+.product-name-box-input {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.product-name-box-input {
+  flex-direction: row;
+  color: var(--color3);
+}
+
+.category-box-title,
+.product-name-box {
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.product-name-box {
+  border-top: 1px solid var(--color-gainsboro-100);
+  width: 992px;
+}
+
+.product-name-box-title,
+.category-box-title {
+  align-self: stretch;
+  background-color: var(--color-whitesmoke-100);
+  width: 240px;
+  padding: var(--padding-xs) var(--padding-base);
+}
+
+.product-name-box,
+.category-box,
+.category-box-input {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.category-box-input {
+  flex: 1;
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  align-items: flex-start;
+  padding: var(--padding-xs) var(--padding-base);
+  color: var(--color3);
+  font-family: var(--typography-body1);
+}
+
+.product-name-box-input {
+  flex: 1;
+  align-items: flex-start;
+  padding: var(--padding-xs) var(--padding-base);
+  color: var(--color3);
+  font-family: var(--typography-body1);
+}
+
+.product-name-box,
+.category-box {
+  width: 992px;
+  align-items: center;
+}
+
+.price-box-input,
+.listprice-box-input,
+.quantity-box-input,
+.discount-box-input,
+.period-box-input,
+.stock-box-input,
+.shipping-box-input,
+.weight-box-input,
+.expiration-box-input,
+.image-box-input,
+.description-box-input {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.price-box-input,
+.listprice-box-input,
+.quantity-box-input,
+.discount-box-input,
+.period-box-input,
+.stock-box-input,
+.shipping-box-input,
+.weight-box-input,
+.expiration-box-input,
+.image-box-input,
+.description-box-input {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  flex-direction: row;
+  padding: var(--padding-xs) var(--padding-base);
+  color: var(--color3);
+}
+
+.group-purchase-input {
+  position: absolute;
+  top: 177px;
+  left: 264px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+  color: var(--color-black);
+}
+
+.group-purchase-create {
+  background-color: var(--color);
+  width: 100%;
+  text-align: center;
+  font-size: var(--typography-body1-size);
+  color: var(--color);
+}
+
+input[type=datetime-local]::-webkit-calendar-picker-indicator,
+input[type=date]::-webkit-calendar-picker-indicator {
+  transform: scale(1.5); /* サイズを変更する */
+}
+
+#preview img {
+  width: 200px;
+  margin: 10px;
+  border: solid 1px silver;
+}
+
+.btn-conf {
+  border: none; /* 枠線を削除 */
+  background: none; /* 背景を削除（必要に応じて変更）*/
+  padding: 20px 30px;
+  font-size: 16px;
+  color: #fff;
+  font-weight: bold; /* テキストを太字にする */
+  cursor: pointer; /* カーソルをポインターに変更（クリック可能な要素として示すため） */
+}
+
+.btn-conf:hover {
+  border-radius: var(--br-9xs);
+  background-color: #f136b3;
+}
+
+textarea {
+  height: 180px;
+  resize: vertical;
+}
+
+select {
+  color: #666;
+}
+
+.con-title-text {
+  position: relative;
+  line-height: 100%;
+}
+
+.con-product-name-box-title {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.con-product-name-box-title {
+  align-self: stretch;
+  background-color: var(--color-whitesmoke-100);
+  width: 240px;
+  justify-content: flex-start;
+  padding: var(--padding-xs) var(--padding-base);
+}
+
+.con-product-name-box-input {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-left: 10px;
+}
+
+.con-category-box-title,
+.con-product-name-box {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.con-product-name-box {
+  border-top: 1px solid var(--color-gainsboro-100);
+  width: 100%;
+}
+
+.con-product-name-box-title,
+.con-category-box-title {
+  font-weight: bold; /* テキストを太字にする */
+  align-self: stretch;
+  background-color: var(--color-whitesmoke-100);
+  width: 240px;
+  padding: var(--padding-xs) var(--padding-base);
+}
+
+.con-product-name-box,
+.con-category-box,
+.con-category-box-input {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.con-category-box-input {
+  flex: 1;
+  align-items: flex-start;
+  font-family: var(--typography-body1);
+}
+
+.con-product-name-box-input {
+  flex: 1;
+  align-items: flex-start;
+  font-family: var(--typography-body1);
+}
+
+.con-product-name-box,
+.con-category-box {
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  width: 100%;
+  align-items: center;
+}
+
+.con-price-box-input,
+.con-quantity-box-input,
+.con-discount-box-input,
+.con-period-box-input,
+.con-stock-box-input,
+.con-shipping-box-input,
+.con-weight-box-input,
+.con-expiration-box-input,
+.con-image-box-input,
+.con-description-box-input {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  flex-direction: row;
+}
+
+/* モーダルのスタイル */
+.modal {
+  display: none; /* 最初は非表示 */
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4); /* 背景を半透明にする */
+}
+
+/* モーダルのコンテンツ */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto; /* 上下左右中央に配置 */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 70%;
+  overflow: auto;
+  height: 100%;
+  color: #333;
+  border-radius: 5px;
+}
+
+/* 閉じるボタン */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-button {
+  border-radius: var(--br-9xs);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  margin: 30px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.modal-back {
+  border: none; /* 枠線を削除 */
+  border-radius: var(--br-9xs);
+  width: 200px;
+  height: 50px;
+  font-size: 16px;
+  font-weight: bold; /* テキストを太字にする */
+  background-color: var(--color-gainsboro-100);
+  cursor: pointer;
+}
+
+.modal-back:hover {
+  border-radius: var(--br-9xs);
+  background-color: #edd5a8;
+}
+
+.modal-group {
+  border: none; /* 枠線を削除 */
+  border-radius: var(--br-9xs);
+  width: 200px;
+  height: 50px;
+  font-size: 16px;
+  color: #fff;
+  font-weight: bold; /* テキストを太字にする */
+  background-color: var(--color4);
+  cursor: pointer;
+}
+
+.modal-group:hover {
+  border-radius: var(--br-9xs);
+  background-color: #f136b3;
+}
+
+.modal-title {
+  float: left;
+  border-left: 5px solid var(--color-black);
+  align-items: flex-start;
+  padding: var(--padding-xs) var(--padding-xl);
+  font-size: var(--font-size-xl);
+  font-weight: bold; /* テキストを太字にする */
+}
+
+.product-name-box-input span,
+.category-box-input span,
+.price-box-input span,
+.listprice-box-input span,
+.quantity-box-input span,
+.discount-box-input span,
+.period-box-input span,
+.stock-box-input span,
+.shipping-box-input span,
+.weight-box-input span,
+.expiration-box-input span,
+.image-box-input span,
+.description-box-input span {
+  margin: 10px;
+}
+
+/* レスポンシブ対応 */
+@media screen and (max-width: 800px) {
+  .product-name-box, .category-box {
+    width: 80%;
+    width: 100%;
+    height: 90px;
+    text-align: left;
+    flex-direction: column;
+    margin-bottom: 10px;
+    border-style: none;
+  }
+  .product-name-box-title, .category-box-title {
+    width: 100%;
+    text-align: left;
+    border-bottom: none;
+  }
+  .product-name-box-input, .category-box-input, .price-box-input, .listprice-box-input, .quantity-box-input, .discount-box-input, .period-box-input, .stock-box-input, .shipping-box-input, .weight-box-input, .expiration-box-input, .image-box-input, .description-box-input {
+    width: 100%;
+    margin-right: auto;
+    border-bottom: none;
+  }
+  .group-purchase-button, .general-purchase-button {
+    position: relative;
+    left: 0px;
+  }
+  .product-delete-button, .group-product-button, .general-product-button {
+    transform: scale(0.7);
+  }
+  .product-delete-button {
+    position: relative;
+    bottom: -55px;
+    left: -50px;
+  }
+  .group-edit-button {
+    left: 180px;
+    top: 94%;
+  }
+  .general-edit-button {
+    left: 180px;
+    top: 93%;
+  }
+}
+.ue-title {
+  top: 10%;
+  left: 300px;
+  border-left: 5px solid var(--color-black);
+  padding: var(--padding-xs) var(--padding-xl);
+  font-weight: bold;
+  font-size: var(--font-size-3xl);
+}
+
+.pass-nakami,
+.ue-title {
+  position: absolute;
+  box-sizing: border-box;
+  width: 680px;
+}
+
+.pass-nakami {
+  top: 0;
+  left: 0;
+  border-radius: var(--br-5xs);
+  background-color: var(--color-gainsboro-100);
+  border: 1px solid var(--color-gainsboro-100);
+  height: 90%;
+}
+
+.pass-input-nakami,
+.pass-nakami-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.pass-nakami-title {
+  position: absolute;
+  top: 24px;
+  left: 110px;
+  background-color: var(--color-gainsboro-100);
+  align-items: flex-start;
+  padding: var(--padding-xs) var(--padding-xl);
+  text-align: center;
+  font-size: var(--font-size-3xl);
+}
+
+.pass-input-nakami {
+  align-self: stretch;
+  flex: 1;
+  overflow: hidden;
+  align-items: center;
+  padding: var(--padding-5xs) 0;
+}
+
+.pass-input-email,
+.pass-input {
+  border-radius: var(--br-9xs);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.pass-input-email {
+  align-self: stretch;
+  flex: 1;
+  padding: 0 var(--padding-base);
+  border: none;
+}
+
+.pass-input {
+  position: absolute;
+  top: 123px;
+  left: 140px;
+  width: 400px;
+  height: 65px;
+  cursor: pointer;
+}
+
+.pass-main {
+  position: absolute;
+  top: 127px;
+  left: 300px;
+  width: 680px;
+  height: 406px;
+  font-size: var(--typography-body1-size);
+}
+
+.pass-top {
+  position: absolute;
+  top: 75%;
+  left: 258px;
+  text-decoration: underline;
+  line-height: 150%;
+  cursor: pointer;
+}
+
+.emailsub {
+  position: absolute;
+  top: 200px;
+  left: 269px;
+  border-radius: 5px;
+  background-color: var(--color-black);
+  width: 140px;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-base);
+  cursor: pointer;
+  font-size: var(--font-size-lg);
+  font-weight: bold;
+  border: none;
+  color: var(--color);
+}
+
+/* 1000px以下の場合 */
+@media screen and (max-width: 1000px) {
+  .ue-title,
+  .pass-nakami,
+  .pass-main {
+    width: 90%;
+    left: 5%;
+  }
+  .pass-input {
+    width: 80%;
+    left: 10%;
+  }
+  .pass-top {
+    left: 38%;
+  }
+  .emailsub {
+    top: 200px;
+    left: 40%;
+  }
+}
+/* 700px以下の場合 */
+@media screen and (max-width: 700px) {
+  .ue-title,
+  .pass-nakami,
+  .pass-main {
+    width: 90%;
+    left: 5%;
+  }
+  .pass-input {
+    width: 80%;
+    left: 10%;
+  }
+  .pass-input-email {
+    width: 100%;
+    padding: var(--padding-base);
+    margin-bottom: var(--margin-base);
+  }
+  .pass-top {
+    left: 32%;
+  }
+  .emailsub {
+    top: 220px;
+    left: 10%;
+    width: 80%;
+  }
+  .pass-nakami-title {
+    position: absolute;
+    top: 24px;
+    left: 5%;
+    background-color: var(--color-gainsboro-100);
+    width: 90%;
+    align-items: flex-start;
+    padding: var(--padding-xs) var(--padding-xl);
+    text-align: center;
+    font-size: 19px;
+  }
+}
+.store-info-button {
+  margin-top: 60px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.btn-store-edit {
+  width: 200px;
+  height: 50px;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px;
+  margin: 10px;
+  color: #fff;
+  background-color: #ff9900;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.btn-store-edit:hover {
+  background-color: #ff4000;
+}
+
+.store-info-container {
+  position: absolute;
+  top: 177px;
+  left: 264px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.store-info-box {
+  width: 992px;
+  height: 70px;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  border-bottom: 1px solid var(--color-gainsboro-100);
+}
+
+.store-info-box-title {
+  align-self: stretch;
+  background-color: var(--color-whitesmoke-100);
+  width: 240px;
+  padding: var(--padding-xs) var(--padding-base);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.store-title-text {
+  position: relative;
+  line-height: 100%;
+  font-weight: bold;
+}
+
+.store-info-box-input {
+  flex: 1;
+  align-items: flex-start;
+  padding: var(--padding-xs) var(--padding-base);
+}
+
+/* レスポンシブ対応 */
+@media screen and (max-width: 800px) {
+  .store-info-box {
+    width: 100%;
+    height: 90px;
+    text-align: left;
+    flex-direction: column;
+    margin-bottom: 10px;
+    border-style: none;
+  }
+  .store-info-box-title {
+    width: 100%;
+    text-align: left;
+  }
+  .store-info-box-input {
+    margin-right: auto;
+  }
+  .store-info-button {
+    margin-right: 50%;
+  }
+}
+.store-input-active {
+  overflow: hidden;
+  width: 700px;
+  padding: 10px;
+}
+
+.store-create-main {
+  position: absolute;
+  top: 127px;
+  left: 300px;
+  width: 680px;
+}
+
+.store-create-title {
+  position: absolute;
+  top: 20px;
+  left: 10%;
+  text-align: center;
+  font-size: var(--font-size-lg);
+}
+
+.store-create-container {
+  position: absolute;
+  top: 70px;
+}
+
+.store-create-box {
+  width: 680px;
+  display: flex;
+  border-bottom: 1px solid var(--color-gainsboro-100);
+}
+
+.store-create-box-title {
+  align-self: stretch;
+  background-color: var(--color-whitesmoke-100);
+  width: 200px;
+  padding: 10px;
+  /* box-sizing: border-box; */
+  display: flex;
+  /* flex-direction: row; */
+  align-items: center;
+}
+
+.store-create-box-input {
+  flex: 1;
+  width: 480px;
+  align-items: flex-start;
+  /* padding: 20px; */
+  margin: 10px;
+}
+
+.store-create-input-active {
+  width: 100%;
+  padding: 10px;
+}
+
+.store-create-button {
+  margin-top: 60px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.btn-store-create {
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px;
+  margin: 10px;
+  color: #fff;
+  background-color: #ff9900;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+}
+
+ul {
+  list-style: none;
+}
+
+.modal-title-store {
+  float: left;
+  border-left: 5px solid var(--color-black);
+  align-items: flex-start;
+  padding: var(--padding-xs) var(--padding-xl);
+  font-size: var(--font-size-xl);
+  font-weight: bold;
+}
+
+.store-modal-ul {
+  position: absolute;
+  top: 140px;
+}
+
+.store-modal-li-hidari {
+  font-weight: bold;
+  align-self: stretch;
+  background-color: var(--color-whitesmoke-100);
+  width: 240px;
+  padding: var(--padding-xs) var(--padding-base);
+}
+
+.store-modal-li-migi {
+  flex: 1;
+  align-items: flex-start;
+  font-family: var(--typography-body1);
+  justify-content: flex-start;
+  margin-left: 10px;
+  padding: 10px;
+}
+
+.store-modal-content {
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 60%;
+  overflow: auto;
+  height: 190%;
+  color: #333;
+  border-radius: 5px;
+}
+
+.store-modal-btn {
+  position: relative;
+  top: 1040px;
+}
+
+@media screen and (max-width: 1000px) {
+  .store-create-main {
+    position: absolute;
+    top: 127px;
+    left: 0px;
+    width: 100%;
+  }
+  .store-create-title {
+    position: absolute;
+    top: 20px;
+    left: 10%;
+    text-align: center;
+    font-size: var(--font-size-lg);
+  }
+  .store-create-container {
+    position: absolute;
+    top: 70px;
+  }
+  .store-create-box {
+    width: 100%;
+    display: flex;
+    border-bottom: 1px solid var(--color-gainsboro-100);
+  }
+  .store-create-box-title {
+    align-self: stretch;
+    background-color: var(--color-whitesmoke-100);
+    width: 200px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+  }
+  .store-create-box-input {
+    flex: 1;
+    width: 480px;
+    align-items: flex-start;
+    margin: 10px;
+  }
+  .store-create-input-active {
+    width: 100%;
+    padding: 10px;
+  }
+  .store-create-button {
+    margin-top: 60px;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+  .btn-store-create {
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px;
+    margin: 10px;
+    color: #fff;
+    background-color: #ff9900;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    position: relative;
+  }
+  ul {
+    list-style: none;
+  }
+  .modal-title-store {
+    float: left;
+    border-left: 5px solid var(--color-black);
+    align-items: flex-start;
+    padding: var(--padding-xs) var(--padding-xl);
+    font-size: var(--font-size-xl);
+    font-weight: bold;
+  }
+  .store-modal-ul {
+    position: absolute;
+    top: 140px;
+  }
+  .store-modal-li-hidari {
+    font-weight: bold;
+    align-self: stretch;
+    background-color: var(--color-whitesmoke-100);
+    width: 240px;
+    padding: var(--padding-xs) var(--padding-base);
+  }
+  .store-modal-li-migi {
+    flex: 1;
+    align-items: flex-start;
+    font-family: var(--typography-body1);
+    justify-content: flex-start;
+    margin-left: 10px;
+    padding: 10px;
+  }
+  .store-modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%;
+    color: #333;
+    border-radius: 5px;
+  }
+  .store-modal-btn {
+    position: relative;
+    top: 85%;
+    margin: 20px;
+    padding: 30px;
+  }
+  .btn-modal-edit {
+    position: relative;
+  }
+  .btn-modal-confirm {
+    position: relative;
+    left: 30%;
+  }
+  /* 700px以下の場合 */
+}
+@media screen and (max-width: 1000px) and (max-width: 700px) {
+  .store-create-main {
+    position: static;
+    width: 100%;
+    left: 0;
+  }
+  .store-create-title {
+    position: relative;
+    text-align: center;
+    top: 120px;
+    left: 3%;
+  }
+  .store-create-container {
+    position: relative;
+    top: 150px;
+  }
+  .store-create-box {
+    width: 100%;
+    display: block;
+  }
+  .store-create-box-title {
+    width: 100%;
+    padding: 10px;
+  }
+  .store-create-box-input {
+    width: calc(100% - 20px);
+    margin: 10px;
+  }
+  .store-create-input-active {
+    width: calc(100% - 20px);
+    padding: 10px;
+  }
+  .store-create-button {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  .btn-store-create {
+    font-size: 16px;
+    padding: 8px;
+    margin: 8px;
+  }
+  .store-modal-ul {
+    top: 100px;
+  }
+  .store-modal-li-hidari {
+    width: 100%;
+    padding: 8px;
+  }
+  .store-modal-li-migi {
+    width: calc(100% - 20px);
+    margin-left: 0;
+    padding: 8px;
+  }
+  .store-modal-btn {
+    position: relative;
+    top: 85%;
+    margin: 20px;
+    padding: 30px;
+  }
+  .btn-modal-edit {
+    position: relative;
+  }
+  .btn-modal-confirm {
+    position: relative;
+    left: 30%;
+  }
+  .store-modal-content {
+    width: 80%;
+    overflow: auto;
+  }
+  /* ue-title のレスポンシブ対応 */
+  .ue-title {
+    left: 5%;
+    top: 5%;
+  }
+}
+/* Document
+* ========================================================================== */
+/**
+* 1. Add border box sizing in all browsers (opinionated).
+* 2. Backgrounds do not repeat by default (opinionated).
+*/
+body {
+  height: 100vh;
+  font-family: "NotoSansJP", sans-serif;
+}
+
+*,
+::before,
+::after {
+  box-sizing: border-box; /* 1 */
+  background-repeat: no-repeat; /* 2 */
+}
+
+/**
+  * 1. Add text decoration inheritance in all browsers (opinionated).
+  * 2. Add vertical alignment inheritance in all browsers (opinionated).
+  */
+::before,
+::after {
+  text-decoration: inherit; /* 1 */
+  vertical-align: inherit; /* 2 */
+}
+
+/**
+  * 1. Use the default cursor in all browsers (opinionated).
+  * 2. Change the line height in all browsers (opinionated).
+  * 3. Breaks words to prevent overflow in all browsers (opinionated).
+  * 4. Use a 4-space tab width in all browsers (opinionated).
+  * 5. Remove the grey highlight on links in iOS (opinionated).
+  * 6. Prevent adjustments of font size after orientation changes in iOS.
+  */
+:where(:root) {
+  cursor: default; /* 1 */
+  line-height: 1.5; /* 2 */
+  overflow-wrap: break-word; /* 3 */
+  -moz-tab-size: 4; /* 4 */
+  -o-tab-size: 4;
+     tab-size: 4; /* 4 */
+  -webkit-tap-highlight-color: transparent; /* 5 */
+  -webkit-text-size-adjust: 100%; /* 6 */
+  -moz-text-size-adjust: 100%;
+       text-size-adjust: 100%; /* 6 */
+}
+
+/* Sections
+  * ========================================================================== */
+/**
+  * Remove the margin in all browsers (opinionated).
+  */
+:where(body) {
+  margin: 0;
+}
+
+/**
+  * Correct the font size and margin on `h1` elements within `section` and
+  * `article` contexts in Chrome, Edge, Firefox, and Safari.
+  */
+:where(h1) {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+/* Grouping content
+  * ========================================================================== */
+/**
+  * Remove the margin on nested lists in Chrome, Edge, and Safari.
+  */
+:where(dl, ol, ul) :where(dl, ol, ul) {
+  margin: 0;
+}
+
+/**
+  * 1. Correct the inheritance of border color in Firefox.
+  * 2. Add the correct box sizing in Firefox.
+  */
+:where(hr) {
+  color: inherit; /* 1 */
+  height: 0; /* 2 */
+}
+
+/**
+  * Remove the list style on navigation lists in all browsers (opinionated).
+  */
+:where(nav) :where(ol, ul) {
+  list-style-type: none;
+  padding: 0;
+}
+
+/**
+  * Prevent VoiceOver from ignoring list semantics in Safari (opinionated).
+  */
+:where(nav li)::before {
+  content: "​";
+  float: left;
+}
+
+/**
+  * 1. Correct the inheritance and scaling of font size in all browsers.
+  * 2. Correct the odd `em` font sizing in all browsers.
+  * 3. Prevent overflow of the container in all browsers (opinionated).
+  */
+:where(pre) {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+  overflow: auto; /* 3 */
+}
+
+/* Text-level semantics
+  * ========================================================================== */
+/**
+  * Add the correct text decoration in Safari.
+  */
+:where(abbr[title]) {
+  text-decoration: underline;
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted;
+}
+
+/**
+  * Add the correct font weight in Chrome, Edge, and Safari.
+  */
+:where(b, strong) {
+  font-weight: bolder;
+}
+
+/**
+  * 1. Correct the inheritance and scaling of font size in all browsers.
+  * 2. Correct the odd `em` font sizing in all browsers.
+  */
+:where(code, kbd, samp) {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/**
+  * Add the correct font size in all browsers.
+  */
+:where(small) {
+  font-size: 80%;
+}
+
+/* Embedded content
+  * ========================================================================== */
+/*
+  * Change the alignment on media elements in all browsers (opinionated).
+  */
+:where(audio, canvas, iframe, img, svg, video) {
+  vertical-align: middle;
+}
+
+/**
+  * Remove the border on iframes in all browsers (opinionated).
+  */
+:where(iframe) {
+  border-style: none;
+}
+
+/**
+  * Change the fill color to match the text color in all browsers (opinionated).
+  */
+:where(svg:not([fill])) {
+  fill: currentColor;
+}
+
+/* Tabular data
+  * ========================================================================== */
+/**
+  * 1. Collapse border spacing in all browsers (opinionated).
+  * 2. Correct table border color in Chrome, Edge, and Safari.
+  * 3. Remove text indentation from table contents in Chrome, Edge, and Safari.
+  */
+:where(table) {
+  border-collapse: collapse; /* 1 */
+  border-color: currentColor; /* 2 */
+  text-indent: 0; /* 3 */
+}
+
+/* Forms
+  * ========================================================================== */
+/**
+  * Remove the margin on controls in Safari.
+  */
+:where(button, input, select) {
+  margin: 0;
+}
+
+/**
+  * Correct the inability to style buttons in iOS and Safari.
+  */
+:where(button, [type=button i], [type=reset i], [type=submit i]) {
+  -webkit-appearance: button;
+}
+
+/**
+  * Change the inconsistent appearance in all browsers (opinionated).
+  */
+:where(fieldset) {
+  border: 1px solid #a0a0a0;
+}
+
+/**
+  * Add the correct vertical alignment in Chrome, Edge, and Firefox.
+  */
+:where(progress) {
+  vertical-align: baseline;
+}
+
+/**
+  * 1. Remove the margin in Firefox and Safari.
+  * 3. Change the resize direction in all browsers (opinionated).
+  */
+:where(textarea) {
+  margin: 0; /* 1 */
+  resize: vertical; /* 3 */
+}
+
+/**
+  * 1. Correct the odd appearance in Chrome, Edge, and Safari.
+  * 2. Correct the outline style in Safari.
+  */
+:where([type=search i]) {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+
+/**
+  * Correct the cursor style of increment and decrement buttons in Safari.
+  */
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/**
+  * Correct the text style of placeholders in Chrome, Edge, and Safari.
+  */
+::-webkit-input-placeholder {
+  color: inherit;
+  opacity: 0.54;
+}
+
+/**
+  * Remove the inner padding in Chrome, Edge, and Safari on macOS.
+  */
+::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+  * 1. Correct the inability to style upload buttons in iOS and Safari.
+  * 2. Change font properties to `inherit` in Safari.
+  */
+::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}
+
+/* Interactive
+  * ========================================================================== */
+/*
+  * Add the correct styles in Safari.
+  */
+:where(dialog) {
+  background-color: white;
+  border: solid;
+  color: black;
+  height: -moz-fit-content;
+  height: fit-content;
+  left: 0;
+  margin: auto;
+  padding: 1em;
+  position: absolute;
+  right: 0;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+:where(dialog:not([open])) {
+  display: none;
+}
+
+/*
+  * Add the correct display in Safari.
+  */
+:where(details > summary:first-of-type) {
+  display: list-item;
+}
+
+/* Accessibility
+  * ========================================================================== */
+/**
+  * Change the cursor on busy elements in all browsers (opinionated).
+  */
+:where([aria-busy=true i]) {
+  cursor: progress;
+}
+
+/*
+  * Change the cursor on disabled, not-editable, or otherwise
+  * inoperable elements in all browsers (opinionated).
+  */
+:where([aria-disabled=true i], [disabled]) {
+  cursor: not-allowed;
+}
+
+/*
+  * Change the display on visually hidden accessible elements
+  * in all browsers (opinionated).
+  */
+:where([aria-hidden=false i][hidden]) {
+  display: initial;
+}
+
+:where([aria-hidden=false i][hidden]:not(:focus)) {
+  clip: rect(0, 0, 0, 0);
+  position: absolute;
+}
+
+/* User interaction
+  * ========================================================================== */
+body {
+  margin: 0 auto;
+  max-width: 1280px; /* サイトの最大幅 */
+}
+
+.popup-overlay {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  inset: 0;
+}
+
+:root {
+  /* fonts */
+  --font-noto-sans: "Noto Sans";
+  --components-chip: Roboto;
+  --font-cairo: Cairo;
+  --font-cagliostro: Cagliostro;
+  --bold-16: Inter;
+  --font-noto-sans-jp: "Noto Sans JP";
+  /* font sizes */
+  --typography-body1-size: 16px;
+  --font-size-mini: 15px;
+  --font-size-sm: 14px;
+  --typography-caption-size: 12px;
+  --font-size-xl: 20px;
+  --font-size-3xs: 10px;
+  --font-size-17xl: 36px;
+  --font-size-mid: 17px;
+  --components-chip-size: 13px;
+  --font-size-lg: 18px;
+  --font-size-5xl: 24px;
+  --font-size-3xl: 22px;
+  /* Colors */
+  --color: #fff;
+  --color4: #d485ba;
+  --color8: rgba(212, 133, 186, 0.2);
+  --color5: #85a8d4;
+  --color9: rgba(133, 168, 212, 0.2);
+  --grey-grey-300: #e0e0e0;
+  --color-gainsboro-100: #ddd;
+  --color-gainsboro-200: rgba(217, 217, 217, 0);
+  --color-black: #000;
+  --color-lightgray: #ccc;
+  --components-fieldcontrol-bordercolor: #aeb3b7;
+  --color3: #aaa;
+  --color6: #252525;
+  --color-gray-100: rgba(0, 0, 0, 0.6);
+  --text-primary: rgba(0, 0, 0, 0.87);
+  --color-whitesmoke-100: #f5f5f5;
+  --color-whitesmoke-200: #eef0f3;
+  --color1: #ebebeb;
+  --grey-black: #333;
+  --color-darkslategray-100: #323232;
+  --color2: #d4b985;
+  --color7: #f75050;
+  --color10: #f3f6fa;
+  --color-slategray: #6a717d;
+  --grey-grey-400: #bdbdbd;
+  --color-dimgray-100: #666;
+  --grey-grey-700: #616161;
+  /* Spacing */
+  --number-8: 8px;
+  /* Gaps */
+  --gap-base: 16px;
+  --gap-5xl: 24px;
+  --gap-21xl: 40px;
+  --gap-51xl: 70px;
+  --gap-5xs: 8px;
+  /* Paddings */
+  --padding-base: 16px;
+  --padding-5xs: 8px;
+  --padding-8xs: 5px;
+  --padding-7xs: 6px;
+  --padding-xs: 12px;
+  --padding-xl: 20px;
+  --padding-15xl: 34px;
+  --padding-16xl: 35px;
+  --padding-9xs: 4px;
+  --padding-10xs: 3px;
+  --padding-5xl: 24px;
+  /* Border radiuses */
+  --br-9xs: 4px;
+  --br-lgi: 19px;
+  --br-8xs: 5px;
+  --br-3xs: 10px;
+  --br-12xs: 1px;
+  --br-5xs: 8px;
+  --br-31xl: 50px;
+  --br-29xl: 48px;
+  --br-base: 16px;
+  --br-45xl: 64px;
+}
+
+.sidebar-child {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color);
+  border-right: 1px solid var(--color-gainsboro-100);
+  box-sizing: border-box;
+  width: 240px;
+  height: 100%;
+}
+
+.store-title {
+  position: absolute;
+  top: 20px;
+  left: 16px;
+  font-size: var(--font-size-xl);
+  letter-spacing: 1px;
+  line-height: 100%;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.dropdown-text {
+  width: 100%;
+}
+
+.accordion-title js-accordion-title {
+  position: relative;
+  line-height: 150%;
+  text-transform: uppercase;
+}
+
+.keyboardarrowright-icon {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.dropdown-tyuumonkanri,
+.dropdown-syouhinkanri {
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  box-sizing: border-box;
+  width: 240px;
+  flex-direction: row;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.dropdown-menu,
+.dropdown-tenpo,
+.dropdown-tyuumonkanri,
+.dropdown-syouhinkanri {
+  display: flex;
+  align-items: flex-start;
+}
+
+.dropdown-tenpo {
+  border-bottom: 1px solid var(--color-gainsboro-100);
+  box-sizing: border-box;
+  width: 240px;
+  flex-direction: row;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 56px;
+  left: 0;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.sidebar {
+  position: absolute;
+  left: 0;
+  width: 240px;
+  top: 0;
+  height: 100%;
+  border-right: 1px solid var(--color-gainsboro-100);
+  flex: 1;
+  z-index: 1;
+}
+
+.logout {
+  position: absolute;
+  bottom: 0;
+  border-top: 1px solid var(--color-gainsboro-100);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--padding-base);
+  width: 240px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.header-icon {
+  position: relative;
+  width: 36px;
+  height: 36px;
+}
+
+.user-icon {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 12.5%;
+  right: 12.5%;
+  bottom: 12.5%;
+  left: 12.5%;
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+}
+
+.header-icon {
+  position: relative;
+  width: 30px;
+  height: 30px;
+}
+
+.user-icon {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  max-width: 100%;
+  max-height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain; /* 追加：画像のアスペクト比を保ったまま表示 */
+}
+
+.user-text {
+  position: relative;
+  font-size: var(--font-size-mini);
+  text-transform: capitalize;
+  margin: 5px;
+  font-weight: bold;
+}
+
+.header-migiue {
+  display: flex;
+  align-items: center; /* 垂直方向の中央揃え */
+}
+
+.header-frame,
+.header-migiue,
+.header-storekanri {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.header-frame {
+  justify-content: flex-start;
+  cursor: pointer;
+}
+
+.header-storekanri {
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.base-container,
+.header {
+  position: absolute;
+  top: 0;
+  background-color: var(--color);
+}
+
+.header {
+  left: 240px;
+  box-sizing: border-box;
+  width: 1040px;
+  height: 56px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--padding-5xs) var(--padding-base);
+}
+
+.right-content {
+  position: relative;
+  overflow: auto;
+  height: 100%;
+  width: 100%;
+}
+
+.base-container {
+  left: 0;
+  width: 1280px;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+}
+
+.base {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  font-size: var(--font-size-sm);
+  color: var(--color-black);
+  font-family: var(--font-noto-sans);
+}
+
+.accordion-title {
+  cursor: pointer;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  margin: 15px;
+}
+
+.accordion-content-text {
+  cursor: pointer;
+  padding: 15px 0px 15px 100px;
+  border-top: 1px solid var(--color-gainsboro-100);
+}
+
+.accordion-content {
+  background-color: var(--color-whitesmoke-200);
+  display: flex;
+  border-top: 1px solid var(--color-gainsboro-100);
+  flex-flow: column;
+}
+
+.modal-logout {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content-logout {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  border-radius: 5px;
+}
+
+.close-logout {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close-logout:hover,
+.close-logout:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+#confirmLogout, #cancelLogout {
+  border-radius: 5px;
+  margin: 10px;
+  padding: 10px 20px; /* ボタン内のテキストとボタンの境界との間隔を調整 */
+  font-size: 18px; /* テキストのサイズを調整 */
+  font-weight: bold; /* テキストの太さを調整 */
+  border: none; /* ボタンの枠線を削除 */
+  cursor: pointer;
+}
+
+#confirmLogout:hover, #cancelLogout:hover {
+  border-radius: 5px;
+  background-color: #444;
+  color: white;
+  cursor: pointer;
+}
+
+a, a:visited {
+  color: inherit;
+}
+
+@media screen and (max-width: 1100px) {
+  .header, topic-path {
+    width: 860px;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .header, topic-path {
+    width: 760px;
+  }
+}
+@media screen and (max-width: 900px) {
+  .header, topic-path {
+    width: 660px;
+  }
+}
+@media screen and (max-width: 800px) {
+  .header, topic-path {
+    width: 560px;
+  }
+}
+@media screen and (max-width: 700px) {
+  .header, topic-path {
+    width: 460px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .header, topic-path {
+    width: 360px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .header, topic-path {
+    width: 260px;
+  }
+}

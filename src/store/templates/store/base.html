@@ -1,0 +1,179 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}店舗管理画面{% endblock %}</title>
+    <!-- ディスクリプション設定 -->
+    <meta name='description' content='Melimit店舗管理画面'>
+    <!-- ファビコン設定（まだ未設定。 -->
+    <link rel='shortcut icon' href='img/favicon.ico'>
+    <link rel="stylesheet" href="{% static 'store/css/style.css' %}" />
+</head>
+<body>
+    <div class="base">
+        <div class="base-container">
+            <div class="sidebar">
+                <div class="store-title"><a href="{% url 'store:index' %}">{{ user.username }}</a></div>
+                <div class="accordion">
+                    <div class="accordion-container">
+                        <div class="dropdown-menu">
+                            <div class="dropdown-tyuumonkanri" id="dropdownTyuumonkanriContainer">
+                                <div class="dropdown-text">
+                                    <div class="accordion-item">
+                                        <h3 class="accordion-title js-accordion-title">
+                                            <span>注文管理</span>
+                                            <img class="keyboardarrowright-icon" alt="" src="{% static 'store/img/keyboardarrowright.png' %}" />
+                                        </h3>
+                                        <!--/.accordion-title-->
+                                        <div class="accordion-content"  style="display:none;">
+                                            <a href="{% url 'store:order-not-shipped' %}" class="accordion-content-text">・未発送注文一覧</a>
+                                            <a href="{% url 'store:order-history' %}" class="accordion-content-text">・発送済み注文履歴</a>
+                                        </div>
+                                        <!--/.accordion-content-->
+                                    </div>
+                                    <!-- /.accordion-item -->
+                                </div>
+                                <!--/.dropdown-text-->
+                            </div>
+                            <!--/.dropdown-tyuumonkanri-->
+                            <div class="dropdown-syouhinkanri" id="dropdownSyouhinkanriContainer">
+                                <div class="dropdown-text">
+                                    <div class="accordion-item">
+                                        <h3 class="accordion-title js-accordion-title">
+                                            <span>商品管理</span>
+                                            <img class="keyboardarrowright-icon" alt="" src="{% static 'store/img/keyboardarrowright.png' %}" />
+                                        </h3>
+                                        <!--/.accordion-title-->
+                                        <div class="accordion-content"  style="display:none;">
+                                            <a href="{% url 'store:product-manage' %}" class="accordion-content-text">・商品管理一覧</a>
+                                            <a href="{% url 'store:create-general-purchase' %}" class="accordion-content-text">・新規登録（一般）</a>
+                                            <a href="{% url 'store:create-group-purchase' %}" class="accordion-content-text">・新規登録（共同）</a>
+                                        </div>
+                                        <!--/.accordion-content-->
+                                    </div>
+                                    <!-- /.accordion-item -->
+                                </div>
+                                <!--/.dropdown-text-->
+                            </div>
+                            <!--/.dropdown-syouhinkanri-->
+                            <div class="dropdown-tenpo" id="dropdownTenpoContainer">
+                                <div class="dropdown-text">
+                                    <div class="accordion-item">
+                                        <a href="{% url 'store:store-info' %}">
+                                            <h3 class="accordion-title js-accordion-title">
+                                                <span>店舗情報設定</span>
+                                                <img class="keyboardarrowright-icon" alt="" src="{% static 'store/img/keyboardarrowright.png' %}" />
+                                            </h3>
+                                            <!--/.accordion-title-->
+                                        </a>
+                                    </div>
+                                    <!-- /.accordion-item -->
+                                </div>
+                                <!--/.dropdown-text-->
+                            </div>
+                            <!--/.dropdown-tenpo-->
+                        </div>
+                        <!--/.dropdown-menu-->
+                    </div>
+                    <!-- /.accordion-container -->
+                </div>
+                <!-- .accordion -->
+                <div class="logout" id="logoutContainer">
+                    <div class="dropdown-text">ログアウト</div>
+                    <img class="keyboardarrowright-icon" alt="" src="{% static 'store/img/keyboardarrowright.png' %}" />
+                </div>
+                
+                <!-- モーダルウィンドウのコンテンツ -->
+                <div id="logoutModal" class="modal-logout">
+                    <div class="modal-content-logout">
+                        <span class="close-logout">&times;</span>
+                        <p>ログアウトしますか？</p>
+                        <div class="buttons-container">
+                            <button id="confirmLogout">はい</button>
+                            <button id="cancelLogout">いいえ</button>
+                        </div>
+                    </div>
+                </div>
+
+                {% comment %} ヘッダー {% endcomment %}
+                <div class="header">
+                    <div class="header-storekanri">
+                        <div class="header-frame" id="headerFrameContainer">
+                            <p>|{{ user.site_url }}|</p>
+                            <p>{{ user.username }}さんがログイン中</p>
+                            <p>ユーザータイプ：{{ user.user_type }}</p>
+                            <p>モデル名：{{ model_name }}</p>
+                            <p>インスタンス名：{{ instance_name }}</p>
+                            <div class="header-migiue">
+                                <div class="header-icon">
+                                <img class="user-icon" alt="" src="{% static 'store/img/user.png' %}" />
+                                </div>
+                                <a href="store-info" class="user-text">管理者様</a>
+                            </div>
+                            <!--/.header-migiue-->
+                        </div>
+                        <!--/.header-frame-->
+                    </div>
+                    <!--/.header-storekanri-->
+                </div>
+                <!--/.header-->
+            </div>
+            <!--/.sidebar-->
+
+                    {% block contents %}
+
+                    {% endblock %}
+        </div>
+        <!--/.base-container-->
+    </div>
+    <!--/.base-->
+
+
+
+    <script>
+        // サイドバーの処理
+        document.querySelectorAll('.js-accordion-title').forEach((title) => {
+            title.addEventListener('click', () => {
+                const content = title.nextElementSibling;
+                if (content.style.display === 'none' || content.style.display === '') {
+                content.style.display = 'flex';
+                } else {
+                content.style.display = 'none';
+                }
+            });
+        });
+
+        // ログアウトモーダルの処理
+        document.getElementById('logoutContainer').addEventListener('click', function() {
+            document.getElementById('logoutModal').style.display = 'block';
+        });
+        
+        document.getElementsByClassName('close-logout')[0].addEventListener('click', function() {
+            document.getElementById('logoutModal').style.display = 'none';
+        });
+        
+        document.getElementById('cancelLogout').addEventListener('click', function() {
+            document.getElementById('logoutModal').style.display = 'none';
+        });
+        
+        document.getElementById('confirmLogout').addEventListener('click', function() {
+        // ここにログアウト処理を書く
+        window.location.href = "{% url 'accounts:store_logout' %}";
+        });
+        
+
+        // モーダルウィンドウの要素を取得
+        var modal = document.getElementById('logoutModal');
+        // モーダルウィンドウの外側をクリックしたときの処理を追加
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+    </script>
+</body>
+</html>

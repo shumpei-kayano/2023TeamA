@@ -1,0 +1,12 @@
+<h1>以下を削除しますか</h1>
+<form method="post">
+    {% csrf_token %}
+    <ul>
+        {% for product in products %}
+            <li>{{ product.name }} (ID: {{ product.id }})</li>
+            <input type="hidden" name="product_ids" value="{{ product.id }}">
+        {% endfor %}
+    </ul>
+
+    <input type="submit" value="削除">
+</form>

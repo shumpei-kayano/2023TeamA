@@ -7,3 +7,5 @@ django-allauth
 django-extensions
 django-cleanup
 django-sass-processor
+apscheduler
+python-dateutil

@@ -1,0 +1,11 @@
+{% block contents %}
+<div>
+    <h1>店舗トップ画面</h1>
+    <p>{{ user.username }}さんがログイン中</p>
+    <p>モデル名：{{ model_name }}</p>
+    <p>ユーザータイプ：{{ user.user_type }}</p>
+    <p>インスタンス名：{{ instance_name }}</p>
+    <a href="{% url 'accounts:store_edit' %}">編集画面</a>
+    {% comment %} <a href={% url 'accounts:rog_out' %}>ログアウト</a> {% endcomment %}
+</div>
+{% endblock %}

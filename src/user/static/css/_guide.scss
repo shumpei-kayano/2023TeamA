@@ -1,0 +1,50 @@
+.guide {
+    margin: auto;
+    text-align: center;
+
+    &-head {
+        text-align: center;
+        font-size: 30px;
+    }
+
+    &-one, &-two, &-three {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        h3 {
+            font-size: 60px;
+            flex: 1;
+        }
+
+        img {
+            width: 500px;
+            height: auto;
+            border-radius: 50%;
+        }
+    }
+
+    &-two {
+        width: 100%;
+        background-color: $main_color;
+    }
+
+    @media (max-width: 600px) {
+        &-one, &-two, &-three {
+            flex-direction: column;
+            flex-wrap: wrap;
+            align-items: normal;
+
+            h3 {
+                font-size: 30px;
+            }
+
+            img {
+                width: 100%;
+            }
+        }
+        &-two {
+            flex-direction: column-reverse;
+        }
+    }
+}

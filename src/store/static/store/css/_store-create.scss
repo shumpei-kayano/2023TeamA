@@ -1,0 +1,319 @@
+.store-create-main {
+    position: absolute;
+    top: 127px;
+    left: 300px;
+    width: 680px;
+}
+.store-create-title {
+    position: absolute;
+    top: 20px;
+    // left: 110px;
+    left: 10%;
+    text-align: center;
+    font-size: var(--font-size-lg);
+}
+.store-create-container {
+    position: absolute;
+    top: 70px;
+}
+.store-create-box {
+    width: 680px;
+    // height: 70px;
+    // align-items: center;
+    display: flex;
+    // flex-direction: row;
+    // justify-content: flex-start;
+    border-bottom: 1px solid var(--color-gainsboro-100);
+}
+.store-create-box-title {
+    align-self: stretch;
+    background-color: var(--color-whitesmoke-100);
+    width: 200px;
+    padding: 10px;
+    /* box-sizing: border-box; */
+    display: flex;
+    /* flex-direction: row; */
+    align-items: center;
+}
+.store-create-box-input {
+    flex: 1;
+    width: 480px;
+    align-items: flex-start;
+    /* padding: 20px; */
+    margin: 10px;
+}
+.store-create-input-active {
+    // overflow: hidden;
+    width: 100%;
+    padding: 10px;
+    // margin: 10px;
+}
+.store-create-button {
+    margin-top: 60px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+.btn-store-create {
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px;
+    margin: 10px;
+    color: #fff;
+    background-color: #ff9900;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    position: relative;
+}
+ul {
+    list-style: none;
+}
+.modal-title-store {
+    float: left;
+    border-left: 5px solid var(--color-black);
+    align-items: flex-start;
+    padding: var(--padding-xs) var(--padding-xl);
+    font-size: var(--font-size-xl);
+    font-weight: bold;
+}
+.store-modal-ul {
+    position: absolute;
+    top: 140px;
+}
+.store-modal-li-hidari {
+    font-weight: bold;
+    align-self: stretch;
+    background-color: var(--color-whitesmoke-100);
+    width: 240px;
+    padding: var(--padding-xs) var(--padding-base);
+}
+.store-modal-li-migi {
+    flex: 1;
+    align-items: flex-start;
+    font-family: var(--typography-body1);
+    justify-content: flex-start;
+    margin-left: 10px;
+    padding: 10px;
+}
+.store-modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%;
+    overflow: auto;
+    height: 190%;
+    color: #333;
+    border-radius: 5px;
+}
+.store-modal-btn {
+    position: relative;
+    top: 1040px;
+}
+
+// レスポンシブ対応（1000px以下）
+@media screen and (max-width: 1000px) {
+    .store-create-main {
+        position: absolute;
+        top: 127px;
+        left: 0px;
+        width: 100%;
+    }
+    .store-create-title {
+        position: absolute;
+        top: 20px;
+        left: 10%;
+        text-align: center;
+        font-size: var(--font-size-lg);
+    }
+    .store-create-container {
+        position: absolute;
+        top: 70px;
+    }
+    .store-create-box {
+        width: 100%;
+        display: flex;
+        border-bottom: 1px solid var(--color-gainsboro-100);
+    }
+    .store-create-box-title {
+        align-self: stretch;
+        background-color: var(--color-whitesmoke-100);
+        width: 200px;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+    }
+    .store-create-box-input {
+        flex: 1;
+        width: 480px;
+        align-items: flex-start;
+        margin: 10px;
+    }
+    .store-create-input-active {
+        width: 100%;
+        padding: 10px;
+    }
+    .store-create-button {
+        margin-top: 60px;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+    .btn-store-create {
+        font-size: 18px;
+        font-weight: bold;
+        padding: 10px;
+        margin: 10px;
+        color: #fff;
+        background-color: #ff9900;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        position: relative;
+    }
+    ul {
+        list-style: none;
+    }
+    .modal-title-store {
+        float: left;
+        border-left: 5px solid var(--color-black);
+        align-items: flex-start;
+        padding: var(--padding-xs) var(--padding-xl);
+        font-size: var(--font-size-xl);
+        font-weight: bold;
+    }
+    .store-modal-ul {
+        position: absolute;
+        top: 140px;
+    }
+    .store-modal-li-hidari {
+        font-weight: bold;
+        align-self: stretch;
+        background-color: var(--color-whitesmoke-100);
+        width: 240px;
+        padding: var(--padding-xs) var(--padding-base);
+    }
+    .store-modal-li-migi {
+        flex: 1;
+        align-items: flex-start;
+        font-family: var(--typography-body1);
+        justify-content: flex-start;
+        margin-left: 10px;
+        padding: 10px;
+    }
+    .store-modal-content {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 60%;
+        // overflow: auto;
+        // height: 170%;
+        color: #333;
+        border-radius: 5px;
+    }
+    .store-modal-btn {
+        position: relative;
+        top: 85%;
+        margin: 20px;
+        padding: 30px;
+    }
+    .btn-modal-edit {
+        position: relative;
+        // left: 5%;
+    }
+    .btn-modal-confirm {
+        position: relative;
+        left: 30%;
+    }
+
+    /* 700px以下の場合 */
+    @media screen and (max-width: 700px) {
+        .store-create-main {
+            position: static;
+            width: 100%;
+            left: 0;
+        }
+
+        .store-create-title {
+            position: relative;
+            text-align: center;
+            top: 120px;
+            left: 3%;
+        }
+
+        .store-create-container {
+            position: relative;
+            top: 150px;
+        }
+
+        .store-create-box {
+            width: 100%;
+            display: block;
+        }
+
+        .store-create-box-title {
+            width: 100%;
+            padding: 10px;
+        }
+
+        .store-create-box-input {
+            width: calc(100% - 20px);
+            margin: 10px;
+        }
+
+        .store-create-input-active {
+            width: calc(100% - 20px);
+            padding: 10px;
+        }
+
+        .store-create-button {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .btn-store-create {
+            font-size: 16px;
+            padding: 8px;
+            margin: 8px;
+        }
+
+        .store-modal-ul {
+            top: 100px;
+        }
+
+        .store-modal-li-hidari {
+            width: 100%;
+            padding: 8px;
+        }
+
+        .store-modal-li-migi {
+            width: calc(100% - 20px);
+            margin-left: 0;
+            padding: 8px;
+        }
+        .store-modal-btn {
+            position: relative;
+            top: 85%;
+            margin: 20px;
+            padding: 30px;
+        }
+        .btn-modal-edit {
+            position: relative;
+            // left: 5%;
+        }
+        .btn-modal-confirm {
+            position: relative;
+            left: 30%;
+        }
+        .store-modal-content {
+            width: 80%;
+            overflow: auto;
+            // height: auto;
+        }
+        /* ue-title のレスポンシブ対応 */
+        .ue-title {
+            left: 5%;
+            top: 5%;
+        }
+    }
+}

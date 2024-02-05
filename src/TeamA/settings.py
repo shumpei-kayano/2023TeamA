@@ -1,5 +1,8 @@
 from pathlib import Path
 import os
+
+from django.conf import settings  # 追加
+
 # debug_toolbarの設定
 import mimetypes
 mimetypes.add_type("application/javascript", ".js", True)
@@ -32,10 +35,15 @@ INSTALLED_APPS = [
     'debug_toolbar', # 追加
     'sass_processor', # 追加
     'django_extensions', # 追加
-    'django_cleanup' # 追加
-    # 'django.contrib.sites', # 追加
-    # 'allauth', # 追加
-    # 'allauth.account', # 追加
+    'django_cleanup', # 追加
+    'user',
+    'accounts',
+    'django.contrib.sites', # 追加
+    'allauth', # 追加
+    'allauth.account', # 追加
+    'allauth.socialaccount', # 追加
+    'store',
+    'apscheduler', # 追加
 ]
 
 MIDDLEWARE = [
@@ -48,6 +56,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware', # 追加
     # 'allauth.account.middleware.AccountMiddleware',  # 追加
+    'allauth.account.middleware.AccountMiddleware',  # 追加
 ]
 
 INTERNAL_IPS = ['127.0.0.1', '::1', 'localhost', '0.0.0.0'] # 追加
@@ -57,7 +66,7 @@ ROOT_URLCONF = 'TeamA.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ BASE_DIR / 'user/templates', BASE_DIR / 'accounts/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -149,21 +158,48 @@ DEBUG_TOOLBAR_CONFIG = {
 # allauth用
 SITE_ID = 1
 
-'''
+
 # django-allauthの設定
 # AUTHENTICATION_BACKENDSとは、認証バックエンドを指定する設定
 # デフォルトでは、django.contrib.auth.backends.ModelBackendが指定されている
 AUTHENTICATION_BACKENDS = (
-    # ユーザー名とパスワードによる認証を行うバックエンド
+    # MelimitUserModelBackendを使う
+    'accounts.backends.MelimitUserModelBackend',  # 追加
+    # MelimitStoreModelBackendを使う
+    'accounts.backends.MelimitStoreModelBackend',  # 追加
+    # ユーザー名とパスワードによる認証を行うバックエンド 
     'django.contrib.auth.backends.ModelBackend',
     # Emailによる認証を行うバックエンドはAuthenticationBackendを使う
-    'allauth.account.auth_backends.AuthenticationBackend'
-    # ,  # 追加
+    'allauth.account.auth_backends.AuthenticationBackend',  # 追加
 )
 
-# ログイン/ログアウト後の遷移先を設定
-LOGIN_REDIRECT_URL = 'sdgs_diary:index'  # 追加
-ACCOUNT_LOGOUT_REDIRECT_URL = 'accounts:logout_success'  # 追加
+# MelimitAccountAdapterを使う
+ACCOUNT_ADAPTER = 'accounts.adapter.MelimitAccountAdapter'  # 追加
 
-AUTH_USER_MODEL = 'accounts.User'  # 追加
-'''
+# ログイン/ログアウト後の遷移先を設定
+# LOGIN_REDIRECT_URL = 'user:index'
+# settings.LOGIN_REDIRECT_URL = settings.LOGIN_REDIRECT_URL.replace('#next', '')
+ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login_kkkk'  # 追加
+
+AUTH_USER_MODEL = 'accounts.CustomUser'  # 追加
+
+# ログインページのURLを設定(allauthのデフォルトを上書き)
+# ここからログインすると、なぜかadapterを経由しない
+# LOGIN_URL = 'account_login_kkkk'  # 追加
+
+# ここからログインすると、adapterを経由して遷移する
+# ユーザーが未ログイン状態でパスワードを変更すると遷移するページ
+LOGIN_URL = 'account_login_kkkk'  # 追加
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# マイクロソフトのメールサービス、office365を使用する
+EMAIL_HOST = 'smtp.office365.com'
+EMAIL_PORT = 587
+# 使用しているoffice365のメールアドレスとパスワード
+EMAIL_HOST_USER = 'ooi2272105@stu.o-hara.ac.jp'
+EMAIL_HOST_PASSWORD = 'Pokemon6124m'
+EMAIL_USE_TLS = True
+# 開発用 コンソールに出力する
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# localhostからooi学番で送るとエラーが起こるので送信元をHOSTと同じにする
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

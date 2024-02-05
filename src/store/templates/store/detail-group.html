@@ -1,0 +1,377 @@
+{% extends 'store/base.html' %}
+
+{% load static %}
+
+{% block title %}共同購入商品の詳細{% endblock %}
+
+{% block contents %}
+  <div class="product-manage__container">
+    <div class="topic-path">
+      <div class="product-manage">商品管理</div>
+      <img class="searchfilled-icon" alt="" src="{% static 'store/img/keyboardarrowright_mini.png' %}" />
+      <div class="product-manage">共同購入商品の詳細</div>
+    </div>
+
+    <div class="title-product-manage">
+      <div class="product-manage-text">共同購入商品の詳細</div>
+      <img class="fibermanualrecordfilled-icon" alt="" src="{% static 'store/img/maru.png' %}" />
+    </div>
+
+    <div class="group-purchase-create">
+        <div class="group-purchase-input">
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+          <!-- 商品名の入力欄 -->
+          <div class="product-name-box">
+            <div class="product-name-box-title">
+              <div class="title-text">商品名</div>
+            </div>
+            <div class="product-name-box-input">
+              <span>{{ sale.product.product_name }}</span>
+            </div>
+          </div>
+
+          <!-- カテゴリの選択欄 -->
+          <div class="category-box">
+            <div class="category-box-title">
+              <div class="title-text">カテゴリ</div>
+            </div>
+            <div class="category-box-input">
+              <span>{{ sale.product.get_product_category_display }}</span>
+            </div>
+          </div>
+
+          <!-- 販売価格の入力欄 -->
+          <div class="category-box">
+            <div class="category-box-title">
+              <div class="title-text">販売価格</div>
+            </div>
+            <div class="price-box-input">
+              <span>{{ sale.sale_price }} 円</span>
+            </div>
+          </div>
+
+          <!-- 定価の入力欄 -->
+          <div class="category-box">
+            <div class="category-box-title">
+              <div class="title-text">定価</div>
+            </div>
+            <div class="listprice-box-input">
+              <span>{{ sale.product.product_price }} 円</span>
+            </div>
+          </div>
+
+          <!-- 共同購入達成数量の入力欄 -->
+          <div class="category-box">
+            <div class="category-box-title">
+              <div class="title-text">共同購入達成数量</div>
+            </div>
+            <div class="quantity-box-input">
+              <span>{{ threshold.threshold }} 個</span>
+            </div>
+          </div>
+
+          <!-- 共同購入達成時の値引率の入力欄 -->
+          <div class="category-box">
+            <div class="category-box-title">
+              <div class="title-text">共同購入達成時の値引率</div>
+            </div>
+            <div class="discount-box-input">
+              <span>{{ threshold.discount_rate }} ％</span>
+            </div>
+          </div>
+
+          <!-- 表示期間の入力欄 -->
+          <div class="category-box">
+            <div class="category-box-title">
+              <div class="title-text">表示期間</div>
+            </div>
+            <div class="period-box-input">
+              <span>開始：{{ sale.sale_end }} ～ 終了：{{ sale.sale_end }}</span>
+            </div>
+          </div>
+
+          <!-- 在庫数の入力欄 -->
+          <div class="category-box">
+            <div class="category-box-title">
+              <div class="title-text">在庫数</div>
+            </div>
+            <div class="stock-box-input">
+              <span>{{ sale.stock }} 個</span>
+            </div>
+          </div>
+
+          <!-- 送料の入力欄 -->
+          <div class="category-box">
+            <div class="category-box-title">
+              <div class="title-text">送料</div>
+            </div>
+            <div class="shipping-box-input">
+              <span>送料が入ってます</span>
+            </div>
+          </div>
+
+          <!-- 重量の入力欄 -->
+          <div class="category-box">
+            <div class="category-box-title">
+              <div class="title-text">重量</div>
+            </div>
+            <div class="weight-box-input">
+              <span>{{ sale.product.weight }} g(グラム)</span>
+            </div>
+          </div>
+
+          <!-- 賞味期限の入力欄 -->
+          <div class="category-box">
+            <div class="category-box-title">
+              <div class="title-text">賞味期限</div>
+            </div>
+            <div class="expiration-box-input">
+              <span>{{ sale.expiration_date }}</span>
+            </div>
+          </div>
+
+          <!-- 画像の選択欄 -->
+          <div class="category-box" style="height: 200px;">
+            <div class="category-box-title">
+              <div class="title-text">画像</div>
+            </div>
+            <div class="image-box-input" style="height: 200px;">
+              <span><img src="{{ sale.product.product_image.url }}" alt="{{ sale.product.product_name }}" height="160" /></span>
+            </div>
+          </div>
+
+          <!-- 商品説明の入力欄 -->
+          <div class="category-box" style="height: 200px;">
+            <div class="category-box-title">
+              <div class="title-text">商品説明</div>
+            </div>
+            <div class="description-box-input" style="height: 200px;">
+              <span>{{ sale.description }}</span>
+            </div>
+          </div>
+
+          <!-- リンク3種類 -->
+          <div class="group-product-button">
+            <a href="#!" class="btn-product" style="color: #fff">実際の商品ページを見る</a>
+          </div>
+
+          <div class="product-delete-button">
+            <button class="btn-delete" type="submit">商品を削除する</button>
+          </div>
+
+          <div class="group-edit-button">
+            <a href="{% url 'store:detail-group-edit' sale.product.pk %}" class="btn-edit" style="color: #fff">商品を編集する</a>
+            {% comment %} <a href="detail-group-edit.html" class="btn-edit">商品を編集する</a> {% endcomment %}
+          </div>
+        </div>
+      </form>
+          <!-- 「商品を削除する」ボタンを押した時に出てくるモーダル -->
+          <div id="modal" class="modal">
+            <div class="modal-content">
+              <span class="modal-title">共同購入商品を本当に削除しますか？</span>
+              <span class="close">&times;</span>
+                <form id="deleteForm" method="POST" action="{% url 'store:product_delete' sale.product.pk %}">
+                  {% csrf_token %}
+                  <!-- 入力内容を表示する部分 -->
+                  <div id="confirmationContent">
+                    <!-- 確認内容をここに表示 -->
+                  </div>
+                  <div class="modal-button">
+                    <button class="modal-back" type="button">もどる</button>
+                    <button class="modal-group" type="submit">削除する</button>
+                  </div>
+                </form>
+            </div>
+          </div>
+
+      
+    </div>
+
+    <script>
+
+    
+    
+        // モーダルの処理
+        document.addEventListener('DOMContentLoaded', function () {
+          const form = document.querySelector('form');
+          const modal = document.getElementById('modal');
+          const confirmationContent = document.getElementById('confirmationContent');
+          const closeButton = document.querySelector('.close');
+          const backButton = document.querySelector('.modal-back');
+          const confirmButton = document.querySelector('.modal-group');
+          const deleteButton = document.querySelector('.btn-delete');
+      
+          // モーダル表示用関数
+          function showModal() {
+              modal.style.display = 'block';
+          }
+      
+          // モーダル非表示用関数
+          function closeModal() {
+              modal.style.display = 'none';
+          }
+      
+          // 「商品を削除する」ボタンのクリックイベント
+          deleteButton.addEventListener('click', function (event) {
+              event.preventDefault(); // フォームのデフォルトの動作を防止
+      
+              // 入力値を取得
+              const productName = document.querySelector('.product-name-box-input span').textContent;
+              const category = document.querySelector('.category-box-input span').textContent;
+              const price = document.querySelector('.price-box-input span').textContent + '円';
+              const listprice = document.querySelector('.listprice-box-input span').textContent + '円';
+              const quantity = document.querySelector('.quantity-box-input span').textContent + '個';
+              const discount = document.querySelector('.discount-box-input span').textContent + '%';
+              // 開始と終了の入力値を取得
+              const startDateTime = document.querySelector('.period-box-input span').textContent;
+              const stock = document.querySelector('.stock-box-input span').textContent + '個';
+              const shipping = document.querySelector('.shipping-box-input span').textContent + '円';
+              const weight = document.querySelector('.weight-box-input span').textContent + 'g(グラム)';
+              const expiration = document.querySelector('.expiration-box-input span').textContent;
+              const image = document.querySelector('.image-box-input img').src;
+              const description = document.querySelector('.description-box-input span').textContent;
+      
+              // 確認用の内容を作成
+              const confirmationHTML = `
+              <div class="con-product-name-box">
+                <div class="con-product-name-box-title">
+                  <div class="con-title-text">商品名</div>
+                </div>
+                <div class="con-product-name-box-input">
+                  <p>${productName}</p>
+                </div>
+              </div>
+              <div class="con-category-box">
+                <div class="con-category-box-title">
+                  <div class="con-title-text">カテゴリ</div>
+                </div>
+                <div class="con-product-name-box-input">
+                  <p>${category}</p>
+                </div>
+              </div>
+              <div class="con-category-box">
+                <div class="con-category-box-title">
+                  <div class="con-title-text">販売価格</div>
+                </div>
+                <div class="con-product-name-box-input">
+                  <p>${price}</p>
+                </div>
+              </div>
+              <div class="con-category-box">
+                <div class="con-category-box-title">
+                  <div class="con-title-text">定価</div>
+                </div>
+                <div class="con-product-name-box-input">
+                  <p>${listprice}</p>
+                </div>
+              </div>
+              <div class="con-category-box">
+                <div class="con-category-box-title">
+                  <div class="con-title-text">共同購入達成数量</div>
+                </div>
+                <div class="con-product-name-box-input">
+                  <p>${quantity}</p>
+                </div>
+              </div>
+              <div class="con-category-box">
+                <div class="con-category-box-title">
+                  <div class="con-title-text">共同購入達成時の値引率</div>
+                </div>
+                <div class="con-product-name-box-input">
+                  <p>${discount}</p>
+                </div>
+              </div>
+              <div class="con-category-box">
+                <div class="con-category-box-title">
+                  <div class="con-title-text">表示期間</div>
+                </div>
+                <div class="con-product-name-box-input">
+                  <p>開始～終了：${startDateTime}</p>
+                </div>
+              </div>
+              <div class="con-category-box">
+                <div class="con-category-box-title">
+                  <div class="con-title-text">在庫数</div>
+                </div>
+                <div class="con-product-name-box-input">
+                  <p>${stock}</p>
+                </div>
+              </div>
+              <div class="con-category-box">
+                <div class="con-category-box-title">
+                  <div class="con-title-text">送料</div>
+                </div>
+                <div class="con-product-name-box-input">
+                  <p>${shipping}</p>
+                </div>
+              </div>
+              <div class="con-category-box">
+                <div class="con-category-box-title">
+                  <div class="con-title-text">重量</div>
+                </div>
+                <div class="con-product-name-box-input">
+                  <p>${weight}</p>
+                </div>
+              </div>
+              <div class="con-category-box">
+                <div class="con-category-box-title">
+                  <div class="con-title-text">賞味期限</div>
+                </div>
+                <div class="con-product-name-box-input">
+                  <p>${expiration}</p>
+                </div>
+              </div>
+              <div class="con-category-box">
+                <div class="con-category-box-title">
+                  <div class="con-title-text">画像</div>
+                </div>
+                <div class="con-product-name-box-input">
+                  <img src="${image}" alt="${productName}" height="160">
+                  {% comment %} <p>${image}</p> {% endcomment %}
+                </div>
+              </div>
+              <div class="con-category-box">
+                <div class="con-category-box-title">
+                  <div class="con-title-text">商品説明</div>
+                </div>
+                <div class="con-product-name-box-input">
+                  <p>${description}</p>
+                </div>
+              </div>
+            `;
+              confirmationContent.innerHTML = confirmationHTML;
+              showModal();
+          });
+      
+          // 「もどる」ボタンのクリックイベント
+          backButton.addEventListener('click', function () {
+              closeModal();
+          });
+      
+          // 「削除する」ボタンのクリックイベント
+          // アラートを出してから商品管理ページに遷移する予定
+          confirmButton.addEventListener('click', function () {
+              alert('共同購入商品を削除しました！');
+              closeModal();
+              window.location.href = '#!';
+          });
+      
+          // モーダルを閉じるアイコンのクリックイベント
+          closeButton.addEventListener('click', function () {
+              closeModal();
+          });
+      
+          // モーダル外の領域をクリックしたときに閉じる
+          window.addEventListener('click', function (event) {
+              if (event.target === modal) {
+                  closeModal();
+              }
+          });
+      });
+      
+    
+      </script>
+
+  </div>
+{% endblock %}

@@ -1,0 +1,68 @@
+.store-login {
+    width: 50%;
+    margin: 50px auto 0;
+    background-color: $store_gray;
+    border-radius: 8px;
+    padding: 30px 50px;
+    text-align: center;
+    &__title {
+        display: block;
+        text-align: center;
+        font-size: 2rem;
+        font-weight: 700;
+    }
+    input {
+        width: 50%;
+        margin: 10px 0;
+        padding: 10px;
+        border: 1px solid $store_gray;
+        border-radius: 4px;
+        font-size: 1.2rem;
+        &:focus {
+            outline: none;
+        }
+    }
+    &__btn {
+        width: 50%;
+        margin: 10px 0;
+        padding: 10px;
+        border-radius: 4px;
+        font-size: 1.2rem;
+        background-color: $melimit_black;
+        color: #fff;
+        cursor: pointer;
+        &:hover {
+            background-color: darken($store_gray, 30%);
+            color:black;
+        }
+    }
+    &__signup-btn {
+        display: inline-block;
+        width: 50%;
+        margin: 10px 0;
+        padding: 10px;
+        border-radius: 4px;
+        font-size: 1.2rem;
+        background-color: $melimit_black;
+        color: #fff;
+        cursor: pointer;
+        &:hover {
+            background-color: darken($store_gray, 30%);
+            color:black;
+        }
+    }
+    &__what-melimit {
+        display: inline-block;
+        margin: 10px 0;
+        padding: 10px 30px;
+        border-radius: 4px;
+        font-size: 1.2rem;
+        background-color: $melimit_black;
+        color: #fff;
+        cursor: pointer;
+        &:hover {
+            background-color: darken($store_gray, 30%);
+            color:black;
+        }
+    }
+}
