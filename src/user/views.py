@@ -792,6 +792,10 @@ def category_products(request):
                         'at_count':at_count,
                     }
         product_detail.append(detail)
+        print(product_detail)
+        for i in product_detail:
+            if i['sale_type'] == 'melimit_sales':
+                print(i)
     return render(request, 'user/category-products.html', {'products': product_detail})
     # return render(request, 'user/category-products.html')
 
