@@ -2,6 +2,7 @@
 {% block title %}商品詳細{% endblock %}
 {% block content %}
 {% load static %}
+{% load priceslice_filters %}
 <section class="detail1">
     <div class="detail1__left">
         <div id="large-image-container">
@@ -21,9 +22,9 @@
         <div class="detail1__right--upper">
             <div class="detail1__right--upper1">
                 <h2 class="detail1__title">{{ sale.product.product_name }}</h2>
-                <h3 class="detail1__discount">¥{{ sale.sale_price }}（税込）</h3>
+                <h3 class="detail1__discount">¥{{ sale.sale_price|to_currency }}（税込）</h3>
                 <p class="detail1__discount--text">定価から{{ sale.discount_rate }}%OFF</p>
-                <p class="detail1__price">定価：¥{{ sale.product.product_price }}（税込）</p>
+                <p class="detail1__price">定価：¥{{ sale.product.product_price|to_currency }}（税込）</p>
                 </div>
             <div class="detail1__right--upper2">
                 <p class="detail1__genre general">一般購入商品</p>
@@ -38,14 +39,23 @@
         </div>
         <div class="detail1__right--center">
             <p class="detail1__text">{{ sale.description }}商品説明商品説明商品説明商品説明商品説明商品説明商品説明商品説明</p>
+            {% if sale.stock > 0 %}
             <form action="{% url 'user:add_to_cart' sale.pk %}" method="post">
                 {% csrf_token %}
                 <label for="quantity" class="detail1__text-bd">数量</label>
                 <input type="number" class="cnt" min="1" max="10" step="1" value="1" name="quantity" id="quantity">
                 <input type="hidden" name="product_id" value="{{ sale.pk }}">
                 <button type="submit" class="btn--beige btn--middle">カートに入れる</button>
-                <button type="submit" class="btn--white btn--middle">お気に入りに追加</button>
             </form>
+            <form action="#" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{ sale.pk }}" >
+                <button type="submit" class="btn--white btn--middle">お気に入りに追加</button>
+
+            </form>
+            {% else %}
+
+            {% endif %}
         </div>
         <div class="detail1__right--lower">
             <div class="detail1__right--lower1">

@@ -11,9 +11,12 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 # orderhistoryをimportする
 from .models import OrderHistory
+from .utils import melmit_product_detail
 # Create your views here.
 # @login_required
 def index(request):
+    random_sales = []
+    category_detail = []
     print(request.user)
     # ログインしているか
     if request.user.is_authenticated:
@@ -27,28 +30,77 @@ def index(request):
             print(f'user: {user}')
             user_taste = user.taste  # ユーザーの好みを取得
             print(user_taste)
-            matching_sales = Sale.objects.filter(product__product_category=user_taste).order_by('?')[:3]  # ユーザーの好みに合った商品をランダムに3つ取得
-            print(matching_sales)
+            #user_tasteがない人の処理をかけ
+            if not user_taste:
+                matching_sales = Sale.objects.order_by('?')[:3]
+            else:
+                matching_sales = Sale.objects.filter(product__product_category=user_taste).order_by('?')[:3]  # ユーザーの好みに合った商品をランダムに3つ取得
+            print('match商品：',matching_sales)
+            #マッチした商品をリストに入れていく
+            for random in matching_sales:
+                print('random:',random)
+                detail = melmit_product_detail(random)
+                random_sales.append(detail)
+            for detail in random_sales:
+                print('detail',detail)
             # matching_sales = Sale.objects.filter(product__product_category=user_taste)  # ユーザーの好みに合った商品を取得
             # random_sale = random.choice(matching_sales)  # ランダムに1つの商品を選択
             categories = Product.TASTE_CHOICES #商品をカテゴリーごとに取得
             # random_sale.sale_priceとrandom_sale.product.product_price
-            print(categories)
-            sales_by_category = {category[0]: Sale.objects.filter(product__product_category=category[0]) for category in categories}
+            print('かてごりー：',categories)
+            # sales_by_categoryは辞書？この時点でランダム
+            sales_by_category = {category[0]: Sale.objects.filter(product__product_category=category[0]).order_by('?')[:3] for category in categories}
             # return render(request, 'index.html', {'random_sale': random_sale})
-            print(sales_by_category)
-            return render(request, 'user/index.html', {'user': user,'random_sales': matching_sales,'sales_by_category': sales_by_category})
+            for key,values in sales_by_category.items():
+                for value in values:
+                #カテゴリー名が出てくる str
+                    print('カテゴリーがでてくるはず:',key)
+                    detail = melmit_product_detail(value)
+                    category_detail.append(detail)
+            # product_category = {category[0]:category_detail.product_category == category[0] for category in categories}
+            #product_categoryがないよ
+            product_category = {category[0]: [detail for detail in category_detail if detail['product_category'] == category[0]] for category in categories}
+            print('sales_by:',sales_by_category)
+            print('category_detail:',category_detail)
+            print('product_category:',product_category)
+            print('meat:',product_category['meat'])
+            return render(request, 'user/index.html', {'user': user,'random_sales': random_sales,'product_category': product_category})
         else:
             return redirect('user:omae_store')
     else:
         #ログインしていないとき
-        #ランダムに３件取得する
-        random_sales = Sale.objects.order_by('?')[:3]
-        # 商品をカテゴリーごとに取得
+        #ランダムに３件取得する おすすめの商品
+        random_sales = []
+        category_detail = []
+        matching_sales = Sale.objects.order_by('?')[:3]
+        for random in matching_sales:
+                print('random:',random)
+                detail = melmit_product_detail(random)
+                random_sales.append(detail)
+        
+        # for random in random_sales:
+        #     print(random)
+        #     detail = melmit_product_detail(random)
+        #     category_detail.append(detail)
+        #     print('product:',category_detail)
+        # for detail in category_detail:
+        #     print(detail)
         categories = Product.TASTE_CHOICES
-        sales_by_category = {category[0]: Sale.objects.filter(product__product_category=category[0]) for category in categories}
+        product_category = {category[0]: [detail for detail in category_detail if detail['product_category'] == category[0]] for category in categories}
+        # 商品をカテゴリーごとに取得
+        
+        sales_by_category = {category[0]: Sale.objects.filter(product__product_category=category[0]).order_by('?')[:3] for category in categories}
+        for key,values in sales_by_category.items():
+                for value in values:
+                #カテゴリー名が出てくる str
+                    print('カテゴリーがでてくるはず:',key)
+                    detail = melmit_product_detail(value)
+                    category_detail.append(detail)
+            # product_category = {category[0]:category_detail.product_category == category[0] for category in categories}
+            #product_categoryがないよ
+        product_category = {category[0]: [detail for detail in category_detail if detail['product_category'] == category[0]] for category in categories}
         # return render(request, 'sales_list.html', {'sales_by_category': sales_by_category})
-        return render(request, 'user/index.html', {'sales_by_category': sales_by_category, 'random_sales':random_sales,})
+        return render(request, 'user/index.html', {'sales_by_category': sales_by_category, 'random_sales':random_sales, 'product_category':product_category})
     # print('index_________')
     # print(request.user.user_id)
     # return render(request, 'user/index.html')
@@ -136,6 +188,7 @@ def all_products_joint(request):
     thresholds = {}
     #商品情報と閾値情報、割引後の値段等を一括りにするsale_infos
     sale_infos = []
+    mel_product = []
     for sale in sales:
         print(sale)
         print(sale.threshold_set.all())
@@ -183,6 +236,8 @@ def all_products_joint(request):
         sale_infos.append(sale_info)
         # ここでthresholdsを使用する
         #salesをひとつずつsaleに入れて、saleごとに閾値は一つなのでsalesをfor文で回すときに同時に閾値もfor文を回すとその商品の閾値が取得できる。が、閾値が複数の時や、対応場所がずれた時に対応できない
+        mel_info = melmit_product_detail(sale)
+        mel_product.append(mel_info)
     print(2)
     #この段階で辞書型 商品は閾値を持っていないので辞書型で関連性を持たせる必要がある
     print(thresholds)
@@ -203,11 +258,12 @@ def all_products_joint(request):
             print(threshold.threshold)
     #しきい値を取得できた thresholdの一つ目の引数=sale.pkのthreshold.threshold
     
-    return render(request, 'user/joint-products.html', {'sales': sales, 'thresholds':thresholds, 'sale_infos':sale_infos})
+    return render(request, 'user/joint-products.html', {'sales': sales, 'thresholds':thresholds, 'sale_infos':sale_infos,'mel_product':mel_product})
 
 # 一般商品詳細
 def general_products_detail(request,pk):
     #detailに必要なデータをここで取得する
+    #名前
     #値段
     #商品名
     #割引率
@@ -218,6 +274,7 @@ def general_products_detail(request,pk):
     #在庫数
     #商品から店舗情報
     sale = Sale.objects.get(id=pk)
+    print('image:',sale.product.product_image)
     print(sale.product.product_name)
     print(sale.stock)
     print(sale.product.store)
@@ -707,6 +764,7 @@ def category_products(request):
                     #なにもとれない！！！！！！！
                     at_count = threshold.threshold -count
                     print('at_count:',at_count)
+                    discounted_price = round(sale.sale_price * (100 - threshold.discount_rate) / 100)
                     #saleモデルからcheckモデルの内容を取得しよう
                     detail = {
                         #pk
@@ -718,14 +776,15 @@ def category_products(request):
                         #クリア後の値段
                         #閾値個数
                         #現在の閾値個数 チェックモデルから
-                        #閾値をクリアしているか確認→クリア後が表記変わるため　countとthresholdを比較するだけで行けそう？どこで比較するか
+                        #閾値をクリアしているか確認→クリア後が表記変わるため　countとthresholdを比較するだけ
+                        #discount_amountは割引額　
                         'pk':product.pk,
                         'image':product.product_image,
                         'rate':sale.discount_rate(),
                         'product_name':product.product_name,
                         'price':sale.sale_price,
                         'threshold_rate':threshold.discount_rate,
-                        'clear_price':threshold.discount_amount(),
+                        'clear_price':discounted_price,
                         'threshold':threshold.threshold,
                         'threshold_now':count,
                         'sale_type':sale.sale_type,

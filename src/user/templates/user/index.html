@@ -48,186 +48,213 @@
                 
                     {% comment %} ログインしているとき {% endcomment %}
                     {% if user.is_authenticated %}
-                        {% for random_sale in random_sales %}
-                            {% comment %} ループを三回まで実行する {% endcomment %}
-                            {% if forloop.counter <= 3 %}
-                                {% if random_sale.sale_type == 'general_sales' %}
-                                    <div class="item--card card--blue">
-                                        <a href="{% url 'user:general_products_detail' pk=random_sale.pk %}">
-                                            
-                                            <img src="{{ random_sale.product.product_image.url }}" alt="{{ random_sale.product.product_name }}" class="card--img">
-                                            <p class="discount">{{ random_sale.discount_rate }}％</p>
-                                            <div class="card--content">
-                                                <h3 class="card--title">{{ random_sale.product.product_name }}</h3>
-                                                <h4 class="card--discount">￥{{ random_sale.sale_price|to_currency }}(税込)</h4>
-                                            </div>
-                                        </a>
-                                    </div>
-                                {% comment %} 商品が共同の場合 {% endcomment %}
-                                {% else %}
-                                    <div class="item--card card--pink">
-                                        <a href="{% url 'user:joint_products_detail' pk=random_sale.pk %}">
-                                            <img src="{{ random_sale.product.product_image.url }}" alt="{{ random_sale.product.product_name }}" class="card--img">
-                                            <p class="discount">{{ random_sale.discount_rate }}％</p>
-                                            <div class="card--content">
-                                                <h3 class="card--title">{{ random_sale.product.product_name }}</h3>
-                                                <meter low="69" high="80" max="100" value="84">B</meter>
-                                                <p class="card--text">あと00人達成で</p>
-                                                <p class="card--price">{{ random_sale.sale_price }}(税込)</p>
-                                                <h4 class="card--discount">￥100,000（税込）</h4>
-                                            </div>
-                                        </a>
-                                    </div>
-                                {% endif %}
-                            {% endif %}
-                            {% comment %} {% if forloop.counter == 1 %}　ループ何回目かの判断
-                                
-                                ランダムに取得した商品が一般か、共同か判断 
-                                {% if sale.sale_type == 'general_sales' %} ←saleではなく、random_saleの可能性？
-                                {% if random_sale.sale_type =='general_sales' %}
-                                    <div class="item--card card--blue">
-                                        <a href="#">
-                                            
-                                            <img src="{{ random_sale.product.product_image.url }}" alt="{{ random_sale.product.product_name }}" class="card--img">
-                                            <p class="discount">ひとつめ {{ random_sale.discount_rate }}％</p>
-                                            <div class="card--content">
-                                                <h3 class="card--title">{{ random_sale.product.product_name }}</h3>
-                                                <h4 class="card--discount">￥{{ random_sale.sale_price }}(税込)</h4>
-                                            </div>
-                                        </a>
-                                    </div>
-                                商品が共同の場合 
-                                {% else %}
-                                <div class="item--card card--pink">
-                                    <a href="#">
-                                        <img src="{% random_sale.product.product_image.url %}" alt="{{ random_sale.product.product_name }}" class="card--img">
-                                        <p class="discount">{{ random_sale.discount_rate }}％</p>
-                                        <div class="card--content">
-                                            <h3 class="card--title">{{ random_sale.product.product_name }}</h3>
-                                            <meter low="69" high="80" max="100" value="84">B</meter>
-                                            <p class="card--text">あと00人達成で</p>
-                                            <p class="card--price">{{ random_sale.sale_price }}(税込)</p>
-                                            <h4 class="card--discount">￥100,000（税込）</h4>
-                                        </div>
-                                    </a>
-                                </div>
-                                {% endif %}
-                                    <div class="item--card card--blue">
-                                        <a href="#">
-                                            
-                                            <img src="{{ random_sale.product.product_image.url }}" alt="{{ random_sale.product.product_name }}" class="card--img">
-                                            <p class="discount">ひとつめ {{ random_sale.discount_rate }}％</p>
-                                            <div class="card--content">
-                                                <h3 class="card--title">{{ random_sale.product.product_name }}</h3>
-                                                <h4 class="card--discount">￥{{ random_sale.sale_price }}(税込)</h4>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    
-                                        <div class="item--card card--pink">
-                                            <a href="#">
-                                                <img src="{% random_sale.product.product_image.url %}" alt="{{ random_sale.product.product_name }}" class="card--img">
-                                                <p class="discount">{{ random_sale.discount_rate }}％</p>
+                        {% comment %} random_salesが空の場合 elseは中身がある場合。 {% endcomment %}
+                        {% if not random_sales %}
+                        {% comment %} 商品がない場合。 {% endcomment %}
+                            <p>商品ないよ！過、疎サイト</p>
+                        {% else %}
+                        
+                            {% comment %} random_salesに何も入っていなかった場合のif文を書いておく {% endcomment %}
+                            {% for random_sale in random_sales %}
+                                {% comment %} ループを三回まで実行する {% endcomment %}
+                                {% if forloop.counter <= 3 %}
+                                    {% if random_sale.sale_type == 'general_sales' %}
+                                        <div class="item--card card--blue">
+                                            <a href="{% url 'user:general_products_detail' pk=random_sale.pk %}">
+                                                <img src="{{ random_sale.image.url }}" alt="{{ random_sale.product_name }}" class="card--img">
+                                                <p class="discount">{{ random_sale.rate }}％</p>
                                                 <div class="card--content">
-                                                    <h3 class="card--title">{{ random_sale.product.product_name }}</h3>
-                                                    <meter low="69" high="80" max="100" value="84">B</meter> それぞれの値を商品チェックモデルから参照する　フロントに確認
-                                                    <p class="card--text">あと00人達成で</p> 商品チェックモデルから総量を算出
-                                                    <p class="card--price">{{ random_sale.sale_price }}(税込)</p>
-                                                    <h4 class="card--discount">￥100,000（税込）</h4>　割引額はモデルにあるのでprice-割引額を算出
+                                                    <h3 class="card--title">{{ random_sale.product_name }}</h3>
+                                                    <h4 class="card--discount">￥{{ random_sale.price|to_currency }}(税込)</h4>
                                                 </div>
                                             </a>
                                         </div>
-                                    
-                            {% endif %}
-                                
-                                {% for sale in random_sales %}
-                                    {% if forloop.counter == 1 %}
-                                        <a href="#">
-                                            <img src="{{ sale.product.product_image.url }}" alt="{{ sale.product.product_name }}" class="card--img">
-                                            <p class="discount">00%OFF {{ sale.discount_rate }}％</p>
-                                            <div class="card--content">
-                                                <h3 class="card--title">{{ sale.product.product_name }}</h3>
-                                                <h4 class="card--discount">￥{{ sale.sale_price }}(税込)</h4>
-                                                {% if sale.sale_type == 'general_sales' %}
-                                                    <!-- 一般商品の場合の表示 -->
-                                                {% else %}
-                                                    <!-- 共同販売商品の場合の表示 -->
-                                                    <p>Threshold: {{ sale.threshold_set.all|first.threshold }}</p>
-                                                {% endif %}
-                                            </div>
-                                        </a>
-                                    {% endif %}
-                                {% endfor %}
-                                
-                            {% if forloop.counter == 2 %}
-                                共同の時は閾値を取得できるようにしよう(まだできていない)
-                                <div class="item--card card--pink">
-                                    <a href="#">
-                                        <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                                        <p class="discount">MAX00%OFF</p>
-                                        <div class="card--content">
-                                            <h3 class="card--title">大原製菓</h3>
-                                            <meter low="69" high="80" max="100" value="84">B</meter>
-                                            <p class="card--text">あと00人達成で</p>
-                                            <p class="card--price">￥100,000（税込）</p>
-                                            <h4 class="card--discount">￥100,000（税込）</h4>
+                                    {% comment %} 商品が共同の場合 達成後は定価から達成後の％{% endcomment %}
+                                    {% else %}
+                                        <div class="item--card card--pink">
+                                            <a href="{% url 'user:joint_products_detail' pk=random_sale.pk %}">
+                                                <img src="{{ random_sale.image.url }}" alt="{{ random_sale.product_name }}" class="card--img">
+                                                    {% if random_sale.threshold_now < random_sale.threshold %}
+                                                        <p class="discount">{{ random_sale.rate }}％</p>
+                                                        <div class="card--content">
+                                                            <h3 class="card--title">{{ random_sale.product_name }}</h3>
+                                                            <meter low={{ random_sale.threshold|meter_value:"3" }} high={{ random_sale.threshold|meter_value:"1.5"}} max={{ random_sale.threshold }} value={{ random_sale.threshold_now }}>B</meter>
+                                                            <p class="card--text">あと{{ random_sale.at_count }}人達成で</p>
+                                                            <p class="card--price">{{ random_sale.price|to_currency }}(税込)</p>
+                                                            <h4 class="card--discount">￥{{ random_sale.clear_price|to_currency }}（税込）</h4>
+                                                        </div>
+                                                    {% else %}
+                                                        <p class="discount">{{ random_sale.final_rate }}％</p>
+                                                        <div class="card--content">
+                                                            <h3 class="card--title">{{ random_sale.product_name }}</h3>
+                                                            <meter low={{ random_sale.threshold|meter_value:"3" }} high={{ random_sale.threshold|meter_value:"1.5"}} max={{ random_sale.threshold }} value={{ random_sale.threshold_now }}>B</meter>
+                                                            <p class="card--text">達成しました！</p>
+                                                            <p class="card--price">{{ random_sale.price|to_currency }}(税込)</p>
+                                                            <h4 class="card--discount">￥{{ random_sale.clear_price|to_currency }}（税込）</h4>
+                                                        </div>
+                                                    {% endif %}
+                                            </a>
                                         </div>
-                                    </a>
-                                </div>
-                            {% endif %}
-                            {% if forloop.counter == 3 %} 
-                                    <div class="item--card card--blue">
+                                    {% endif %}
+                                {% endif %}
+                                {% comment %} {% if forloop.counter == 1 %}　ループ何回目かの判断
+                                    
+                                    ランダムに取得した商品が一般か、共同か判断 
+                                    {% if sale.sale_type == 'general_sales' %} ←saleではなく、random_saleの可能性？
+                                    {% if random_sale.sale_type =='general_sales' %}
+                                        <div class="item--card card--blue">
+                                            <a href="#">
+                                                
+                                                <img src="{{ random_sale.product.product_image.url }}" alt="{{ random_sale.product.product_name }}" class="card--img">
+                                                <p class="discount">ひとつめ {{ random_sale.discount_rate }}％</p>
+                                                <div class="card--content">
+                                                    <h3 class="card--title">{{ random_sale.product.product_name }}</h3>
+                                                    <h4 class="card--discount">￥{{ random_sale.sale_price }}(税込)</h4>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    商品が共同の場合 
+                                    {% else %}
+                                    <div class="item--card card--pink">
                                         <a href="#">
-                                            <img src="{{ random_sale.product.product_image.url }}" alt="{{ random_sale.product.product_name }}" class="card--img">
-                                            <p class="discount">３つめ {{ random_sale.discount_rate }}％</p>
-                                            <div class="card--content">
-                                                <h3 class="card--title">{{ random_sale.product.product_name }}</h3>
-                                                <h4 class="card--discount">￥{{ random_sale.sale_price }}(税込)</h4>
-                                            </div>
-                                        </a>
-                                    </div> 
-                            {% endif %} {% endcomment %}
-                        {% endfor %}
-                    {% else %}
-                        {% comment %} ログインしていないときのランダム商品 {% endcomment %}
-                        {% for random_sale in random_sales%}
-                            {% if forloop.counter <= 3 %}
-                                {% if random_sale.sale_type == 'general_sales' %}
-                                    <div class="item--card card--blue">
-                                        <a href="{% url 'user:general_products_detail' pk=random_sale.pk %}">
-                                            <img src="{{ random_sale.product.product_image.url }}" alt="{{ random_sale.product.product_name }}" class="card--img">
+                                            <img src="{% random_sale.product.product_image.url %}" alt="{{ random_sale.product.product_name }}" class="card--img">
                                             <p class="discount">{{ random_sale.discount_rate }}％</p>
                                             <div class="card--content">
                                                 <h3 class="card--title">{{ random_sale.product.product_name }}</h3>
-                                                <h4 class="card--discount">￥{{ random_sale.sale_price|to_currency }}(税込)</h4>
+                                                <meter low="69" high="80" max="100" value="84">B</meter>
+                                                <p class="card--text">あと00人達成で</p>
+                                                <p class="card--price">{{ random_sale.sale_price }}(税込)</p>
+                                                <h4 class="card--discount">￥100,000（税込）</h4>
                                             </div>
                                         </a>
                                     </div>
-                            {% comment %} 商品が共同の場合 {% endcomment %}
-                                {% else %}
+                                    {% endif %}
+                                        <div class="item--card card--blue">
+                                            <a href="#">
+                                                
+                                                <img src="{{ random_sale.product.product_image.url }}" alt="{{ random_sale.product.product_name }}" class="card--img">
+                                                <p class="discount">ひとつめ {{ random_sale.discount_rate }}％</p>
+                                                <div class="card--content">
+                                                    <h3 class="card--title">{{ random_sale.product.product_name }}</h3>
+                                                    <h4 class="card--discount">￥{{ random_sale.sale_price }}(税込)</h4>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        
+                                            <div class="item--card card--pink">
+                                                <a href="#">
+                                                    <img src="{% random_sale.product.product_image.url %}" alt="{{ random_sale.product.product_name }}" class="card--img">
+                                                    <p class="discount">{{ random_sale.discount_rate }}％</p>
+                                                    <div class="card--content">
+                                                        <h3 class="card--title">{{ random_sale.product.product_name }}</h3>
+                                                        <meter low="69" high="80" max="100" value="84">B</meter> それぞれの値を商品チェックモデルから参照する　フロントに確認
+                                                        <p class="card--text">あと00人達成で</p> 商品チェックモデルから総量を算出
+                                                        <p class="card--price">{{ random_sale.sale_price }}(税込)</p>
+                                                        <h4 class="card--discount">￥100,000（税込）</h4>　割引額はモデルにあるのでprice-割引額を算出
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        
+                                {% endif %}
+                                    
+                                    {% for sale in random_sales %}
+                                        {% if forloop.counter == 1 %}
+                                            <a href="#">
+                                                <img src="{{ sale.product.product_image.url }}" alt="{{ sale.product.product_name }}" class="card--img">
+                                                <p class="discount">00%OFF {{ sale.discount_rate }}％</p>
+                                                <div class="card--content">
+                                                    <h3 class="card--title">{{ sale.product.product_name }}</h3>
+                                                    <h4 class="card--discount">￥{{ sale.sale_price }}(税込)</h4>
+                                                    {% if sale.sale_type == 'general_sales' %}
+                                                        <!-- 一般商品の場合の表示 -->
+                                                    {% else %}
+                                                        <!-- 共同販売商品の場合の表示 -->
+                                                        <p>Threshold: {{ sale.threshold_set.all|first.threshold }}</p>
+                                                    {% endif %}
+                                                </div>
+                                            </a>
+                                        {% endif %}
+                                    {% endfor %}
+                                    
+                                {% if forloop.counter == 2 %}
+                                    共同の時は閾値を取得できるようにしよう(まだできていない)
                                     <div class="item--card card--pink">
-                                        <a href="{% url 'user:joint_products_detail' pk=random_sale.pk %}">
-                                            <img src="{{ random_sale.product.product_image.url }}" alt="{{ random_sale.product.product_name }}" class="card--img">
-                                            <p class="discount">{{ random_sale.discount_rate }}％</p>
+                                        <a href="#">
+                                            <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
+                                            <p class="discount">MAX00%OFF</p>
                                             <div class="card--content">
-                                                <h3 class="card--title">{{ random_sale.product.product_name }}</h3>
-                                                {% if %}
+                                                <h3 class="card--title">大原製菓</h3>
                                                 <meter low="69" high="80" max="100" value="84">B</meter>
                                                 <p class="card--text">あと00人達成で</p>
-                                                <p class="card--price">{{ random_sale.sale_price }}(税込)</p>
+                                                <p class="card--price">￥100,000（税込）</p>
                                                 <h4 class="card--discount">￥100,000（税込）</h4>
-                                                {% else %}
-                                                <meter low="69" high="80" max="100" value="84">B</meter>
-                                                <p class="card--text">あと00人達成で</p>
-                                                <p class="card--price">{{ random_sale.sale_price }}(税込)</p>
-                                                <h4 class="card--discount">￥100,000（税込）</h4>
-                                                {% endif %}
                                             </div>
                                         </a>
                                     </div>
                                 {% endif %}
-                            {% endif %}
-                        {% endfor %}
+                                {% if forloop.counter == 3 %} 
+                                        <div class="item--card card--blue">
+                                            <a href="#">
+                                                <img src="{{ random_sale.product.product_image.url }}" alt="{{ random_sale.product.product_name }}" class="card--img">
+                                                <p class="discount">３つめ {{ random_sale.discount_rate }}％</p>
+                                                <div class="card--content">
+                                                    <h3 class="card--title">{{ random_sale.product.product_name }}</h3>
+                                                    <h4 class="card--discount">￥{{ random_sale.sale_price }}(税込)</h4>
+                                                </div>
+                                            </a>
+                                        </div> 
+                                {% endif %} {% endcomment %}
+                            {% endfor %}
+                        {% endif %}
+                    {% else %}
+                        {% if not random_sales %}
+                        {% comment %} 商品がない場合。 {% endcomment %}
+                            <p>商品ないよ！過、疎サイト</p>
+                        {% else %}
+                            {% comment %} ログインしていないときのランダム商品 {% endcomment %}
+                            {% for random_sale in random_sales %}
+                                {% if forloop.counter <= 3 %}
+                                    {% if random_sale.sale_type == 'general_sales' %}
+                                        <div class="item--card card--blue">
+                                            <a href="{% url 'user:general_products_detail' pk=random_sale.pk %}">
+                                                <img src="{{ random_sale.image.url }}" alt="{{ random_sale.product_name }}" class="card--img">
+                                                <p class="discount">{{ random_sale.rate }}％</p>
+                                                <div class="card--content">
+                                                    <h3 class="card--title">{{ random_sale.product_name }}</h3>
+                                                    <h4 class="card--discount">￥{{ random_sale.price|to_currency }}(税込)</h4>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        {% comment %} 商品が共同の場合 {% endcomment %}
+                                    {% else %}
+                                        <div class="item--card card--pink">
+                                            <a href="{% url 'user:joint_products_detail' pk=random_sale.pk %}">
+                                                <img src="{{ random_sale.image.url }}" alt="{{ random_sale.product_name }}" class="card--img">
+                                                    {% if random_sale.threshold_now < random_sale.threshold %}
+                                                        <p class="discount">{{ random_sale.rate }}％</p>
+                                                        <div class="card--content">
+                                                            <h3 class="card--title">{{ random_sale.product_name }}</h3>
+                                                            <meter low={{ random_sale.threshold|meter_value:"3" }} high={{ random_sale.threshold|meter_value:"1.5"}} max={{ random_sale.threshold }} value={{ random_sale.threshold_now }}>B</meter>
+                                                            <p class="card--text">あと{{ random_sale.at_count }}人達成で</p>
+                                                            <p class="card--price">{{ random_sale.price|to_currency }}(税込)</p>
+                                                            <h4 class="card--discount">￥{{ random_sale.clear_price|to_currency }}（税込）</h4>
+                                                        </div>
+                                                    {% else %}
+                                                        <p class="discount">{{ random_sale.rate }}％</p>
+                                                        <div class="card--content">
+                                                            <h3 class="card--title">{{ random_sale.product_name }}</h3>
+                                                            <meter low={{ random_sale.threshold|meter_value:"3" }} high={{ random_sale.threshold|meter_value:"1.5"}} max={{ random_sale.threshold }} value={{ random_sale.threshold_now }}>B</meter>
+                                                            <p class="card--text">達成しました！</p>
+                                                            <p class="card--price">{{ random_sale.price|to_currency }}(税込)</p>
+                                                            <h4 class="card--discount">￥{{ random_sale.clear_price|to_currency }}（税込）</h4>
+                                                        </div>
+                                                    {% endif %}
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
                     {% endif %}
             </div>
             <a class="btn--beige btn--middle mgt-10">すべての商品を見る</a>
@@ -245,20 +272,54 @@
         <div class="content_class">
             <p>タブ2のコンテンツを表示します</p>
             <div class="item--list">
-                {% for sale in sales_by_category.meat %}
-                    
-                        <div class="item--card card--blue">
-                            <a href="#">
-                                
-                                <img src="{{ sale.product.product_image.url }}" alt="{{ sale.product.product_name }}" class="card--img">
-                                <p class="discount">ひとつめ {{ sale.discount_rate }}％</p>
-                                <div class="card--content">
-                                    <h3 class="card--title">{{ sale.product.product_name }}</h3>
-                                    <h4 class="card--discount">￥{{ sale.sale_price }}(税込)</h4>
+                {% if not product_category.meat %}
+                    {% comment %} 商品がない場合。 {% endcomment %}
+                    <p>商品ないよ！過、疎サイト</p>
+                {% else %}
+                    {% for sale in product_category.meat %}
+                        {% if forloop.counter <= 3 %}
+                            {% if sale.sale_type == 'general_sales' %}
+                                <div class="item--card card--blue">
+                                    <a href="{% url 'user:general_products_detail' pk=sale.pk %}">
+                                        <img src="{{ sale.image.url }}" alt="{{ sale.product_name }}" class="card--img">
+                                        <p class="discount">{{ sale.rate }}％</p>
+                                        <div class="card--content">
+                                            <h3 class="card--title">{{ sale.product_name }}</h3>
+                                            <h4 class="card--discount">￥{{ sale.price|to_currency }}(税込)</h4>
+                                        </div>
+                                    </a>
                                 </div>
-                            </a>
-                        </div>
-                {% endfor %}
+                                {% comment %} 商品が共同の場合 {% endcomment %}
+                            {% else %}
+                                <div class="item--card card--pink">
+                                    <a href="{% url 'user:joint_products_detail' pk=sale.pk %}">
+                                        <img src="{{ sale.image.url }}" alt="{{ sale.product_name }}" class="card--img">
+                                            {% if sale.threshold_now < sale.threshold %}
+                                                <p class="discount">{{ sale.rate }}％</p>
+                                                <div class="card--content">
+                                                    <h3 class="card--title">{{ sale.product_name }}</h3>
+                                                    <meter low={{ sale.threshold|meter_value:"3" }} high={{ sale.threshold|meter_value:"1.5"}} max={{ sale.threshold }} value={{ sale.threshold_now }}>B</meter>
+                                                    <p class="card--text">あと{{ sale.at_count }}人達成で</p>
+                                                    <p class="card--price">{{ sale.price|to_currency }}(税込)</p>
+                                                    <h4 class="card--discount">￥{{ sale.clear_price|to_currency }}（税込）</h4>
+                                                </div>
+                                            {% else %}
+                                                <p class="discount">{{ sale.final_rate }}％</p>
+                                                <div class="card--content">
+                                                    <h3 class="card--title">{{ sale.product_name }}</h3>
+                                                    <meter low={{ sale.threshold|meter_value:"3" }} high={{ sale.threshold|meter_value:"1.5"}} max={{ sale.threshold }} value={{ sale.threshold_now }}>B</meter>
+                                                    <p class="card--text">達成しました！</p>
+                                                    <p class="card--price">{{ sale.price|to_currency }}(税込)</p>
+                                                    <h4 class="card--discount">￥{{ sale.clear_price|to_currency }}（税込）</h4>
+                                                </div>
+                                            {% endif %}
+                                        
+                                    </a>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>
         <input type="radio" name="tab_name" id="tab3" >
@@ -266,20 +327,54 @@
         <div class="content_class">
             <p>タブ3のコンテンツを表示します</p>
             <div class="item--list">
-                {% for sale in sales_by_category.vegetables %}
-                    
-                        <div class="item--card card--blue">
-                            <a href="#">
-                                
-                                <img src="{{ sale.product.product_image.url }}" alt="{{ sale.product.product_name }}" class="card--img">
-                                <p class="discount">ひとつめ {{ random_sale.discount_rate }}％</p>
-                                <div class="card--content">
-                                    <h3 class="card--title">{{ sale.product.product_name }}</h3>
-                                    <h4 class="card--discount">￥{{ sale.sale_price }}(税込)</h4>
+                {% if not product_category.vegetables %}
+                    {% comment %} 商品がない場合。 {% endcomment %}
+                    <p>商品ないよ！過、疎サイト</p>
+                {% else %}
+                    {% for sale in product_category.vegetables %}
+                        {% if forloop.counter <= 3 %}
+                            {% if sale.sale_type == 'general_sales' %}
+                                <div class="item--card card--blue">
+                                    <a href="{% url 'user:general_products_detail' pk=sale.pk %}">
+                                        <img src="{{ sale.image.url }}" alt="{{ sale.product_name }}" class="card--img">
+                                        <p class="discount">{{ sale.rate }}％</p>
+                                        <div class="card--content">
+                                            <h3 class="card--title">{{ sale.product_name }}</h3>
+                                            <h4 class="card--discount">￥{{ sale.price|to_currency }}(税込)</h4>
+                                        </div>
+                                    </a>
                                 </div>
-                            </a>
-                        </div>
-                {% endfor %}
+                                {% comment %} 商品が共同の場合 {% endcomment %}
+                            {% else %}
+                                <div class="item--card card--pink">
+                                    <a href="{% url 'user:joint_products_detail' pk=sale.pk %}">
+                                        <img src="{{ sale.image.url }}" alt="{{ sale.product_name }}" class="card--img">
+                                            {% if sale.threshold_now < sale.threshold %}
+                                                <p class="discount">{{ sale.rate }}％</p>
+                                                <div class="card--content">
+                                                    <h3 class="card--title">{{ sale.product_name }}</h3>
+                                                    <meter low={{ sale.threshold|meter_value:"3" }} high={{ sale.threshold|meter_value:"1.5"}} max={{ sale.threshold }} value={{ sale.threshold_now }}>B</meter>
+                                                    <p class="card--text">あと{{ sale.at_count }}人達成で</p>
+                                                    <p class="card--price">{{ sale.price|to_currency }}(税込)</p>
+                                                    <h4 class="card--discount">￥{{ sale.clear_price|to_currency }}（税込）</h4>
+                                                </div>
+                                            {% else %}
+                                                <p class="discount">{{ sale.final_rate }}％</p>
+                                                <div class="card--content">
+                                                    <h3 class="card--title">{{ sale.product_name }}</h3>
+                                                    <meter low={{ sale.threshold|meter_value:"3" }} high={{ sale.threshold|meter_value:"1.5"}} max={{ sale.threshold }} value={{ sale.threshold_now }}>B</meter>
+                                                    <p class="card--text">達成しました！</p>
+                                                    <p class="card--price">{{ sale.price|to_currency }}(税込)</p>
+                                                    <h4 class="card--discount">￥{{ sale.clear_price|to_currency }}（税込）</h4>
+                                                </div>
+                                            {% endif %}
+                                        
+                                    </a>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>
         <input type="radio" name="tab_name" id="tab4" >
@@ -287,20 +382,54 @@
         <div class="content_class">
             <p>タブ4のコンテンツを表示します</p>
             <div class="item--list">
-                {% for sale in sales_by_category.fruit %}
-                    
-                        <div class="item--card card--blue">
-                            <a href="#">
-                                
-                                <img src="{{ sale.product.product_image.url }}" alt="{{ sale.product.product_name }}" class="card--img">
-                                <p class="discount">ひとつめ {{ random_sale.discount_rate }}％</p>
-                                <div class="card--content">
-                                    <h3 class="card--title">{{ sale.product.product_name }}</h3>
-                                    <h4 class="card--discount">￥{{ sale.sale_price }}(税込)</h4>
+                {% if not product_category.fruit %}
+                    {% comment %} 商品がない場合。 {% endcomment %}
+                    <p>商品ないよ！過、疎サイト</p>
+                {% else %}
+                    {% for sale in product_category.fruit %}
+                        {% if forloop.counter <= 3 %}
+                            {% if sale.sale_type == 'general_sales' %}
+                                <div class="item--card card--blue">
+                                    <a href="{% url 'user:general_products_detail' pk=sale.pk %}">
+                                        <img src="{{ sale.image.url }}" alt="{{ sale.product_name }}" class="card--img">
+                                        <p class="discount">{{ sale.rate }}％</p>
+                                        <div class="card--content">
+                                            <h3 class="card--title">{{ sale.product_name }}</h3>
+                                            <h4 class="card--discount">￥{{ sale.price|to_currency }}(税込)</h4>
+                                        </div>
+                                    </a>
                                 </div>
-                            </a>
-                        </div>
-                {% endfor %}
+                                {% comment %} 商品が共同の場合 {% endcomment %}
+                            {% else %}
+                                <div class="item--card card--pink">
+                                    <a href="{% url 'user:joint_products_detail' pk=sale.pk %}">
+                                        <img src="{{ sale.image.url }}" alt="{{ sale.product_name }}" class="card--img">
+                                            {% if sale.threshold_now < sale.threshold %}
+                                                <p class="discount">{{ sale.rate }}％</p>
+                                                <div class="card--content">
+                                                    <h3 class="card--title">{{ sale.product_name }}</h3>
+                                                    <meter low={{ sale.threshold|meter_value:"3" }} high={{ sale.threshold|meter_value:"1.5"}} max={{ sale.threshold }} value={{ sale.threshold_now }}>B</meter>
+                                                    <p class="card--text">あと{{ sale.at_count }}人達成で</p>
+                                                    <p class="card--price">{{ sale.price|to_currency }}(税込)</p>
+                                                    <h4 class="card--discount">￥{{ sale.clear_price|to_currency }}（税込）</h4>
+                                                </div>
+                                            {% else %}
+                                                <p class="discount">{{ sale.final_rate }}％</p>
+                                                <div class="card--content">
+                                                    <h3 class="card--title">{{ sale.product_name }}</h3>
+                                                    <meter low={{ sale.threshold|meter_value:"3" }} high={{ sale.threshold|meter_value:"1.5"}} max={{ sale.threshold }} value={{ sale.threshold_now }}>B</meter>
+                                                    <p class="card--text">達成しました！</p>
+                                                    <p class="card--price">{{ sale.price|to_currency }}(税込)</p>
+                                                    <h4 class="card--discount">￥{{ sale.clear_price|to_currency }}（税込）</h4>
+                                                </div>
+                                            {% endif %}
+                                        
+                                    </a>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>
         <input type="radio" name="tab_name" id="tab5" >
@@ -308,20 +437,54 @@
         <div class="content_class">
             <p>タブ5のコンテンツを表示します</p>
             <div class="item--list">
-                {% for sale in sales_by_category.fish %}
-                    
-                        <div class="item--card card--blue">
-                            <a href="#">
-                                
-                                <img src="{{ sale.product.product_image.url }}" alt="{{ sale.product.product_name }}" class="card--img">
-                                <p class="discount">ひとつめ {{ random_sale.discount_rate }}％</p>
-                                <div class="card--content">
-                                    <h3 class="card--title">{{ sale.product.product_name }}</h3>
-                                    <h4 class="card--discount">￥{{ sale.sale_price }}(税込)</h4>
+                {% if not product_category.fish %}
+                    {% comment %} 商品がない場合。 {% endcomment %}
+                    <p>商品ないよ！過、疎サイト</p>
+                {% else %}
+                    {% for sale in product_category.fish %}
+                        {% if forloop.counter <= 3 %}
+                            {% if sale.sale_type == 'general_sales' %}
+                                <div class="item--card card--blue">
+                                    <a href="{% url 'user:general_products_detail' pk=sale.pk %}">
+                                        <img src="{{ sale.image.url }}" alt="{{ sale.product_name }}" class="card--img">
+                                        <p class="discount">{{ sale.rate }}％</p>
+                                        <div class="card--content">
+                                            <h3 class="card--title">{{ sale.product_name }}</h3>
+                                            <h4 class="card--discount">￥{{ sale.price|to_currency }}(税込)</h4>
+                                        </div>
+                                    </a>
                                 </div>
-                            </a>
-                        </div>
-                {% endfor %}
+                                {% comment %} 商品が共同の場合 {% endcomment %}
+                            {% else %}
+                                <div class="item--card card--pink">
+                                    <a href="{% url 'user:joint_products_detail' pk=sale.pk %}">
+                                        <img src="{{ sale.image.url }}" alt="{{ sale.product_name }}" class="card--img">
+                                            {% if sale.threshold_now < sale.threshold %}
+                                                <p class="discount">{{ sale.rate }}％</p>
+                                                <div class="card--content">
+                                                    <h3 class="card--title">{{ sale.product_name }}</h3>
+                                                    <meter low={{ sale.threshold|meter_value:"3" }} high={{ sale.threshold|meter_value:"1.5"}} max={{ sale.threshold }} value={{ sale.threshold_now }}>B</meter>
+                                                    <p class="card--text">あと{{ sale.at_count }}人達成で</p>
+                                                    <p class="card--price">{{ sale.price|to_currency }}(税込)</p>
+                                                    <h4 class="card--discount">￥{{ sale.clear_price|to_currency }}（税込）</h4>
+                                                </div>
+                                            {% else %}
+                                                <p class="discount">{{ sale.final_rate }}％</p>
+                                                <div class="card--content">
+                                                    <h3 class="card--title">{{ sale.product_name }}</h3>
+                                                    <meter low={{ sale.threshold|meter_value:"3" }} high={{ sale.threshold|meter_value:"1.5"}} max={{ sale.threshold }} value={{ sale.threshold_now }}>B</meter>
+                                                    <p class="card--text">達成しました！</p>
+                                                    <p class="card--price">{{ sale.price|to_currency }}(税込)</p>
+                                                    <h4 class="card--discount">￥{{ sale.clear_price|to_currency }}（税込）</h4>
+                                                </div>
+                                            {% endif %}
+                                        
+                                    </a>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>
     </div>

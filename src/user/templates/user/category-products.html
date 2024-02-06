@@ -68,7 +68,7 @@
                                 <p class="card--price">{{ product.price }}(税込)</p>
                                 <h4 class="card--discount">￥{{ product.clear_price|to_currency }}（税込）</h4>
                                 {% else %}
-                                <meter low="69" high="80" max="100" value="100">B</meter>
+                                <meter low={{ product.threshold|meter_value:"3" }} high={{ product.threshold|meter_value:"1.5"}} max={{ product.threshold }} value={{ product.threshold_now }}>B</meter>
                                 <p class="card--text">達成!</p>
                                 <p class="card--price">{{ product.price }}(税込)</p>
                                 <h4 class="card--discount">￥{{ product.clear_price|to_currency }}（税込）</h4>

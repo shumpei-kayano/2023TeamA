@@ -1,27 +1,15 @@
 {% extends 'user/base.html' %}
 {% block title %}一般購入商品{% endblock %}
 {% load static %}
+{% load priceslice_filters %}
 {% block content %}
-{% comment %} 
-            <li>商品名：<a href="{% url 'store:test3' sale.pk %}">{{ sale.product.product_name }}</a></li> 
-            {% endcomment %}
-            {% comment %} sales_by_choice['general_sales'] 
-            <div class="item--card card--blue">
-            <a href="#">
-                <img src="{{ random_sale.product.product_image.url }}" alt="{{ random_sale.product.product_name }}" class="card--img">
-                <p class="discount">ひとつめ {{ random_sale.discount_rate }}％</p>
-                <div class="card--content">
-                    <h3 class="card--title">{{ random_sale.product.product_name }}</h3>
-                    <h4 class="card--discount">￥{{ random_sale.sale_price }}(税込)</h4>
-                </div>
-            </a>
-        </div>{% endcomment %}
+
 <section>
     <h2 class="center">一般購入商品</h2>
     <form>
         <label>
             sort by&colon;
-            <select class="product-sort">
+            <select class="product-sort" onchange="sortProducts(event)">
                 <option>新規商品</option>
                 <option>価格順（昇順）</option>
                 <option>価格順（降順）</option>
@@ -33,143 +21,62 @@
         {% comment %} {% for sale in sales_by_choices.general_sales %} {% endcomment %}
         {% for sale in sales %}
             <div class="item--card card--blue">
+                <div class="card--pk" style="display: none;">{{ sale.pk }}</div>
                 <a href="{% url 'user:general_products_detail' pk=sale.pk %}">
                     <img src="{{ sale.product.product_image.url }}" alt="{{ sale.product.product_name }}" class="card--img">
-                    <p class="discount">{{ sale.discount_rate }}％OFF</p>
+                    <p class="discount">{{ sale.discount_rate }}%OFF</p>
                     <div class="card--content">
                         <h3 class="card--title">{{ sale.product.product_name }}</h3>
-                        <h4 class="card--discount">￥{{ sale.sale_price }}(税込)</h4>
+                        <h4 class="card--discount">￥{{ sale.sale_price|to_currency }}(税込)</h4>
                     </div>
                 </a>
             </div>
         {% endfor %}
     </div>
-
-    {% comment %} <div class="item--list">
-        
-        
-        <div class="item--card card--blue">
-            <a href="{% url 'user:general_products_detail' %}">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">オオハラ水産</h3>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-        
-        <div class="item--card card--blue">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">おおはら精肉店</h3>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-        <div class="item--card card--blue">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">おおはら精肉店</h3>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-        <div class="item--card card--blue">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">オオハラ水産</h3>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-        <div class="item--card card--blue">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">おおはら精肉店</h3>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-        <div class="item--card card--blue">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">おおはら精肉店</h3>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-        <div class="item--card card--blue">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">オオハラ水産</h3>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-        <div class="item--card card--blue">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">おおはら精肉店</h3>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-        <div class="item--card card--blue">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">おおはら精肉店</h3>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-        <div class="item--card card--blue">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">オオハラ水産</h3>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-        <div class="item--card card--blue">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">おおはら精肉店</h3>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-        <div class="item--card card--blue">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">おおはら精肉店</h3>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-    </div> {% endcomment %}
-    
 </section>
+<script>
+    function sortProducts(event) {
+        // 選択されたオプションを取得
+        var selectedOption = event.target.value;
+    
+        // 商品データを取得
+        var sales = Array.from(document.getElementsByClassName('item--card'));
+    
+        if (selectedOption === '価格順（昇順）') {
+            sales.sort(function(a, b) {
+                var priceA = parseInt(a.getElementsByClassName('card--discount')[0].innerText.replace('￥', '').replace(/（税込）/g, '').replace(/,/g, ''));
+                var priceB = parseInt(b.getElementsByClassName('card--discount')[0].innerText.replace('￥', '').replace(/（税込）/g, '').replace(/,/g, ''));
+                return priceA - priceB;
+            });
+        } else if (selectedOption === '価格順（降順）') {
+            sales.sort(function(a, b) {
+                var priceA = parseInt(a.getElementsByClassName('card--discount')[0].innerText.replace('￥', '').replace(/（税込）/g, '').replace(/,/g, ''));
+                var priceB = parseInt(b.getElementsByClassName('card--discount')[0].innerText.replace('￥', '').replace(/（税込）/g, '').replace(/,/g, ''));
+                return priceB - priceA;
+            });
+        } else if (selectedOption === '新規商品') {
+            sales.sort(function(a, b) {
+                // 商品の登録が新しい順に並び替えたい
+                var dateA = new Date(a.getElementsByClassName('card--pk')[0].innerText);
+                var dateB = new Date(b.getElementsByClassName('card--pk')[0].innerText);
+                return dateB - dateA;
+            });
+        }
+    
+        // 商品を並び替えた後のHTMLを生成
+        var sortedHTML = '';
+        for (var i = 0; i < sales.length; i++) {
+            sortedHTML += sales[i].outerHTML;
+        }
+    
+        // 並び替えた後のHTMLをページに反映
+        document.getElementsByClassName('item--list')[0].innerHTML = sortedHTML;
+        
+    }
+    //ロード時に新規商品順に並び替える
+    window.onload = function() {
+        var event = new Event('change');
+        document.getElementsByClassName('product-sort')[0].dispatchEvent(event);
+    };
+    </script>
 {% endblock %}

@@ -8,156 +8,100 @@
     <form>
         <label>
             sort by&colon;
-            <select class="product-sort">
+            <select class="product-sort" onchange="sortProducts(event)">
                 <option>新規商品</option>
                 <option>価格順（昇順）</option>
                 <option>価格順（降順）</option>
+                <option>閾値クリア後の価格順（昇順）</option>
+                <option>閾値クリア後の価格順（降順）</option>
             </select>
         </label>
     </form>
     <div class="item--list">
         {% comment %} 3 {% endcomment %}
-        {% for sale in sale_infos %}
-        {% comment %} 3 {% endcomment %}
-            {% comment %} {% for sale_pk,threshold_list in thresholds.items %} {% endcomment %}
-            {% comment %} 1 {% endcomment %}
-            {% comment %} {% for threshold in threshold_list %} {% endcomment %}
-            {% comment %} {% with thresholds|get_item:sale.pk as threshold_list %} {% endcomment %}
-                {% comment %} {% for threshold in threshold_list %} {% endcomment %}
-                    <div class="item--card card--pink">
-                        <a href="{% url 'user:joint_products_detail' pk=sale.sale_pk %}">
-                            <img src="{{ sale.product_image.url }}" alt="{{ sale.product_name }}" class="card--img">
-                            <p class="discount">{{ sale.discount_rate }}%OFF</p>
-                            <div class="card--content">
-                                <h3 class="card--title">{{ sale.product_name }}</h3>
-                                <meter low={{ sale.threshold}} high={{ sale.threshold}} max="100" value="80">B</meter>
-                                <p class="card--text">あと{{ sale.}}人達成で</p>
-                                <p class="card--price">￥{{ sale.sale_price }}（税込）</p>
-                                <h4 class="card--discount">￥{{ sale.discounted_price }}</h4>
-                            </div>
-                        </a>
-                    </div>
-                {% comment %} {% endfor %} {% endcomment %}
-            {% comment %} {% endwith %} {% endcomment %}
-                {% comment %} {% endfor %} {% endcomment %}
-            {% comment %} {% endfor %} {% endcomment %}
+        {% for sale in mel_product %}
+            <div class="item--card card--pink">
+                <div class="card--pk" style="display: none;">{{ sale.pk }}</div>
+                <a href="{% url 'user:joint_products_detail' pk=sale.pk %}">
+                    <img src="{{ sale.image.url }}" alt="{{ sale.product_name }}" class="card--img">
+                    {% if sale.threshold_now < sale.threshold %}
+                        <p class="discount">{{ sale.rate }}%OFF</p>
+                        <div class="card--content">
+                            <h3 class="card--title">{{ sale.product_name }}</h3>
+                            <meter low={{ sale.threshold|meter_value:"3" }} high={{ sale.threshold|meter_value:"1.5"}} max={{ sale.threshold }} value={{ sale.threshold_now }}>B</meter>
+                            <p class="card--text">あと{{ sale.at_count}}人達成で</p>
+                            <p class="card--price">￥{{ sale.price|to_currency }}（税込）</p>
+                            <h4 class="card--discount">￥{{ sale.clear_price|to_currency }}</h4>
+                        </div>
+                    {% else %}
+                        <p class="discount">{{ sale.final_rate }}%OFF</p>
+                        <div class="card--content">
+                            <h3 class="card--title">{{ sale.product_name }}</h3>
+                            <meter low={{ sale.threshold|meter_value:"3" }} high={{ sale.threshold|meter_value:"1.5"}} max={{ sale.threshold }} value={{ sale.threshold_now }}>B</meter>
+                            <p class="card--text">達成しました！</p>
+                            <p class="card--price">￥{{ sale.price|to_currency }}（税込）</p>
+                            <h4 class="card--discount">￥{{ sale.clear_price|to_currency }}</h4>
+                        </div>
+                    {% endif %}
+                </a>
+            </div>
         {% endfor %}
-        <div class="item--card card--pink">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">MAX00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">大原製菓</h3>
-                    <meter low="69" high="80" max="100" value="84">B</meter>
-                    <p class="card--text">あと00人達成で</p>
-                    <p class="card--price">￥100,000（税込）</p>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-        <div class="item--card card--pink">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">MAX00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">大原製菓</h3>
-                    <meter low="69" high="80" max="100" value="84">B</meter>
-                    <p class="card--text">あと00人達成で</p>
-                    <p class="card--price">￥100,000（税込）</p>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-        <div class="item--card card--pink">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">MAX00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">大原製菓</h3>
-                    <meter low="69" high="80" max="100" value="84">B</meter>
-                    <p class="card--text">あと00人達成で</p>
-                    <p class="card--price">￥100,000（税込）</p>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-        <div class="item--card card--pink">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">MAX00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">大原製菓</h3>
-                    <meter low="69" high="80" max="100" value="84">B</meter>
-                    <p class="card--text">あと00人達成で</p>
-                    <p class="card--price">￥100,000（税込）</p>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-        <div class="item--card card--pink">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">MAX00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">大原製菓</h3>
-                    <meter low="69" high="80" max="100" value="84">B</meter>
-                    <p class="card--text">あと00人達成で</p>
-                    <p class="card--price">￥100,000（税込）</p>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-        <div class="item--card card--pink">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">MAX00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">大原製菓</h3>
-                    <meter low="69" high="80" max="100" value="84">B</meter>
-                    <p class="card--text">あと00人達成で</p>
-                    <p class="card--price">￥100,000（税込）</p>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>        <div class="item--card card--pink">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">MAX00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">大原製菓</h3>
-                    <meter low="69" high="80" max="100" value="84">B</meter>
-                    <p class="card--text">あと00人達成で</p>
-                    <p class="card--price">￥100,000（税込）</p>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-        <div class="item--card card--pink">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">MAX00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">大原製菓</h3>
-                    <meter low="69" high="80" max="100" value="84">B</meter>
-                    <p class="card--text">あと00人達成で</p>
-                    <p class="card--price">￥100,000（税込）</p>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-        <div class="item--card card--pink">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">MAX00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">大原製菓</h3>
-                    <meter low="69" high="80" max="100" value="84">B</meter>
-                    <p class="card--text">あと00人達成で</p>
-                    <p class="card--price">￥100,000（税込）</p>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
     </div>
 </section>
+<script>
+    function sortProducts(event) {
+        // 選択されたオプションを取得
+        var selectedOption = event.target.value;
+    
+        // 商品データを取得
+        var sales = Array.from(document.getElementsByClassName('item--card'));
+    
+        if (selectedOption === '価格順（昇順）') {
+            sales.sort(function(a, b) {
+                var priceA = parseInt(a.getElementsByClassName('card--price')[0].innerText.replace('￥', '').replace(/（税込）/g, '').replace(/,/g, ''));
+                var priceB = parseInt(b.getElementsByClassName('card--price')[0].innerText.replace('￥', '').replace(/（税込）/g, '').replace(/,/g, ''));
+                return priceA - priceB;
+            });
+        } else if (selectedOption === '価格順（降順）') {
+            sales.sort(function(a, b) {
+                var priceA = parseInt(a.getElementsByClassName('card--price')[0].innerText.replace('￥', '').replace(/（税込）/g, '').replace(/,/g, ''));
+                var priceB = parseInt(b.getElementsByClassName('card--price')[0].innerText.replace('￥', '').replace(/（税込）/g, '').replace(/,/g, ''));
+                return priceB - priceA;
+            });
+        } else if (selectedOption === '閾値クリア後の価格順（昇順）') {
+            sales.sort(function(a, b) {
+                var priceA = parseInt(a.getElementsByClassName('card--discount')[0].innerText.replace('￥', '').replace(/（税込）/g, '').replace(/,/g, ''));
+                var priceB = parseInt(b.getElementsByClassName('card--discount')[0].innerText.replace('￥', '').replace(/（税込）/g, '').replace(/,/g, ''));
+                return priceA - priceB;
+            });
+        } else if (selectedOption === '閾値クリア後の価格順（降順）') {
+            sales.sort(function(a, b) {
+                var priceA = parseInt(a.getElementsByClassName('card--discount')[0].innerText.replace('￥', '').replace(/（税込）/g, '').replace(/,/g, ''));
+                var priceB = parseInt(b.getElementsByClassName('card--discount')[0].innerText.replace('￥', '').replace(/（税込）/g, '').replace(/,/g, ''));
+                return priceB - priceA;
+            });
+        } else if (selectedOption === '新規商品') {
+            sales.sort(function(a, b) {
+                // 商品の登録が新しい順に並び替えたい
+                var dateA = new Date(a.getElementsByClassName('card--pk')[0].innerText);
+                var dateB = new Date(b.getElementsByClassName('card--pk')[0].innerText);
+                return dateB - dateA;
+            });
+        }
+    
+        // 商品を並び替えた後のHTMLを生成
+        var sortedHTML = '';
+        for (var i = 0; i < sales.length; i++) {
+            sortedHTML += sales[i].outerHTML;
+        }
+    
+        // 並び替えた後のHTMLをページに反映
+        document.getElementsByClassName('item--list')[0].innerHTML = sortedHTML;
+    }
+    //ロード時に新規商品順に並び替える
+    window.onload = function() {
+        var event = new Event('change');
+        document.getElementsByClassName('product-sort')[0].dispatchEvent(event);
+    };
+    </script>
 {% endblock %}
