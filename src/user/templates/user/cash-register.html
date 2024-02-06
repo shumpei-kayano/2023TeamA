@@ -26,7 +26,7 @@
                     {% comment %} {% for item in cart_items %} {% endcomment %}
                             <tr>
                                 <td>
-                                    <img src={{ cart_item.sale_image.url }} alt="野菜"/>
+                                    <img src={{ cart_item.sale_image.url }} alt="{{ cart_item.sale }}"/>
                                 </td>
                                 <td>
                                     {{ cart_item.sale }}
@@ -93,10 +93,10 @@
                     {% for cart_item in cart_item_mel %}
                     <tr>
                         <td>
-                            <img src={{ cart_item.sale_image.url }} alt="野菜"/>
+                            <img src={{ cart_item.sale_image.url }} alt="{{ cart_item.sale }}"/>
                         </td>
                         <td>
-                            {{cart_item.sale}}トマト
+                            {{ cart_item.sale }}
                             {% comment %} {{ item.product.name }} {% endcomment %}
                         </td>
                         <td>

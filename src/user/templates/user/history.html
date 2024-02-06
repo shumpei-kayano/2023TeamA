@@ -21,7 +21,7 @@
         {% comment %} {% for item in cart_items %} {% endcomment %}
             <tr>
                 <td>
-                    <img src={{ order.product.product_image.url }} alt="野菜"/>
+                    <img src={{ order.product.product_image.url }} alt="{{ order.product.product_name }}"/>
                 </td>
                 <td>
                     {{ order.product.product_name }}

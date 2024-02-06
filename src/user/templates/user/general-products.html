@@ -17,7 +17,7 @@
             </a>
         </div>{% endcomment %}
 <section>
-    <h2 class="center">一般購入商品</h2>
+    <h2 class="center">「一般購入商品」の検索結果</h2>
     <form>
         <label>
             sort by&colon;
@@ -35,7 +35,7 @@
             <div class="item--card card--blue">
                 <a href="{% url 'user:general_products_detail' pk=sale.pk %}">
                     <img src="{{ sale.product.product_image.url }}" alt="{{ sale.product.product_name }}" class="card--img">
-                    <p class="discount">{{ sale.discount_rate }}％OFF</p>
+                    <p class="discount">{{ sale.discount_rate }}%OFF!</p>
                     <div class="card--content">
                         <h3 class="card--title">{{ sale.product.product_name }}</h3>
                         <h4 class="card--discount">￥{{ sale.sale_price }}(税込)</h4>
@@ -44,132 +44,5 @@
             </div>
         {% endfor %}
     </div>
-
-    {% comment %} <div class="item--list">
-        
-        
-        <div class="item--card card--blue">
-            <a href="{% url 'user:general_products_detail' %}">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">オオハラ水産</h3>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-        
-        <div class="item--card card--blue">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">おおはら精肉店</h3>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-        <div class="item--card card--blue">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">おおはら精肉店</h3>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-        <div class="item--card card--blue">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">オオハラ水産</h3>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-        <div class="item--card card--blue">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">おおはら精肉店</h3>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-        <div class="item--card card--blue">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">おおはら精肉店</h3>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-        <div class="item--card card--blue">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">オオハラ水産</h3>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-        <div class="item--card card--blue">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">おおはら精肉店</h3>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-        <div class="item--card card--blue">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">おおはら精肉店</h3>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-        <div class="item--card card--blue">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">オオハラ水産</h3>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-        <div class="item--card card--blue">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">おおはら精肉店</h3>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-        <div class="item--card card--blue">
-            <a href="#">
-                <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                <p class="discount">00%OFF</p>
-                <div class="card--content">
-                    <h3 class="card--title">おおはら精肉店</h3>
-                    <h4 class="card--discount">￥100,000（税込）</h4>
-                </div>
-            </a>
-        </div>
-    </div> {% endcomment %}
-    
 </section>
 {% endblock %}

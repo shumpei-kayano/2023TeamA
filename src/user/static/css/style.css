@@ -802,7 +802,7 @@ button:hover {
 }
 
 .item--card {
-  width: 25%;
+  width: 30%;
   border: 1px solid #ccc;
   border-radius: 5px;
   overflow: hidden;
@@ -810,10 +810,12 @@ button:hover {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  aspect-ratio: 1/1;
 }
 @media screen and (max-width: 768px) {
   .item--card {
-    width: 75%;
+    width: 90%;
+    font-size: small;
   }
 }
 .item--card .discount {
@@ -836,8 +838,8 @@ button:hover {
   aspect-ratio: 2/1;
 }
 .card--content {
-  padding: 2.5%;
   text-align: center;
+  height: 8em;
 }
 .card--content .progress-bar {
   height: 10px;
@@ -846,7 +848,6 @@ button:hover {
 .card--title {
   margin: 0;
   font-weight: bold;
-  height: 2rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -869,8 +870,6 @@ button:hover {
   border: 1px solid #D4B985;
 }
 .card--notice p {
-  margin: 5% 0;
-  height: 2rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -1680,6 +1679,11 @@ input:checked + .tab_class + .content_class {
     gap: 1rem;
   }
 }
+.detail1 img {
+  aspect-ratio: 4/3;
+  width: 100%;
+  object-fit: contain;
+}
 .detail1__left {
   width: 45%;
 }
@@ -1687,10 +1691,6 @@ input:checked + .tab_class + .content_class {
   .detail1__left {
     width: 100%;
   }
-}
-.detail1__left #large-image-container img {
-  aspect-ratio: 4/3;
-  width: 100%;
 }
 .detail1__left .image-container {
   display: flex;

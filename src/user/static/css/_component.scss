@@ -59,7 +59,7 @@
 // カードリスト
 .item {
     &--card{
-        width: 25%;
+        width: 30%;
         border: 1px solid #ccc;
         border-radius: 5px;
         overflow: hidden;
@@ -67,8 +67,10 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        aspect-ratio: 1/1;
         @media screen and (max-width: 768px) {
-            width: 75%;
+            width: 90%;
+            font-size: small;
         }
         .discount{
             background-color: $melimit_red;
@@ -93,8 +95,8 @@
         aspect-ratio: 2/1;
     }
     &--content{
-        padding: 2.5%;
         text-align: center;
+        height: 8em;
         .progress-bar {
             height: 10px;
             margin: 0.5em 0;
@@ -103,7 +105,6 @@
     &--title{
         margin: 0;
         font-weight: bold;
-        height: 2rem;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -125,8 +126,6 @@
     &--notice{
         border: 1px solid $main_color;
         p {
-            margin: 5% 0;
-            height: 2rem;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;

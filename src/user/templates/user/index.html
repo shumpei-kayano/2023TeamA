@@ -18,22 +18,22 @@
         <div class="d-demo">
             <div class="d-demo__wrap">
                 {% with ''|center:2 as range %}
-                {% for _ in range %}
-                <ul class="d-demo__list d-demo__list--left">
-                    <li class="d-demo__item"><img src="{% static 'assets/img/banana.jpg' %}" alt></li>
-                    <li class="d-demo__item"><img src="{% static 'assets/img/budou.jpg' %}" alt></li>
-                    <li class="d-demo__item"><img src="{% static 'assets/img/itigo.jpg' %}" alt></li>
-                    <li class="d-demo__item"><img src="{% static 'assets/img/burokkori-.jpg' %}" alt></li>
-                    <li class="d-demo__item"><img src="{% static 'assets/img/nasu.jpg' %}" alt></li>
-                    <li class="d-demo__item"><img src="{% static 'assets/img/tomato.jpg' %}" alt></li>
-                    <li class="d-demo__item"><img src="{% static 'assets/img/tai.jpg' %}" alt></li>
-                    <li class="d-demo__item"><img src="{% static 'assets/img/kai.jpg' %}" alt></li>
-                    <li class="d-demo__item"><img src="{% static 'assets/img/kani.jpg' %}" alt></li>
-                    <li class="d-demo__item"><img src="{% static 'assets/img/toriniku.jpg' %}" alt></li>
-                    <li class="d-demo__item"><img src="{% static 'assets/img/gyuuniku.jpg' %}" alt></li>
-                    <li class="d-demo__item"><img src="{% static 'assets/img/butaniku.jpg' %}" alt></li>
-                 </ul>
-                {% endfor %}
+                    {% for _ in range %}
+                    <ul class="d-demo__list d-demo__list--left">
+                        <li class="d-demo__item"><img src="{% static 'assets/img/banana.jpg' %}" alt= "バナナ"></li>
+                        <li class="d-demo__item"><img src="{% static 'assets/img/budou.jpg' %}" alt="ブドウ"></li>
+                        <li class="d-demo__item"><img src="{% static 'assets/img/itigo.jpg' %}" alt="イチゴ"></li>
+                        <li class="d-demo__item"><img src="{% static 'assets/img/burokkori-.jpg' %}" alt="ブロッコリー"></li>
+                        <li class="d-demo__item"><img src="{% static 'assets/img/nasu.jpg' %}" alt="ナス"></li>
+                        <li class="d-demo__item"><img src="{% static 'assets/img/tomato.jpg' %}" alt="トマト"></li>
+                        <li class="d-demo__item"><img src="{% static 'assets/img/tai.jpg' %}" alt="鯛"></li>
+                        <li class="d-demo__item"><img src="{% static 'assets/img/kai.jpg' %}" alt="貝"></li>
+                        <li class="d-demo__item"><img src="{% static 'assets/img/kani.jpg' %}" alt="カニ"></li>
+                        <li class="d-demo__item"><img src="{% static 'assets/img/toriniku.jpg' %}" alt="鶏肉"></li>
+                        <li class="d-demo__item"><img src="{% static 'assets/img/gyuuniku.jpg' %}" alt="牛肉"></li>
+                        <li class="d-demo__item"><img src="{% static 'assets/img/butaniku.jpg' %}" alt="豚肉"></li>
+                    </ul>
+                    {% endfor %}
                 {% endwith %}
             </div>
          </div>
@@ -65,9 +65,8 @@
                                 {% if random_sale.sale_type == 'general_sales' %}
                                     <div class="item--card card--blue">
                                         <a href="{% url 'user:general_products_detail' pk=random_sale.pk %}">
-                                            
                                             <img src="{{ random_sale.product.product_image.url }}" alt="{{ random_sale.product.product_name }}" class="card--img">
-                                            <p class="discount">ひとつめ {{ random_sale.discount_rate }}％</p>
+                                            <p class="discount">{{ random_sale.discount_rate }}%OFF!</p>
                                             <div class="card--content">
                                                 <h3 class="card--title">{{ random_sale.product.product_name }}</h3>
                                                 <h4 class="card--discount">￥{{ random_sale.sale_price|to_currency }}(税込)</h4>
@@ -79,10 +78,12 @@
                                     <div class="item--card card--pink">
                                         <a href="{% url 'user:joint_products_detail' pk=random_sale.pk %}">
                                             <img src="{{ random_sale.product.product_image.url }}" alt="{{ random_sale.product.product_name }}" class="card--img">
-                                            <p class="discount">{{ random_sale.discount_rate }}％</p>
+                                            <p class="discount">{{ random_sale.discount_rate }}%OFF!</p>
                                             <div class="card--content">
                                                 <h3 class="card--title">{{ random_sale.product.product_name }}</h3>
-                                                <meter low="69" high="80" max="100" value="84">B</meter>
+                                                <div class="progress-bar">
+                                                    <div class="progress-bar__completed" style="width: 50%;"></div>
+                                                </div>
                                                 <p class="card--text">あと00人達成で</p>
                                                 <p class="card--price">{{ random_sale.sale_price }}(税込)</p>
                                                 <h5 class="card--discount">￥100,000（税込）</h5>
@@ -204,7 +205,7 @@
                         <div class="item--card card--blue">
                             <a href="#">
                                 <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                                <p class="discount">00%OFF</p>
+                                <p class="discount">%OFF!</p>
                                 <div class="card--content">
                                     <h3 class="card--title">オオハラ水産</h3>
                                     <h5 class="card--discount">￥100,000（税込）</h5>
@@ -214,10 +215,12 @@
                         <div class="item--card card--pink">
                             <a href="#">
                                 <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                                <p class="discount">MAX00%OFF</p>
+                                <p class="discount">%OFF!</p>
                                 <div class="card--content">
                                     <h3 class="card--title">大原製菓</h3>
-                                    <meter low="69" high="80" max="100" value="84">B</meter>
+                                    <div class="progress-bar">
+                                        <div class="progress-bar__completed" style="width: 50%;"></div>
+                                    </div>
                                     <p class="card--text">あと00人達成で</p>
                                     <p class="card--price">￥100,000（税込）</p>
                                     <h5 class="card--discount">￥100,000（税込）</h5>
@@ -227,7 +230,7 @@
                         <div class="item--card card--blue">
                             <a href="#">
                                 <img src="{% static 'assets/img/350x160.png' %}" alt="Image" class="card--img">
-                                <p class="discount">00%OFF</p>
+                                <p class="discount">00%OFF!</p>
                                 <div class="card--content">
                                     <h3 class="card--title">おおはら精肉店</h3>
                                     <h5 class="card--discount">￥100,000（税込）</h5>
@@ -236,7 +239,6 @@
                         </div>
                     {% endif %}
             </div>
-            <a class="btn--beige btn--middle mgt-10">すべての商品を見る</a>
         </div>
         {% comment %} カテゴリーごとに表示 {% endcomment %}
         {% comment %} {% for category, sales in sales_by_category.items %}
@@ -249,86 +251,162 @@
         <input type="radio" name="tab_name" id="tab2" >
         <label class="tab_class" for="tab2">肉</label>
         <div class="content_class">
-            <p>タブ2のコンテンツを表示します</p>
+            {% comment %} タブ2のコンテンツを表示します {% endcomment %}
             <div class="item--list">
                 {% for sale in sales_by_category.meat %}
-                    
-                        <div class="item--card card--blue">
+                    {% if forloop.counter <= 3 %}
+                        {% if sale.sale_type == 'general_sales' %}
+                            <div class="item--card card--blue">
+                                <a href="#">
+                                    <img src="{{ sale.product.product_image.url }}" alt="{{ sale.product.product_name }}" class="card--img">
+                                    <p class="discount">{{ sale.discount_rate }}%OFF!</p>
+                                    <div class="card--content">
+                                        <h3 class="card--title">{{ sale.product.product_name }}</h3>
+                                        <h5 class="card--discount">￥{{ sale.sale_price }}(税込)</h5>
+                                    </div>
+                                </a>
+                            </div>
+                        {% else %}
+                        <div class="item--card card--pink">
                             <a href="#">
-                                
                                 <img src="{{ sale.product.product_image.url }}" alt="{{ sale.product.product_name }}" class="card--img">
-                                <p class="discount">ひとつめ {{ sale.discount_rate }}％</p>
+                                <p class="discount">{{ sale.discount_rate }}%OFF!</p>
                                 <div class="card--content">
                                     <h3 class="card--title">{{ sale.product.product_name }}</h3>
-                                    <h5 class="card--discount">￥{{ sale.sale_price }}(税込)</h5>
+                                    <div class="progress-bar">
+                                        <div class="progress-bar__completed" style="width: 50%;"></div>
+                                    </div>
+                                    <p class="card--text">あと00人達成で</p>
+                                    <p class="card--price">{{ sale.sale_price }}(税込)</p>
+                                    <h5 class="card--discount">￥100,000（税込）</h5>
                                 </div>
                             </a>
                         </div>
+                        {% endif %}
+                    {% endif %}
                 {% endfor %}
             </div>
+            <button class="more-button btn--beige btn--middle mgt-10" data-category="1">肉の商品をもっとみる</button>
         </div>
         <input type="radio" name="tab_name" id="tab3" >
         <label class="tab_class" for="tab3">野菜</label>
         <div class="content_class">
-            <p>タブ3のコンテンツを表示します</p>
+            {% comment %} タブ3のコンテンツを表示します {% endcomment %}
             <div class="item--list">
                 {% for sale in sales_by_category.vegetables %}
-                    
-                        <div class="item--card card--blue">
+                    {% if forloop.counter <= 3 %}
+                        {% if sale.sale_type == 'general_sales' %}
+                            <div class="item--card card--blue">
+                                <a href="#">
+                                    <img src="{{ sale.product.product_image.url }}" alt="{{ sale.product.product_name }}" class="card--img">
+                                    <p class="discount">{{ sale.discount_rate }}%OFF!</p>
+                                    <div class="card--content">
+                                        <h3 class="card--title">{{ sale.product.product_name }}</h3>
+                                        <h5 class="card--discount">￥{{ sale.sale_price }}(税込)</h5>
+                                    </div>
+                                </a>
+                            </div>
+                        {% else %}
+                        <div class="item--card card--pink">
                             <a href="#">
-                                
                                 <img src="{{ sale.product.product_image.url }}" alt="{{ sale.product.product_name }}" class="card--img">
-                                <p class="discount">ひとつめ {{ random_sale.discount_rate }}％</p>
+                                <p class="discount">{{ sale.discount_rate }}%OFF!</p>
                                 <div class="card--content">
                                     <h3 class="card--title">{{ sale.product.product_name }}</h3>
-                                    <h5 class="card--discount">￥{{ sale.sale_price }}(税込)</h5>
+                                    <div class="progress-bar">
+                                        <div class="progress-bar__completed" style="width: 50%;"></div>
+                                    </div>
+                                    <p class="card--text">あと00人達成で</p>
+                                    <p class="card--price">{{ sale.sale_price }}(税込)</p>
+                                    <h5 class="card--discount">￥100,000（税込）</h5>
                                 </div>
                             </a>
                         </div>
+                        {% endif %}
+                    {% endif %}
                 {% endfor %}
             </div>
+            <button class="more-button btn--beige btn--middle mgt-10" data-category="2">野菜の商品をもっとみる</button>
         </div>
         <input type="radio" name="tab_name" id="tab4" >
         <label class="tab_class" for="tab4">果物</label>
         <div class="content_class">
-            <p>タブ4のコンテンツを表示します</p>
+            {% comment %} タブ4のコンテンツを表示します {% endcomment %}
             <div class="item--list">
                 {% for sale in sales_by_category.fruit %}
-                    
-                        <div class="item--card card--blue">
+                    {% if forloop.counter <= 3 %}
+                        {% if sale.sale_type == 'general_sales' %}
+                            <div class="item--card card--blue">
+                                <a href="#">
+                                    <img src="{{ sale.product.product_image.url }}" alt="{{ sale.product.product_name }}" class="card--img">
+                                    <p class="discount">{{ sale.discount_rate }}%OFF!</p>
+                                    <div class="card--content">
+                                        <h3 class="card--title">{{ sale.product.product_name }}</h3>
+                                        <h5 class="card--discount">￥{{ sale.sale_price }}(税込)</h5>
+                                    </div>
+                                </a>
+                            </div>
+                        {% else %}
+                        <div class="item--card card--pink">
                             <a href="#">
-                                
                                 <img src="{{ sale.product.product_image.url }}" alt="{{ sale.product.product_name }}" class="card--img">
-                                <p class="discount">ひとつめ {{ random_sale.discount_rate }}％</p>
+                                <p class="discount">{{ sale.discount_rate }}%OFF!</p>
                                 <div class="card--content">
                                     <h3 class="card--title">{{ sale.product.product_name }}</h3>
-                                    <h5 class="card--discount">￥{{ sale.sale_price }}(税込)</h5>
+                                    <div class="progress-bar">
+                                        <div class="progress-bar__completed" style="width: 50%;"></div>
+                                    </div>
+                                    <p class="card--text">あと00人達成で</p>
+                                    <p class="card--price">{{ sale.sale_price }}(税込)</p>
+                                    <h5 class="card--discount">￥100,000（税込）</h5>
                                 </div>
                             </a>
                         </div>
+                        {% endif %}
+                    {% endif %}
                 {% endfor %}
             </div>
+            <button class="more-button btn--beige btn--middle mgt-10" data-category="3">果物の商品をもっとみる</button>
         </div>
         <input type="radio" name="tab_name" id="tab5" >
         <label class="tab_class" for="tab5">海鮮</label>
         <div class="content_class">
-            <p>タブ5のコンテンツを表示します</p>
+            {% comment %} タブ5のコンテンツを表示します {% endcomment %}
             <div class="item--list">
                 {% for sale in sales_by_category.fish %}
-                    
-                        <div class="item--card card--blue">
+                    {% if forloop.counter <= 3 %}
+                        {% if sale.sale_type == 'general_sales' %}
+                            <div class="item--card card--blue">
+                                <a href="#">
+                                    <img src="{{ sale.product.product_image.url }}" alt="{{ sale.product.product_name }}" class="card--img">
+                                    <p class="discount">{{ sale.discount_rate }}%OFF!</p>
+                                    <div class="card--content">
+                                        <h3 class="card--title">{{ sale.product.product_name }}</h3>
+                                        <h5 class="card--discount">￥{{ sale.sale_price }}(税込)</h5>
+                                    </div>
+                                </a>
+                            </div>
+                        {% else %}
+                        <div class="item--card card--pink">
                             <a href="#">
-                                
                                 <img src="{{ sale.product.product_image.url }}" alt="{{ sale.product.product_name }}" class="card--img">
-                                <p class="discount">ひとつめ {{ random_sale.discount_rate }}％</p>
+                                <p class="discount">{{ sale.discount_rate }}%OFF!</p>
                                 <div class="card--content">
                                     <h3 class="card--title">{{ sale.product.product_name }}</h3>
-                                    <h5 class="card--discount">￥{{ sale.sale_price }}(税込)</h5>
+                                    <div class="progress-bar">
+                                        <div class="progress-bar__completed" style="width: 50%;"></div>
+                                    </div>
+                                    <p class="card--text">あと00人達成で</p>
+                                    <p class="card--price">{{ sale.sale_price }}(税込)</p>
+                                    <h5 class="card--discount">￥100,000（税込）</h5>
                                 </div>
                             </a>
                         </div>
+                        {% endif %}
+                    {% endif %}
                 {% endfor %}
             </div>
+            <button class="more-button btn--beige btn--middle mgt-10" data-category="4">海鮮の商品をもっとみる</button>
         </div>
     </div>
 </section>
@@ -368,4 +446,14 @@
     </div>
     <a href="{% url "user:notice" %}" class="btn--beige btn--middle mgt-10">お知らせ一覧</a>
 </section>
+<script>
+// JavaScriptコード
+    document.querySelectorAll('.more-button').forEach(function(button) {
+        button.addEventListener('click', function() {
+            var category = this.getAttribute('data-category');
+            // カテゴリーに基づいて新しいURLにリダイレクトします。
+            window.location.href = "/category-products/?category=" + category;
+        });
+    });
+</script>
 {% endblock %}
