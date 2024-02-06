@@ -79,14 +79,14 @@ class SaleForm(forms.ModelForm):
                 'placeholder': '商品説明を入力してください',
                 'required': 'required'
             }),
-            'sale_start': forms.DateTimeInput(attrs={
+            'sale_start': forms.DateInput(attrs={
                 'id': 'startDateTime',
                 'class': 'input-active', 
                 'title': '販売開始日時を入力してください',
                 'required': 'required',
                 'type': 'datetime-local'
             }),
-            'sale_end': forms.DateTimeInput(attrs={
+            'sale_end': forms.DateInput(attrs={
                 'id': 'endDateTime',
                 'class': 'input-active', 
                 'title': '販売終了日時を入力してください',

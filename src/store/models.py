@@ -3,6 +3,8 @@ from accounts.models import MelimitStore
 from django.utils import timezone
 from accounts.models import *
 from django.db.models import Sum
+from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.exceptions import ValidationError
 
 # Create your models here.
 
@@ -22,12 +24,25 @@ class Product(models.Model):
         ('other', 'その他'),
     )
 
-    product_name = models.CharField(max_length=100, verbose_name='商品名')
-    product_price = models.IntegerField(verbose_name='定価')
-    # product_price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='定価')
-    weight = models.IntegerField(verbose_name='重量')
-    product_image = models.ImageField(upload_to='images', verbose_name='商品画像')
-    product_category = models.CharField("カテゴリ", max_length=20, choices=TASTE_CHOICES, blank=True)
+    product_name = models.CharField(max_length=30, verbose_name='商品名')
+    product_price = models.IntegerField(
+        verbose_name='定価',
+        validators=[
+            MinValueValidator(1),  # 最小値
+            MaxValueValidator(1000000),  # 最大値
+        ],
+        blank = False,
+    )
+    weight = models.IntegerField(
+        verbose_name='重量',
+        validators=[
+            MinValueValidator(1),  # 最小値
+            MaxValueValidator(10000),  # 最大値
+        ],
+        blank=False,
+    )
+    product_image = models.ImageField(upload_to='images', verbose_name='商品画像', blank=True)
+    product_category = models.CharField("カテゴリ", max_length=20, choices=TASTE_CHOICES , blank=False,)
     # 外部キーとしてMelimitStoreのidを持つ
     # ログインしているMelimitStoreのidが自動で入る
     store = models.ForeignKey(MelimitStore, on_delete=models.CASCADE, verbose_name='店舗名')
@@ -40,27 +55,56 @@ class Product(models.Model):
     def __str__(self):
         return self.product_name
 
+# 日付入力のバリデーション用
+def validate_date(date):
+    if date < timezone.now().date():
+        raise ValidationError("販売開始日時は当日以降でなければなりません。")
 class Sale(models.Model):
     SALE_CHOICES = (
         ('general_sales', '一般商品'),
-        ('melimit_sales', '共同販売商品'),
+        ('melimit_sales', '共同商品'),
         # 文字数を揃える必要あり
     )
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     store = models.ForeignKey(MelimitStore, on_delete=models.CASCADE)
-    sale_price = models.IntegerField(verbose_name='販売価格')
-    # sale_price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='販売価格')
-    sale_start = models.DateTimeField(verbose_name='販売開始日時')
-    sale_end = models.DateTimeField(verbose_name='販売終了日時')
+    sale_price = models.IntegerField(
+        verbose_name='販売価格',
+        validators=[
+            MinValueValidator(1),  # 最小値
+            MaxValueValidator(1000000),  # 最大値
+        ],
+        blank = False,
+    )
+    sale_start = models.DateField(
+        verbose_name='販売開始日時',
+        validators=[validate_date],
+        blank=False,
+    )
+    sale_end = models.DateField(
+        verbose_name='販売終了日時',
+        validators=[validate_date],
+        blank=False,
+    )
     # 在庫数
-    stock = models.IntegerField(verbose_name='在庫数')
+    stock = models.IntegerField(
+        verbose_name='在庫数',
+        validators=[
+            MinValueValidator(1),  # 最小値
+            MaxValueValidator(10000),  # 最大値
+        ],
+        blank=False,
+    )
     # 賞味期限
-    expiration_date = models.DateField(verbose_name='賞味期限')
+    expiration_date = models.DateField(
+        verbose_name='賞味期限',
+        validators=[validate_date],
+        blank=False,
+        )
     # 商品の説明
-    description = models.TextField(verbose_name='商品の説明')
+    description = models.TextField(verbose_name='商品の説明', max_length=500, blank=False,)
     # 一般商品か、共同販売商品か選択するchoiceフィールド、選択肢は共同販売商品、一般商品
-    sale_type = models.CharField("販売タイプ", max_length=20, choices=SALE_CHOICES, blank=True)
+    sale_type = models.CharField("販売タイプ", max_length=20, choices=SALE_CHOICES, blank=False,)
     # 注文履歴modelに設定する
     # 発送状況(登録時は未発送)
     # DjangoのBooleanFieldは、データベースレベルではTINYINT型として表現されます。その値は0（False）または1（True）になります。
@@ -76,13 +120,33 @@ class Sale(models.Model):
     # 値引き率を計算する関数
     def discount_rate(self):
         return round((1 - self.sale_price / self.product.product_price) * 100)
+    
+    # 開始日と終了日が正しいかをチェックする関数
+    def clean(self):
+        super().clean()
+        if self.sale_end < self.sale_start:
+            raise ValidationError("販売終了日時は販売開始日時以降でなければなりません。")
+        if self.expiration_date < self.sale_end:
+            raise ValidationError("賞味期限は現在以降かつ販売終了日時以降でなければなりません。")
 
 # しきい値model
 class Threshold(models.Model):
     # 割引率(%表示)
-    discount_rate = models.IntegerField(verbose_name='割引率')
+    discount_rate = models.IntegerField(
+        verbose_name='割引率',
+        validators=[
+            MinValueValidator(1),  # 最小値
+            MaxValueValidator(99),  # 最大値
+        ],
+    )
     # しきい値(個数)
-    threshold = models.IntegerField(verbose_name='しきい値')
+    threshold = models.IntegerField(
+        verbose_name='しきい値',
+        validators=[
+            MinValueValidator(1),  # 最小値
+            MaxValueValidator(1000),  # 最大値
+        ],
+    )
     # saleの外部キー
     sale = models.ForeignKey(Sale, on_delete=models.CASCADE)
 
@@ -93,6 +157,17 @@ class Threshold(models.Model):
     # 割引率とsale_priceから割引額を計算する関数
     def discount_amount(self):
         return round(self.sale.sale_price * self.discount_rate / 100)
+    
+    def clean(self):
+        # 既存のバリデーションを実行
+        super().clean()
+
+        # thresholdがsaleのstockより大きい場合はエラー
+        if self.threshold > self.sale.stock:
+            print('しきい値が在庫数を超えています。')
+            raise ValidationError({
+                'threshold': 'Threshold cannot be greater than the stock of the related sale.'
+            })
     
 class ThresholdCheck(models.Model):
     # 個数　カート　レジから セッション

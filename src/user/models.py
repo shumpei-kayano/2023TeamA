@@ -4,7 +4,6 @@ from store.models import *
 from accounts.models import *
 from decimal import Decimal
 
-
 # Create your models here.
 
 # 注文履歴クラス
@@ -18,11 +17,13 @@ class OrderHistory(models.Model):
     # 外部キーとしてMelimitUserのidを持つ
     orderhistory_user = models.ForeignKey(MelimitUser, on_delete=models.CASCADE)
     # 金額
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    # amount = models.DecimalField(max_digits=10, decimal_places=2)
+    amount = models.IntegerField()
     # 数量
     quantity = models.IntegerField()
     # CO2排出量
-    co2 = models.DecimalField(max_digits=10, decimal_places=2)
+    # co2 = models.DecimalField(max_digits=10, decimal_places=2)
+    co2 = models.IntegerField()
     # 注文日時
     order_date = models.DateTimeField(default=timezone.now)
     # 配送方法
@@ -33,8 +34,15 @@ class OrderHistory(models.Model):
     def save(self, *args, **kwargs):
         self.sale.stock -= self.quantity
         self.sale.save()
-        self.co2 = Decimal(self.product.weight * 0.4 * self.quantity)  # 注文の数量を考慮したco2の計算
+        # 注文の数量を考慮したco2の計算
+        self.co2 = round(self.product.weight * 0.4 * self.quantity)  # 結果を整数にするため四捨五入
         super().save(*args, **kwargs)
+
+    # def save(self, *args, **kwargs):
+    #     self.sale.stock -= self.quantity
+    #     self.sale.save()
+    #     self.co2 = Decimal(self.product.weight * 0.4 * self.quantity)  # 注文の数量を考慮したco2の計算
+    #     super().save(*args, **kwargs)
 
 # このコードでは、save()メソッドが一度だけ呼び出されています。
 # ただし、2つの異なるオブジェクトに対してsave()が呼び出されています。
