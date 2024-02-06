@@ -59,6 +59,8 @@
                 <p class="detail1__text-bd">達成しました！</p>
                 {% comment %} endif {% endcomment %}
                 <p class="detail1__text">{{ sales.description }}商品説明商品説明商品説明商品説明商品説明商品説明商品説明商品説明</p>
+                {% comment %} 在庫があるかどうかでカートに追加ボタンを表示したり消したり {% endcomment %}
+                {% if sale.stock > 0 %}
                 <form action="{% url 'user:add_to_cart' sales.sale_pk %}" method="post">
                     {% csrf_token %}
                     <label for="quantity" class="detail1__text-bd">数量</label>
@@ -67,6 +69,19 @@
                     <button type="submit" class="btn--beige btn--middle">カートに入れる</button>
                     <button type="submit" class="btn--white btn--middle">お気に入りに追加</button>
                 </form>
+                <form action="#" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{ sale.pk }}" >
+                    <button type="submit" class="btn--white btn--middle">お気に入りに追加</button>
+                </form>
+                {% else %}
+                {% comment %} 在庫がないとき。お気に入りボタンのみ。なくなる可能性あり {% endcomment %}
+                <form action="#" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{ sale.pk }}" >
+                    <button type="submit" class="btn--white btn--middle">お気に入りに追加</button>
+                </form>
+                {% endif %}
             </div>
             <div class="detail1__right--lower">
                 <div class="detail1__right--lower1">
