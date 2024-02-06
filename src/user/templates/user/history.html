@@ -3,96 +3,102 @@
 {% load static %}
 {% block content %}
 <h2 class="cart__title">注文履歴</h2>
-<table class="cart__shopping-table">
-    <thead>
-      <tr>
-        <th scope="col"></th>
-        <th scope="col">商品</th>
-        <th scope="col">種別</th>
-        <th scope="col">価格</th>
-        <th scope="col">数量</th>
-        <th scope="col">発送状況</th>
-        <th scope="col">支払方法</th>
-        <th scope="col">送料</th>
-      </tr>
-    </thead>
-    <tbody>
-        {% for order in order_history %}
-        {% comment %} {% for item in cart_items %} {% endcomment %}
-            <tr>
-                <td>
-                    <img src={{ order.product.product_image.url }} alt="{{ order.product.product_name }}"/>
-                </td>
-                <td>
-                    {{ order.product.product_name }}
-                    {% comment %} {{ item.product.name }} {% endcomment %}
-                </td>
-                <td>
-                    {% if order.sale.sale_type == 'general_sales'%}
-                    一般商品
-                    {% else %}
-                    共同販売商品
-                    {% endif %}
-                    {% comment %} {{ item.product.category }} {% endcomment %}
-                </td>
-                <td>
-                    {{ order.amount }}円
-                    {% comment %} {{ item.product.price }} {% endcomment %}
-                    {% comment %} <span class="definition">確定</span> {% endcomment %}
-                </td>
-                <td>
-                    {{ order.quantity }}個
-                    {% comment %} {{ item.quantity }} {% endcomment %}
-                </td>
-                <td>
-                    {% if order.is_shipped == False %}
-                    未発送
-                    {% else %}
-                    発送済み
-                    {% endif %}
-                    {% comment %} {{ item.total_price }} {% endcomment %}
-                </td>
-                <td>
-                    クレジットカード決済
-                </td>
-                <td>
-                    送料100円
-                </td>
-            </tr>
-        {% endfor %}
-    {% comment %} <tr>
-        <td>
-            <img src="{% static 'assets/img/メリ光男.png' %}" alt="野菜"/>
-        </td>
-        <td>
-            トマト
-            
-        </td>
-        <td>
-            共同購入商品
-            
-        </td>
-        <td>
-            100円
-            
-        </td>
-        <td>
-            1
 
-        </td>
-        <td>
-            発送済み
-            
-        </td>
-        <td>
-            クレジットカード決済
-        </td>
-        <td>
-            送料無料
-        </td>
-    </tr> {% endcomment %}
-      {% comment %} {% endfor %} {% endcomment %}
-    </tbody>
+<table class="cart__shopping-table">
+    {% if not order_history %}
+        <p>商品購入履歴がありません
+    {% else %}
+    
+        <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">商品</th>
+            <th scope="col">種別</th>
+            <th scope="col">価格</th>
+            <th scope="col">数量</th>
+            <th scope="col">発送状況</th>
+            <th scope="col">支払方法</th>
+            <th scope="col">送料</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for order in order_history %}
+            {% comment %} {% for item in cart_items %} {% endcomment %}
+                <tr>
+                    <td>
+                        <img src={{ order.product.product_image.url }} alt="野菜"/>
+                    </td>
+                    <td>
+                        {{ order.product.product_name }}
+                        {% comment %} {{ item.product.name }} {% endcomment %}
+                    </td>
+                    <td>
+                        {% if order.sale.sale_type == 'general_sales'%}
+                        一般商品
+                        {% else %}
+                        共同販売商品
+                        {% endif %}
+                        {% comment %} {{ item.product.category }} {% endcomment %}
+                    </td>
+                    <td>
+                        {{ order.amount }}円
+                        {% comment %} {{ item.product.price }} {% endcomment %}
+                        {% comment %} <span class="definition">確定</span> {% endcomment %}
+                    </td>
+                    <td>
+                        {{ order.quantity }}個
+                        {% comment %} {{ item.quantity }} {% endcomment %}
+                    </td>
+                    <td>
+                        {% if order.is_shipped == False %}
+                        未発送
+                        {% else %}
+                        発送済み
+                        {% endif %}
+                        {% comment %} {{ item.total_price }} {% endcomment %}
+                    </td>
+                    <td>
+                        クレジットカード決済
+                    </td>
+                    <td>
+                        送料100円
+                    </td>
+                </tr>
+            {% endfor %}
+        {% comment %} <tr>
+            <td>
+                <img src="{% static 'assets/img/メリ光男.png' %}" alt="野菜"/>
+            </td>
+            <td>
+                トマト
+                
+            </td>
+            <td>
+                共同購入商品
+                
+            </td>
+            <td>
+                100円
+                
+            </td>
+            <td>
+                1
+
+            </td>
+            <td>
+                発送済み
+                
+            </td>
+            <td>
+                クレジットカード決済
+            </td>
+            <td>
+                送料無料
+            </td>
+        </tr> {% endcomment %}
+        {% comment %} {% endfor %} {% endcomment %}
+        </tbody>
+    {% endif %}
 </table>
 
 {% endblock %}

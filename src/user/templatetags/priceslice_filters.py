@@ -15,7 +15,16 @@ register = template.Library()
 #             return value
 #     conv = locale.currency(value, grouping=True, symbol=False)
 #     return conv
-
+#数値に対してのみ使用可能。文字列の場合、エラーが出る
 @register.filter
 def to_currency(value):
-    return "{:,}".format(value)
+    try:
+        # value = float(value)
+        return "{:,}".format(value)
+    except ValueError:
+        return value
+
+@register.filter
+def meter_value(value, arg):
+    #valueをargで割る
+    return round(value / float(arg))

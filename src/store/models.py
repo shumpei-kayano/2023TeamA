@@ -143,3 +143,16 @@ class ThresholdCheck(models.Model):
         else:
             return (None,None)
         # self.save()
+    
+    def sum_count(self):
+        #表示期間切れの商品確認はスケジューラーで行う
+        #行数は人数
+        # th_ch = ThresholdCheck.objects.filter(sale=self.sale).count()
+        #辞書が返ってくる
+        #販売IDの数for文
+        #今のDB内の個数
+        sub_count = ThresholdCheck.objects.filter(sale=self.sale).aggregate(Sum('count'))['count__sum']
+        total_count = sub_count
+        print('total_count:',total_count)
+        print('閾値用個数：',self.threshold.threshold)
+        return total_count
