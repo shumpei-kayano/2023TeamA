@@ -21,10 +21,9 @@
             }
             // ページのタイトルを設定
             document.title = categoryName;
-
             // h2タグにカテゴリ名を設定
             var categoryTitleElement = document.getElementById('category-title');
-            categoryTitleElement.textContent = categoryName + 'の商品';
+            categoryTitleElement.textContent = '「' + categoryName + '」の検索結果';
         });
     </script>
     <section>
@@ -48,7 +47,7 @@
                     <div class="item--card card--blue">
                         <a href="{% url 'user:general_products_detail' pk=product.pk %}">
                             <img src="{{ product.image.url }}" alt="{{ product.product_name }}" class="card--img">
-                            <p class="discount">{{ product.rate }}％OFF</p>
+                            <p class="discount">{{ product.rate }}%OFF!</p>
                             <div class="card--content">
                                 <h3 class="card--title">{{ product.product_name }}</h3>
                                 <h4 class="card--discount">￥{{ product.price|to_currency }}(税込)</h4>

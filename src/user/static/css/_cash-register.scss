@@ -1,4 +1,7 @@
 .register {
+    @media screen and (max-width: 768px){
+        font-size: 0.75em;
+    }
     .cart__shopping-table {
         margin-bottom: 0;
     }
@@ -52,6 +55,9 @@
         }
     }
     &__user-info {
+        @media screen and (max-width: 768px){
+            font-size: 0.75em;
+        }
         &-title {
             padding-left : 1rem;
             background-color: $main_color;
@@ -65,13 +71,33 @@
             border-bottom: 1px solid $melimit_gray;
             padding: 1em;
         }
+        &-detail {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            form {
+                input {
+                    width: 100%;
+                }
+            }
+        }
         &-label {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
             p {
+                width: 100%;
                 font-weight: bold;
             }
         }
+        &-value {
+            width: 100%;
+        }
         &-subtitle, &-btn {
             margin: auto 0;
+            @media screen and (max-width: 768px){
+                writing-mode: vertical-rl;
+            }
         }
     }
     &__final-confirmation {

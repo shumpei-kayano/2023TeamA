@@ -21,10 +21,13 @@
     {% block css %}{% endblock css %}
 </head>
 <body>
+    <div id="loading">
+        <div class="spinner"></div>
+        ローディング中...
+    </div>
     <header>
         <div class="header_upper">
-            <h1>Melimit</h1>
-            <a href="{% url 'user:index' %}"  class="header_logo"><img src="{% static 'assets/img/Melimit.png' %}" alt="Melimit"/></a>
+            <h1><a href="{% url 'user:index' %}"  class="header_logo"><img src="{% static 'assets/img/Melimit.png' %}" alt="Melimit"/></a></h1>
             <nav class="header_upper__nav">
                 <ul class="header_upper__menu">
                     <li><a href="{% url "user:what_melimit" %}">Melimitとは</a></li>
@@ -74,16 +77,35 @@
 </main>
 {% include "user/footer.html" %}
 <script>
+    // カテゴリーの表示切り替え
     function toggleCategory() {
         var categoryItems = document.querySelectorAll('.header_down__category li:not(:first-child)');
-        
         categoryItems.forEach(function(item) {
             item.classList.toggle('hidden');
         });
     }
-</script>
-</body>
-<script>
+
+    // ローディング画面を初めて非表示にする
+    const loading = document.getElementById('loading');
+    loading.style.display = 'none';
+
+    let timer;
+    window.addEventListener('load', function() {
+        // ページの読み込みが完了したら、ローディング画面を非表示にし、タイマーをクリアする
+        clearTimeout(timer);
+        loading.style.opacity = '0';
+        setTimeout(function() {
+            loading.style.display = 'none';
+        }, 1000);
+    });
+
+    // 1秒後にローディング画面を表示するタイマーを設定する
+    timer = setTimeout(function() {
+        loading.style.display = 'block';
+        loading.style.opacity = '1';
+    }, 1000);
+
+    // カテゴリーの表示切り替え
     function handleSelectChange(event) {
         var selectedValue = event.target.value;
         if (selectedValue != "0") {

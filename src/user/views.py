@@ -915,3 +915,7 @@ def order_complete(request):
 
 def error_view(request):
     return render(request, 'user/04_complete_test.html')
+
+# 共同購入商品確認
+def joint_cfm(request):
+    return render(request, 'user/joint-cfm.html')

@@ -5,7 +5,7 @@
 {% block content %}
 
 <section>
-    <h2 class="center">一般購入商品</h2>
+    <h2 class="center">「一般購入商品」の検索結果</h2>
     <form>
         <label>
             sort by&colon;
@@ -24,7 +24,7 @@
                 <div class="card--pk" style="display: none;">{{ sale.pk }}</div>
                 <a href="{% url 'user:general_products_detail' pk=sale.pk %}">
                     <img src="{{ sale.product.product_image.url }}" alt="{{ sale.product.product_name }}" class="card--img">
-                    <p class="discount">{{ sale.discount_rate }}%OFF</p>
+                    <p class="discount">{{ sale.discount_rate }}%OFF!</p>
                     <div class="card--content">
                         <h3 class="card--title">{{ sale.product.product_name }}</h3>
                         <h4 class="card--discount">￥{{ sale.sale_price|to_currency }}(税込)</h4>
