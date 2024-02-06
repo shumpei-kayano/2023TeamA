@@ -227,15 +227,14 @@
         <button type="submit" id="submit-button" class="btn btn--beige">注文を確定する</button>
     </div>
 </section>
-    <script>
-        /// 共同購入商品の注意事項の確認
+        
 
-    <script>
+    <script>/// 共同購入商品の注意事項の確認
         document.getElementById('submit-button').addEventListener('click', function(event) {
             if (document.getElementById('confirm-checkbox').checked) {
                 window.location.href = "{% url 'user:order_completed' %}";
             } else {
-                if ("{{ cart_item_gen }}" && ! "{{ cart_item_mel }}".trim() !== ""){
+                if ("{{ cart_item_mel }}".trim() !== "" && "{{ cart_item_gen }}".trim() === ""){
                     window.location.href = "{% url 'user:order_completed' %}";
                 } else {
                     event.preventDefault();
@@ -249,6 +248,7 @@
         document.getElementById('submit-button').addEventListener('click', function(event) {
             window.location.href = "{% url 'user:order_completed' %}";
         });{% endcomment %}
+    <script>
         /// クレジットカード情報のバリデーション
         function validateInput() {
             var cardNumberPattern = /^\d{4}-?\d{4}-?\d{4}-?\d{4}$/;
@@ -305,5 +305,6 @@
         });
         
         // 初期状態ではボタンを無効化
-        document.getElementById('submit-button').disabled = true;    </script>
+        document.getElementById('submit-button').disabled = true;    
+    </script>
 {% endblock %}
