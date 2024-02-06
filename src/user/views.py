@@ -557,7 +557,7 @@ def cash_register(request):
         print(request.session)
         #sessionの中身を全部表示
         print(request.session['cart'].items())
-        
+        print('gen:',cart_item_gen)
         return render(request, 'user/cash-register.html',{'cart_items':cart_items,'cart_item_gen':cart_item_gen,'cart_item_mel':cart_item_mel,'total_gen':total_gen,'total_mel':total_mel,'total_gen_100':total_gen_100,'total_mel_100':total_mel_100,'user':user,'all_total':all_total})
     else:
         return render(request,)
@@ -634,8 +634,6 @@ def update_cart(request):
             'quantity': quantity,
             'total_price': sale.sale_price * quantity,
         })
-
-
     return JsonResponse({'cart_items': cart_items})
 
 #カートから商品を削除する

@@ -69,7 +69,7 @@
                         </p>
                     </li>
                 </ul>
-                
+                <input type="hidden" id="confirm-checkbox">
             </div>
         
         {% endif %}
@@ -224,14 +224,23 @@
         <button type="submit" id="submit-button" class="btn btn--beige">注文を確定する</button>
     </div>
 
-    {% comment %} <script>
+    <script>
         document.getElementById('submit-button').addEventListener('click', function(event) {
             if (document.getElementById('confirm-checkbox').checked) {
                 window.location.href = "{% url 'user:order_completed' %}";
             } else {
-                event.preventDefault();
-                alert('共同購入商品の注意事項をご確認ください。');
+                if ("{{ cart_item_gen }}" && ! "{{ cart_item_mel }}".trim() !== ""){
+                    window.location.href = "{% url 'user:order_completed' %}";
+                } else {
+                    event.preventDefault();
+                    alert('共同購入商品の注意事項をご確認ください。');
+                }
             }
+        });
+    </script>
+    {% comment %} <script>
+        document.getElementById('submit-button').addEventListener('click', function(event) {
+            window.location.href = "{% url 'user:order_completed' %}";
         });
     </script> {% endcomment %}
 {% endblock %}
