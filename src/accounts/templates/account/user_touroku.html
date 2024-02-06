@@ -7,28 +7,28 @@
         {% csrf_token %}
         <div class="signup__form-group">
             <span class="required">必須</span>
-            {{ form.email.label_tag }}
+            {{ form.email.label_tag }} 
             <span class="signup__input-group">
                 {{ form.email }}
             </span>
         </div>
         <div class="signup__form-group">
             <span class="required">必須</span>
-            {{ form.password.label_tag }}
+            {{ form.password.label_tag }} 半角英字と数字を1文字以上含み、8文字以上24文字以内
             <span class="signup__input-group">
                 {{ form.password }}
             </span>
         </div>
         <div class="signup__form-group">
             <span class="required">必須</span>
-            {{ form.password_confirm.label_tag }}
+            パスワード確認用
             <span class="signup__input-group">
                 {{ form.password_confirm }}
             </span>
         </div>
         <div class="signup__form-group">
             <span class="required">必須</span>
-            {{ form.username.label_tag }}
+            名前
             <span class="signup__input-group">
                 {{ form.username }}
             </span>
