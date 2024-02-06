@@ -735,16 +735,39 @@ button:hover {
   opacity: 0.7;
 }
 
-::-webkit-scrollbar {
-  background: #EBEBEB;
-  border-radius: 5px;
+#loading {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
 }
 
-::-webkit-scrollbar-thumb {
-  background-color: #D4B985;
-  border-radius: 5px;
+.spinner {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -20px 0 0 -20px;
+  border: 4px solid #D4B985;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 3s linear infinite;
 }
 
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 .btn {
   font-size: 0.8rem;
   border-radius: 5px;
@@ -1516,48 +1539,6 @@ input:checked + .tab_class + .content_class {
   background-blend-mode: lighten;
 }
 
-.loading {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 10;
-  background-color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: fadeOut 1.5s 2.5s forwards;
-}
-
-@keyframes fadeOut {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    visibility: hidden;
-  }
-}
-.loading__logo {
-  opacity: 0;
-  animation: logo_fade 2s 0.5s forwards;
-  width: 175px;
-}
-
-@keyframes logo_fade {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  60% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  100% {
-    opacity: 0;
-  }
-}
 .section {
   text-align: center;
   scroll-snap-align: start;
