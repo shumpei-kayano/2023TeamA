@@ -140,7 +140,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView, MelimitModelMixin):
     model = MelimitUser
     form_class = MelimitUserRegistrationForm
     template_name = 'account/user_edit.html'
-    success_url = reverse_lazy('user:index')
+    success_url = reverse_lazy('accounts:mypage')
 
     def get_object(self, queryset=None):
         user = self.get_melimitmodel_user()

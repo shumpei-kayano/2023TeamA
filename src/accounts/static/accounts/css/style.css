@@ -4,7 +4,6 @@
 /**
  * Add border box sizing in all browsers (opinionated).
  */
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap");
 *,
 ::before,
 ::after {
@@ -503,242 +502,6 @@ textarea,
   position: absolute;
 }
 
-h1 {
-  display: none;
-}
-
-header, footer {
-  width: 100%;
-  padding: 0 6%;
-}
-
-header {
-  background-image: linear-gradient(180deg, #D4B985 0%, #FFFFFF 100%);
-}
-header .user_name {
-  text-align: center;
-  font-size: 0.5rem;
-}
-@media (max-width: 768px) {
-  header {
-    padding: 0 2rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .header_logo, .footer_logo {
-    margin: 1.5rem auto;
-  }
-}
-
-.header_upper {
-  font-weight: bold;
-  font-size: 0.75rem;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 0.1rem;
-}
-.header_upper__nav li {
-  display: inline-block;
-  color: #252525;
-  padding: 0.5rem 1rem;
-}
-.header_upper__nav li:hover {
-  opacity: 0.7;
-}
-.header_upper__menu {
-  justify-content: center;
-  display: flex;
-  flex-wrap: wrap;
-}
-.header_upper__icon {
-  display: flex;
-}
-@media (max-width: 768px) {
-  .header_upper__icon {
-    flex-flow: column;
-    margin: 0 auto;
-  }
-}
-.header_upper__icon__line {
-  display: flex;
-  justify-content: space-around;
-}
-.header_upper__icon .header_icon {
-  width: 2rem;
-  object-fit: cover;
-  margin: 0 1rem;
-}
-@media screen and (max-width: 768px) {
-  .header_upper__icon .header_icon {
-    margin: 0 auto;
-  }
-}
-
-.header_down {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-}
-.header_down .hidden {
-  display: none;
-}
-.header_down__menu {
-  width: 65%;
-  padding-left: 0;
-  display: flex;
-  flex-wrap: wrap-reverse;
-  align-items: center;
-  justify-content: space-between;
-}
-@media (max-width: 768px) {
-  .header_down__menu {
-    width: 100%;
-  }
-}
-.header_down__category {
-  border: none;
-  border-radius: 5px;
-  text-align: center;
-  font-weight: bold;
-  padding: 0.75rem;
-}
-.header_down__category option {
-  font-weight: bold;
-  background: #FFFFFF;
-  color: #252525;
-}
-.header_down__menu-container {
-  padding-left: 0;
-  display: flex;
-  justify-content: space-between;
-}
-.header_down__menu-container li:first-child {
-  margin-right: 30px;
-}
-.header_down li {
-  color: #252525;
-}
-.header_down li:hover {
-  opacity: 0.7;
-}
-.header_down__menu-btn {
-  border-radius: 5px;
-  text-align: center;
-  display: inline-block;
-  padding: 0.5rem 1rem;
-}
-.header_down__search {
-  margin: 1rem 0;
-}
-.header_down__search-input {
-  height: 2.2rem;
-  padding: 0.5rem 0 0.5rem 1rem;
-  border-radius: 5px;
-}
-.header_down button {
-  height: 2rem;
-  padding: 0.3rem 1rem;
-}
-
-footer {
-  background-color: #EBEBEB;
-  padding: 2rem;
-  font-size: 0.8rem;
-  color: #FFFFFF;
-}
-
-.footer_upper {
-  display: flex;
-  justify-content: left;
-}
-.footer_upper__info {
-  padding-left: 0;
-}
-
-.footer_down {
-  text-align: center;
-}
-
-html {
-  height: -webkit-fill-available;
-  font-size: 100%;
-  font-weight: 500;
-  font-style: normal;
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: "Noto Sans JP", sans-serif;
-  color: #252525;
-  background-color: #FFFFFF;
-  margin: 0 auto;
-}
-
-main {
-  background-color: #FFFFFF;
-  max-width: 90%;
-  margin: 0 auto;
-}
-@media (max-width: 768px) {
-  main {
-    margin: 1rem auto;
-  }
-}
-
-a {
-  text-decoration: none;
-  color: #252525;
-  display: inline-block;
-  transition: 0.3s;
-}
-a:hover {
-  opacity: 0.7;
-  cursor: pointer;
-}
-a.underline {
-  text-decoration: underline;
-}
-
-input {
-  height: 50px;
-  border: solid 1px #EBEBEB;
-}
-
-input:focus {
-  border-bottom: 2px solid;
-  outline: none;
-}
-
-li {
-  list-style: none;
-}
-
-button {
-  border-radius: 5px;
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
-  font-size: 100%;
-  transition: 0.3s;
-}
-button:hover {
-  opacity: 0.7;
-}
-
-::-webkit-scrollbar {
-  background: #EBEBEB;
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #D4B985;
-  border-radius: 5px;
-}
-
 .login-container {
   width: 100%;
   margin: 0 auto;
@@ -748,9 +511,19 @@ button:hover {
 }
 
 .login-form {
-  width: 100%;
+  width: 25%;
   margin: 0 auto;
   text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.login-form input {
+  width: 100%;
+  margin: 10px 0;
+  padding: 1rem;
+  border-radius: 5px;
+  border: 1px solid #EBEBEB;
 }
 
 .login-btn-container {
@@ -1087,7 +860,7 @@ button:hover {
   margin: 1rem 0;
 }
 .mypage__container {
-  flex-basis: calc(50% - 1rem);
+  flex-basis: calc(33% - 1rem);
   background-color: #EBEBEB;
   border-radius: 5px;
   margin: 0.5rem;
