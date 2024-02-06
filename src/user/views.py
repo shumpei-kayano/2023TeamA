@@ -205,6 +205,8 @@ def all_products_joint(request):
             discounted_amount = i.discount_amount
             #割引後の値段を計算
             discounted_price = round(sale.sale_price * (100 - i.discount_rate) / 100)
+            #現在の個数/閾値の個数　で割合を出す
+            ratio = 1
             sale_info = {
                 'sale_pk':sale.pk,
                 'product_name':sale.product.product_name,
@@ -257,8 +259,8 @@ def all_products_joint(request):
             print(threshold)
             print(threshold.threshold)
     #しきい値を取得できた thresholdの一つ目の引数=sale.pkのthreshold.threshold
-    
-    return render(request, 'user/joint-products.html', {'sales': sales, 'thresholds':thresholds, 'sale_infos':sale_infos,'mel_product':mel_product})
+    atai = 75
+    return render(request, 'user/joint-products.html', {'sales': sales, 'thresholds':thresholds, 'sale_infos':sale_infos,'mel_product':mel_product,'atai':atai})
 
 # 一般商品詳細
 def general_products_detail(request,pk):

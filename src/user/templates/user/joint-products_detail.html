@@ -46,7 +46,7 @@
             <div class="detail1__right--center">
                 {% comment %} 閾値について {% endcomment %}
                 <div class="progress-bar">
-                    <div class="progress-bar__completed" style="width: 0%;"></div>
+                    <div class="progress-bar__completed" style="width: {{  }}%;"></div>
                     <p>00%<br>達成</p>
                 </div>
                 {% comment %} 達成したら表示させない {% endcomment %}
@@ -152,7 +152,7 @@
                                     <div class="card--content">
                                         <h3 class="card--title">{{ related_sale.product.product_name }}</h3>
                                         <div class="progress-bar">
-                                            <div class="progress-bar__completed" style="width: 50%;"></div>
+                                            <div class="progress-bar__completed" style="width: {{  }}%;"></div>
                                         </div>
                                         <p class="card--text">あと00人達成で</p>
                                         <p class="card--price">{{ related_sale.sale_price }}(税込)</p>

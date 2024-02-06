@@ -49,6 +49,7 @@ def melmit_product_detail(sale):
             at_count = threshold.threshold - count
             discounted_price = round(sale.sale_price * (100 - threshold.discount_rate) / 100)
             productprice_thresholdprice = sale.discount_rate() + threshold.discount_rate
+            ratio = count // threshold.threshold
             detail = {
                 'pk':sale.pk,
                 'image': sale.product.product_image,
@@ -63,5 +64,6 @@ def melmit_product_detail(sale):
                 'at_count': at_count,
                 'product_category': sale.product.product_category,
                 'final_rate':productprice_thresholdprice,
+                'ratio':ratio,
             }
         return detail
