@@ -379,14 +379,18 @@ def create_group_purchase_view(request):
         threshold_form = ThresholdForm(request.POST)
         product_form.instance.store = user.melimitstore
         # product_form.instance.storeを表示する
-        print(product_form.instance.store)
+        # print(product_form.instance.store)
         sale_form.instance.store = user.melimitstore
         # sale_form.instance.storeを表示する
-        print(sale_form.instance.store)
+        # print(sale_form.instance.store)
+        # ↓forms.pyでself.instance.〇〇を使用するため、instanceを指定する
         sale_form.instance.product = product_form.instance
-        # sale_form.instance.productを表示する
-        print(sale_form.instance.product)
-        # threshold_formの登録とthresholdの外部キーにsaleのidを設定する
+        threshold_form.instance.sale = sale_form.instance
+        # ↑forms.pyでself.instance.〇〇を使用するため、instanceを指定する
+        # ここで表示してもdbに保存前なので、表示できない
+        print("product_form.instance.product:",sale_form.instance.product.__dict__)
+        print("threshold_form.instance.sale:",threshold_form.instance.sale.__dict__)
+        
         if product_form.is_valid() and sale_form.is_valid() and threshold_form.is_valid():
             product = product_form.save()
             sale = sale_form.save(commit=False)

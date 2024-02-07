@@ -10,7 +10,7 @@ from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 # orderhistoryをimportする
-from .models import OrderHistory
+from .models import OrderHistory,Favorite
 from .utils import melmit_product_detail
 # Create your views here.
 # @login_required
@@ -43,6 +43,10 @@ def index(request):
                 random_sales.append(detail)
             for detail in random_sales:
                 print('detail',detail)
+                if detail['sale_type'] == 'melimit_sales':
+                    print('ratio:',detail['ratio'])
+                    print('threshold_now:',detail['threshold_now'])
+                    print('threshold:',detail['threshold'])
             # matching_sales = Sale.objects.filter(product__product_category=user_taste)  # ユーザーの好みに合った商品を取得
             # random_sale = random.choice(matching_sales)  # ランダムに1つの商品を選択
             categories = Product.TASTE_CHOICES #商品をカテゴリーごとに取得
@@ -178,11 +182,17 @@ def all_products_general(request):
 
 # 共同購入商品一覧
 def all_products_joint(request):
+    mel_sales = []
     sales_by_choices = {}
     for choice, _ in Sale.SALE_CHOICES:
         sales_by_choices[choice] = Sale.objects.filter(sale_type=choice)
         #sales melimit商品すべて 辞書でkeyを指定し、valueを取り出す
     sales = sales_by_choices['melimit_sales']
+    print('sales',sales)
+    for sale in sales:
+        print('sale',sale)
+        mel_sale = melmit_product_detail(sale)
+        mel_sales.append(mel_sale)
     #for文の最後のみ入っている すべてが入るように
     #thresholdsを辞書のままテンプレートに送るとめんどくさいのでリスト型にしたい
     thresholds = {}
@@ -260,7 +270,7 @@ def all_products_joint(request):
             print(threshold.threshold)
     #しきい値を取得できた thresholdの一つ目の引数=sale.pkのthreshold.threshold
     atai = 75
-    return render(request, 'user/joint-products.html', {'sales': sales, 'thresholds':thresholds, 'sale_infos':sale_infos,'mel_product':mel_product,'atai':atai})
+    return render(request, 'user/joint-products.html', {'sales': sales, 'thresholds':thresholds, 'sale_infos':sale_infos,'mel_product':mel_product,'atai':atai,'mel_sales':mel_sales})
 
 # 一般商品詳細
 def general_products_detail(request,pk):
@@ -478,9 +488,24 @@ def order_completed(request):
     return render(request, 'user/order-completed.html')
     
 
+
 # お気に入り
 def favorite(request):
-    return render(request, 'user/favorite.html')
+    user_id = request.user.id
+    user = MelimitUser.objects.get(id=user_id)
+    favorites = Favorite.objects.filter(user=user)
+    print('ふぁぼりて:',favorites)
+    fav_sales = []
+    for i in favorites:
+        sale_id = i.sale.id
+        print('sale_id:',sale_id)
+        sale = Sale.objects.filter(id=sale_id)
+        for random in sale:
+                print('random:',random)
+                detail = melmit_product_detail(random)
+                fav_sales.append(detail)
+    print('fav:',fav_sales)
+    return render(request, 'user/favorite.html', {'favorites': fav_sales})
 
 # パスワード設定用メール送信完了
 def pass_mail(request):
@@ -568,12 +593,13 @@ def signup_choice(request):
 
 def add_to_cart(request, pk):
     sale = get_object_or_404(Sale, id=pk)
+    cart = request.session.get('cart', {})
     #カート全体
     # cart = request.session['cart']
     #カート全体から商品すべてをループして該当のpkがあるか探す
-    
-    cart = request.session.get('cart', {})
-    quantity = int(request.POST.get('quantity'))
+    # if 'quantity' not in request.session:
+    #     request.session['quantity'] = 1
+    quantity = int(request.POST.get('quantity', 1))
     print('cart:',cart.items())
     #該当するpkなら個数を追加して更新 違うとき？ cart[pk]が空の時であって、cart[pk]が存在していないといけない
     for item_pk, quantitys in cart.items():
@@ -688,6 +714,101 @@ def sdgs(request):
 # カテゴリー別商品一覧
 def category_products(request):
     category = request.GET.get('category')
+    searchword = request.GET.get('inputValue')
+    print('searchword:',searchword)
+    product_detail = []
+    #キーワード検索の場合
+    if searchword:
+        results = Product.objects.filter(Q(product_name__icontains=searchword))
+        print('results:',results)
+        #resultsにはあるのにproductになると出力されない
+        for product in results:
+            print('product:',product)
+            #1商品当たりのsaleの情報を取得
+            print('set.all:',product.sale_set.all())
+            sales = product.sale_set.all()
+            print('sales:',sales)
+            #一般商品のみ適応　共同商品にも対応できるように
+            for sale in sales:
+                print(sale)
+                print(type(sale.sale_type))
+                print('rate:',sale.discount_rate())
+                if sale.sale_type == 'general_sales':
+                    detail = {
+                        #pk
+                        #画像
+                        #値引き率
+                        #商品名
+                        #販売価格
+                        'pk':product.pk,
+                        'image':product.product_image,
+                        'rate':sale.discount_rate(),
+                        'product_name':product.product_name,
+                        'price':sale.sale_price,
+                        'sale_type':sale.sale_type,
+                    }
+                elif sale.sale_type == 'melimit_sales':
+                    print('商品がメリミット')
+                    threshold_all = sale.threshold_set.all()
+                    print('saleから閾値もでるとりだし',threshold_all)
+                    for threshold in threshold_all:
+                        print('閾値をとりだすぞ')
+                        print('閾値ひとつのはず',threshold)
+                        #何も登録していないと空のオブジェクトが出る
+                        #空の時の処理を想定しないといけない
+                        threshold_checks = threshold.thresholdcheck_set.all()
+                        print('閾値チェックもでるのはず',threshold_checks)
+                        if not threshold_checks:
+                            #空の時、個数を０で判断するように
+                            count = 0
+                            print("No threshold checks found, meow!")
+                        else:
+                            for check in threshold_checks:
+                                #中身があるとき、個数を取り出して合計して判断 sale.pkで閾値チェックモデル化からsumで数量を取得
+                                count = check.sum_count()
+                                print('check:',check)
+                                print('count:',count)
+                        for check in threshold_checks:
+                            print('閾値チェックだぞ')
+                            print('check_all:',check)
+                        print('閾値もでる？',threshold)
+                        print('閾値全部',threshold.threshold)
+                        
+                        #なにもとれない！！！！！！！
+                        at_count = threshold.threshold -count
+                        print('at_count:',at_count)
+                        discounted_price = round(sale.sale_price * (100 - threshold.discount_rate) / 100)
+                        #saleモデルからcheckモデルの内容を取得しよう
+                        detail = {
+                            #pk
+                            #画像
+                            #値引き率
+                            #商品名
+                            #販売価格
+                            #閾値クリア後の割引率
+                            #クリア後の値段
+                            #閾値個数
+                            #現在の閾値個数 チェックモデルから
+                            #閾値をクリアしているか確認→クリア後が表記変わるため　countとthresholdを比較するだけ
+                            #discount_amountは割引額　
+                            'pk':product.pk,
+                            'image':product.product_image,
+                            'rate':sale.discount_rate(),
+                            'product_name':product.product_name,
+                            'price':sale.sale_price,
+                            'threshold_rate':threshold.discount_rate,
+                            'clear_price':discounted_price,
+                            'threshold':threshold.threshold,
+                            'threshold_now':count,
+                            'sale_type':sale.sale_type,
+                            'at_count':at_count,
+                        }
+            product_detail.append(detail)
+            print('product_detail:',product_detail)
+            for Type in product_detail:
+                print('sale_type:',Type['sale_type'])
+        return render(request, 'user/category-products.html', {'products': product_detail})
+    #カテゴリー検索の場合
     #商品が一般か共同かわける必要あり
     #pk
     #画像
@@ -708,7 +829,6 @@ def category_products(request):
     elif category == '5':
         category = 'other'
     print('category:',category)
-    product_detail = []
     #カテゴリー別に商品を取得。（一般、共同両方入っている）
     products = Product.objects.filter(product_category=category)
     for product in products:
@@ -792,6 +912,10 @@ def category_products(request):
                         'at_count':at_count,
                     }
         product_detail.append(detail)
+        print(product_detail)
+        for i in product_detail:
+            if i['sale_type'] == 'melimit_sales':
+                print(i)
     return render(request, 'user/category-products.html', {'products': product_detail})
     # return render(request, 'user/category-products.html')
 
@@ -920,3 +1044,37 @@ def error_view(request):
 # 共同購入商品確認
 def joint_cfm(request):
     return render(request, 'user/joint-cfm.html')
+
+#お気に入りに追加するビュー
+def add_to_favorites(request, pk):
+    if request.user.is_authenticated:
+        # product = get_object_or_404(Product, pk=product_id)
+        sale = Sale.objects.get(id=pk)
+        user_id = request.user.id
+        user = MelimitUser.objects.get(id=user_id)
+        Favorite.objects.get_or_create(user=user, sale=sale)
+        # リダイレクト先はお気に入り？商品ページ？　商品ページなら if 一般、共同
+        # return redirect('product_detail', product_id=pk)
+        favorites = Favorite.objects.filter(user=request.user)
+        return redirect('user:favorite')
+        # return render(request, 'user/favorite.html', {'favorites':favorites})
+    else:
+        return render(request, 'user/login.html')
+    # return render(request, 'user/joint-products_detail.html', {'sale': sale,'sale_infos':sale_infos,'related_sales':related_sales})
+    # return render(request, 'user/general-products_detail.html', {'sale': sale, 'related_sales':related_sales})
+
+#お気に入りから削除するビュー
+def remove_from_favorites(request, pk):
+    # product = get_object_or_404(Product, pk=product_id)
+    sale = Sale.objects.get(id=pk)
+    print('sale:',sale)
+    user_id = request.user.id
+    user = MelimitUser.objects.get(id=user_id)
+    print('user:',user)
+    print('aaaaaaaaaaaaaaaaaaaaaaaa')
+    fav = Favorite.objects.filter(user=user, sale=sale).delete()
+    print('favvvvvvvvvvv:',fav)
+    #リダイレクト先はお気に入りページにしよう
+    return redirect('user:favorite')
+    # return render(request, 'user/favorite.html')
+    # return redirect('product_detail', product_id=pk)

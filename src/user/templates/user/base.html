@@ -66,9 +66,16 @@
             </div>
             <div class="header_down__search">
             <form method="get" action="#" class="header_search">
-                    <input class="header_down__search-input" type="text" name="search" placeholder="キーワードを入力">
-                    <button class="btn--beige" type="submit" value="検索">検索</button></li>
+                    {% comment %} <input class="header_down__search-input" type="text" name="search" placeholder="キーワードを入力"> {% endcomment %}
+                    {% comment %} <button class="btn--beige" type="submit" value="検索">検索</button>{% endcomment %}
+                    {% comment %} <input id="category-input" type="text">
+                    <button class="btn--beige" type="submit" onclick="handleButtonClick()" value="検索">検索</button> {% endcomment %}
+                    </li> 
                 </form>
+                
+                    <input id="category-input" type="text">
+                    <button class="btn--beige" type="submit" onclick="handleButtonClick()" value="検索">検索</button>
+                
             </div>
         </div>
     </header>
@@ -123,5 +130,12 @@
             // 非同期応答を示すためにtrueを返す
             return true;
         });
+    }
+    function handleButtonClick() {
+        var inputField = document.getElementById('category-input');
+        var inputValue = inputField.value;
+        if (inputValue) {
+            window.location.href = "/category-products/?inputValue=" + inputValue;
+        }
     }
 </script>

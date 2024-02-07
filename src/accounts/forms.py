@@ -171,14 +171,14 @@ class MelimitUserRegistrationForm(forms.ModelForm):
         fields = ['email', 'password', 'username', 'taste','postal_code', 'prefecture', 'city', 'address', 'phone_number']
         widgets = {
             'email': forms.EmailInput(attrs={
-                'class': 'store-create-input-active',
+                'class': 'user-create-input-active',
                 'placeholder': 'メールアドレスを入力してください（半角）',
                 'required': True,
                 'pattern': '[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$',
                 'name': 'email',
             }),
             'password': forms.PasswordInput(attrs={
-                'class': 'store-create-input-active',
+                'class': 'user-create-input-active',
                 'placeholder': '（半角英字と数字を1文字以上含み、8文字以上24文字以内）',
                 'required': True,
                 'pattern': '^(?=.*?[a-z])(?=.*?\d)[a-z\d]{8,24}$',
@@ -190,13 +190,13 @@ class MelimitUserRegistrationForm(forms.ModelForm):
             #     'placeholder': 'パスワードを再入力してください（半角）'
             # }),
             'username': forms.TextInput(attrs={
-                'class': 'store-create-input-active',
+                'class': 'user-create-input-active',
                 'pattern': '^.{1,20}$',
-                'placeholder': '店舗名を入力してください',
+                'placeholder': 'ユーザー名を入力してください',
                 'name': 'username',
             }),
             'postal_code': forms.TextInput(attrs={
-                'class': 'store-create-input-active',
+                'class': 'user-create-input-active',
                 'pattern': '^[0-9]{7}$',
                 'placeholder': '郵便番号（半角数字）を入力してください（ハイフン不要）'}),
                 'prefecture': forms.Select(choices=PREFECTURE_CHOICES, attrs={
@@ -204,15 +204,15 @@ class MelimitUserRegistrationForm(forms.ModelForm):
                 'name': 'postal_code',
             }),
             'city': forms.TextInput(attrs={
-                'class': 'store-create-input-active',
+                'class': 'user-create-input-active',
                 'name': 'city',
             }),
             'address': forms.TextInput(attrs={
-                'class': 'store-create-input-active',
+                'class': 'user-create-input-active',
                 'name': 'address',
                 }),
             'phone_number': forms.TextInput(attrs={
-                'class': 'store-create-input-active',
+                'class': 'user-create-input-active',
                 'pattern': '^[0-9]{10,11}$',
                 'placeholder': '電話番号（半角数字）を市外局番から入力してください（ハイフン不要）',
                 'name': 'phone_number',
@@ -223,7 +223,7 @@ class MelimitUserRegistrationForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['password_confirm'] = forms.CharField(
             widget=forms.PasswordInput(attrs={
-                'class': 'store-create-input-active',
+                'class': 'user-create-input-active',
                 'pattern': '^(?=.*?[a-z])(?=.*?\d)[a-z\d]{8,20}$',
                 'placeholder': 'パスワードを再入力してください（半角英数字）',
                 'name': 'password_confirm',

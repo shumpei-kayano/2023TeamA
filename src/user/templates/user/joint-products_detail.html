@@ -57,25 +57,33 @@
                 {% comment %} endif {% endcomment %}
                 {% comment %} 在庫があるかどうかでカートに追加ボタンを表示したり消したり {% endcomment %}
                 {% if sale.stock > 0 %}
-                <form class="detail1__form1" action="{% url 'user:add_to_cart' sales.sale_pk %}" method="post">
-                    {% csrf_token %}
-                    <label for="quantity" class="detail1__text-bd">数量</label>
-                    <input type="number" class="cnt" min="1" max="10" step="1" value="1" name="quantity" id="quantity">
-                    <input type="hidden" name="product_id" value="{{ sales.pk }}">
-                    <button type="submit" class="btn--beige btn">カートに入れる</button>
-                </form>
-                <form class="detail1__form2" action="#" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="product_id" value="{{ sale.pk }}" >
-                    <button type="submit" class="btn--white btn">お気に入りに追加</button>
-                </form>
+                    <form  class="detail1__form1" action="{% url 'user:add_to_cart' sales.sale_pk %}" method="post">
+                        {% csrf_token %}
+                        <label for="quantity" class="detail1__text-bd">数量</label>
+                        <input type="number" class="cnt" min="1" max="10" step="1" value="1" name="quantity" id="quantity">
+                        <input type="hidden" name="product_id" value="{{ sales.pk }}">
+                        <button type="submit" class="btn--beige btn--middle">カートに入れる</button>
+                    </form>
+                    {% if user.is_authenticated %}
+                        <form class="detail1__form2" action="{% url 'user:add_to_favorites' sales.sale_pk %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="product_id" value="{{ sales.sale_pk }}" >
+                            <button type="submit" class="btn--white btn--middle">お気に入りに追加</button>
+                        </form>
+                    {% else %}
+                    <a href="{% url 'account_login_kkkk' %}" class="btn--beige btn">お気に入りに追加するにはログインしてください</a>
+                    {% endif %}
                 {% else %}
                 {% comment %} 在庫がないとき。お気に入りボタンのみ。なくなる可能性あり {% endcomment %}
-                <form action="#" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="product_id" value="{{ sale.pk }}" >
-                    <button type="submit" class="btn--white btn">お気に入りに追加</button>
-                </form>
+                    {% if user.is_authenticated %}
+                        <form action="{% url 'user:add_to_favorites' sales.sale_pk %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="product_id" value="{{ sales.sale_pk }}" >
+                            <button type="submit" class="btn--white btn">お気に入りに追加</button>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'account_login_kkkk' %}" class="btn--beige btn">お気に入りに追加するにはログインしてください</a>
+                    {% endif %}
                 {% endif %}
             </div>
             <div class="detail1__right--lower">
