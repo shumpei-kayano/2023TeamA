@@ -2,84 +2,94 @@
 {% load static %}
 {% block title %}お気に入り{% endblock %}
 {% block content %}
+{% load priceslice_filters %}
 <h2 class="cart__title">お気に入り</h2>
-    <table class="cart__shopping-table">
-        <thead>
-          <tr>
-            <th scope="col"></th>
-            <th scope="col">商品</th>
-            <th scope="col">種別</th>
-            <th scope="col">価格</th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {% comment %} {% for item in cart_items %} {% endcomment %}
-          <tr>
-            <td>
-                <img src="{% static 'assets/img/メリ光男.png' %}" alt=""/>
-            </td>
-            <td>
-                トマト
-                {% comment %} {{ item.product.name }} {% endcomment %}
-            </td>
-            <td>
-                一般購入商品
-                {% comment %} {{ item.product.category }} {% endcomment %}
-            </td>
-            <td>
-                100円
-                {% comment %} {{ item.product.price }} {% endcomment %}
-            </td>
-            <td>
-                <a href="#" class="btn btn--white">詳細</a>
-            </td>
-            <td>
-                <form action="#" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn--beige">カートに追加</button>
-                </form>
-            </td>
-            <td>
-                <form action="#" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn--red">削除</button>
-                </form>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <img src="{% static 'assets/img/メリ光男.png' %}" alt=""/>
-            </td>
-            <td>
-                トマト
-                {% comment %} {{ item.product.name }} {% endcomment %}
-            </td>
-            <td>
-                一般購入商品
-                {% comment %} {{ item.product.category }} {% endcomment %}
-            </td>
-            <td>
-                100円
-                {% comment %} {{ item.product.price }} {% endcomment %}
-            </td>
-            <td>
-                <a href="#" class="btn btn--white">詳細</a>
-            </td>
-            <td>
-                <form action="#" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn--beige">カートに追加</button>
-                </form>
-            </td>
-            <td>
-                <form action="#" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" class="btn">削除</button>
-                </form>
-            </td>
-        </tr>
-    </table>
+    {% if favorites %}
+        <table class="cart__shopping-table">
+            <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">商品</th>
+                <th scope="col">種別</th>
+                <th scope="col">価格</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for item in favorites %}
+                {% if item.sale_type == 'general_sales' %}
+                    <tr>
+                        <td>
+                            <img src="{{ item.image.url}}" alt="{{ item.product_name }}"/>
+                        </td>
+                        <td>
+                            {{ item.product_name }}
+                            {% comment %} {{ item.product.name }} {% endcomment %}
+                        </td>
+                        <td>
+                            {{ item.sale_type }}
+                            {% comment %} {{ item.product.category }} {% endcomment %}
+                        </td>
+                        <td>
+                            {{ item.price|to_currency }}円
+                            {% comment %} {{ item.product.price }} {% endcomment %}
+                        </td>
+                        <td>
+                            <a href="{% url 'user:general_products_detail' pk=item.pk %}" class="btn btn--white">詳細</a>
+                        </td>
+                        <td>
+                            <form action="{% url 'user:add_to_cart' item.pk %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn--beige">カートに追加</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="{% url 'user:remove_from_favorites' item.pk %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn--red">削除</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td>
+                            <img src="{{ item.image.url}}" alt="{{ item.product_name }}"/>
+                        </td>
+                        <td>
+                            {{ item.product_name }}
+                            {% comment %} {{ item.product.name }} {% endcomment %}
+                        </td>
+                        <td>
+                            {{ item.sale_type }}
+                            {% comment %} {{ item.product.category }} {% endcomment %}
+                        </td>
+                        <td>
+                            {{ item.price|to_currency }}円
+                            {% comment %} {{ item.product.price }} {% endcomment %}
+                        </td>
+                        <td>
+                            <a href="{% url 'user:joint_products_detail' pk=item.pk %}" class="btn btn--white">詳細</a>
+                        </td>
+                        <td>
+                            <form action="{% url 'user:add_to_cart' item.pk %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn--beige">カートに追加</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="{% url 'user:remove_from_favorites' item.pk %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn--red">削除</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>お気に入りに商品がありません。</p>
+    {% endif %}
 {% endblock %}

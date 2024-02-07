@@ -10,7 +10,7 @@ from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 # orderhistoryをimportする
-from .models import OrderHistory
+from .models import OrderHistory,Favorite
 from .utils import melmit_product_detail
 # Create your views here.
 # @login_required
@@ -43,9 +43,10 @@ def index(request):
                 random_sales.append(detail)
             for detail in random_sales:
                 print('detail',detail)
-                print('ratio:',detail['ratio'])
-                print('threshold_now:',detail['threshold_now'])
-                print('threshold:',detail['threshold'])
+                if detail['sale_type'] == 'melimit_sales':
+                    print('ratio:',detail['ratio'])
+                    print('threshold_now:',detail['threshold_now'])
+                    print('threshold:',detail['threshold'])
             # matching_sales = Sale.objects.filter(product__product_category=user_taste)  # ユーザーの好みに合った商品を取得
             # random_sale = random.choice(matching_sales)  # ランダムに1つの商品を選択
             categories = Product.TASTE_CHOICES #商品をカテゴリーごとに取得
@@ -489,7 +490,19 @@ def order_completed(request):
 
 # お気に入り
 def favorite(request):
-    return render(request, 'user/favorite.html')
+    favorites = Favorite.objects.filter(user=request.user)
+    print(favorites)
+    fav_sales = []
+    for i in favorites:
+        sale_id = i.sale.id
+        print('sale_id:',sale_id)
+        sale = Sale.objects.filter(id=sale_id)
+        for random in sale:
+                print('random:',random)
+                detail = melmit_product_detail(random)
+                fav_sales.append(detail)
+    print('fav:',fav_sales)
+    return render(request, 'user/favorite.html', {'favorites': fav_sales})
 
 # パスワード設定用メール送信完了
 def pass_mail(request):
@@ -577,12 +590,13 @@ def signup_choice(request):
 
 def add_to_cart(request, pk):
     sale = get_object_or_404(Sale, id=pk)
+    cart = request.session.get('cart', {})
     #カート全体
     # cart = request.session['cart']
     #カート全体から商品すべてをループして該当のpkがあるか探す
-    
-    cart = request.session.get('cart', {})
-    quantity = int(request.POST.get('quantity'))
+    # if 'quantity' not in request.session:
+    #     request.session['quantity'] = 1
+    quantity = int(request.POST.get('quantity', 1))
     print('cart:',cart.items())
     #該当するpkなら個数を追加して更新 違うとき？ cart[pk]が空の時であって、cart[pk]が存在していないといけない
     for item_pk, quantitys in cart.items():
@@ -1027,3 +1041,31 @@ def error_view(request):
 # 共同購入商品確認
 def joint_cfm(request):
     return render(request, 'user/joint-cfm.html')
+
+#お気に入りに追加するビュー
+def add_to_favorites(request, pk):
+    if request.user.is_authenticated:
+        # product = get_object_or_404(Product, pk=product_id)
+        sale = Sale.objects.get(id=pk)
+        user_id = request.user.id
+        user = MelimitUser.objects.get(id=user_id)
+        Favorite.objects.get_or_create(user=user, sale=sale)
+        # リダイレクト先はお気に入り？商品ページ？　商品ページなら if 一般、共同
+        # return redirect('product_detail', product_id=pk)
+        favorites = Favorite.objects.filter(user=request.user)
+        return redirect('user:favorite')
+        # return render(request, 'user/favorite.html', {'favorites':favorites})
+    else:
+        return render(request, 'user/login.html')
+    # return render(request, 'user/joint-products_detail.html', {'sale': sale,'sale_infos':sale_infos,'related_sales':related_sales})
+    # return render(request, 'user/general-products_detail.html', {'sale': sale, 'related_sales':related_sales})
+
+#お気に入りから削除するビュー
+def remove_from_favorites(request, pk):
+    # product = get_object_or_404(Product, pk=product_id)
+    sale = Sale.objects.get(id=pk)
+    Favorite.objects.filter(user=request.user, sale=sale).delete()
+    #リダイレクト先はお気に入りページにしよう
+    return redirect('user:favorite')
+    # return render(request, 'user/favorite.html')
+    # return redirect('product_detail', product_id=pk)

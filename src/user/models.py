@@ -3,7 +3,7 @@ from django.utils import timezone
 from store.models import *
 from accounts.models import *
 from decimal import Decimal
-
+from django.conf import settings
 # Create your models here.
 
 # 注文履歴クラス
@@ -51,3 +51,15 @@ class OrderHistory(models.Model):
 # super().save(*args, **kwargs): ここでは、OrderHistoryオブジェクト自体のsave()メソッドが呼び出されています。
 # これは、OrderHistoryオブジェクトのco2フィールドを計算した後、その変更をデータベースに保存するために必要です。super().save(*args, **kwargs)は、
 # 親クラス（models.Model）のsave()メソッドを呼び出しています。これにより、OrderHistoryオブジェクトの全てのフィールドがデータベースに保存されます。
+
+# お気に入りモデル
+class Favorite(models.Model):
+    user = models.ForeignKey(MelimitUser, on_delete=models.CASCADE)
+    sale = models.ForeignKey(Sale, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'sale')
+
+    def __str__(self):
+        return f'{self.user.username} likes {self.sale.product.product_name}'
