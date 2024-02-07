@@ -209,6 +209,9 @@
     border-collapse: collapse;
     border-spacing: 2em;
     margin-bottom: 100px;
+    @media screen and (max-width: 768px) {
+        font-size: smaller;
+    }
     th {
         padding: 15px 0;
     }
@@ -222,10 +225,13 @@
         width: 5rem;
         aspect-ratio: 4/3;
         object-fit: cover;
+        @media screen and (max-width: 768px){
+            display: none;
+        }
     }
     .cnt{
         font-weight: bold;
-        padding: 0.5rem;
+        text-align: center;
         }
     tr {
         border-bottom: 1px solid #ccc;
@@ -234,6 +240,11 @@
         color: $melimit_red;
         font-size: 0.75rem;
         font-weight: bold;
+    }
+    .decrease-quantity, .increase-quantity {
+        @media screen and (max-width: 768px){
+            display: none;
+        }
     }
 }
 

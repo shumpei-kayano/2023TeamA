@@ -28,7 +28,6 @@
                         <p class="discount">{{ sale.rate }}%OFF!</p>
                         <div class="card--content">
                             <h3 class="card--title">{{ sale.product_name }}</h3>
-                            <meter low={{ sale.threshold|meter_value:"3" }} high={{ sale.threshold|meter_value:"1.5"}} max={{ sale.threshold }} value={{ sale.threshold_now }}>B</meter>
                             <div class="progress-bar">
                                 <div class="progress-bar__completed" style="width: 50%;"></div>
                             </div>
@@ -40,7 +39,6 @@
                         <p class="discount">{{ sale.final_rate }}%OFF!</p>
                         <div class="card--content">
                             <h3 class="card--title">{{ sale.product_name }}</h3>
-                            <meter low={{ sale.threshold|meter_value:"3" }} high={{ sale.threshold|meter_value:"1.5"}} max={{ sale.threshold }} value={{ sale.threshold_now }}>B</meter>
                             <div class="progress-bar">
                                 <div class="progress-bar__completed" style="width: {{ atai }}%;"></div>
                             </div>

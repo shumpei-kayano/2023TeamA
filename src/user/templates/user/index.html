@@ -62,7 +62,7 @@
                         {% comment %} random_salesが空の場合 elseは中身がある場合。 {% endcomment %}
                         {% if not random_sales %}
                         {% comment %} 商品がない場合。 {% endcomment %}
-                            <p>商品ないよ！過、疎サイト</p>
+                            <p>商品ないよ！</p>
                         {% else %}
                         
                             {% comment %} random_salesに何も入っていなかった場合のif文を書いておく {% endcomment %}
@@ -73,7 +73,7 @@
                                         <div class="item--card card--blue">
                                             <a href="{% url 'user:general_products_detail' pk=random_sale.pk %}">
                                                 <img src="{{ random_sale.image.url }}" alt="{{ random_sale.product_name }}" class="card--img">
-                                                <p class="discount">{{ random_sale.rate }}％</p>
+                                                <p class="discount">{{ random_sale.rate }}％OFF!</p>
                                                 <div class="card--content">
                                                     <h3 class="card--title">{{ random_sale.product_name }}</h3>
                                                     <h4 class="card--discount">￥{{ random_sale.price|to_currency }}（税込）</h4>
@@ -226,7 +226,7 @@
                     {% else %}
                         {% if not random_sales %}
                         {% comment %} 商品がない場合。 {% endcomment %}
-                            <p>商品ないよ！過、疎サイト</p>
+                            <p>商品ないよ！</p>
                         {% else %}
                             {% comment %} ログインしていないときのランダム商品 {% endcomment %}
                             {% for random_sale in random_sales %}
@@ -296,7 +296,7 @@
             <div class="item--list">
                 {% if not product_category.meat %}
                     {% comment %} 商品がない場合。 {% endcomment %}
-                    <p>商品ないよ！過、疎サイト</p>
+                    <p>商品ないよ！</p>
                 {% else %}
                     {% for sale in product_category.meat %}
                         {% if forloop.counter <= 3 %}
@@ -304,7 +304,7 @@
                                 <div class="item--card card--blue">
                                     <a href="{% url 'user:general_products_detail' pk=sale.pk %}">
                                         <img src="{{ sale.image.url }}" alt="{{ sale.product_name }}" class="card--img">
-                                        <p class="discount">{{ sale.rate }}％</p>
+                                        <p class="discount">{{ sale.rate }}％OFF!</p>
                                         <div class="card--content">
                                             <h3 class="card--title">{{ sale.product_name }}</h3>
                                             <h4 class="card--discount">￥{{ sale.price|to_currency }}（税込）</h4>
@@ -317,7 +317,7 @@
                                     <a href="{% url 'user:joint_products_detail' pk=sale.pk %}">
                                         <img src="{{ sale.image.url }}" alt="{{ sale.product_name }}" class="card--img">
                                             {% if sale.threshold_now < sale.threshold %}
-                                                <p class="discount">{{ sale.rate }}％</p>
+                                                <p class="discount">{{ sale.rate }}％OFF!</p>
                                                 <div class="card--content">
                                                     <h3 class="card--title">{{ sale.product_name }}</h3>
                                                     
@@ -329,7 +329,7 @@
                                                     <h4 class="card--discount">￥{{ sale.clear_price|to_currency }}（税込）</h4>
                                                 </div>
                                             {% else %}
-                                                <p class="discount">{{ sale.final_rate }}％</p>
+                                                <p class="discount">{{ sale.final_rate }}％OFF!</p>
                                                 <div class="card--content">
                                                     <h3 class="card--title">{{ sale.product_name }}</h3>
                                                     
@@ -358,7 +358,7 @@
             <div class="item--list">
                 {% if not product_category.vegetables %}
                     {% comment %} 商品がない場合。 {% endcomment %}
-                    <p>商品ないよ！過、疎サイト</p>
+                    <p>商品ないよ！</p>
                 {% else %}
                     {% for sale in product_category.vegetables %}
                         {% if forloop.counter <= 3 %}
@@ -366,7 +366,7 @@
                                 <div class="item--card card--blue">
                                     <a href="{% url 'user:general_products_detail' pk=sale.pk %}">
                                         <img src="{{ sale.image.url }}" alt="{{ sale.product_name }}" class="card--img">
-                                        <p class="discount">{{ sale.rate }}％</p>
+                                        <p class="discount">{{ sale.rate }}％OFF!</p>
                                         <div class="card--content">
                                             <h3 class="card--title">{{ sale.product_name }}</h3>
                                             <h4 class="card--discount">￥{{ sale.price|to_currency }}（税込）</h4>
@@ -379,7 +379,7 @@
                                     <a href="{% url 'user:joint_products_detail' pk=sale.pk %}">
                                         <img src="{{ sale.image.url }}" alt="{{ sale.product_name }}" class="card--img">
                                             {% if sale.threshold_now < sale.threshold %}
-                                                <p class="discount">{{ sale.rate }}％</p>
+                                                <p class="discount">{{ sale.rate }}％OFF!</p>
                                                 <div class="card--content">
                                                     <h3 class="card--title">{{ sale.product_name }}</h3>
                                                     
@@ -391,7 +391,7 @@
                                                     <h4 class="card--discount">￥{{ sale.clear_price|to_currency }}（税込）</h4>
                                                 </div>
                                             {% else %}
-                                                <p class="discount">{{ sale.final_rate }}％</p>
+                                                <p class="discount">{{ sale.final_rate }}％OFF!</p>
                                                 <div class="card--content">
                                                     <h3 class="card--title">{{ sale.product_name }}</h3>
                                                     
@@ -420,7 +420,7 @@
             <div class="item--list">
                 {% if not product_category.fruit %}
                     {% comment %} 商品がない場合。 {% endcomment %}
-                    <p>商品ないよ！過、疎サイト</p>
+                    <p>商品ないよ！</p>
                 {% else %}
                     {% for sale in product_category.fruit %}
                         {% if forloop.counter <= 3 %}
@@ -428,7 +428,7 @@
                                 <div class="item--card card--blue">
                                     <a href="{% url 'user:general_products_detail' pk=sale.pk %}">
                                         <img src="{{ sale.image.url }}" alt="{{ sale.product_name }}" class="card--img">
-                                        <p class="discount">{{ sale.rate }}％</p>
+                                        <p class="discount">{{ sale.rate }}％OFF!</p>
                                         <div class="card--content">
                                             <h3 class="card--title">{{ sale.product_name }}</h3>
                                             <h4 class="card--discount">￥{{ sale.price|to_currency }}（税込）</h4>
@@ -441,7 +441,7 @@
                                     <a href="{% url 'user:joint_products_detail' pk=sale.pk %}">
                                         <img src="{{ sale.image.url }}" alt="{{ sale.product_name }}" class="card--img">
                                             {% if sale.threshold_now < sale.threshold %}
-                                                <p class="discount">{{ sale.rate }}％</p>
+                                                <p class="discount">{{ sale.rate }}％OFF!</p>
                                                 <div class="card--content">
                                                     <h3 class="card--title">{{ sale.product_name }}</h3>
                                                     
@@ -453,7 +453,7 @@
                                                     <h4 class="card--discount">￥{{ sale.clear_price|to_currency }}（税込）</h4>
                                                 </div>
                                             {% else %}
-                                                <p class="discount">{{ sale.final_rate }}％</p>
+                                                <p class="discount">{{ sale.final_rate }}％OFF!</p>
                                                 <div class="card--content">
                                                     <h3 class="card--title">{{ sale.product_name }}</h3>
                                                     
@@ -482,7 +482,7 @@
             <div class="item--list">
                 {% if not product_category.fish %}
                     {% comment %} 商品がない場合。 {% endcomment %}
-                    <p>商品ないよ！過、疎サイト</p>
+                    <p>商品ないよ！</p>
                 {% else %}
                     {% for sale in product_category.fish %}
                         {% if forloop.counter <= 3 %}
@@ -490,7 +490,7 @@
                                 <div class="item--card card--blue">
                                     <a href="{% url 'user:general_products_detail' pk=sale.pk %}">
                                         <img src="{{ sale.image.url }}" alt="{{ sale.product_name }}" class="card--img">
-                                        <p class="discount">{{ sale.rate }}％</p>
+                                        <p class="discount">{{ sale.rate }}％OFF!</p>
                                         <div class="card--content">
                                             <h3 class="card--title">{{ sale.product_name }}</h3>
                                             <h4 class="card--discount">￥{{ sale.price|to_currency }}（税込）</h4>
@@ -503,7 +503,7 @@
                                     <a href="{% url 'user:joint_products_detail' pk=sale.pk %}">
                                         <img src="{{ sale.image.url }}" alt="{{ sale.product_name }}" class="card--img">
                                             {% if sale.threshold_now < sale.threshold %}
-                                                <p class="discount">{{ sale.rate }}％</p>
+                                                <p class="discount">{{ sale.rate }}％OFF!</p>
                                                 <div class="card--content">
                                                     <h3 class="card--title">{{ sale.product_name }}</h3>
                                                     
@@ -515,7 +515,7 @@
                                                     <h4 class="card--discount">￥{{ sale.clear_price|to_currency }}（税込）</h4>
                                                 </div>
                                             {% else %}
-                                                <p class="discount">{{ sale.final_rate }}％</p>
+                                                <p class="discount">{{ sale.final_rate }}％OFF!</p>
                                                 <div class="card--content">
                                                     <h3 class="card--title">{{ sale.product_name }}</h3>
                                                     
