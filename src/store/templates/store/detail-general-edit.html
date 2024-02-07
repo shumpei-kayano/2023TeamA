@@ -410,8 +410,15 @@
 
           const startDate = new Date(startInput.value);
           const endDate = new Date(endInput.value);
+          // モデル定義をdatetimeからdateに変更したため
+          // 開始日の入力値が"現在"との比較になり時間のせいで"当日"が選択できない。
+          // そのため、"日付"で比較する為に一日前の日付を取得して比較する。
+          const anaDate = new Date();
+          const beforeDate = new Date();
+          beforeDate.setDate(anaDate.getDate() - 1);
 
-          if (startDate < new Date() || endDate < new Date()) {
+          //if (startDate < new Date() || endDate < new Date()) {
+          if (startDate < beforeDate || endDate < new Date()) {
             alert('表示期間は現在日時よりも過去の日時に設定できません。');
             return;
           }
@@ -430,6 +437,7 @@
           }
 
           // 確認用の内容を作成
+          // 修正：数字の3桁区切り
           const confirmationHTML = `
           <div class="con-product-name-box">
             <div class="con-product-name-box-title">
@@ -452,7 +460,7 @@
               <div class="con-title-text">販売価格</div>
             </div>
             <div class="con-product-name-box-input">
-              <p>${price} 円</p>
+              <p>${Number(price).toLocaleString()} 円</p>
             </div>
           </div>
           <div class="con-category-box">
@@ -460,7 +468,7 @@
               <div class="con-title-text">定価</div>
             </div>
             <div class="con-product-name-box-input">
-              <p>${listprice} 円</p>
+              <p>${Number(listprice).toLocaleString()} 円</p>
             </div>
           </div>
           <div class="con-category-box">
@@ -477,7 +485,7 @@
               <div class="con-title-text">在庫数</div>
             </div>
             <div class="con-product-name-box-input">
-              <p>${stock} 個</p>
+              <p>${Number(stock).toLocaleString()} 個</p>
             </div>
           </div>
           <div class="con-category-box">
@@ -485,7 +493,7 @@
               <div class="con-title-text">送料</div>
             </div>
             <div class="con-product-name-box-input">
-              <p>${shipping} 円</p>
+              <p>${Number(shipping).toLocaleString()} 円</p>
             </div>
           </div>
           <div class="con-category-box">
@@ -493,7 +501,7 @@
               <div class="con-title-text">重量</div>
             </div>
             <div class="con-product-name-box-input">
-              <p>${weight} g(グラム)</p>
+              <p>${Number(weight).toLocaleString()} g(グラム)</p>
             </div>
           </div>
           <div class="con-category-box">

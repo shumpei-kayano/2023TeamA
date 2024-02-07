@@ -2,6 +2,8 @@
 
 {% load static %}
 
+{% load priceslice_filters %}
+
 {% block title %}未発送注文一覧詳細{% endblock %}
 
 {% block contents %}
@@ -70,23 +72,23 @@
             </tr>
             <tr class="consumer-table-con">
               <th class="info-label">数量</th>
-              <td class="info-value">{{ order_history.quantity }} 個</td>
+              <td class="info-value">{{ order_history.quantity|to_currency }} 個</td>
             </tr>
             <tr class="consumer-table-con">
               <th class="info-label">販売価格</th>
-              <td class="info-value">{{ order_history.sale.sale_price }} 円</td>
+              <td class="info-value">{{ order_history.sale.sale_price|to_currency }} 円</td>
             </tr>
             <tr class="consumer-table-con">
               <th class="info-label">合計金額</th>
-              <td class="info-value">{{ order_history.amount }} 円</td>
+              <td class="info-value">{{ order_history.amount|to_currency }} 円</td>
             </tr>
             <tr class="consumer-table-con">
               <th class="info-label">支払い方法</th>
-              <td class="info-value">※現在は着払いのみに対応。</td>
+              <td class="info-value">※現在はクレジットカード決済のみに対応。</td>
             </tr>
             <tr class="consumer-table-con">
               <th class="info-label">CO2排出削減量</th>
-              <td class="info-value">{{ order_history.co2 }} g</td>
+              <td class="info-value">{{ order_history.co2|to_currency }} g</td>
             </tr>
             <tr class="consumer-table-con">
               <th class="info-label">販売種別</th>
