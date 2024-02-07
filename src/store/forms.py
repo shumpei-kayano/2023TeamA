@@ -55,7 +55,7 @@ class SaleForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
     class Meta:
         model = Sale
-        exclude = ['product', 'store']
+        exclude = ['product', 'store', ]
         fields = ['sale_price', 'sale_start', 'sale_end', 'stock', 'expiration_date', 'description', 'sale_type']
         widgets = {
             'sale_price': forms.NumberInput(attrs={
@@ -84,14 +84,16 @@ class SaleForm(forms.ModelForm):
                 'class': 'input-active', 
                 'title': '販売開始日時を入力してください',
                 'required': 'required',
-                'type': 'datetime-local'
+                # 'type': 'datetime-local',
+                'type': 'date',
             }),
             'sale_end': forms.DateInput(attrs={
                 'id': 'endDateTime',
                 'class': 'input-active', 
                 'title': '販売終了日時を入力してください',
                 'required': 'required',
-                'type': 'datetime-local'
+                # 'type': 'datetime-local',
+                'type': 'date',
             }),
         }
 
@@ -102,8 +104,13 @@ class SaleForm(forms.ModelForm):
         cleaned_data = super().clean()
         sale_price = cleaned_data.get('sale_price')
         print("3番")
-        # okパターン(httpリクエストのpostパラメータからstr型で取得し、int型に変換する)
-        product_price = int(self.request.POST.get('product_price')) if self.request else None
+        # ↓product_priceをint型に変更したのでこの記述になった
+        print(self.instance.product.product_price)
+        product_price = self.instance.product.product_price if self.instance.product else None
+        # ↑product_priceをint型に変更したのでこの記述になった
+
+        # okパターン(httpリクエストのpostパラメータからstr型で取得し、int型に変換する))
+        # product_price = int(self.request.POST.get('product_price')) if self.request else None
 
         # okパターン(cleaned_dataからint型で取得する)
         # formを定義後、is_validでバリデーションとクリーニングを行い、formの値を正しい型に更新しcleaned_data辞書からint型で値を取得する
@@ -145,6 +152,9 @@ class SaleForm(forms.ModelForm):
         return sale_price
 
 class ThresholdForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super().__init__(*args, **kwargs)
     class Meta:
         model = Threshold
         fields = ['discount_rate', 'threshold']
@@ -160,6 +170,29 @@ class ThresholdForm(forms.ModelForm):
                 'required': 'required'
             }),
         }
+
+    def clean(self):
+        # 既存のバリデーションを実行
+        # 既存のバリデーションを実行
+        cleaned_data = super().clean()
+        threshold = cleaned_data.get('threshold')
+        print('threshold:', threshold)
+        print("テスト")
+        # sale_form = SaleForm(self.request.POST, )
+        # sale_stock = sale_form.cleaned_data.get('stock') if sale_form.is_valid() else None
+        # print('salestock', sale_stock)
+        print(self.instance.sale.stock)
+        sale_stock = self.instance.sale.stock if self.instance.sale else None
+        # sale_stock = self.instance.sale.stock if self.instance.sale else None
+        
+        print('sale:', sale_stock)
+
+        # thresholdがsaleのstockより大きい場合はエラー
+        if sale_stock and threshold > sale_stock:
+            print('しきい値が在庫数を超えています。')
+            raise forms.ValidationError({
+                'threshold': 'Threshold cannot be greater than the stock of the related sale.'
+            })
 
 class MelimitStoreEditForm(forms.ModelForm):
     class Meta:
