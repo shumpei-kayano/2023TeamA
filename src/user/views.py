@@ -691,6 +691,7 @@ def category_products(request):
     searchword = request.GET.get('inputValue')
     print('searchword:',searchword)
     product_detail = []
+    #キーワード検索の場合
     if searchword:
         results = Product.objects.filter(Q(product_name__icontains=searchword))
         print('results:',results)
@@ -778,7 +779,10 @@ def category_products(request):
                         }
             product_detail.append(detail)
             print('product_detail:',product_detail)
-        return render(request, 'user/category-products.html', {'products': results})
+            for Type in product_detail:
+                print('sale_type:',Type['sale_type'])
+        return render(request, 'user/category-products.html', {'products': product_detail})
+    #カテゴリー検索の場合
     #商品が一般か共同かわける必要あり
     #pk
     #画像
