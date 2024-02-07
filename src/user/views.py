@@ -43,6 +43,9 @@ def index(request):
                 random_sales.append(detail)
             for detail in random_sales:
                 print('detail',detail)
+                print('ratio:',detail['ratio'])
+                print('threshold_now:',detail['threshold_now'])
+                print('threshold:',detail['threshold'])
             # matching_sales = Sale.objects.filter(product__product_category=user_taste)  # ユーザーの好みに合った商品を取得
             # random_sale = random.choice(matching_sales)  # ランダムに1つの商品を選択
             categories = Product.TASTE_CHOICES #商品をカテゴリーごとに取得
@@ -178,11 +181,17 @@ def all_products_general(request):
 
 # 共同購入商品一覧
 def all_products_joint(request):
+    mel_sales = []
     sales_by_choices = {}
     for choice, _ in Sale.SALE_CHOICES:
         sales_by_choices[choice] = Sale.objects.filter(sale_type=choice)
         #sales melimit商品すべて 辞書でkeyを指定し、valueを取り出す
     sales = sales_by_choices['melimit_sales']
+    print('sales',sales)
+    for sale in sales:
+        print('sale',sale)
+        mel_sale = melmit_product_detail(sale)
+        mel_sales.append(mel_sale)
     #for文の最後のみ入っている すべてが入るように
     #thresholdsを辞書のままテンプレートに送るとめんどくさいのでリスト型にしたい
     thresholds = {}
@@ -260,7 +269,7 @@ def all_products_joint(request):
             print(threshold.threshold)
     #しきい値を取得できた thresholdの一つ目の引数=sale.pkのthreshold.threshold
     atai = 75
-    return render(request, 'user/joint-products.html', {'sales': sales, 'thresholds':thresholds, 'sale_infos':sale_infos,'mel_product':mel_product,'atai':atai})
+    return render(request, 'user/joint-products.html', {'sales': sales, 'thresholds':thresholds, 'sale_infos':sale_infos,'mel_product':mel_product,'atai':atai,'mel_sales':mel_sales})
 
 # 一般商品詳細
 def general_products_detail(request,pk):
