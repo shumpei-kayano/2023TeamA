@@ -102,11 +102,11 @@
                 <div class="header">
                     <div class="header-storekanri">
                         <div class="header-frame" id="headerFrameContainer">
-                            <p>|{{ user.site_url }}|</p>
+                            {% comment %} <p>|{{ user.site_url }}|</p>
                             <p>{{ user.username }}さんがログイン中</p>
                             <p>ユーザータイプ：{{ user.user_type }}</p>
                             <p>モデル名：{{ model_name }}</p>
-                            <p>インスタンス名：{{ instance_name }}</p>
+                            <p>インスタンス名：{{ instance_name }}</p> {% endcomment %}
                             <div class="header-migiue">
                                 <div class="header-icon">
                                 <img class="user-icon" alt="" src="{% static 'store/img/user.png' %}" />

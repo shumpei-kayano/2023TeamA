@@ -36,6 +36,7 @@
               </div>
               <div class="product-name-box-input">
                 {{ product_form.product_name }}
+                <div id="productNameError" style="color: red;"></div>
               </div>
             </div>
   
@@ -56,7 +57,8 @@
               </div>
               <div class="price-box-input">
                 {{ sale_form.sale_price }}
-              <div id="priceValidationError"></div> <!-- js用id -->
+                <div id="priceValidationError"></div> <!-- js用id -->
+                <div id="salePriceError" style="color: red;"></div>
               </div>
             </div>
   
@@ -67,6 +69,7 @@
               </div>
               <div class="listprice-box-input">
                 {{ product_form.product_price }}
+                <div id="listPriceError" style="color: red;"></div>
               </div>
             </div>
   
@@ -77,6 +80,7 @@
               </div>
               <div class="quantity-box-input">
                 {{ threshold_form.threshold }}
+                <div id="quantityError" style="color: red;"></div>
               </div>
             </div>
   
@@ -87,6 +91,7 @@
               </div>
               <div class="discount-box-input">
                 {{ threshold_form.discount_rate }}
+                <div id="discountError" style="color: red;"></div>
               </div>
             </div>
   
@@ -110,6 +115,7 @@
               </div>
               <div class="stock-box-input">
                 {{ sale_form.stock }}
+                <div id="stockError" style="color: red;"></div>
               </div>
             </div>
   
@@ -120,6 +126,7 @@
               </div>
               <div class="shipping-box-input">
                 <input type="number" class="input-active" placeholder="送料を入力してください（※半角数字）" required/>
+                <div id="shippingError" style="color: red;"></div>
               </div>
             </div>
   
@@ -130,6 +137,7 @@
               </div>
               <div class="weight-box-input">
                 {{ product_form.weight }} g(グラム)
+                <div id="weightError" style="color: red;"></div>
               </div>
             </div>
   
@@ -193,6 +201,110 @@
   
   
       <script>
+              // 商品名の入力欄の要素を取得
+      const productNameInput = document.querySelector('.product-name-box-input input');
+      // エラーメッセージを表示するための要素を取得
+      const productNameError = document.getElementById('productNameError');
+
+      // 商品名の入力が変更されたときに呼ばれる関数
+      productNameInput.addEventListener('input', function () {
+        // 商品名の現在の文字数を取得
+        const currentLength = productNameInput.value.length;
+
+        // 制限する文字数（30文字）を超える場合はエラーメッセージを表示
+        if (currentLength > 30) {
+          productNameError.textContent = '商品名は30文字以内で入力してください。';
+          // 入力を受け付けないようにする（31文字目以降を削除）
+          productNameInput.value = productNameInput.value.substring(0, 30);
+        } else {
+          // 制限内ならエラーメッセージをクリア
+          productNameError.textContent = '';
+        }
+      });
+      // 各数値入力欄の要素を取得
+      const salePriceInput = document.querySelector('.price-box-input input');
+      const listPriceInput = document.querySelector('.listprice-box-input input');
+      const quantityInput = document.querySelector('.quantity-box-input input');
+      const discountInput = document.querySelector('.discount-box-input input');
+      const stockInput = document.querySelector('.stock-box-input input');
+      const shippingInput = document.querySelector('.shipping-box-input input');
+      const weightInput = document.querySelector('.weight-box-input input');
+      // 各エラーメッセージを表示するための要素を取得
+      const salePriceError = document.getElementById('salePriceError');
+      const listPriceError = document.getElementById('listPriceError');
+      const quantityError = document.getElementById('quantityError');
+      const discountError = document.getElementById('discountError');
+      const stockError = document.getElementById('stockError');
+      const shippingError = document.getElementById('shippingError');
+      const weightError = document.getElementById('weightError');
+      // 各数値入力欄の入力が変更されたときに呼ばれる関数
+      salePriceInput.addEventListener('input', handleNumericInput.bind(null, salePriceInput, salePriceError));
+      listPriceInput.addEventListener('input', handleNumericInput.bind(null, listPriceInput, listPriceError));
+      quantityInput.addEventListener('input', handleNumericInput.bind(null, quantityInput, quantityError));
+      {% comment %} discountInput.addEventListener('input', handleNumericInput.bind(null, discountInput, discountError)); {% endcomment %}
+      discountInput.addEventListener('input', handleDiscountInput);
+      stockInput.addEventListener('input', handleNumericInput.bind(null, stockInput, stockError));
+      shippingInput.addEventListener('input', handleNumericInput.bind(null, shippingInput, shippingError));
+      weightInput.addEventListener('input', handleNumericInput.bind(null, weightInput, weightError));
+      // 数値入力欄の入力が変更されたときに呼ばれる汎用の関数
+      function handleNumericInput(inputElement, errorElement) {
+        // 入力が小数点を含む場合、エラーメッセージを表示
+        if (/\./.test(inputElement.value)) {
+          errorElement.textContent = '小数点は入力できません。';
+          // 入力を受け付けないようにする（小数点を削除）
+          inputElement.value = inputElement.value.replace(/\./g, '');
+        } else if (!/^\d+$/.test(inputElement.value)) {
+          // 入力された値が数値でない場合もエラーメッセージを表示
+          errorElement.textContent = '数値を入力してください。';
+          // 入力を受け付けないようにする（非数値を削除）
+          inputElement.value = inputElement.value.replace(/[^\d]/g, '');
+        } else if (inputElement.value.startsWith('0')) {
+          // 最初に0が入力された場合、エラーメッセージを表示
+          errorElement.textContent = '0から始まる数値は入力できません。';
+          // 入力を受け付けないようにする（0を削除）
+          inputElement.value = inputElement.value.substring(1);
+        } else {
+          // 入力が数値ならエラーメッセージをクリア
+          errorElement.textContent = '';
+        }
+        // 入力された数値が6文字以上の場合、エラーメッセージを表示し7文字目以降を無視
+        if (inputElement.value.length > 6) {
+          errorElement.textContent = '6桁以内で入力してください。';
+          // 入力を受け付けないようにする（7文字目以降を削除）
+          inputElement.value = inputElement.value.substring(0, 6);
+        }
+      }
+      // 「共同購入達成時の値引率」の入力が変更されたときに呼ばれる関数
+      function handleDiscountInput() {
+        const discountInput = document.querySelector('.discount-box-input input');
+        const discountError = document.getElementById('discountError');
+        // 数値を入力する欄に小数点以下を受け付けない
+        if (discountInput.value.indexOf('.') !== -1) {
+            discountError.textContent = '小数点以下は設定できません。';
+            // 入力を受け付けないようにする（小数点を削除）
+            discountInput.value = discountInput.value.replace(/\./g, '');
+        } else if (!/^\d+$/.test(discountInput.value)) {
+            // 入力された値が数値でない場合もエラーメッセージを表示
+            discountError.textContent = '数値を入力してください。';
+            // 入力を受け付けないようにする（非数値を削除）
+            discountInput.value = discountInput.value.replace(/[^\d]/g, '');
+        } else if (discountInput.value.length > 1 && discountInput.value.startsWith('0')) {
+            // 入力が2桁以上で最初に0が入力された場合、エラーメッセージを表示
+            discountError.textContent = '0から始まる数値は入力できません。';
+            // 入力を受け付けないようにする（0を削除）
+            discountInput.value = discountInput.value.substring(1);
+        } else if (discountInput.value.length > 2 || parseInt(discountInput.value) < 1 || parseInt(discountInput.value) > 99) {
+            // 入力が2桁以上または1～99以外の場合、エラーメッセージを表示
+            discountError.textContent = '1から99までの数値を入力してください。';
+            // 入力を受け付けないようにする（無効な値を削除）
+            discountInput.value = '';
+        } else {
+            // 入力が適切な場合はエラーメッセージをクリア
+            discountError.textContent = '';
+        }
+      }
+
+      
       // プレビュー画像を表示する
       function previewFile(file) {
         // プレビュー画像を追加する要素
