@@ -229,21 +229,24 @@
 </section>
         
 
-    <script>/// 共同購入商品の注意事項の確認
-        document.getElementById('submit-button').addEventListener('click', function(event) {
-            if (document.getElementById('confirm-checkbox').checked) {
+<script>
+    /// 共同購入商品の注意事項の確認
+    var cartItemMelLength = {{ cart_item_mel|length }};
+    var cartItemGenLength = {{ cart_item_gen|length }};
+    document.getElementById('submit-button').addEventListener('click', function(event) {
+        if (document.getElementById('confirm-checkbox').checked) {
+            window.location.href = "{% url 'user:order_completed' %}";
+        } else {
+        if (cartItemMelLength === 0 && cartItemGenLength > 0){
                 window.location.href = "{% url 'user:order_completed' %}";
             } else {
-                if ("{{ cart_item_mel }}".trim() !== "" && "{{ cart_item_gen }}".trim() === ""){
-                    window.location.href = "{% url 'user:order_completed' %}";
-                } else {
-                    event.preventDefault();
-                    alert('共同購入商品の注意事項をご確認ください。');
-                }
+                event.preventDefault();
+                alert('共同購入商品の注意事項をご確認ください。');
             }
-        });
+        }
+    });
 
-    </script>
+</script>
     {% comment %} <script>
         document.getElementById('submit-button').addEventListener('click', function(event) {
             window.location.href = "{% url 'user:order_completed' %}";
