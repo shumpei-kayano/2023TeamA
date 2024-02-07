@@ -55,7 +55,7 @@
                                 <p class="discount">{{ product.rate }}%OFF!</p>
                                 <div class="card--content">
                                     <h3 class="card--title">{{ product.product_name }}</h3>
-                                    <h4 class="card--discount">￥{{ product.price|to_currency }}(税込)</h4>
+                                    <h4 class="card--discount">￥{{ product.price|to_currency }}（税込）</h4>
                                 </div>
                             </a>
                         </div>
@@ -72,7 +72,7 @@
                                         <div class="progress-bar__completed" style="width: 50%;"></div>
                                     </div>
                                     <p class="card--text">あと{{ product.at_count}}人達成で</p>
-                                    <p class="card--price">{{ product.price }}(税込)</p>
+                                    <p class="card--price">￥{{ product.price }}（税込）</p>
                                     <h4 class="card--discount">￥{{ product.clear_price|to_currency }}（税込）</h4>
                                     {% else %}
                                     <meter low={{ product.threshold|meter_value:"3" }} high={{ product.threshold|meter_value:"1.5"}} max={{ product.threshold }} value={{ product.threshold_now }}>B</meter>
@@ -80,7 +80,7 @@
                                         <div class="progress-bar__completed" style="width: 50%;"></div>
                                     </div>
                                     <p class="card--text">達成!</p>
-                                    <p class="card--price">{{ product.price }}(税込)</p>
+                                    <p class="card--price">￥{{ product.price }}（税込）</p>
                                     <h4 class="card--discount">￥{{ product.clear_price|to_currency }}（税込）</h4>
                                     {% endif %}
                                 </div>

@@ -76,7 +76,7 @@
                                                 <p class="discount">{{ random_sale.rate }}％</p>
                                                 <div class="card--content">
                                                     <h3 class="card--title">{{ random_sale.product_name }}</h3>
-                                                    <h4 class="card--discount">￥{{ random_sale.price|to_currency }}(税込)</h4>
+                                                    <h4 class="card--discount">￥{{ random_sale.price|to_currency }}（税込）</h4>
                                                 </div>
                                             </a>
                                         </div>
@@ -86,7 +86,7 @@
                                             <a href="{% url 'user:joint_products_detail' pk=random_sale.pk %}">
                                                 <img src="{{ random_sale.image.url }}" alt="{{ random_sale.product_name }}" class="card--img">
                                                     {% if random_sale.threshold_now < random_sale.threshold %}
-                                                        <p class="discount">{{ random_sale.rate }}％</p>
+                                                        <p class="discount">{{ random_sale.rate }}％OFF!</p>
                                                         <div class="card--content">
                                                             <h3 class="card--title">{{ random_sale.product_name }}</h3>
                                                             
@@ -94,11 +94,11 @@
                                                                 <div class="progress-bar__completed" style="width: {{ random_sale.ratio }}%;"></div>
                                                             </div>
                                                             <p class="card--text">あと{{ random_sale.at_count }}人達成で</p>
-                                                            <p class="card--price">{{ random_sale.price|to_currency }}(税込)</p>
+                                                            <p class="card--price">{{ random_sale.price|to_currency }}（税込）</p>
                                                             <h4 class="card--discount">￥{{ random_sale.clear_price|to_currency }}（税込）</h4>
                                                         </div>
                                                     {% else %}
-                                                        <p class="discount">{{ random_sale.final_rate }}％</p>
+                                                        <p class="discount">{{ random_sale.final_rate }}％OFF!</p>
                                                         <div class="card--content">
                                                             <h3 class="card--title">{{ random_sale.product_name }}</h3>
                                                             
@@ -106,7 +106,7 @@
                                                                 <div class="progress-bar__completed" style="width: {{ random_sale.ratio }}%;"></div>
                                                             </div>
                                                             <p class="card--text">達成しました！</p>
-                                                            <p class="card--price">{{ random_sale.price|to_currency }}(税込)</p>
+                                                            <p class="card--price">{{ random_sale.price|to_currency }}（税込）</p>
                                                             <h4 class="card--discount">￥{{ random_sale.clear_price|to_currency }}（税込）</h4>
                                                         </div>
                                                     {% endif %}
@@ -126,7 +126,7 @@
                                                 <p class="discount">ひとつめ {{ random_sale.discount_rate }}％</p>
                                                 <div class="card--content">
                                                     <h3 class="card--title">{{ random_sale.product.product_name }}</h3>
-                                                    <h4 class="card--discount">￥{{ random_sale.sale_price }}(税込)</h4>
+                                                    <h4 class="card--discount">￥{{ random_sale.sale_price }}（税込）</h4>
                                                 </div>
                                             </a>
                                         </div>
@@ -140,7 +140,7 @@
                                                 <h3 class="card--title">{{ random_sale.product.product_name }}</h3>
                                                 <meter low="69" high="80" max="100" value="84">B</meter>
                                                 <p class="card--text">あと00人達成で</p>
-                                                <p class="card--price">{{ random_sale.sale_price }}(税込)</p>
+                                                <p class="card--price">{{ random_sale.sale_price }}（税込）</p>
                                                 <h4 class="card--discount">￥100,000（税込）</h4>
                                             </div>
                                         </a>
@@ -153,7 +153,7 @@
                                                 <p class="discount">ひとつめ {{ random_sale.discount_rate }}％</p>
                                                 <div class="card--content">
                                                     <h3 class="card--title">{{ random_sale.product.product_name }}</h3>
-                                                    <h4 class="card--discount">￥{{ random_sale.sale_price }}(税込)</h4>
+                                                    <h4 class="card--discount">￥{{ random_sale.sale_price }}（税込）</h4>
                                                 </div>
                                             </a>
                                         </div>
@@ -166,7 +166,7 @@
                                                         <h3 class="card--title">{{ random_sale.product.product_name }}</h3>
                                                         <meter low="69" high="80" max="100" value="84">B</meter> それぞれの値を商品チェックモデルから参照する　フロントに確認
                                                         <p class="card--text">あと00人達成で</p> 商品チェックモデルから総量を算出
-                                                        <p class="card--price">{{ random_sale.sale_price }}(税込)</p>
+                                                        <p class="card--price">{{ random_sale.sale_price }}（税込）</p>
                                                         <h4 class="card--discount">￥100,000（税込）</h4>　割引額はモデルにあるのでprice-割引額を算出
                                                     </div>
                                                 </a>
@@ -181,7 +181,7 @@
                                                 <p class="discount">00%OFF {{ sale.discount_rate }}％</p>
                                                 <div class="card--content">
                                                     <h3 class="card--title">{{ sale.product.product_name }}</h3>
-                                                    <h4 class="card--discount">￥{{ sale.sale_price }}(税込)</h4>
+                                                    <h4 class="card--discount">￥{{ sale.sale_price }}（税込）</h4>
                                                     {% if sale.sale_type == 'general_sales' %}
                                                         <!-- 一般商品の場合の表示 -->
                                                     {% else %}
@@ -216,7 +216,7 @@
                                                 <p class="discount">３つめ {{ random_sale.discount_rate }}％</p>
                                                 <div class="card--content">
                                                     <h3 class="card--title">{{ random_sale.product.product_name }}</h3>
-                                                    <h4 class="card--discount">￥{{ random_sale.sale_price }}(税込)</h4>
+                                                    <h4 class="card--discount">￥{{ random_sale.sale_price }}（税込）</h4>
                                                 </div>
                                             </a>
                                         </div> 
@@ -235,10 +235,10 @@
                                         <div class="item--card card--blue">
                                             <a href="{% url 'user:general_products_detail' pk=random_sale.pk %}">
                                                 <img src="{{ random_sale.image.url }}" alt="{{ random_sale.product_name }}" class="card--img">
-                                                <p class="discount">{{ random_sale.rate }}％</p>
+                                                <p class="discount">{{ random_sale.rate }}％OFF!</p>
                                                 <div class="card--content">
                                                     <h3 class="card--title">{{ random_sale.product_name }}</h3>
-                                                    <h4 class="card--discount">￥{{ random_sale.price|to_currency }}(税込)</h4>
+                                                    <h4 class="card--discount">￥{{ random_sale.price|to_currency }}（税込）</h4>
                                                 </div>
                                             </a>
                                         </div>
@@ -248,7 +248,7 @@
                                             <a href="{% url 'user:joint_products_detail' pk=random_sale.pk %}">
                                                 <img src="{{ random_sale.image.url }}" alt="{{ random_sale.product_name }}" class="card--img">
                                                     {% if random_sale.threshold_now < random_sale.threshold %}
-                                                        <p class="discount">{{ random_sale.rate }}％</p>
+                                                        <p class="discount">{{ random_sale.rate }}％OFF!</p>
                                                         <div class="card--content">
                                                             <h3 class="card--title">{{ random_sale.product_name }}</h3>
                                                             
@@ -256,11 +256,11 @@
                                                                 <div class="progress-bar__completed" style="width: {{ random_sale.ratio }}%;"></div>
                                                             </div>
                                                             <p class="card--text">あと{{ random_sale.at_count }}人達成で</p>
-                                                            <p class="card--price">{{ random_sale.price|to_currency }}(税込)</p>
+                                                            <p class="card--price">{{ random_sale.price|to_currency }}（税込）</p>
                                                             <h4 class="card--discount">￥{{ random_sale.clear_price|to_currency }}（税込）</h4>
                                                         </div>
                                                     {% else %}
-                                                        <p class="discount">{{ random_sale.rate }}％</p>
+                                                        <p class="discount">{{ random_sale.rate }}％OFF!</p>
                                                         <div class="card--content">
                                                             <h3 class="card--title">{{ random_sale.product_name }}</h3>
                                                             
@@ -268,7 +268,7 @@
                                                                 <div class="progress-bar__completed" style="width: {{ random_sale.ratio }}%;"></div>
                                                             </div>
                                                             <p class="card--text">達成しました！</p>
-                                                            <p class="card--price">{{ random_sale.price|to_currency }}(税込)</p>
+                                                            <p class="card--price">{{ random_sale.price|to_currency }}（税込）</p>
                                                             <h4 class="card--discount">￥{{ random_sale.clear_price|to_currency }}（税込）</h4>
                                                         </div>
                                                     {% endif %}
@@ -307,7 +307,7 @@
                                         <p class="discount">{{ sale.rate }}％</p>
                                         <div class="card--content">
                                             <h3 class="card--title">{{ sale.product_name }}</h3>
-                                            <h4 class="card--discount">￥{{ sale.price|to_currency }}(税込)</h4>
+                                            <h4 class="card--discount">￥{{ sale.price|to_currency }}（税込）</h4>
                                         </div>
                                     </a>
                                 </div>
@@ -325,7 +325,7 @@
                                                         <div class="progress-bar__completed" style="width: {{ sale.ratio }}%;"></div>
                                                     </div>
                                                     <p class="card--text">あと{{ sale.at_count }}人達成で</p>
-                                                    <p class="card--price">{{ sale.price|to_currency }}(税込)</p>
+                                                    <p class="card--price">{{ sale.price|to_currency }}（税込）</p>
                                                     <h4 class="card--discount">￥{{ sale.clear_price|to_currency }}（税込）</h4>
                                                 </div>
                                             {% else %}
@@ -337,7 +337,7 @@
                                                         <div class="progress-bar__completed" style="width: {{ sale.ratio }}%;"></div>
                                                     </div>
                                                     <p class="card--text">達成しました！</p>
-                                                    <p class="card--price">{{ sale.price|to_currency }}(税込)</p>
+                                                    <p class="card--price">{{ sale.price|to_currency }}（税込）</p>
                                                     <h4 class="card--discount">￥{{ sale.clear_price|to_currency }}（税込）</h4>
                                                 </div>
                                             {% endif %}
@@ -369,7 +369,7 @@
                                         <p class="discount">{{ sale.rate }}％</p>
                                         <div class="card--content">
                                             <h3 class="card--title">{{ sale.product_name }}</h3>
-                                            <h4 class="card--discount">￥{{ sale.price|to_currency }}(税込)</h4>
+                                            <h4 class="card--discount">￥{{ sale.price|to_currency }}（税込）</h4>
                                         </div>
                                     </a>
                                 </div>
@@ -387,7 +387,7 @@
                                                         <div class="progress-bar__completed" style="width: {{ sale.ratio }}%;"></div>
                                                     </div>
                                                     <p class="card--text">あと{{ sale.at_count }}人達成で</p>
-                                                    <p class="card--price">{{ sale.price|to_currency }}(税込)</p>
+                                                    <p class="card--price">{{ sale.price|to_currency }}（税込）</p>
                                                     <h4 class="card--discount">￥{{ sale.clear_price|to_currency }}（税込）</h4>
                                                 </div>
                                             {% else %}
@@ -399,7 +399,7 @@
                                                         <div class="progress-bar__completed" style="width: {{ sale.ratio }}%;"></div>
                                                     </div>
                                                     <p class="card--text">達成しました！</p>
-                                                    <p class="card--price">{{ sale.price|to_currency }}(税込)</p>
+                                                    <p class="card--price">{{ sale.price|to_currency }}（税込）</p>
                                                     <h4 class="card--discount">￥{{ sale.clear_price|to_currency }}（税込）</h4>
                                                 </div>
                                             {% endif %}
@@ -431,7 +431,7 @@
                                         <p class="discount">{{ sale.rate }}％</p>
                                         <div class="card--content">
                                             <h3 class="card--title">{{ sale.product_name }}</h3>
-                                            <h4 class="card--discount">￥{{ sale.price|to_currency }}(税込)</h4>
+                                            <h4 class="card--discount">￥{{ sale.price|to_currency }}（税込）</h4>
                                         </div>
                                     </a>
                                 </div>
@@ -449,7 +449,7 @@
                                                         <div class="progress-bar__completed" style="width: {{ sale.ratio }}%;"></div>
                                                     </div>
                                                     <p class="card--text">あと{{ sale.at_count }}人達成で</p>
-                                                    <p class="card--price">{{ sale.price|to_currency }}(税込)</p>
+                                                    <p class="card--price">{{ sale.price|to_currency }}（税込）</p>
                                                     <h4 class="card--discount">￥{{ sale.clear_price|to_currency }}（税込）</h4>
                                                 </div>
                                             {% else %}
@@ -461,7 +461,7 @@
                                                         <div class="progress-bar__completed" style="width: {{ sale.ratio }}%;"></div>
                                                     </div>
                                                     <p class="card--text">達成しました！</p>
-                                                    <p class="card--price">{{ sale.price|to_currency }}(税込)</p>
+                                                    <p class="card--price">{{ sale.price|to_currency }}（税込）</p>
                                                     <h4 class="card--discount">￥{{ sale.clear_price|to_currency }}（税込）</h4>
                                                 </div>
                                             {% endif %}
@@ -493,7 +493,7 @@
                                         <p class="discount">{{ sale.rate }}％</p>
                                         <div class="card--content">
                                             <h3 class="card--title">{{ sale.product_name }}</h3>
-                                            <h4 class="card--discount">￥{{ sale.price|to_currency }}(税込)</h4>
+                                            <h4 class="card--discount">￥{{ sale.price|to_currency }}（税込）</h4>
                                         </div>
                                     </a>
                                 </div>
@@ -511,7 +511,7 @@
                                                         <div class="progress-bar__completed" style="width: {{ sale.ratio }}%;"></div>
                                                     </div>
                                                     <p class="card--text">あと{{ sale.at_count }}人達成で</p>
-                                                    <p class="card--price">{{ sale.price|to_currency }}(税込)</p>
+                                                    <p class="card--price">{{ sale.price|to_currency }}（税込）</p>
                                                     <h4 class="card--discount">￥{{ sale.clear_price|to_currency }}（税込）</h4>
                                                 </div>
                                             {% else %}
@@ -523,7 +523,7 @@
                                                         <div class="progress-bar__completed" style="width: {{ sale.ratio }}%;"></div>
                                                     </div>
                                                     <p class="card--text">達成しました！</p>
-                                                    <p class="card--price">{{ sale.price|to_currency }}(税込)</p>
+                                                    <p class="card--price">{{ sale.price|to_currency }}（税込）</p>
                                                     <h4 class="card--discount">￥{{ sale.clear_price|to_currency }}（税込）</h4>
                                                 </div>
                                             {% endif %}

@@ -10,21 +10,17 @@
         </div>
         <div class="image-container">
             <img class="small-image" src="{{ sale.product.product_image.url }}" alt="{{ sale.product.product_name }}">
-            <img class="small-image" src="{% static 'assets/img/メリ光男.png' %}" alt="Image 2">
+            <img class="small-image" src="{% static 'assets/img/メリ光雄.png' %}" alt="Image 2">
             <img class="small-image" src="{% static 'assets/img/メリ光子.png' %}" alt="Image 3">
-            <img class="small-image" src="{% static 'assets/img/メリ光男.png' %}" alt="Image 4">
-            <img class="small-image" src="{% static 'assets/img/メリ光子.png' %}" alt="Image 5">
-            <img class="small-image" src="{% static 'assets/img/メリ光男.png' %}" alt="Image 6">
-            <!-- 他の画像も同様に -->
         </div>
     </div>
     <div class="detail1__right">
         <div class="detail1__right--upper">
             <div class="detail1__right--upper1">
                 <h2 class="detail1__title">{{ sale.product.product_name }}</h2>
-                <h3 class="detail1__discount">¥{{ sale.sale_price|to_currency }}（税込）</h3>
+                <h3 class="detail1__discount">￥{{ sale.sale_price|to_currency }}（税込）</h3>
                 <p class="detail1__discount--text">定価から{{ sale.discount_rate }}%OFF</p>
-                <p class="detail1__price">定価：¥{{ sale.product.product_price|to_currency }}（税込）</p>
+                <p class="detail1__price">定価：￥{{ sale.product.product_price|to_currency }}（税込）</p>
                 </div>
             <div class="detail1__right--upper2">
                 <p class="detail1__genre general">一般購入商品</p>
@@ -68,7 +64,7 @@
                 <p class="detail1__text-bd">数量</p>
             </div>
             <div class="detail1__right--lower2">
-                <p class="detail1__text">¥100</p>
+                <p class="detail1__text">￥100</p>
                 <p class="detail1__text">{{ sale.stock }}個</p>
             </div>
         </div>
@@ -130,7 +126,7 @@
                                         <div class="progress-bar__completed" style="width: 50%;"></div>
                                     </div>
                                     <p class="card--text">あと00人達成で</p>
-                                    <p class="card--price">{{ related_sale.sale_price }}(税込)</p>
+                                    <p class="card--price">￥{{ related_sale.sale_price }}（税込）</p>
                                     <h4 class="card--discount">￥100,000（税込）</h4>
                                 </div>
                             </a>

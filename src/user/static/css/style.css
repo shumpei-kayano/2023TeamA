@@ -991,6 +991,7 @@ input:checked + .tab_class + .content_class {
   padding: 0.1em;
   width: 5rem;
   aspect-ratio: 4/3;
+  object-fit: cover;
 }
 .cart__shopping-table .cnt {
   font-weight: bold;
@@ -1322,22 +1323,45 @@ input:checked + .tab_class + .content_class {
   margin-bottom: 1rem;
 }
 
-.order-head {
+.order h2 {
   font-size: 2rem;
   text-align: center;
+}
+@media screen and (max-width: 768px) {
+  .order h2 {
+    font-size: 1.5rem;
+  }
 }
 .order-bottom {
   font-size: 2rem;
   text-align: center;
-  margin-top: 5rem;
-  margin-bottom: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 76px; /* 画像とテキストの間隔を調整 */
+  gap: 1rem;
+}
+@media screen and (max-width: 768px) {
+  .order-bottom {
+    display: grid;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+  }
+}
+.order-bottom p {
+  font-family: cursive;
+}
+.order-bottom img {
+  width: 10rem;
+  aspect-ratio: 1/1;
+}
+@media screen and (max-width: 768px) {
+  .order-bottom img {
+    width: 8rem;
+  }
 }
 .order-btn {
   text-align: center;
+  margin-bottom: 1rem;
 }
 
 .pass-head {
@@ -1417,7 +1441,7 @@ input:checked + .tab_class + .content_class {
 .signup-option .option-content img {
   height: auto;
   width: 10rem;
-  aspect-ratio: 5/4;
+  aspect-ratio: 1/1;
 }
 .signup-detail {
   display: flex;
@@ -1705,10 +1729,13 @@ input:checked + .tab_class + .content_class {
     justify-content: center;
   }
 }
-@media screen and (max-width: 768px) {
-  .detail1__right--upper1, .detail1__right--upper2 {
-    width: 100%;
-  }
+.detail1__right--upper1, .detail1__right--upper2 {
+  width: 100%;
+}
+.detail1__right--upper1 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 .detail1__right--center {
   padding-bottom: 1rem;
@@ -1798,6 +1825,18 @@ input:checked + .tab_class + .content_class {
 }
 .detail1__text-bd {
   font-weight: bold;
+}
+.detail1__form1, .detail1__form2 {
+  width: 50%;
+}
+.detail1__form1 button, .detail1__form2 button {
+  width: 100%;
+}
+.detail1__form1 {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+  align-items: baseline;
 }
 
 .detail2 {
