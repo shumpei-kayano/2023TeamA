@@ -41,13 +41,13 @@
                             <a href="{% url 'user:general_products_detail' pk=item.pk %}" class="btn btn--white">詳細</a>
                         </td>
                         <td>
-                            <form action="{% url 'user:add_to_cart' item.pk %}" method="POST">
+                            <form action="{% url 'user:add_to_cart' pk=item.pk %}" method="POST">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn--beige">カートに追加</button>
                             </form>
                         </td>
                         <td>
-                            <form action="{% url 'user:remove_from_favorites' item.pk %}" method="POST">
+                            <form action="{% url 'user:remove_from_favorites' pk=item.pk %}" method="POST">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn--red">削除</button>
                             </form>
@@ -74,13 +74,13 @@
                             <a href="{% url 'user:joint_products_detail' pk=item.pk %}" class="btn btn--white">詳細</a>
                         </td>
                         <td>
-                            <form action="{% url 'user:add_to_cart' item.pk %}" method="POST">
+                            <form action="{% url 'user:add_to_cart' pk=item.pk %}" method="POST">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn--beige">カートに追加</button>
                             </form>
                         </td>
                         <td>
-                            <form action="{% url 'user:remove_from_favorites' item.pk %}" method="POST">
+                            <form action="{% url 'user:remove_from_favorites' pk=item.pk %}" method="POST">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn--red">削除</button>
                             </form>

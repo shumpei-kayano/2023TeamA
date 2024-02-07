@@ -488,10 +488,13 @@ def order_completed(request):
     return render(request, 'user/order-completed.html')
     
 
+
 # お気に入り
 def favorite(request):
-    favorites = Favorite.objects.filter(user=request.user)
-    print(favorites)
+    user_id = request.user.id
+    user = MelimitUser.objects.get(id=user_id)
+    favorites = Favorite.objects.filter(user=user)
+    print('ふぁぼりて:',favorites)
     fav_sales = []
     for i in favorites:
         sale_id = i.sale.id
@@ -1064,7 +1067,13 @@ def add_to_favorites(request, pk):
 def remove_from_favorites(request, pk):
     # product = get_object_or_404(Product, pk=product_id)
     sale = Sale.objects.get(id=pk)
-    Favorite.objects.filter(user=request.user, sale=sale).delete()
+    print('sale:',sale)
+    user_id = request.user.id
+    user = MelimitUser.objects.get(id=user_id)
+    print('user:',user)
+    print('aaaaaaaaaaaaaaaaaaaaaaaa')
+    fav = Favorite.objects.filter(user=user, sale=sale).delete()
+    print('favvvvvvvvvvv:',fav)
     #リダイレクト先はお気に入りページにしよう
     return redirect('user:favorite')
     # return render(request, 'user/favorite.html')
