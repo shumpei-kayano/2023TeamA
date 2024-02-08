@@ -10,31 +10,14 @@
             </div>
             <div class="image-container">
                 <img class="small-image" src="{{ sales.product_image.url }}" alt="{{ sales.product_name }}">
-                <img class="small-image" src="{% static 'assets/img/メリ光男.png' %}" alt="Image 2">
-                <img class="small-image" src="{% static 'assets/img/メリ光子.png' %}" alt="Image 3">
-                <img class="small-image" src="{% static 'assets/img/メリ光男.png' %}" alt="Image 4">
-                <img class="small-image" src="{% static 'assets/img/メリ光子.png' %}" alt="Image 5">
-                <img class="small-image" src="{% static 'assets/img/メリ光男.png' %}" alt="Image 6">
+                {% comment %} <img class="small-image" src="{% static 'assets/img/メリ光雄.png' %}" alt="Image 2">
+                <img class="small-image" src="{% static 'assets/img/メリ光子.png' %}" alt="Image 3"> {% endcomment %}
                 <!-- 他の画像も同様に -->
             </div>
         </div>
         <div class="detail1__right">
             <div class="detail1__right--upper">
                 <div class="detail1__right--upper1">
-                    <h2 class="detail1__title">{{ sales.product_name }}</h2>
-                    {% comment %} 閾値クリア前に表示の金額は何。その時のdetail_priceはどうする 閾値をクリアしているかのif文を設置？ {% endcomment %}
-                    {% comment %} 現在の商品チェックモデルの商品ごとの個数が出せないので仮置きの stock {% endcomment %}
-                    {% if sales.stock >= sales.threshold %}
-                    <h3 class="detail1__discount">¥閾値クリア後の値段（税込）</h3>
-                    <p class="detail1__discount--text">クリア後の%OFF</p>
-                    {% comment %} if 閾値をクリアしていたら下を表示 {% endcomment %}
-                    {% else %}
-                    <h3 class="detail1__discount">¥閾値クリア前の値段 税込）</h3>
-                    <p class="detail1__discount--text">定価から00%OFF</p>
-                    {% endif %}
-                    <p class="detail1__price">¥{{ sales.sale_price }}（税込）</p>
-                    </div>
-                <div class="detail1__right--upper2">
                     <p class="detail1__genre joint">共同購入商品</p>
                     {% if sales.stock > 0 %}
                     <p class="detail1__soldout">在庫あり</p>
@@ -42,6 +25,20 @@
                     {% comment %} <p class="detail1__soldout">在庫なし</p>えｘ {% endcomment %}
                     {% endif %}
                 </div>
+                <div class="detail1__right--upper2">
+                    <h2 class="detail1__title">{{ sales.product_name }}</h2>
+                    {% comment %} 閾値クリア前に表示の金額は何。その時のdetail_priceはどうする 閾値をクリアしているかのif文を設置？ {% endcomment %}
+                    {% comment %} 現在の商品チェックモデルの商品ごとの個数が出せないので仮置きの stock {% endcomment %}
+                    {% if sales.stock >= sales.threshold %}
+                    <h3 class="detail1__discount">￥閾値クリア後の値段（税込）</h3>
+                    <p class="detail1__discount--text">クリア後の%OFF</p>
+                    {% comment %} if 閾値をクリアしていたら下を表示 {% endcomment %}
+                    {% else %}
+                    <h3 class="detail1__discount">￥閾値クリア前の値段 税込）</h3>
+                    <p class="detail1__discount--text">定価から00%OFF</p>
+                    {% endif %}
+                    <p class="detail1__price">￥{{ sales.sale_price }}（税込）</p>
+                    </div>
             </div>
             <div class="detail1__right--center">
                 {% comment %} 閾値について {% endcomment %}
@@ -58,42 +55,48 @@
                 {% comment %} else {% endcomment %}
                 <p class="detail1__text-bd">達成しました！</p>
                 {% comment %} endif {% endcomment %}
-                <p class="detail1__text">{{ sales.description }}商品説明商品説明商品説明商品説明商品説明商品説明商品説明商品説明</p>
                 {% comment %} 在庫があるかどうかでカートに追加ボタンを表示したり消したり {% endcomment %}
                 {% if sale.stock > 0 %}
-                <form action="{% url 'user:add_to_cart' sales.sale_pk %}" method="post">
-                    {% csrf_token %}
-                    <label for="quantity" class="detail1__text-bd">数量</label>
-                    <input type="number" class="cnt" min="1" max="10" step="1" value="1" name="quantity" id="quantity">
-                    <input type="hidden" name="product_id" value="{{ sales.pk }}">
-                    <button type="submit" class="btn--beige btn--middle">カートに入れる</button>
-                    <button type="submit" class="btn--white btn--middle">お気に入りに追加</button>
-                </form>
-                <form action="#" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="product_id" value="{{ sale.pk }}" >
-                    <button type="submit" class="btn--white btn--middle">お気に入りに追加</button>
-                </form>
+                    <form  class="detail1__form1" action="{% url 'user:add_to_cart' sales.sale_pk %}" method="post">
+                        {% csrf_token %}
+                        <label for="quantity" class="detail1__text-bd">数量</label>
+                        <input type="number" class="cnt" min="1" max="10" step="1" value="1" name="quantity" id="quantity">
+                        <input type="hidden" name="product_id" value="{{ sales.pk }}">
+                        <button type="submit" class="btn--beige btn--middle">カートに入れる</button>
+                    </form>
+                    {% if user.is_authenticated %}
+                        <form class="detail1__form2" action="{% url 'user:add_to_favorites' sales.sale_pk %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="product_id" value="{{ sales.sale_pk }}" >
+                            <button type="submit" class="btn--white btn--middle">お気に入りに追加</button>
+                        </form>
+                    {% else %}
+                    <a href="{% url 'account_login_kkkk' %}" class="btn--beige btn">お気に入りに追加するにはログインしてください</a>
+                    {% endif %}
                 {% else %}
                 {% comment %} 在庫がないとき。お気に入りボタンのみ。なくなる可能性あり {% endcomment %}
-                <form action="#" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="product_id" value="{{ sale.pk }}" >
-                    <button type="submit" class="btn--white btn--middle">お気に入りに追加</button>
-                </form>
+                    {% if user.is_authenticated %}
+                        <form action="{% url 'user:add_to_favorites' sales.sale_pk %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="product_id" value="{{ sales.sale_pk }}" >
+                            <button type="submit" class="btn--white btn">お気に入りに追加</button>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'account_login_kkkk' %}" class="btn--beige btn">お気に入りに追加するにはログインしてください</a>
+                    {% endif %}
                 {% endif %}
             </div>
             <div class="detail1__right--lower">
                 <div class="detail1__right--lower1">
                     <p class="detail1__text-bd">販売期間</p>
                     <p class="detail1__text-bd">送料</p>
-                    <p class="detail1__text-bd">数量</p>
+                    <p class="detail1__text-bd">在庫数</p>
                 </div>
                 <div class="detail1__right--lower2">
                     <p class="detail1__text">
                         {% comment %} {{ sales.sale_start }}〜 {% endcomment %}
                         {{ sales.sale_end }}まで</p>
-                    <p class="detail1__text">¥100（税込）</p>
+                    <p class="detail1__text">￥100（税込）</p>
                     <p class="detail1__text">{{ sales.stock }}個</p>
                 </div>
             </div>
@@ -155,7 +158,7 @@
                                             <div class="progress-bar__completed" style="width: 60%;"></div>
                                         </div>
                                         <p class="card--text">あと00人達成で</p>
-                                        <p class="card--price">{{ related_sale.sale_price }}(税込)</p>
+                                        <p class="card--price">{{ related_sale.sale_price }}（税込）</p>
                                         <h4 class="card--discount">￥100,000（税込）</h4>
                                     </div>
                                 </a>

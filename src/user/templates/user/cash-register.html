@@ -69,7 +69,7 @@
                         </p>
                     </li>
                 </ul>
-                <input type="hidden" id="confirm-checkbox">
+                {% comment %} <input type="hidden" id="confirm-checkbox"> {% endcomment %}
             </div>
         
         {% endif %}
@@ -141,7 +141,7 @@
         {% endfor %} {% endcomment %}
             <p class="register__caution">※共同購入商品は目標個数に達しなかった場合、最終割引は適用されません。（定価からの割引は適用されます。）</p>
             <p class="register__caution">また、発送日時も前後する場合があります。</p>
-            <p class="register__caution">必ず<a href="#">melimitご利用ガイド</a>をご一読ください。</p>
+            <p class="register__caution">ご注意ください。</p>
             <div class="register__confirm">
                 <input type="checkbox" id="confirm-checkbox">
                 <label for="confirm-checkbox">確認しました</label>
@@ -229,21 +229,24 @@
 </section>
         
 
-    <script>/// 共同購入商品の注意事項の確認
-        document.getElementById('submit-button').addEventListener('click', function(event) {
+<script>
+    /// 共同購入商品の注意事項の確認
+    var cartItemMelLength = {{ cart_item_mel|length }};
+    var cartItemGenLength = {{ cart_item_gen|length }};
+    document.getElementById('submit-button').addEventListener('click', function(event) {
+        if (cartItemMelLength === 0 && cartItemGenLength > 0){
+            window.location.href = "{% url 'user:order_completed' %}";
+        } else {
             if (document.getElementById('confirm-checkbox').checked) {
                 window.location.href = "{% url 'user:order_completed' %}";
             } else {
-                if ("{{ cart_item_mel }}".trim() !== "" && "{{ cart_item_gen }}".trim() === ""){
-                    window.location.href = "{% url 'user:order_completed' %}";
-                } else {
-                    event.preventDefault();
-                    alert('共同購入商品の注意事項をご確認ください。');
-                }
+                event.preventDefault();
+                alert('共同購入商品の注意事項をご確認ください。');
             }
-        });
+        }
+    });
 
-    </script>
+</script>
     {% comment %} <script>
         document.getElementById('submit-button').addEventListener('click', function(event) {
             window.location.href = "{% url 'user:order_completed' %}";

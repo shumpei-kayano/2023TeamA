@@ -619,7 +619,6 @@ textarea,
 }
 .signup__form-group {
   margin-bottom: 50px;
-  position: relative;
 }
 .signup__form-group .required {
   text-align: center;

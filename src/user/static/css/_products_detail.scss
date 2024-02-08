@@ -45,9 +45,12 @@
                 justify-content: center;
             }
             &1,&2 {
-                @media screen and (max-width: 768px){
                     width: 100%;
-                }
+            }
+            &1 {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
             }
         }
         &--center{
@@ -58,10 +61,6 @@
                 flex-wrap: wrap;
                 justify-content: center;
             }
-            .cnt{
-                font-weight: bold;
-                padding: 0.5rem;
-                }
             button{
                 padding: 0.5rem 1rem;
                 margin: 0.5rem 0;
@@ -86,6 +85,7 @@
     }
     &__title {
         margin-top: 0;
+        text-align: center;
     }
     &__discount {
         color: $melimit_red;
@@ -134,6 +134,20 @@
         }
         &-bd {
             font-weight: bold;
+        }
+    }
+    &__form {
+        &1,&2 {
+            width: 50%;
+            .btn {
+                width: 100%;
+            }
+        }
+        &1 {
+            display: flex;
+            flex-wrap: wrap;
+            text-align: center;
+            align-items: baseline;
         }
     }
 }

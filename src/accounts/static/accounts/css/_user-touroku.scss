@@ -45,7 +45,6 @@
     }
     &__form-group {
         margin-bottom: 50px;
-        position: relative;
         .required {
             @include label-element;
             background-color: $melimit-red;

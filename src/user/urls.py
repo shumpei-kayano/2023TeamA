@@ -53,4 +53,6 @@ urlpatterns = [
     path('complete/', views.order_complete, name='order_complete'),
     # エラー
     path('error/', views.error_view, name='error'),
+    path('favorite/add/<int:pk>',views.add_to_favorites,name='add_to_favorites'),
+    path('favorite/delete/<int:pk>',views.remove_from_favorites,name='remove_from_favorites'),
 ]

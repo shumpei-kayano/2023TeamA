@@ -9,3 +9,5 @@ django-cleanup
 django-sass-processor
 apscheduler
 python-dateutil
+faker
+django-seed

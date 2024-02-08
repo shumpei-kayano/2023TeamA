@@ -4,10 +4,10 @@
     <div class="footer_upper">
         <div class="footer_upper__left">
             <ul class="footer_upper__info">
-                <li><a href="#">melimitとは</a></li>
-                <li><a href="#">ご利用ガイド</a></li>
+                {% comment %} <li><a href="{% url "user:what_melimit" %}">melimitとは</a></li> {% endcomment %}
+                <li><a href="{% url 'user:guide' %}">ご利用ガイド</a></li>
                 <li><a href="https://drive.google.com/file/d/1eqGwRDUwRiTg3b1pZf0_8KIGNrYITR9X/view?usp=sharing">プライバシーポリシー</a></li>
-                <li><a href="#">お問い合わせ</a></li>
+                <li><a href="{% url "user:contact" %}">お問い合わせ</a></li>
                 <li><p>&copy;{% now "Y" %}Melimit</p></li>
             </ul>
         </div>

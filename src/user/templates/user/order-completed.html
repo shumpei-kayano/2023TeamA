@@ -1,17 +1,15 @@
 {% extends 'user/base.html' %}
 {% load static %}
 {% block content %}
-<section class="order-head">
+<section class="order">
     <h2>注文が完了しました！</h2>
+    <div class="order-bottom">
+        <img src="{% static 'assets/img/メリ光子.png' %}" alt="メリ光子">
+        <p>Thank you for your order!<br>商品の発送まで今しばらくお待ちください。</p>
+        <img src="{% static 'assets/img/メリ光雄.png' %}" alt="メリ光男">
+    </div>
+    <div class="order-btn">
+        <a href="{% url 'user:index' %}" class="btn btn--beige">トップページへ戻る</a>
+    </div>
 </section>
-
-<div class="order-bottom">
-    <img src="{% static 'assets/img/メリ光子.png' %}" alt="メリ光子">
-    <p>ありがとう!</p>
-    <img src="{% static 'assets/img/メリ光男.png' %}" alt="メリ光男">
-</div>
-
-<div class="order-btn">
-<a href="{% url 'user:index' %}" class="btn btn--beige">トップページへ戻る</a>
-</div>
 {% endblock %}

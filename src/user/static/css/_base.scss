@@ -125,12 +125,9 @@ header {
     display: inline-block;
     padding: 0.5rem 1rem;
   }
-  &__search {
+  .header_search {
+    height: 2.5em;
     margin: 1rem 0;
-  }
-  &__search-input {
-    height: 2.2rem;
-    padding: 0.5rem 0 0.5rem 1rem;
     border-radius: 5px;
   }
   button {
