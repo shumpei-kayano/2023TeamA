@@ -518,6 +518,11 @@ textarea,
   flex-wrap: wrap;
   justify-content: center;
 }
+@media screen and (max-width: 768px) {
+  .login-form {
+    width: 100%;
+  }
+}
 .login-form input {
   width: 100%;
   margin: 10px 0;
