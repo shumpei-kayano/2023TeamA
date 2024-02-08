@@ -10,7 +10,7 @@
 </div> {% endcomment %}
 <section class="section1 mgt-10">
     <div class="section1__left">
-        <a href="{% url 'user:guide' %}" class="btn--beige btn--big">ご利用ガイド</a>
+        {% comment %} <a href="{% url 'user:guide' %}" class="btn--beige btn--big">ご利用ガイド</a> {% endcomment %}
         <a href="{% url 'user:sdgs' %}" class="btn--beige btn--big mgt-10">MelimitとSDGs</a>
         <a href="{% url 'user:sdgs' %}#sdgs-head2" class="btn--beige btn--big mgt-10">食品ロスとは</a>
     </div>
@@ -62,7 +62,7 @@
                         {% comment %} random_salesが空の場合 elseは中身がある場合。 {% endcomment %}
                         {% if not random_sales %}
                         {% comment %} 商品がない場合。 {% endcomment %}
-                            <p>商品ないよ！</p>
+                            <p>商品がないよ！</p>
                         {% else %}
                         
                             {% comment %} random_salesに何も入っていなかった場合のif文を書いておく {% endcomment %}
@@ -226,7 +226,7 @@
                     {% else %}
                         {% if not random_sales %}
                         {% comment %} 商品がない場合。 {% endcomment %}
-                            <p>商品ないよ！</p>
+                            <p>商品がないよ！</p>
                         {% else %}
                             {% comment %} ログインしていないときのランダム商品 {% endcomment %}
                             {% for random_sale in random_sales %}
@@ -296,7 +296,7 @@
             <div class="item--list">
                 {% if not product_category.meat %}
                     {% comment %} 商品がない場合。 {% endcomment %}
-                    <p>商品ないよ！</p>
+                    <p>商品がないよ！</p>
                 {% else %}
                     {% for sale in product_category.meat %}
                         {% if forloop.counter <= 3 %}
@@ -358,7 +358,7 @@
             <div class="item--list">
                 {% if not product_category.vegetables %}
                     {% comment %} 商品がない場合。 {% endcomment %}
-                    <p>商品ないよ！</p>
+                    <p>商品がないよ！</p>
                 {% else %}
                     {% for sale in product_category.vegetables %}
                         {% if forloop.counter <= 3 %}
@@ -420,7 +420,7 @@
             <div class="item--list">
                 {% if not product_category.fruit %}
                     {% comment %} 商品がない場合。 {% endcomment %}
-                    <p>商品ないよ！</p>
+                    <p>商品がないよ！</p>
                 {% else %}
                     {% for sale in product_category.fruit %}
                         {% if forloop.counter <= 3 %}
@@ -482,7 +482,7 @@
             <div class="item--list">
                 {% if not product_category.fish %}
                     {% comment %} 商品がない場合。 {% endcomment %}
-                    <p>商品ないよ！</p>
+                    <p>商品がないよ！</p>
                 {% else %}
                     {% for sale in product_category.fish %}
                         {% if forloop.counter <= 3 %}

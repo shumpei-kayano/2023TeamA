@@ -636,12 +636,9 @@ header .user_name {
   display: inline-block;
   padding: 0.5rem 1rem;
 }
-.header_down__search {
+.header_down .header_search {
+  height: 2.5em;
   margin: 1rem 0;
-}
-.header_down__search-input {
-  height: 2.2rem;
-  padding: 0.5rem 0 0.5rem 1rem;
   border-radius: 5px;
 }
 .header_down button {
@@ -1844,7 +1841,7 @@ input:checked + .tab_class + .content_class {
 .detail1__form1, .detail1__form2 {
   width: 50%;
 }
-.detail1__form1 button, .detail1__form2 button {
+.detail1__form1 .btn, .detail1__form2 .btn {
   width: 100%;
 }
 .detail1__form1 {
