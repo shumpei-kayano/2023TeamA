@@ -49,12 +49,12 @@
                         <button type="submit" class="btn--white btn">お気に入りに追加</button>
                     </form>
                 {% else %}
-                    <a href="{% url 'account_login_kkkk' %}" class="btn--beige btn">お気に入りに追加するにはログインしてください</a>
+                    <a href="{% url 'account_login_kkkk' %}" class="btn--white btn">お気に入りに追加するにはログインしてください</a>
                 {% endif %}
             {% else %}
             {% comment %} 在庫がないとき。お気に入りボタンのみ。なくなる可能性あり {% endcomment %}
                 {% if user.is_authenticated %}
-                <form action="{% url 'user:add_to_favorites' sale.pk %}" method="post">
+                <form class="detail1__form2" action="{% url 'user:add_to_favorites' sale.pk %}" method="post">
                     {% csrf_token %}
                     <input type="hidden" name="product_id" value="{{ sale.pk }}" >
                     <button type="submit" class="btn--white btn">お気に入りに追加</button>
@@ -68,7 +68,7 @@
         <div class="detail1__right--lower">
             <div class="detail1__right--lower1">
                 <p class="detail1__text-bd">送料</p>
-                <p class="detail1__text-bd">数量</p>
+                <p class="detail1__text-bd">在庫数</p>
             </div>
             <div class="detail1__right--lower2">
                 <p class="detail1__text">￥100</p>
