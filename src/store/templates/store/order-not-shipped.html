@@ -2,6 +2,8 @@
 
 {% load static %}
 
+{% load priceslice_filters %}
+
 {% block title %}未発送注文一覧{% endblock %}
 
 {% block contents %}
@@ -44,7 +46,8 @@
             <td class="head-product-name">商品名</td>
             <td class="head-quantity">数量</td>
             <td class="head-price">販売価格</td>
-            <td class="head-pay">入金の有無</td>
+            {% comment %} <td class="head-pay">入金の有無</td> {% endcomment %}
+            <td class="head-pay">CO2削減量</td>
             <td class="head-type">販売種別</td>
           </tr>
         </thead>
@@ -54,9 +57,9 @@
               <td class="order-number">{{ order_history.id }}</td>
               <td class="order-day">{{ order_history.order_date }}</td>
               <td class="product-name">{{ order_history.product.product_name }}</td>
-              <td class="quantity">{{ order_history.quantity }}</td>
-              <td class="price">{{ order_history.amount }}</td>
-              <td class="co2">{{ order_history.co2 }}</td>
+              <td class="quantity">{{ order_history.quantity|to_currency }}</td>
+              <td class="price">{{ order_history.amount|to_currency }}</td>
+              <td class="co2">{{ order_history.co2|to_currency }}</td>
               <td class="type">{{ order_history.sale.get_sale_type_display }}</td>
             </tr>
           {% empty %}

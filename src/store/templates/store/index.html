@@ -12,19 +12,23 @@
         <div class="top-page-content">
             {% comment %} 注文状況部分 {% endcomment %}
             <div class="order-status">
-                <div class="order-status-title">注文状況</div>
+                <div class="order-status-title">発送状況・商品登録状況</div>
                 <div class="order-status-nakami">
                     <div class="order-status-koumoku">
-                        <div class="koumoku-title">新規注文</div>
-                        <div class="koumoku-nakami">0</div>
+                        <div class="koumoku-title">未発送商品数</div>
+                        <div class="koumoku-nakami">{{ context_total_data.total_shipped }}</div>
                     </div>
                     <div class="order-status-koumoku">
-                        <div class="koumoku-title">入金待ち</div>
-                        <div class="koumoku-nakami">100</div>
+                        <div class="koumoku-title">発送済み商品数</div>
+                        <div class="koumoku-nakami">{{ context_total_data.total_not_shipped }}</div>
                     </div>
                     <div class="order-status-koumoku">
-                        <div class="koumoku-title">未発送</div>
-                        <div class="koumoku-nakami">50</div>
+                        <div class="koumoku-title">登録済み一般商品数</div>
+                        <div class="koumoku-nakami">{{ context_total_data.total_general }}</div>
+                    </div>
+                    <div class="order-status-koumoku">
+                        <div class="koumoku-title">登録済み共同商品数</div>
+                        <div class="koumoku-nakami">{{ context_total_data.total_melimit }}</div>
                     </div>
                 </div>
             </div>
