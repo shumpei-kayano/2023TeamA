@@ -90,10 +90,12 @@ class MelimitStoreRegistrationForm(forms.ModelForm):
             'postal_code': forms.TextInput(attrs={
                 'class': 'store-create-input-active',
                 'pattern': '^[0-9]{7}$',
-                'placeholder': '郵便番号（半角数字）を入力してください（ハイフン不要）'}),
-                'prefecture': forms.Select(choices=PREFECTURE_CHOICES, attrs={
-                'class': 'store-create-input-active',
+                'placeholder': '郵便番号（半角数字）を入力してください（ハイフン不要）',
                 'name': 'postal_code',
+            }),
+            'prefecture': forms.Select(choices=PREFECTURE_CHOICES, attrs={
+                'class': 'store-create-input-active',
+                'name': 'prefecture',
             }),
             'city': forms.TextInput(attrs={
                 'class': 'store-create-input-active',
