@@ -2,6 +2,8 @@
 
 {% load static %}
 
+{% load priceslice_filters %}
+
 {% block title %}商品管理一覧{% endblock %}
 
 {% block contents %}
@@ -78,9 +80,10 @@
               <td class="product-number">{{ sale.id }}</td>
               {% comment %} <td class="product-number"><input type="checkbox" id="checkbox">{{ sale.id }}</td> {% endcomment %}
               <td class="product-name">{{ sale.product.product_name }}</td>
-              <td class="price">{{ sale.sale_price }}</td>
-              <td class="inventory">{{ sale.stock }}</td>
-              <td class="period">{{ sale.remaining_days }}</td>
+              <td class="price">{{ sale.sale_price|to_currency }}</td>
+              <td class="inventory">{{ sale.stock|to_currency }}</td>
+              {% comment %} <td class="period">{{ sale.remaining_days|to_currency }}</td> {% endcomment %}
+              <td class="period">{{ sale.sale_end }} 23:59 まで表示</td>
               <td class="category">{{ sale.product.get_product_category_display }}</td>
               <td class="type">{{ sale.get_sale_type_display }}</td>
               {% comment %} <td class="type" {% if sale.get_sale_type_display == '共同販売商品' %} style="background-color: #FFB6C180;"{% elif sale.get_sale_type_display == '一般商品' %}style="background-color: #a0d8ef80;"{% endif %}>{{ sale.get_sale_type_display }}</td> {% endcomment %}

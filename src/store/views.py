@@ -29,7 +29,7 @@ def index(request):
     # store = MelimitStore.objects.get(user=user.customuser_ptr_id)
 
     # 更新ボタンが押されたか、またはセッションデータが存在しない場合にデータを取得
-    if 'update' in request.POST or 'context_co2_amount' not in request.session:
+    if 'update' in request.POST or 'context_co2_amount' not in request.session or 'context_total_data' not in request.session:
         # 現在の年、月、日を取得
         now = timezone.now()
 
@@ -142,6 +142,17 @@ def index(request):
         daily_data_amount_list = list(map(int, daily_data_amount_list))
         print(f"daily_data_amount_list : {daily_data_amount_list}")
 
+        # melimitstoreかつ、sale_type='general_sales'の商品の総数を取得
+        total_general = Sale.objects.filter(store=user.melimitstore, sale_type='general_sales').count()
+        print(f"total_Sale : {total_general}")
+        # melimitstoreかつ、sale_type='melimit_sales'の商品の総数を取得
+        total_melimit = Sale.objects.filter(store=user.melimitstore, sale_type='melimit_sales').count()
+        print(f"total_melimit : {total_melimit}")
+        total_shipped = OrderHistory.objects.filter(orderhistory_store=user.melimitstore, is_shipped=True).count()
+        print(f"total_shipped : {total_shipped}")
+        total_not_shipped = OrderHistory.objects.filter(orderhistory_store=user.melimitstore, is_shipped=False).count()
+        print(f"total_not_shipped : {total_not_shipped}")
+
         context_co2_amount = {
             'yearly_data_co2_list': yearly_data_co2_list,
             'yearly_data_amount_list': yearly_data_amount_list,
@@ -150,15 +161,24 @@ def index(request):
             'daily_data_co2_list': daily_data_co2_list,
             'daily_data_amount_list': daily_data_amount_list,
         }
+        context_total_data = {
+            'total_general': total_general,
+            'total_melimit': total_melimit,
+            'total_shipped': total_shipped,
+            'total_not_shipped': total_not_shipped,
+        }
         # セッションにデータを保存
         request.session['context_co2_amount'] = context_co2_amount
         print(f"セッションに保存したcontext_co2_amount : {context_co2_amount}")
+        request.session['context_total_data'] = context_total_data
     else:
         # セッションからデータを取得
         context_co2_amount = request.session['context_co2_amount']
         print(f"セッションから取得したcontext_co2_amount : {context_co2_amount}")
+        context_total_data = request.session['context_total_data']
+    print(f"セッションから取得したcontext_total_data : {context_total_data}")
     print('インデックス')
-    return render(request, 'store/index.html', {'user': user, 'context_co2_amount': context_co2_amount,})
+    return render(request, 'store/index.html', {'user': user, 'context_co2_amount': context_co2_amount, 'context_total_data': context_total_data, })
 
 # 発送済み注文履歴(modelは注文履歴モデル、発送済みフラグtrueのものを表示)
 def order_history_view(request):
