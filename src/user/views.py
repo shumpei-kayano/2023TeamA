@@ -11,9 +11,12 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 # orderhistoryをimportする
 from .models import OrderHistory
+from .utils import melmit_product_detail
 # Create your views here.
 # @login_required
 def index(request):
+    random_sales = []
+    category_detail = []
     print(request.user)
     # ログインしているか
     if request.user.is_authenticated:
@@ -27,25 +30,77 @@ def index(request):
             print(f'user: {user}')
             user_taste = user.taste  # ユーザーの好みを取得
             print(user_taste)
-            matching_sales = Sale.objects.filter(product__product_category=user_taste).order_by('?')[:3]  # ユーザーの好みに合った商品をランダムに3つ取得
-            print(matching_sales)
+            #user_tasteがない人の処理をかけ
+            if not user_taste:
+                matching_sales = Sale.objects.order_by('?')[:3]
+            else:
+                matching_sales = Sale.objects.filter(product__product_category=user_taste).order_by('?')[:3]  # ユーザーの好みに合った商品をランダムに3つ取得
+            print('match商品：',matching_sales)
+            #マッチした商品をリストに入れていく
+            for random in matching_sales:
+                print('random:',random)
+                detail = melmit_product_detail(random)
+                random_sales.append(detail)
+            for detail in random_sales:
+                print('detail',detail)
             # matching_sales = Sale.objects.filter(product__product_category=user_taste)  # ユーザーの好みに合った商品を取得
             # random_sale = random.choice(matching_sales)  # ランダムに1つの商品を選択
             categories = Product.TASTE_CHOICES #商品をカテゴリーごとに取得
             # random_sale.sale_priceとrandom_sale.product.product_price
-            print(categories)
-            sales_by_category = {category[0]: Sale.objects.filter(product__product_category=category[0]) for category in categories}
+            print('かてごりー：',categories)
+            # sales_by_categoryは辞書？この時点でランダム
+            sales_by_category = {category[0]: Sale.objects.filter(product__product_category=category[0]).order_by('?')[:3] for category in categories}
             # return render(request, 'index.html', {'random_sale': random_sale})
-            print(sales_by_category)
-            return render(request, 'user/index.html', {'user': user,'random_sales': matching_sales,'sales_by_category': sales_by_category})
+            for key,values in sales_by_category.items():
+                for value in values:
+                #カテゴリー名が出てくる str
+                    print('カテゴリーがでてくるはず:',key)
+                    detail = melmit_product_detail(value)
+                    category_detail.append(detail)
+            # product_category = {category[0]:category_detail.product_category == category[0] for category in categories}
+            #product_categoryがないよ
+            product_category = {category[0]: [detail for detail in category_detail if detail['product_category'] == category[0]] for category in categories}
+            print('sales_by:',sales_by_category)
+            print('category_detail:',category_detail)
+            print('product_category:',product_category)
+            print('meat:',product_category['meat'])
+            return render(request, 'user/index.html', {'user': user,'random_sales': random_sales,'product_category': product_category})
         else:
             return redirect('user:omae_store')
     else:
-        # 商品をカテゴリーごとに取得
+        #ログインしていないとき
+        #ランダムに３件取得する おすすめの商品
+        random_sales = []
+        category_detail = []
+        matching_sales = Sale.objects.order_by('?')[:3]
+        for random in matching_sales:
+                print('random:',random)
+                detail = melmit_product_detail(random)
+                random_sales.append(detail)
+        
+        # for random in random_sales:
+        #     print(random)
+        #     detail = melmit_product_detail(random)
+        #     category_detail.append(detail)
+        #     print('product:',category_detail)
+        # for detail in category_detail:
+        #     print(detail)
         categories = Product.TASTE_CHOICES
-        sales_by_category = {category[0]: Sale.objects.filter(product__product_category=category[0]) for category in categories}
+        product_category = {category[0]: [detail for detail in category_detail if detail['product_category'] == category[0]] for category in categories}
+        # 商品をカテゴリーごとに取得
+        
+        sales_by_category = {category[0]: Sale.objects.filter(product__product_category=category[0]).order_by('?')[:3] for category in categories}
+        for key,values in sales_by_category.items():
+                for value in values:
+                #カテゴリー名が出てくる str
+                    print('カテゴリーがでてくるはず:',key)
+                    detail = melmit_product_detail(value)
+                    category_detail.append(detail)
+            # product_category = {category[0]:category_detail.product_category == category[0] for category in categories}
+            #product_categoryがないよ
+        product_category = {category[0]: [detail for detail in category_detail if detail['product_category'] == category[0]] for category in categories}
         # return render(request, 'sales_list.html', {'sales_by_category': sales_by_category})
-        return render(request, 'user/index.html', {'sales_by_category': sales_by_category})
+        return render(request, 'user/index.html', {'sales_by_category': sales_by_category, 'random_sales':random_sales, 'product_category':product_category})
     # print('index_________')
     # print(request.user.user_id)
     # return render(request, 'user/index.html')
@@ -133,6 +188,7 @@ def all_products_joint(request):
     thresholds = {}
     #商品情報と閾値情報、割引後の値段等を一括りにするsale_infos
     sale_infos = []
+    mel_product = []
     for sale in sales:
         print(sale)
         print(sale.threshold_set.all())
@@ -149,6 +205,8 @@ def all_products_joint(request):
             discounted_amount = i.discount_amount
             #割引後の値段を計算
             discounted_price = round(sale.sale_price * (100 - i.discount_rate) / 100)
+            #現在の個数/閾値の個数　で割合を出す
+            ratio = 1
             sale_info = {
                 'sale_pk':sale.pk,
                 'product_name':sale.product.product_name,
@@ -180,6 +238,8 @@ def all_products_joint(request):
         sale_infos.append(sale_info)
         # ここでthresholdsを使用する
         #salesをひとつずつsaleに入れて、saleごとに閾値は一つなのでsalesをfor文で回すときに同時に閾値もfor文を回すとその商品の閾値が取得できる。が、閾値が複数の時や、対応場所がずれた時に対応できない
+        mel_info = melmit_product_detail(sale)
+        mel_product.append(mel_info)
     print(2)
     #この段階で辞書型 商品は閾値を持っていないので辞書型で関連性を持たせる必要がある
     print(thresholds)
@@ -199,12 +259,13 @@ def all_products_joint(request):
             print(threshold)
             print(threshold.threshold)
     #しきい値を取得できた thresholdの一つ目の引数=sale.pkのthreshold.threshold
-    
-    return render(request, 'user/joint-products.html', {'sales': sales, 'thresholds':thresholds, 'sale_infos':sale_infos})
+    atai = 75
+    return render(request, 'user/joint-products.html', {'sales': sales, 'thresholds':thresholds, 'sale_infos':sale_infos,'mel_product':mel_product,'atai':atai})
 
 # 一般商品詳細
 def general_products_detail(request,pk):
     #detailに必要なデータをここで取得する
+    #名前
     #値段
     #商品名
     #割引率
@@ -215,6 +276,7 @@ def general_products_detail(request,pk):
     #在庫数
     #商品から店舗情報
     sale = Sale.objects.get(id=pk)
+    print('image:',sale.product.product_image)
     print(sale.product.product_name)
     print(sale.stock)
     print(sale.product.store)
@@ -495,7 +557,8 @@ def cash_register(request):
         print(request.session)
         #sessionの中身を全部表示
         print(request.session['cart'].items())
-        
+        print('gen:',cart_item_gen)
+        print('mel:',cart_item_mel)
         return render(request, 'user/cash-register.html',{'cart_items':cart_items,'cart_item_gen':cart_item_gen,'cart_item_mel':cart_item_mel,'total_gen':total_gen,'total_mel':total_mel,'total_gen_100':total_gen_100,'total_mel_100':total_mel_100,'user':user,'all_total':all_total})
     else:
         return render(request,)
@@ -572,8 +635,6 @@ def update_cart(request):
             'quantity': quantity,
             'total_price': sale.sale_price * quantity,
         })
-
-
     return JsonResponse({'cart_items': cart_items})
 
 #カートから商品を削除する
@@ -623,6 +684,214 @@ def notice(request):
 # MelimitとSDGs
 def sdgs(request):
     return render(request, 'user/sdgs.html')
+
+# カテゴリー別商品一覧
+def category_products(request):
+    category = request.GET.get('category')
+    searchword = request.GET.get('inputValue')
+    print('searchword:',searchword)
+    product_detail = []
+    #キーワード検索の場合
+    if searchword:
+        results = Product.objects.filter(Q(product_name__icontains=searchword))
+        print('results:',results)
+        #resultsにはあるのにproductになると出力されない
+        for product in results:
+            print('product:',product)
+            #1商品当たりのsaleの情報を取得
+            print('set.all:',product.sale_set.all())
+            sales = product.sale_set.all()
+            print('sales:',sales)
+            #一般商品のみ適応　共同商品にも対応できるように
+            for sale in sales:
+                print(sale)
+                print(type(sale.sale_type))
+                print('rate:',sale.discount_rate())
+                if sale.sale_type == 'general_sales':
+                    detail = {
+                        #pk
+                        #画像
+                        #値引き率
+                        #商品名
+                        #販売価格
+                        'pk':product.pk,
+                        'image':product.product_image,
+                        'rate':sale.discount_rate(),
+                        'product_name':product.product_name,
+                        'price':sale.sale_price,
+                        'sale_type':sale.sale_type,
+                    }
+                elif sale.sale_type == 'melimit_sales':
+                    print('商品がメリミット')
+                    threshold_all = sale.threshold_set.all()
+                    print('saleから閾値もでるとりだし',threshold_all)
+                    for threshold in threshold_all:
+                        print('閾値をとりだすぞ')
+                        print('閾値ひとつのはず',threshold)
+                        #何も登録していないと空のオブジェクトが出る
+                        #空の時の処理を想定しないといけない
+                        threshold_checks = threshold.thresholdcheck_set.all()
+                        print('閾値チェックもでるのはず',threshold_checks)
+                        if not threshold_checks:
+                            #空の時、個数を０で判断するように
+                            count = 0
+                            print("No threshold checks found, meow!")
+                        else:
+                            for check in threshold_checks:
+                                #中身があるとき、個数を取り出して合計して判断 sale.pkで閾値チェックモデル化からsumで数量を取得
+                                count = check.sum_count()
+                                print('check:',check)
+                                print('count:',count)
+                        for check in threshold_checks:
+                            print('閾値チェックだぞ')
+                            print('check_all:',check)
+                        print('閾値もでる？',threshold)
+                        print('閾値全部',threshold.threshold)
+                        
+                        #なにもとれない！！！！！！！
+                        at_count = threshold.threshold -count
+                        print('at_count:',at_count)
+                        discounted_price = round(sale.sale_price * (100 - threshold.discount_rate) / 100)
+                        #saleモデルからcheckモデルの内容を取得しよう
+                        detail = {
+                            #pk
+                            #画像
+                            #値引き率
+                            #商品名
+                            #販売価格
+                            #閾値クリア後の割引率
+                            #クリア後の値段
+                            #閾値個数
+                            #現在の閾値個数 チェックモデルから
+                            #閾値をクリアしているか確認→クリア後が表記変わるため　countとthresholdを比較するだけ
+                            #discount_amountは割引額　
+                            'pk':product.pk,
+                            'image':product.product_image,
+                            'rate':sale.discount_rate(),
+                            'product_name':product.product_name,
+                            'price':sale.sale_price,
+                            'threshold_rate':threshold.discount_rate,
+                            'clear_price':discounted_price,
+                            'threshold':threshold.threshold,
+                            'threshold_now':count,
+                            'sale_type':sale.sale_type,
+                            'at_count':at_count,
+                        }
+            product_detail.append(detail)
+            print('product_detail:',product_detail)
+            for Type in product_detail:
+                print('sale_type:',Type['sale_type'])
+        return render(request, 'user/category-products.html', {'products': product_detail})
+    #カテゴリー検索の場合
+    #商品が一般か共同かわける必要あり
+    #pk
+    #画像
+    #値引き率
+    #商品名
+    #販売価格
+    #productからsaleを取り出す必要あり
+    #categoryは1~4の数字str?
+    count = 0
+    if category == '1':
+        category = 'meat'
+    elif category == '2':
+        category = 'vegetables'
+    elif category == '3':
+        category = 'fruit'
+    elif category == '4':
+        category = 'fish'
+    elif category == '5':
+        category = 'other'
+    print('category:',category)
+    #カテゴリー別に商品を取得。（一般、共同両方入っている）
+    products = Product.objects.filter(product_category=category)
+    for product in products:
+        #1商品当たりのsaleの情報を取得
+        print('set.all:',product.sale_set.all())
+        sales = product.sale_set.all()
+        print('sales:',sales)
+        #一般商品のみ適応　共同商品にも対応できるように
+        for sale in sales:
+            print(sale)
+            print(sale.sale_type)
+            print('rate:',sale.discount_rate())
+            if sale.sale_type == 'general_sales':
+                detail = {
+                    #pk
+                    #画像
+                    #値引き率
+                    #商品名
+                    #販売価格
+                    'pk':product.pk,
+                    'image':product.product_image,
+                    'rate':sale.discount_rate(),
+                    'product_name':product.product_name,
+                    'price':sale.sale_price,
+                    'sale_type':sale.sale_type,
+                }
+            elif sale.sale_type == 'melimit_sales':
+                print('商品がメリミット')
+                threshold_all = sale.threshold_set.all()
+                print('saleから閾値もでるとりだし',threshold_all)
+                for threshold in threshold_all:
+                    print('閾値をとりだすぞ')
+                    print('閾値ひとつのはず',threshold)
+                    #何も登録していないと空のオブジェクトが出る
+                    #空の時の処理を想定しないといけない
+                    threshold_checks = threshold.thresholdcheck_set.all()
+                    print('閾値チェックもでるのはず',threshold_checks)
+                    if not threshold_checks:
+                        #空の時、個数を０で判断するように
+                        count = 0
+                        print("No threshold checks found, meow!")
+                    else:
+                        for check in threshold_checks:
+                            #中身があるとき、個数を取り出して合計して判断 sale.pkで閾値チェックモデル化からsumで数量を取得
+                            count = check.sum_count()
+                            print('check:',check)
+                            print('count:',count)
+                    for check in threshold_checks:
+                        print('閾値チェックだぞ')
+                        print('check_all:',check)
+                    print('閾値もでる？',threshold)
+                    print('閾値全部',threshold.threshold)
+                    
+                    #なにもとれない！！！！！！！
+                    at_count = threshold.threshold -count
+                    print('at_count:',at_count)
+                    discounted_price = round(sale.sale_price * (100 - threshold.discount_rate) / 100)
+                    #saleモデルからcheckモデルの内容を取得しよう
+                    detail = {
+                        #pk
+                        #画像
+                        #値引き率
+                        #商品名
+                        #販売価格
+                        #閾値クリア後の割引率
+                        #クリア後の値段
+                        #閾値個数
+                        #現在の閾値個数 チェックモデルから
+                        #閾値をクリアしているか確認→クリア後が表記変わるため　countとthresholdを比較するだけ
+                        #discount_amountは割引額　
+                        'pk':product.pk,
+                        'image':product.product_image,
+                        'rate':sale.discount_rate(),
+                        'product_name':product.product_name,
+                        'price':sale.sale_price,
+                        'threshold_rate':threshold.discount_rate,
+                        'clear_price':discounted_price,
+                        'threshold':threshold.threshold,
+                        'threshold_now':count,
+                        'sale_type':sale.sale_type,
+                        'at_count':at_count,
+                    }
+        product_detail.append(detail)
+        print(product_detail)
+        for i in product_detail:
+            if i['sale_type'] == 'melimit_sales':
+                print(i)
+    return render(request, 'user/category-products.html', {'products': product_detail})
+    # return render(request, 'user/category-products.html')
 
 # テスト/商品一覧表示
 def product_list(request):
@@ -745,3 +1014,7 @@ def order_complete(request):
 
 def error_view(request):
     return render(request, 'user/04_complete_test.html')
+
+# 共同購入商品確認
+def joint_cfm(request):
+    return render(request, 'user/joint-cfm.html')

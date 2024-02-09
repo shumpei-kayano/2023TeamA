@@ -48,29 +48,29 @@
                             </div>
                         </div>
 
-                        <div class="store-create-box">
+                        {% comment %} <div class="store-create-box">
                             <div class="store-create-box-title">
                                 <div class="store-title-text">店舗責任者名</div>
                             </div>
-                            <div class="store-create-box-input">
+                            <div class="store-create-box-input"> {% endcomment %}
                                 {% comment %} <input type="text" class="store-create-input-active" required {% endcomment %}
                                 {% comment %} 15文字以内の正規表現 {% endcomment %}
                                 {% comment %} pattern="^.{1,15}$"
                                 placeholder="店舗責任者名を入力してください"> {% endcomment %}
-                            </div>
-                        </div>
+                            {% comment %} </div>
+                        </div> {% endcomment %}
 
-                        <div class="store-create-box">
+                        {% comment %} <div class="store-create-box">
                             <div class="store-create-box-title">
                                 <div class="store-title-text">店舗責任者名(フリガナ)</div>
                             </div>
-                            <div class="store-create-box-input">
+                            <div class="store-create-box-input"> {% endcomment %}
                                 {% comment %} <input type="text" class="store-create-input-active" required {% endcomment %}
                                 {% comment %} 全角カタカナの正規表現 {% endcomment %}
                                 {% comment %} pattern="^[ァ-ンヴー]+$ , [\u30A1-\u30FF]*"
                                 placeholder="店舗責任者名（フリガナ）を入力してください"> {% endcomment %}
-                            </div>
-                        </div>
+                            {% comment %} </div>
+                        </div> {% endcomment %}
 
                         <div class="store-create-box">
                             <div class="store-create-box-title">

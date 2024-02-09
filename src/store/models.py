@@ -104,7 +104,7 @@ class Sale(models.Model):
     # 商品の説明
     description = models.TextField(verbose_name='商品の説明', max_length=500, blank=False,)
     # 一般商品か、共同販売商品か選択するchoiceフィールド、選択肢は共同販売商品、一般商品
-    sale_type = models.CharField("販売タイプ", max_length=20, choices=SALE_CHOICES, blank=False,)
+    sale_type = models.CharField("販売タイプ", max_length=20, choices=SALE_CHOICES, blank=True,)
     # 注文履歴modelに設定する
     # 発送状況(登録時は未発送)
     # DjangoのBooleanFieldは、データベースレベルではTINYINT型として表現されます。その値は0（False）または1（True）になります。
@@ -114,8 +114,9 @@ class Sale(models.Model):
         return self.product.product_name
     
     # 現在時刻から終了までの期間を計算する関数
-    def remaining_time(self):
-        return self.sale_end - timezone.now()
+    def remaining_days(self):
+        remaining_time = self.sale_end - timezone.now().date()
+        return remaining_time.days
     
     # 値引き率を計算する関数
     def discount_rate(self):
@@ -150,24 +151,13 @@ class Threshold(models.Model):
     # saleの外部キー
     sale = models.ForeignKey(Sale, on_delete=models.CASCADE)
 
-    def __str__(self):
+    # def __str__(self):
         # product_nameとMelimitStoreモデルのusernameを取得し、usernameのproduct_nameのしきい値という形で表示する
-        return self.sale.store.username + '：' + self.sale.product.product_name + 'のしきい値'
+        # return self.sale.store.username + '：' + self.sale.product.product_name + 'のしきい値'
     
     # 割引率とsale_priceから割引額を計算する関数
     def discount_amount(self):
         return round(self.sale.sale_price * self.discount_rate / 100)
-    
-    def clean(self):
-        # 既存のバリデーションを実行
-        super().clean()
-
-        # thresholdがsaleのstockより大きい場合はエラー
-        if self.threshold > self.sale.stock:
-            print('しきい値が在庫数を超えています。')
-            raise ValidationError({
-                'threshold': 'Threshold cannot be greater than the stock of the related sale.'
-            })
     
 class ThresholdCheck(models.Model):
     # 個数　カート　レジから セッション
@@ -218,3 +208,16 @@ class ThresholdCheck(models.Model):
         else:
             return (None,None)
         # self.save()
+    
+    def sum_count(self):
+        #表示期間切れの商品確認はスケジューラーで行う
+        #行数は人数
+        # th_ch = ThresholdCheck.objects.filter(sale=self.sale).count()
+        #辞書が返ってくる
+        #販売IDの数for文
+        #今のDB内の個数
+        sub_count = ThresholdCheck.objects.filter(sale=self.sale).aggregate(Sum('count'))['count__sum']
+        total_count = sub_count
+        print('total_count:',total_count)
+        print('閾値用個数：',self.threshold.threshold)
+        return total_count

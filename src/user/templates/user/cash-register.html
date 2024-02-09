@@ -26,7 +26,7 @@
                     {% comment %} {% for item in cart_items %} {% endcomment %}
                             <tr>
                                 <td>
-                                    <img src={{ cart_item.sale_image.url }} alt="野菜"/>
+                                    <img src={{ cart_item.sale_image.url }} alt="{{ cart_item.sale }}"/>
                                 </td>
                                 <td>
                                     {{ cart_item.sale }}
@@ -69,7 +69,7 @@
                         </p>
                     </li>
                 </ul>
-                
+                <input type="hidden" id="confirm-checkbox">
             </div>
         
         {% endif %}
@@ -93,10 +93,10 @@
                     {% for cart_item in cart_item_mel %}
                     <tr>
                         <td>
-                            <img src={{ cart_item.sale_image.url }} alt="野菜"/>
+                            <img src={{ cart_item.sale_image.url }} alt="{{ cart_item.sale }}"/>
                         </td>
                         <td>
-                            {{cart_item.sale}}トマト
+                            {{ cart_item.sale }}
                             {% comment %} {{ item.product.name }} {% endcomment %}
                         </td>
                         <td>
@@ -138,54 +138,66 @@
             </ul>
         
         {% comment %} {% endif %}
-    {% endfor %} {% endcomment %}
-    <p class="register__caution">※共同購入商品は目標個数に達しなかった場合、最終割引は適用されません。（定価からの割引は適用されます。）</p>
-    <p class="register__caution">また、発送日時も前後する場合があります。</p>
-    <p class="register__caution">必ず<a href="#">melimitご利用ガイド</a>をご一読ください。</p>
-    <div class="register__confirm">
-        <input type="checkbox" id="confirm-checkbox">
-        <label for="confirm-checkbox">確認しました</label>
-    </div>
-    {% endif %}
+        {% endfor %} {% endcomment %}
+            <p class="register__caution">※共同購入商品は目標個数に達しなかった場合、最終割引は適用されません。（定価からの割引は適用されます。）</p>
+            <p class="register__caution">また、発送日時も前後する場合があります。</p>
+            <p class="register__caution">必ず<a href="#">melimitご利用ガイド</a>をご一読ください。</p>
+            <div class="register__confirm">
+                <input type="checkbox" id="confirm-checkbox">
+                <label for="confirm-checkbox">確認しました</label>
+            </div>
+            {% comment %} <script> submit-buttonが一番最後にあるためなんやねんそれってなって動かない
+                document.getElementById('submit-button').addEventListener('click', function(event) {
+                    if (document.getElementById('confirm-checkbox').checked) {
+                        window.location.href = "{% url 'user:order_completed' %}";
+                    } else {
+                        event.preventDefault();
+                        alert('共同購入商品の注意事項をご確認ください。');
+                    }
+                });
+            </script> {% endcomment %}
+        {% endif %}
 </section>
 <section class="register__user-info">
     <h3 class="register__user-info-title">あなたの登録情報</h3>
     <div class="register__user-info-content">
-        <p class="register__user-info-subtitle">お客様情報</p>
+        <p class="register__user-info-subtitle">住所情報</p>
         <div class="register__user-info-label">
             <p>氏名</p>
             <p>電話番号</p>
-        </div>
-        <div class="register__user-info-detail">
-            <p class="register__user-info-value">{{ user.username }}</p>
-            <p class="register__user-info-value">{{ user.phone_number }}</p>
-        </div>
-        <a href="#" class="register__user-info-btn btn btn--gray">変更する</a>
-    </div>
-    <div class="register__user-info-content">
-        <p class="register__user-info-subtitle">住所情報</p>
-        <div class="register__user-info-label">
             <p>郵便番号</p>
             <p>都道府県</p>
             <p>市区町村</p>
             <p>番地</p>
-            <p>建物名</p>
         </div>
         <div class="register__user-info-detail">
+            <p class="register__user-info-value">{{ user.username }}</p>
+            <p class="register__user-info-value">{{ user.phone_number }}</p>
             <p class="register__user-info-value">{{ user.postal_code }}</p>
             <p class="register__user-info-value">{{ user.prefecture }}</p>
             <p class="register__user-info-value">{{ user.city }}</p>
             <p class="register__user-info-value">{{ user.address }}</p>
-            <p class="register__user-info-value">メリ光ビル</p>
         </div>
-        <a href="#" class="register__user-info-btn btn btn--gray">変更する</a>
+        <a href="{% url 'accounts:user_edit' %}" class="register__user-info-btn btn btn--gray">変更する</a>
     </div>
     <div class="register__user-info-content">
         <p class="register__user-info-subtitle">お支払方法</p>
-        <div class="register__user-info-detail">
-            <p class="register__user-info-value">クレジットカード</p>
+        <div class="register__user-info-label">
+            <p>クレジットカード番号</p>
+            <p>セキュリティコード</p>
+            <p>有効期限</p>
         </div>
-        <a href="#" class="register__user-info-btn btn btn--gray">変更する</a>
+        <div class="register__user-info-detail">
+            <form action="#" method="post">
+                <input type="text" name="card_number" id="card_number" placeholder="0000-0000-0000-0000" pattern="\d{4}-?\d{4}-?\d{4}-?\d{4}" maxlength="19" required>
+                <input type="text" name="security_code" id="security_code" placeholder="000" pattern="\d{3,4}" maxlength="4" required>
+                <input type="text" name="expiration_date" id="expiration_date" placeholder="00/00" pattern="\d{2}/?\d{2}" maxlength="5" required>
+            </form>
+        </div>
+    </div>
+    <p id="card_number_error" class="register__caution"></p>
+    <p id="security_code_error" class="register__caution"></p>
+    <p id="expiration_date_error" class="register__caution"></p>
 </section>
 <section class="register__final-confirmation">
     <h3 class="register__final-confirmation-title">最終確認</h3>
@@ -215,19 +227,87 @@
         <button type="submit" id="submit-button" class="btn btn--beige">注文を確定する</button>
     </div>
 </section>
-{% comment %} <script>
+        
+
+<script>
+    /// 共同購入商品の注意事項の確認
+    var cartItemMelLength = {{ cart_item_mel|length }};
+    var cartItemGenLength = {{ cart_item_gen|length }};
     document.getElementById('submit-button').addEventListener('click', function(event) {
         if (document.getElementById('confirm-checkbox').checked) {
             window.location.href = "{% url 'user:order_completed' %}";
         } else {
-            event.preventDefault();
-            alert('共同購入商品の注意事項をご確認ください。');
+        if (cartItemMelLength === 0 && cartItemGenLength > 0){
+                window.location.href = "{% url 'user:order_completed' %}";
+            } else {
+                event.preventDefault();
+                alert('共同購入商品の注意事項をご確認ください。');
+            }
         }
     });
-</script> {% endcomment %}
-<script>
-    document.getElementById('submit-button').addEventListener('click', function(event) {
-            window.location.href = "{% url 'user:order_completed' %}";
-    });
+
 </script>
+    {% comment %} <script>
+        document.getElementById('submit-button').addEventListener('click', function(event) {
+            window.location.href = "{% url 'user:order_completed' %}";
+        });{% endcomment %}
+    <script>
+        /// クレジットカード情報のバリデーション
+        function validateInput() {
+            var cardNumberPattern = /^\d{4}-?\d{4}-?\d{4}-?\d{4}$/;
+            var securityCodePattern = /^\d{3,4}$/;
+            var expirationDatePattern = /^\d{2}\/?\d{2}$/;
+        
+            var cardNumber = document.getElementById('card_number').value;
+            var securityCode = document.getElementById('security_code').value;
+            var expirationDate = document.getElementById('expiration_date').value;
+        
+            var isValidCardNumber = cardNumberPattern.test(cardNumber);
+            var isValidSecurityCode = securityCodePattern.test(securityCode);
+            var isValidExpirationDate = expirationDatePattern.test(expirationDate);
+        
+            var submitButton = document.getElementById('submit-button');
+            if (isValidCardNumber && isValidSecurityCode && isValidExpirationDate) {
+                submitButton.disabled = false;
+            } else {
+                submitButton.disabled = true;
+            }
+        }
+        
+        document.getElementById('card_number').addEventListener('blur', function (e) {
+            var pattern = /^\d{4}-?\d{4}-?\d{4}-?\d{4}$/;
+            var errorMessage = document.getElementById('card_number_error');
+            if (!pattern.test(e.target.value)) {
+                errorMessage.textContent = '無効なカード番号です。';
+            } else {
+                errorMessage.textContent = '';
+            }
+            validateInput();
+        });
+        
+        document.getElementById('security_code').addEventListener('blur', function (e) {
+            var pattern = /^\d{3,4}$/;
+            var errorMessage = document.getElementById('security_code_error');
+            if (!pattern.test(e.target.value)) {
+                errorMessage.textContent = '無効なセキュリティコードです。';
+            } else {
+                errorMessage.textContent = '';
+            }
+            validateInput();
+        });
+        
+        document.getElementById('expiration_date').addEventListener('blur', function (e) {
+            var pattern = /^\d{2}\/?\d{2}$/;
+            var errorMessage = document.getElementById('expiration_date_error');
+            if (!pattern.test(e.target.value)) {
+                errorMessage.textContent = '無効な有効期限です。';
+            } else {
+                errorMessage.textContent = '';
+            }
+            validateInput();
+        });
+        
+        // 初期状態ではボタンを無効化
+        document.getElementById('submit-button').disabled = true;    
+    </script>
 {% endblock %}

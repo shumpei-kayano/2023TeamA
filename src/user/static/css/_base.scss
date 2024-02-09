@@ -1,10 +1,10 @@
 // へッダー・フッターの共通CSSを記述
-h1{
-  display: none;
-}
 header , footer {
   width: 100%;
   padding: 0 6%;
+  @media screen and (max-width: 768px){
+    font-size: 1rem;
+  }
 }
 
 header {
@@ -18,6 +18,10 @@ header {
   }
 }
 .header_logo,.footer_logo {
+  &:hover {
+    opacity: 1;
+    cursor: pointer;
+}
   @media (max-width: 768px) {
     margin: 1.5rem auto;
   }
@@ -79,13 +83,23 @@ header {
     padding-left: 0;
     display: flex;
     flex-wrap: wrap-reverse;
+    align-items: center;
     justify-content: space-between;
     @media (max-width: 768px) {
       width: 100%;
     }
   }
   &__category {
-    padding-left: 0;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    padding: 0.75rem;
+    option {
+      font-weight: bold;
+      background: $melimit_white;
+      color: $melimit_black;
+    }
   }
   &__menu-container {
     padding-left: 0;
@@ -112,7 +126,7 @@ header {
     padding: 0.5rem 1rem;
   }
   &__search {
-    margin: 0 auto;
+    margin: 1rem 0;
   }
   &__search-input {
     height: 2.2rem;
@@ -127,10 +141,11 @@ header {
 
 footer {
   background-color: $melimit_gray;
-  padding: 2rem;
+  padding-top: 2rem;
   // text-align: left;
-  font-size: 0.8rem;
   color: $melimit_white;
+  font-weight: bold;
+  font-size: 0.75rem;
 }
 
 .footer_upper {
@@ -204,11 +219,32 @@ transition: 0.3s;
     opacity: 0.7;
   }
 }
-::-webkit-scrollbar {
-  background: $melimit_gray;
-  border-radius: 5px;
+
+#loading {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
 }
-::-webkit-scrollbar-thumb {
-  background-color: $main_color;
-  border-radius: 5px;
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -20px 0 0 -20px;
+    border: 4px solid $main_color;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 3s linear infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
