@@ -87,15 +87,15 @@ WSGI_APPLICATION = 'TeamA.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+				'ENGINE': 'django.db.backends.mysql',
         'NAME': 'o-hara_db',
         'USER': 'admin',
-        'PASSWORD': 'o-hara',
-        'HOST': 'mysql_db', # dbのコンテナ名
+        'PASSWORD': 'o-hara2023', # RDS作成時のパスワード
+        # DB_HOSTにはRDSのエンドポイントを指定
+        'HOST': os.environ.get('DB_HOST'),  # 環境変数からHOSTを読み込む
         'PORT': '3306',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
