@@ -29,8 +29,8 @@ services:
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - static_volume:/usr/share/nginx/html/static  # 追加
-      - /etc/letsencrypt/live/teama.o-hara-oita.click/fullchain.pem:/etc/nginx/ssl/fullchain.pem #追記
-      - /etc/letsencrypt/live/teama.o-hara-oita.click/privkey.pem:/etc/nginx/ssl/privkey.pem #追記
+      - ${VOLUME_PATH}:/etc/nginx/ssl/fullchain.pem #追記
+      - ${VOLUME_PATH2}:/etc/nginx/ssl/privkey.pem #追記
       # - /etc/letsencrypt/live/teama-sub.o-hara-oita.click/fullchain.pem:/etc/nginx/ssl/fullchain.pem #追記
       # - /etc/letsencrypt/live/teama-sub.o-hara-oita.click/privkey.pem:/etc/nginx/ssl/privkey.pem #追記
   phpmyadmin:
