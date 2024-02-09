@@ -146,6 +146,9 @@
     &__form {
         &1,&2 {
             width: 50%;
+            @media screen and (max-width: 768px){
+                width: 100%;
+            }
             .btn {
                 width: 100%;
             }

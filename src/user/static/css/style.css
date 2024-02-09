@@ -1383,6 +1383,7 @@ input:checked + .tab_class + .content_class {
 @media screen and (max-width: 768px) {
   .order-bottom img {
     width: 8rem;
+    margin: 0 auto;
   }
 }
 .order-btn {
@@ -1855,6 +1856,11 @@ input:checked + .tab_class + .content_class {
 .detail1__form1, .detail1__form2 {
   width: 50%;
 }
+@media screen and (max-width: 768px) {
+  .detail1__form1, .detail1__form2 {
+    width: 100%;
+  }
+}
 .detail1__form1 .btn, .detail1__form2 .btn {
   width: 100%;
 }
@@ -1903,6 +1909,11 @@ input:checked + .tab_class + .content_class {
   border-radius: 5px;
   width: 40%;
   padding: 1em;
+}
+@media screen and (max-width: 768px) {
+  .cart__total ul {
+    width: 100%;
+  }
 }
 .cart__total ul p {
   font-weight: bold;
