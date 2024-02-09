@@ -65,5 +65,6 @@ def melmit_product_detail(sale):
                 'product_category': sale.product.product_category,
                 'final_rate':productprice_thresholdprice,
                 'ratio':ratio,
+                'treshold_rate':threshold.discount_rate,
             }
         return detail
