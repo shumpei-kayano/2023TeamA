@@ -245,3 +245,12 @@ transition: 0.3s;
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+::-webkit-scrollbar {
+  background: $melimit_gray;
+  border-radius: 5px;
+  width: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: $main_color;
+  border-radius: 5px;
+}

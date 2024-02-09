@@ -1,6 +1,8 @@
 .section {
     &-sdgs, &-sdgs2{
         margin-bottom: 1rem;
+        border: solid 2px $main_color;
+        border-radius:5px;
         @media screen and (max-width: 1024px) {
         background-size: 100%;
         }
@@ -14,24 +16,23 @@
         text-align: center;
     }
     &-head {
-        font-size: 2.5rem;
+        font-size: 2rem;
         @media screen and (max-width: 1024px) {
             font-size: 1.5rem;
-            
         }
     }
     &-text {
         font-size: 1.1rem;
-        letter-spacing: 0.6em;
-        line-height: 4;
-        width: 50%;
+        letter-spacing: 0.5em;
+        line-height: 8;
+        width: 90%;
         margin: 0 auto;
         font-weight: bold;
 
         @media screen and (max-width: 1024px){
-            line-height: 2;
-            width: 90%;
-            letter-spacing: 0.3em;
+            font-size: 0.75rem;
+            letter-spacing: 0.25em;
+            line-height: 5;
         }
     }
     &-text3 {
@@ -47,7 +48,7 @@
 
 .section {
     &-sdgs, &-sdgs2{
-        background-color:rgba(255, 255, 255, 0.8);
+        background-color:rgba(255, 255, 255, 0.95);
         background-blend-mode: lighten;
     }
 }

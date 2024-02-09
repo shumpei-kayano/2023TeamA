@@ -20,9 +20,9 @@
                 <div class="detail1__right--upper1">
                     <p class="detail1__genre joint">共同購入商品</p>
                     {% if sales.stock > 0 %}
-                    <p class="detail1__soldout">在庫あり</p>
+                    <p class="detail1__stock">在庫あり</p>
                     {% else %}
-                    {% comment %} <p class="detail1__soldout">在庫なし</p>えｘ {% endcomment %}
+                    <p class="detail1__soldout">在庫なし</p>
                     {% endif %}
                 </div>
                 <div class="detail1__right--upper2">
@@ -157,7 +157,7 @@
                                         <div class="progress-bar">
                                             <div class="progress-bar__completed" style="width: 60%;"></div>
                                         </div>
-                                        <p class="card--text">あと00人達成で</p>
+                                        <p class="card--text">あと00個達成で</p>
                                         <p class="card--price">{{ related_sale.sale_price }}（税込）</p>
                                         <h4 class="card--discount">￥100,000（税込）</h4>
                                     </div>
