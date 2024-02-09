@@ -25,7 +25,7 @@
                 <a href="{% url 'user:joint_products_detail' pk=sale.pk %}">
                     <img src="{{ sale.image.url }}" alt="{{ sale.product_name }}" class="card--img">
                     {% if sale.threshold_now < sale.threshold %}
-                        <p class="discount">{{ sale.rate }}%OFF!</p>
+                        <p class="discount">{{ sale.threshold_rate }}%OFF!</p>
                         <div class="card--content">
                             <h3 class="card--title">{{ sale.product_name }}</h3>
                             <div class="progress-bar">
@@ -36,7 +36,7 @@
                             <h4 class="card--discount">￥{{ sale.clear_price|to_currency }}</h4>
                         </div>
                     {% else %}
-                        <p class="discount">{{ sale.final_rate }}%OFF!</p>
+                        <p class="discount">{{ sale.threshold_rate }}%OFF!</p>
                         <div class="card--content">
                             <h3 class="card--title">{{ sale.product_name }}</h3>
                             <div class="progress-bar">

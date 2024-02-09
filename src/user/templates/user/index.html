@@ -5,6 +5,10 @@
 {% block js %}{% endblock %}
 {% block css %}{% endblock %}
 {% block content %}
+<noscript>
+    <h1>Hi there!</h1>
+    <br>Keepa is a web application that heavily relies on JavaScript. You have to enable JavaScript on Keepa.com for it to work. We don't have any nasty stuff, really. No ads, no analytics and so on.
+</noscript>
 {% comment %} <div class="loading">
     <img class="loading__logo" src="{% static 'assets/img/Melimit.png' %}" alt="VOOL">
 </div> {% endcomment %}
@@ -86,7 +90,7 @@
                                             <a href="{% url 'user:joint_products_detail' pk=random_sale.pk %}">
                                                 <img src="{{ random_sale.image.url }}" alt="{{ random_sale.product_name }}" class="card--img">
                                                     {% if random_sale.threshold_now < random_sale.threshold %}
-                                                        <p class="discount">{{ random_sale.rate }}％OFF!</p>
+                                                        <p class="discount">{{ random_sale.threshold_rate }}％OFF!</p>
                                                         <div class="card--content">
                                                             <h3 class="card--title">{{ random_sale.product_name }}</h3>
                                                             
@@ -98,7 +102,7 @@
                                                             <h4 class="card--discount">￥{{ random_sale.clear_price|to_currency }}（税込）</h4>
                                                         </div>
                                                     {% else %}
-                                                        <p class="discount">{{ random_sale.final_rate }}％OFF!</p>
+                                                        <p class="discount">{{ random_sale.threshold_rate }}％OFF!</p>
                                                         <div class="card--content">
                                                             <h3 class="card--title">{{ random_sale.product_name }}</h3>
                                                             
@@ -248,7 +252,7 @@
                                             <a href="{% url 'user:joint_products_detail' pk=random_sale.pk %}">
                                                 <img src="{{ random_sale.image.url }}" alt="{{ random_sale.product_name }}" class="card--img">
                                                     {% if random_sale.threshold_now < random_sale.threshold %}
-                                                        <p class="discount">{{ random_sale.rate }}％OFF!</p>
+                                                        <p class="discount">{{ random_sale.threshold_rate }}％OFF!</p>
                                                         <div class="card--content">
                                                             <h3 class="card--title">{{ random_sale.product_name }}</h3>
                                                             
@@ -260,7 +264,7 @@
                                                             <h4 class="card--discount">￥{{ random_sale.clear_price|to_currency }}（税込）</h4>
                                                         </div>
                                                     {% else %}
-                                                        <p class="discount">{{ random_sale.rate }}％OFF!</p>
+                                                        <p class="discount">{{ random_sale.threshold_rate }}％OFF!</p>
                                                         <div class="card--content">
                                                             <h3 class="card--title">{{ random_sale.product_name }}</h3>
                                                             
@@ -585,4 +589,8 @@
         });
     });
 </script>
+<noscript>
+    <h1>Hi there!</h1>
+    <br>Keepa is a web application that heavily relies on JavaScript. You have to enable JavaScript on Keepa.com for it to work. We don't have any nasty stuff, really. No ads, no analytics and so on.
+</noscript>
 {% endblock %}
