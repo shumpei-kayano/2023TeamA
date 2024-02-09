@@ -38,14 +38,14 @@
             </div>
 
             <div class="chart-toggle-pro">
+                <button onclick="toggleChart('year', 'pro')">年単位</button>
                 <button onclick="toggleChart('month', 'pro')">月単位</button>
                 <button onclick="toggleChart('day', 'pro')">日単位</button>
-                <button onclick="toggleChart('year', 'pro')">年単位</button>
             </div>
             <div class="chart-toggle-co2">
+                <button onclick="toggleChart('year', 'co2')">年単位</button>
                 <button onclick="toggleChart('month', 'co2')">月単位</button>
                 <button onclick="toggleChart('day', 'co2')">日単位</button>
-                <button onclick="toggleChart('year', 'co2')">年単位</button>
             </div>
         </div>
 
@@ -58,14 +58,16 @@
             var currentChartType_pro = 'month';
             var currentChartType_co2 = 'month';
 
+            // 現在の年を取得
+            var currentYear = new Date().getFullYear();
+
             // 現在の月を取得
             var currentMonth = new Date().getMonth() + 1;
 
             // 現在の日を取得
             var currentDay = new Date().getDate();
 
-            // 現在の年を取得
-            var currentYear = new Date().getFullYear();
+
 
             // 年、月、日ごとのデータ
             var amount_data_year = {{ context_co2_amount.yearly_data_amount_list|safe }}; // 年単位のデータ

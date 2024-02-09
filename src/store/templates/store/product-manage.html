@@ -73,7 +73,7 @@
         {% comment %} <tbody> {% endcomment %}
         <tbody id="tableBody">
           {% for sale in sales %}
-            <tr class="clickable-row" data-href="{% url 'store:sale_detail' sale.pk %}" {% if sale.get_sale_type_display == '共同販売商品' %}style="background-color: #d485ba30;"{% elif sale.get_sale_type_display == '一般商品' %}style="background-color: #85a8d430;"{% endif %}>
+            <tr class="clickable-row" data-href="{% url 'store:sale_detail' sale.pk %}" {% if sale.get_sale_type_display == '共同商品' %}style="background-color: #d485ba30;"{% elif sale.get_sale_type_display == '一般商品' %}style="background-color: #85a8d430;"{% endif %}>
             {% comment %} <tr class="clickable-row" data-href="{% url 'store:sale_detail' sale.pk %}"> {% endcomment %}
               <td class="product-number">{{ sale.id }}</td>
               {% comment %} <td class="product-number"><input type="checkbox" id="checkbox">{{ sale.id }}</td> {% endcomment %}

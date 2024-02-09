@@ -217,13 +217,11 @@ tbody td {
   font-size: var(--typography-caption-size);
 }
 .order-history__container {
-  // position: relative;
   width: 100%;
-  // height: 720px;
   height: 100%;
-  // overflow: hidden;
+  overflow-y: scroll;
   text-align: left;
   font-size: var(--typography-body1-size);
   color: var(--color-black);
-  font-family: var(--font-noto-sans);
+  position: relative;
 }
