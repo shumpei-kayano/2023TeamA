@@ -203,3 +203,10 @@ EMAIL_USE_TLS = True
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # localhostからooi学番で送るとエラーが起こるので送信元をHOSTと同じにする
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+SESSION_COOKIE_SECURE = True 
+CSRF_COOKIE_SECURE = True
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.o-hara-oita.click',
+]
