@@ -39,9 +39,9 @@
                     {% comment %} {{ item.product.price }} {% endcomment %}
                 </td>
                 <td>
-                  <button type="button" class="increase-quantity" data-pk="{{ cart_item.pk }}">増加</button>
-                  <button type="button" class="decrease-quantity" data-pk="{{ cart_item.pk }}">減少</button>
-                    <input type="number" class="cnt" min="1" max="10" step="1" value={{ cart_item.quantity }} name="quantity" id="quantity" data-pk="{{ cart_item.pk }}">
+                  <button type="button" class="decrease-quantity btn" data-pk="{{ cart_item.pk }}">-</button>
+                  <input type="number" class="cnt" min="1" max="10" step="1" value={{ cart_item.quantity }} name="quantity" id="quantity" data-pk="{{ cart_item.pk }}">
+                  <button type="button" class="increase-quantity btn" data-pk="{{ cart_item.pk }}">+</button>
                     {% comment %} {{ item.quantity }} {% endcomment %}
                 </td>
                 <td class='total_price'>
@@ -71,7 +71,7 @@
         </div>
       </div>
   </section>
-    <section class="cart__bottom">
+  <section class="cart__bottom">
     <div class="cart__total">
           <ul>
               <p>合計金額</p>

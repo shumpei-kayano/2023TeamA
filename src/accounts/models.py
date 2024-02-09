@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.contrib.contenttypes.models import ContentType # 追加
 from django.contrib.auth.models import Permission # 追加
 from django.contrib.auth.base_user import BaseUserManager # 追加
+from django.core.validators import RegexValidator
 
 class UserManager(BaseUserManager):
     """カスタムユーザーマネージャー"""
@@ -69,17 +70,33 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     # 作成日時
     date_joined = models.DateTimeField("date_joined", default=timezone.now)
     # 名前
-    username = models.CharField("名前（店舗名）", max_length=30, blank=True, unique=True)
+    username = models.CharField("名前（店舗名）", max_length=20, blank=False, unique=False)
     # 郵便番号
-    postal_code = models.CharField("郵便番号", max_length=8, blank=True)
+    postal_code = models.CharField(
+        "郵便番号",
+        max_length=7,
+        validators=[
+            RegexValidator(r'^\d{7}$', '7桁の半角数字を入力してください。')
+            # RegexValidatorが郵便番号が7桁の半角数字であることを検証します。
+            # 一致しない場合、指定したエラーメッセージが表示されます。(箇所不明)
+        ],
+        blank=False,
+    )
     # 都道府県
-    prefecture = models.CharField("都道府県", max_length=10, blank=True)
+    prefecture = models.CharField("都道府県", max_length=10, blank=False)
     # 市区町村
-    city = models.CharField("市区町村", max_length=50, blank=True)
+    city = models.CharField("市区町村", max_length=30, blank=False)
     # 住所
-    address = models.CharField("住所", max_length=100, blank=True)
+    address = models.CharField("住所", max_length=30, blank=False)
     # 電話番号
-    phone_number = models.CharField("電話番号", max_length=20, blank=True)
+    phone_number = models.CharField(
+        "電話番号",
+        max_length=11,
+        validators=[
+            RegexValidator(r'^\d{10,11}$', '10桁または11桁の半角数字を入力してください。')
+        ],
+        blank=False,
+    )
     
     # モデルのオブジェクトを操作するためのマネージャーを定義 このモデルのCRUDができるマネージャー
     objects = UserManager()

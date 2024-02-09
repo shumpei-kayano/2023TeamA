@@ -7,10 +7,21 @@
 }
 
 .login-form {
-    width: 100%;
+    width: 25%;
     margin: 0 auto;
     text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    input {
+        width: 100%;
+        margin: 10px 0;
+        padding: 1rem;
+        border-radius: 5px;
+        border: 1px solid $melimit_gray;
+    }
 }
+
 .login-btn-container {
     width: 100%;
     margin: 0 auto;

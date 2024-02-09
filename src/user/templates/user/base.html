@@ -21,10 +21,13 @@
     {% block css %}{% endblock css %}
 </head>
 <body>
+    <div id="loading">
+        {% comment %} ローディング中... {% endcomment %}
+        <div class="spinner"></div>
+    </div>
     <header>
         <div class="header_upper">
-            <h1>Melimit</h1>
-            <a href="{% url 'user:index' %}"  class="header_logo"><img src="{% static 'assets/img/Melimit.png' %}" alt="Melimit"/></a>
+            <h1><a href="{% url 'user:index' %}"  class="header_logo"><img src="{% static 'assets/img/Melimit.png' %}" alt="Melimit"/></a></h1>
             <nav class="header_upper__nav">
                 <ul class="header_upper__menu">
                     <li><a href="{% url "user:what_melimit" %}">Melimitとは</a></li>
@@ -41,7 +44,9 @@
             <div class="header_upper__icon">
                 <p class="user_name">ようこそ、{% if user.is_authenticated %}{{ user.username }}さん{% else %}ゲストさん{% endif %}</p>
                 <div class="header_upper__icon__line">
+                    {% if user.is_authenticated %}
                     <a href="{% url "user:favorite" %}"><img class ="header_icon"src="{% static 'assets/img/love.png' %}" alt="love"></a>
+                    {% endif %}
                     <a href="{% url "user:cart" %}"><img class ="header_icon"src="{% static 'assets/img/cart.png' %}" alt="cart"></a>
                 </div>
             </div>
@@ -62,10 +67,8 @@
                 </ul>
             </div>
             <div class="header_down__search">
-            <form method="get" action="#" class="header_search">
-                    <input class="header_down__search-input" type="text" name="search" placeholder="キーワードを入力">
-                    <button class="btn--beige" type="submit" value="検索">検索</button></li>
-                </form>
+                <input class="header_search" id="category-input" type="text">
+                <button class="btn--beige" type="submit" onclick="handleButtonClick()" value="検索">検索</button>
             </div>
         </div>
     </header>
@@ -74,16 +77,35 @@
 </main>
 {% include "user/footer.html" %}
 <script>
+    // カテゴリーの表示切り替え
     function toggleCategory() {
         var categoryItems = document.querySelectorAll('.header_down__category li:not(:first-child)');
-        
         categoryItems.forEach(function(item) {
             item.classList.toggle('hidden');
         });
     }
-</script>
-</body>
-<script>
+
+    // ローディング画面を初めて非表示にする
+    const loading = document.getElementById('loading');
+    loading.style.display = 'none';
+
+    let timer;
+    window.addEventListener('load', function() {
+        // ページの読み込みが完了したら、ローディング画面を非表示にし、タイマーをクリアする
+        clearTimeout(timer);
+        loading.style.opacity = '0';
+        setTimeout(function() {
+            loading.style.display = 'none';
+        }, 1000);
+    });
+
+    // 1秒後にローディング画面を表示するタイマーを設定する
+    timer = setTimeout(function() {
+        loading.style.display = 'block';
+        loading.style.opacity = '1';
+    }, 1000);
+
+    // カテゴリーの表示切り替え
     function handleSelectChange(event) {
         var selectedValue = event.target.value;
         if (selectedValue != "0") {
@@ -101,5 +123,12 @@
             // 非同期応答を示すためにtrueを返す
             return true;
         });
+    }
+    function handleButtonClick() {
+        var inputField = document.getElementById('category-input');
+        var inputValue = inputField.value;
+        if (inputValue) {
+            window.location.href = "/category-products/?inputValue=" + inputValue;
+        }
     }
 </script>

@@ -55,7 +55,7 @@ class SaleForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
     class Meta:
         model = Sale
-        exclude = ['product', 'store']
+        exclude = ['product', 'store', ]
         fields = ['sale_price', 'sale_start', 'sale_end', 'stock', 'expiration_date', 'description', 'sale_type']
         widgets = {
             'sale_price': forms.NumberInput(attrs={
@@ -79,19 +79,21 @@ class SaleForm(forms.ModelForm):
                 'placeholder': '商品説明を入力してください',
                 'required': 'required'
             }),
-            'sale_start': forms.DateTimeInput(attrs={
+            'sale_start': forms.DateInput(attrs={
                 'id': 'startDateTime',
                 'class': 'input-active', 
                 'title': '販売開始日時を入力してください',
                 'required': 'required',
-                'type': 'datetime-local'
+                # 'type': 'datetime-local',
+                'type': 'date',
             }),
-            'sale_end': forms.DateTimeInput(attrs={
+            'sale_end': forms.DateInput(attrs={
                 'id': 'endDateTime',
                 'class': 'input-active', 
                 'title': '販売終了日時を入力してください',
                 'required': 'required',
-                'type': 'datetime-local'
+                # 'type': 'datetime-local',
+                'type': 'date',
             }),
         }
 
@@ -102,8 +104,13 @@ class SaleForm(forms.ModelForm):
         cleaned_data = super().clean()
         sale_price = cleaned_data.get('sale_price')
         print("3番")
-        # okパターン(httpリクエストのpostパラメータからstr型で取得し、int型に変換する)
-        product_price = int(self.request.POST.get('product_price')) if self.request else None
+        # ↓product_priceをint型に変更したのでこの記述になった
+        print(self.instance.product.product_price)
+        product_price = self.instance.product.product_price if self.instance.product else None
+        # ↑product_priceをint型に変更したのでこの記述になった
+
+        # okパターン(httpリクエストのpostパラメータからstr型で取得し、int型に変換する))
+        # product_price = int(self.request.POST.get('product_price')) if self.request else None
 
         # okパターン(cleaned_dataからint型で取得する)
         # formを定義後、is_validでバリデーションとクリーニングを行い、formの値を正しい型に更新しcleaned_data辞書からint型で値を取得する
@@ -145,6 +152,9 @@ class SaleForm(forms.ModelForm):
         return sale_price
 
 class ThresholdForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super().__init__(*args, **kwargs)
     class Meta:
         model = Threshold
         fields = ['discount_rate', 'threshold']
@@ -161,12 +171,42 @@ class ThresholdForm(forms.ModelForm):
             }),
         }
 
+    def clean(self):
+        # 既存のバリデーションを実行
+        # 既存のバリデーションを実行
+        cleaned_data = super().clean()
+        threshold = cleaned_data.get('threshold')
+        print('threshold:', threshold)
+        print("テスト")
+        # sale_form = SaleForm(self.request.POST, )
+        # sale_stock = sale_form.cleaned_data.get('stock') if sale_form.is_valid() else None
+        # print('salestock', sale_stock)
+        print(self.instance.sale.stock)
+        sale_stock = self.instance.sale.stock if self.instance.sale else None
+        # sale_stock = self.instance.sale.stock if self.instance.sale else None
+        
+        print('sale:', sale_stock)
+
+        # thresholdがsaleのstockより大きい場合はエラー
+        if sale_stock and threshold > sale_stock:
+            print('しきい値が在庫数を超えています。')
+            raise forms.ValidationError({
+                'threshold': 'Threshold cannot be greater than the stock of the related sale.'
+            })
+
+# 全都道府県をリスト化(copilot依頼)
+PREFECTURE_CHOICES = [('','選択してください'),('北海道','北海道'),('青森県','青森県'),('岩手県','岩手県'),('宮城県','宮城県'),('秋田県','秋田県'),('山形県','山形県'),('福島県','福島県'),('茨城県','茨城県'),('栃木県','栃木県'),('群馬県','群馬県'),('埼玉県','埼玉県'),('千葉県','千葉県'),('東京都','東京都'),('神奈川県','神奈川県'),('新潟県','新潟県'),('富山県','富山県'),('石川県','石川県'),('福井県','福井県'),('山梨県','山梨県'),('長野県','長野県'),('岐阜県','岐阜県'),('静岡県','静岡県'),('愛知県','愛知県'),('三重県','三重県'),('滋賀県','滋賀県'),('京都府','京都府'),('大阪府','大阪府'),('兵庫県','兵庫県'),('奈良県','奈良県'),('和歌山県','和歌山県'),('鳥取県','鳥取県'),('島根県','島根県'),('岡山県','岡山県'),('広島県','広島県'),('山口県','山口県'),('徳島県','徳島県'),('香川県','香川県'),('愛媛県','愛媛県'),('高知県','高知県'),('福岡県','福岡県'),('佐賀県','佐賀県'),('長崎県','長崎県'),('熊本県','熊本県'),('大分県','大分県'),('宮崎県','宮崎県'),('鹿児島県','鹿児島県'),('沖縄県','沖縄県')]
 class MelimitStoreEditForm(forms.ModelForm):
     class Meta:
         model = MelimitStore
         fields = ['username', 'postal_code', 'prefecture', 'city', 'address', 'phone_number', 'store_image', 'site_url']
         # fields = ['username']
-    
+        widgets = {
+            'prefecture': forms.Select(choices=PREFECTURE_CHOICES, attrs={
+                'class': 'store-input-active',
+                'name': 'prefecture',
+            }),
+        }
     def save(self, commit=True):
         user = super().save(commit=True)
         return user

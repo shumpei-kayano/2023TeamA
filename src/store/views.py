@@ -29,7 +29,7 @@ def index(request):
     # store = MelimitStore.objects.get(user=user.customuser_ptr_id)
 
     # 更新ボタンが押されたか、またはセッションデータが存在しない場合にデータを取得
-    if 'update' in request.POST or 'context_co2_amount' not in request.session:
+    if 'update' in request.POST or 'context_co2_amount' not in request.session or 'context_total_data' not in request.session:
         # 現在の年、月、日を取得
         now = timezone.now()
 
@@ -142,6 +142,17 @@ def index(request):
         daily_data_amount_list = list(map(int, daily_data_amount_list))
         print(f"daily_data_amount_list : {daily_data_amount_list}")
 
+        # melimitstoreかつ、sale_type='general_sales'の商品の総数を取得
+        total_general = Sale.objects.filter(store=user.melimitstore, sale_type='general_sales').count()
+        print(f"total_Sale : {total_general}")
+        # melimitstoreかつ、sale_type='melimit_sales'の商品の総数を取得
+        total_melimit = Sale.objects.filter(store=user.melimitstore, sale_type='melimit_sales').count()
+        print(f"total_melimit : {total_melimit}")
+        total_shipped = OrderHistory.objects.filter(orderhistory_store=user.melimitstore, is_shipped=True).count()
+        print(f"total_shipped : {total_shipped}")
+        total_not_shipped = OrderHistory.objects.filter(orderhistory_store=user.melimitstore, is_shipped=False).count()
+        print(f"total_not_shipped : {total_not_shipped}")
+
         context_co2_amount = {
             'yearly_data_co2_list': yearly_data_co2_list,
             'yearly_data_amount_list': yearly_data_amount_list,
@@ -150,15 +161,24 @@ def index(request):
             'daily_data_co2_list': daily_data_co2_list,
             'daily_data_amount_list': daily_data_amount_list,
         }
+        context_total_data = {
+            'total_general': total_general,
+            'total_melimit': total_melimit,
+            'total_shipped': total_shipped,
+            'total_not_shipped': total_not_shipped,
+        }
         # セッションにデータを保存
         request.session['context_co2_amount'] = context_co2_amount
         print(f"セッションに保存したcontext_co2_amount : {context_co2_amount}")
+        request.session['context_total_data'] = context_total_data
     else:
         # セッションからデータを取得
         context_co2_amount = request.session['context_co2_amount']
         print(f"セッションから取得したcontext_co2_amount : {context_co2_amount}")
+        context_total_data = request.session['context_total_data']
+    print(f"セッションから取得したcontext_total_data : {context_total_data}")
     print('インデックス')
-    return render(request, 'store/index.html', {'user': user, 'context_co2_amount': context_co2_amount,})
+    return render(request, 'store/index.html', {'user': user, 'context_co2_amount': context_co2_amount, 'context_total_data': context_total_data, })
 
 # 発送済み注文履歴(modelは注文履歴モデル、発送済みフラグtrueのものを表示)
 def order_history_view(request):
@@ -379,14 +399,18 @@ def create_group_purchase_view(request):
         threshold_form = ThresholdForm(request.POST)
         product_form.instance.store = user.melimitstore
         # product_form.instance.storeを表示する
-        print(product_form.instance.store)
+        # print(product_form.instance.store)
         sale_form.instance.store = user.melimitstore
         # sale_form.instance.storeを表示する
-        print(sale_form.instance.store)
+        # print(sale_form.instance.store)
+        # ↓forms.pyでself.instance.〇〇を使用するため、instanceを指定する
         sale_form.instance.product = product_form.instance
-        # sale_form.instance.productを表示する
-        print(sale_form.instance.product)
-        # threshold_formの登録とthresholdの外部キーにsaleのidを設定する
+        threshold_form.instance.sale = sale_form.instance
+        # ↑forms.pyでself.instance.〇〇を使用するため、instanceを指定する
+        # ここで表示してもdbに保存前なので、表示できない
+        print("product_form.instance.product:",sale_form.instance.product.__dict__)
+        print("threshold_form.instance.sale:",threshold_form.instance.sale.__dict__)
+        
         if product_form.is_valid() and sale_form.is_valid() and threshold_form.is_valid():
             product = product_form.save()
             sale = sale_form.save(commit=False)

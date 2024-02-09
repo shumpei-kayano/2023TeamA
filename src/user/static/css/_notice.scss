@@ -1,45 +1,61 @@
 .notice {
-  &-head {
-    font-weight: bold;
-    margin-top: 5rem;
-    margin-bottom: 5rem;
-    text-align: center;
-    font-size: 1.5rem;
+    &-head {
+      font-weight: bold;
+      // margin-top: 5rem;
+      // margin-bottom: 5rem;
+      text-align: center;
+      font-size: 1.5rem;
 
-    @media screen and (max-width: 768px) {
-      justify-content: center;
+      @media screen and (max-width: 768px) {
+        justify-content: center;
+      }
     }
-  }
-  &-top {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 11rem;
-    margin-bottom: 5rem;
-    @media screen and (max-width: 768px) {
-      justify-content: center;
-    }
+
+    &-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10%;
+      margin-bottom: 5rem;
+      @media screen and (max-width: 768px) {
+        justify-content: center;
+      }
 
     &-image {
-      width: 30%; // 画像の幅を親要素の30%に設定
+      // width: 30%; // 画像の幅を親要素の30%に設定
+      width: 40%;
       height: auto;
       @media screen and (max-width: 768px) {
         width: 100%;
         display: flex;
         justify-content: center;
       }
+      img {
+        width: 100%;
+        aspect-ratio: 4/3;
+        object-fit: cover;
+      }
     }
 
     &-text {
+      width: 50%;
       display: flex;
       flex-direction: column;
-      margin-left: -2rem;
+      // margin-left: -2rem;
       text-align: center;
-      margin-bottom: 10rem;
+      // margin-bottom: 10rem;
       @media (max-width: 768px) {
-        margin-top: -10rem;
+        width: 90%;
+        // margin-top: -10rem;
         margin-left: 0em
       }
+      p {
+        text-align: justify;
+      }
     }
-}
+  }
+  &-bottom {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
 }
