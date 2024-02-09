@@ -44,11 +44,13 @@ def index(request):
         #ログインしていないとき
         #ランダムに３件取得する
         random_sales = Sale.objects.order_by('?')[:3]
+        if random_sales:
+            print(random_sales)
         # 商品をカテゴリーごとに取得
         categories = Product.TASTE_CHOICES
         sales_by_category = {category[0]: Sale.objects.filter(product__product_category=category[0]) for category in categories}
         # return render(request, 'sales_list.html', {'sales_by_category': sales_by_category})
-        return render(request, 'user/index.html', {'sales_by_category': sales_by_category, 'random_sales':random_sales,})
+        return render(request, 'user/index.html', {'sales_by_category': sales_by_category})
     # print('index_________')
     # print(request.user.user_id)
     # return render(request, 'user/index.html')
