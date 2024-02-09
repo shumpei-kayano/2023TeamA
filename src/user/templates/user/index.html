@@ -190,6 +190,7 @@
                         {% endfor %}
                     {% else %}
                         {% comment %} ログインしていないときのランダム商品 {% endcomment %}
+                        {% if random_sales %}
                         {% for random_sale in random_sales%}
                             {% if forloop.counter <= 3 %}
                                 {% if random_sale.sale_type == 'general_sales' %}
@@ -228,6 +229,7 @@
                                 {% endif %}
                             {% endif %}
                         {% endfor %}
+                        {% endif %}
                     {% endif %}
             </div>
             <a class="btn--beige btn--middle mgt-10">すべての商品を見る</a>
