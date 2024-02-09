@@ -59,7 +59,7 @@
                 <div class="store-info-box-input">
                     {% comment %} <span>郵便番号（半角数字）が入っています</span> {% endcomment %}
                     {% comment %} <input type="text" class="store-input-active" placeholder="{{ user.postal_code }}" required/> {% endcomment %}
-                    <input type="text" class="store-input-active" name="postal_code" value="{{ user.postal_code }}" />
+                    <input type="text" class="store-input-active" name="postal_code" value="{{ user.postal_code }}" required/>
                 </div>
             </div>
 
@@ -79,7 +79,9 @@
                     <div class="store-title-text">都道府県</div>
                 </div>
                 <div class="store-info-box-input">
-                    <input type="text" class="store-input-active" placeholder="現在の情報が入ってるようにしたい" required/>
+                    {% comment %} <input type="text" class="store-input-active" placeholder="現在の情報が入ってるようにしたい" required/> {% endcomment %}
+                    {% comment %} <input type="text" class="store-input-active" value="{{ user.prefecture}}" required/> {% endcomment %}
+                    {{ form.prefecture }}
                 </div>
             </div>
 
@@ -88,7 +90,8 @@
                     <div class="store-title-text">市町村</div>
                 </div>
                 <div class="store-info-box-input">
-                    <input type="text" class="store-input-active" placeholder="現在の情報が入ってるようにしたい" required/>
+                    {% comment %} <input type="text" class="store-input-active" placeholder="現在の情報が入ってるようにしたい" required/> {% endcomment %}
+                    <input type="text" class="store-input-active" name="city" value="{{ user.city }}" required/>
                 </div>
             </div>
 
@@ -97,7 +100,8 @@
                     <div class="store-title-text">番地以降</div>
                 </div>
                 <div class="store-info-box-input">
-                    <input type="text" class="store-input-active" placeholder="現在の情報が入ってるようにしたい" required/>
+                    {% comment %} <input type="text" class="store-input-active" placeholder="現在の情報が入ってるようにしたい" required/> {% endcomment %}
+                    <input type="text" class="store-input-active" name="address" value="{{ user.address }}" required/>
                 </div>
             </div>
 
@@ -107,19 +111,19 @@
                 </div>
                 <div class="store-info-box-input">
                     {% comment %} <span>電話番号（半角数字）が入っています</span> {% endcomment %}
-                    <input type="text" class="store-input-active" name="phone_number" value="{{ user.phone_number }}" />
+                    <input type="text" class="store-input-active" name="phone_number" value="{{ user.phone_number }}" required/>
                 </div>
             </div>
 
-            {% comment %} <div class="store-info-box">
+            <div class="store-info-box">
                 <div class="store-info-box-title">
                     <div class="store-title-text">メールアドレス</div>
                 </div>
-                <div class="store-info-box-input"> {% endcomment %}
+                <div class="store-info-box-input">
                     {% comment %} <span>メールアドレスが入ってます</span> {% endcomment %}
-                    {% comment %} <input type="text" class="store-input-active" placeholder="{{ user.site_url }}" />
+                    <input type="text" class="store-input-active" value="{{ user.email }}" />
                 </div>
-            </div> {% endcomment %}
+            </div>
 
             {% comment %} <div class="store-info-box">
                 <div class="store-info-box-title">

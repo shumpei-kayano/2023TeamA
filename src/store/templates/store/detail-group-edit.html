@@ -469,31 +469,51 @@
 
           const startDate = new Date(startInput.value);
           const endDate = new Date(endInput.value);
-          // モデル定義をdatetimeからdateに変更したため
-          // 開始日の入力値が"現在"との比較になり時間のせいで"当日"が選択できない。
-          // そのため、"日付"で比較する為に一日前の日付を取得して比較する。
-          const anaDate = new Date();
-          const beforeDate = new Date();
-          beforeDate.setDate(anaDate.getDate() - 1);
+        // モデル定義をdatetimeからdateに変更したため
+        // 開始日の入力値(date-inputは9:00で自動設定)が"現在"との比較になり時間のせいで"当日"が選択できない。
+        // そのため、"日付"で比較する為に現在日付の9:00を取得して比較する。
+        const today900 = new Date();
+        today900.setHours(9, 0, 0, 0);
+        // alert(today900);
+        // alert(startDate);
+        // alert(endDate);
 
-          //if (startDate < new Date() || endDate < new Date()) {
-          if (startDate < beforeDate || endDate < new Date()) {
-            alert('表示期間は現在日時よりも過去の日時に設定できません。');
-            return;
-          }
+          // if (startDate < new Date() || endDate < new Date()) {
+        if (startDate < today900 || endDate < today900) {
+          // alert('表示期間は現在日時よりも過去の日時に設定できません。');
+          alert('サイト表示期間は本日以降の日にちを設定してください。');
+          return;
+        }
 
-          if (endDate <= startDate) {
-            alert('表示期間の終了日時は開始日時よりも後の日時に設定してください。');
-            return;
-          }
+        if (endDate <= startDate) {
+          // alert('表示期間の終了日時は開始日時よりも後の日時に設定してください。');
+          alert('サイト表示期間の終了日は開始日よりも後の日にちを設定してください。');
+          return;
+        }
 
-          // 賞味期限が現在日時よりも過去の場合、アラートを表示
-          const expirationInput = document.querySelector('.expiration-box-input input');
-          const expirationDate = new Date(expirationInput.value);
-          if (expirationDate < new Date()) {
-            alert('賞味期限は現在日時よりも過去の日時に設定できません。');
-            return;
-          }
+        // 賞味期限が現在日時よりも過去の場合、アラートを表示
+        const expirationInput = document.querySelector('.expiration-box-input input');
+        const expirationDate = new Date(expirationInput.value);
+        if (expirationDate < today900 || expirationDate < startDate ) {
+          // alert('賞味期限は現在日時よりも過去の日時に設定できません。');
+          alert('品質確保のため、賞味期限が本日より後の日にちかつ、サイト表示期間の開始日より後の日にちの商品を登録して下さい。');
+          return;
+        }
+
+        // 賞味期限が表示期間の終了日から10日以内の場合、アラートを表示
+        const expirationDate10 = new Date(endDate.getTime());
+        expirationDate10.setDate(expirationDate10.getDate() + 10);
+        // alert(expirationDate10);
+        // alert(new Date(expirationDate10.getFullYear(), expirationDate10.getMonth(), expirationDate10.getDate()));
+        // alert(expirationDate10);
+        // alert(expirationDate);
+        // alert(new Date(expirationDate.getFullYear(), expirationDate.getMonth(), expirationDate.getDate()));
+        // alert('expirationDate <= expirationDate10');
+        // alert(expirationDate <= expirationDate10);
+        if (expirationDate < expirationDate10) {
+          alert('品質確保のため、賞味期限がサイト表示期間終了日の10日以上後の商品を登録して下さい。');
+          return;
+        }
 
           // 確認用の内容を作成
           // 修正：数字の3桁区切り
