@@ -49,8 +49,8 @@
         <span class="create-btn-text">共同購入商品新規登録</span>
       </a>
 
-      <form method="get" action="{% url 'store:product_and_sale_delete' %}">
-        {% csrf_token %}
+      {% comment %} <form method="get" action="{% url 'store:product_and_sale_delete' %}">
+        {% csrf_token %} {% endcomment %}
 
       {% comment %} 一括削除は必要ないかもしれないのでコメントアウト
       <div class="bulk-deletion">
@@ -95,7 +95,7 @@
           {% endfor %}
         </tbody>
       </table>
-    </form>
+    {% comment %} </form> {% endcomment %}
   </div>
   <script>
     // 行をクリックしたら詳細ページに遷移する
