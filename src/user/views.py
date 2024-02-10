@@ -174,7 +174,7 @@ def all_products_general(request):
         print(i.product.product_name)
         print(i.sale_price)
         print(i)
-        print(i.pk)
+        print('pk:',i.pk)
         print(1)
     sales = sales_by_choices['general_sales']
     # return render(request, 'user/general-products.html')
@@ -458,6 +458,7 @@ def cart(request):
                 'total_price': sale.sale_price * quantity,
             })
         all_price_100 = all_price + 100
+        print('100:',all_price_100)
     return render(request, 'user/cart.html', {'cart_items': cart_items,'all_price':all_price,'all_price_100':all_price_100})
     # return render(request, 'user/cart.html')
 

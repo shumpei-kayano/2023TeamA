@@ -6,6 +6,7 @@ function updateCartDisplay(cartItems) {
     たとえば、商品の数量や小計を表示するHTML要素を選択し、
     そのテキスト内容を新しい値に更新することができます。*/
     var total = 0;
+    var total_100 = 0;
     for (var i = 0; i < cartItems.length; i++) {
         var cartItem = cartItems[i];
         var row = $('input[data-pk="' + cartItem.pk + '"]').closest('tr');
@@ -14,7 +15,7 @@ function updateCartDisplay(cartItems) {
         console.log(totalPriceElement);  // デバッグ：小計要素をログに出力
         totalPriceElement.text(cartItem.total_price);
         total += cartItem.total_price;
-
+        total_100 += cartItem.total_price + 100;
         //row.find('.sale').text(cartItem.sale);
         //row.find('.sale_image').attr('src',cartItem.sale_image);
         row.find('.cnt').val(cartItem.quantity);
@@ -22,6 +23,7 @@ function updateCartDisplay(cartItems) {
         //total += cartItem.total_price;
     }
     $('.cart__total .total span').text(total + '円');
+    $('.cart__total .total_100 span').text(total_100 + '円');
 }
 
 // $(".increase-quantity, .decrease-quantity").click(function() {
@@ -98,6 +100,13 @@ $(".increase-quantity, .decrease-quantity").click(function() {
     var pk = $(this).data('pk');
     var quantity = $(this).hasClass('increase-quantity') ? 1 : -1;
 
+    if ($(this).hasClass('increase-quantity')) {
+        var currentQuantity = $('input[data-pk="' + pk + '"]').val();
+        if (currentQuantity >= 10) {
+            console.log('Cannot increase quantity above 10');  // デバッグ：数量を10以上にする操作を防ぐ
+            return;  // 数量が10以上になる場合は、操作を中止
+        }
+    }
     // 数量を減らす操作を行う前に、現在の数量が1以上であることを確認
     if ($(this).hasClass('decrease-quantity')) {
         var currentQuantity = $('input[data-pk="' + pk + '"]').val();

@@ -21,8 +21,9 @@
         {% comment %} {% for sale in sales_by_choices.general_sales %} {% endcomment %}
         {% for sale in sales %}
             <div class="item--card card--blue">
-                <div class="card--pk" style="display: none;">{{ sale.pk }}</div>
+                
                 <a href="{% url 'user:general_products_detail' pk=sale.pk %}">
+                    <h1 class="card--pk" style="display: none;">{{ sale.pk }}</h1>
                     <img src="{{ sale.product.product_image.url }}" alt="{{ sale.product.product_name }}" class="card--img">
                     <p class="discount">{{ sale.discount_rate }}%OFF!</p>
                     <div class="card--content">
@@ -41,7 +42,7 @@
     
         // 商品データを取得
         var sales = Array.from(document.getElementsByClassName('item--card'));
-    
+        console.log(sales.length);
         if (selectedOption === '価格順（昇順）') {
             sales.sort(function(a, b) {
                 var priceA = parseInt(a.getElementsByClassName('card--discount')[0].innerText.replace('￥', '').replace(/（税込）/g, '').replace(/,/g, ''));
@@ -57,8 +58,8 @@
         } else if (selectedOption === '新規商品') {
             sales.sort(function(a, b) {
                 // 商品の登録が新しい順に並び替えたい
-                var dateA = new Date(a.getElementsByClassName('card--pk')[0].innerText);
-                var dateB = new Date(b.getElementsByClassName('card--pk')[0].innerText);
+                var dateA = parseInt(a.getElementsByClassName('card--pk')[0].innerText);
+                var dateB = parseInt(b.getElementsByClassName('card--pk')[0].innerText);
                 return dateB - dateA;
             });
         }

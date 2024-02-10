@@ -113,8 +113,8 @@
             } else if (selectedOption === '新規商品') {
                 sales.sort(function(a, b) {
                     // 商品の登録が新しい順に並び替えたい
-                    var dateA = new Date(a.getElementsByClassName('card--pk')[0].innerText);
-                    var dateB = new Date(b.getElementsByClassName('card--pk')[0].innerText);
+                    var dateA = parseInt(a.getElementsByClassName('card--pk')[0].innerText);
+                    var dateB = parseInt(b.getElementsByClassName('card--pk')[0].innerText);
                     return dateB - dateA;
                 });
             }
