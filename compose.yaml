@@ -38,8 +38,11 @@ services:
     container_name: phpmyadmin
     environment:
       PMA_HOST: teamaa-rds.czm4eswsq0yn.us-east-1.rds.amazonaws.com
+      PMA_USER: admin
+      PMA_PASSWORD: o-hara2023
+      PMA_ARBITRARY: 1
       PMA_PORT: 3306
-      MYSQL_ROOT_PASSWORD: o-hara2023
+      # MYSQL_ROOT_PASSWORD: o-hara2023
     ports:
       - "8080:80"
     depends_on:
