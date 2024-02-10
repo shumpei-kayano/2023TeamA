@@ -16,6 +16,8 @@ from django.db.models.functions import TruncYear, TruncMonth, TruncDay, ExtractY
 from datetime import datetime, timedelta
 from django.utils import timezone
 from dateutil.relativedelta import relativedelta
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import never_cache
 
 # Create your views here.
 def index(request):
@@ -288,6 +290,9 @@ def product_manage_view(request):
 
 # 商品詳細ページ
 # 検証用
+@never_cache
+#「実際の商品ページを見る」⇒ログアウト⇒ブラウザバックさせないためにnever_cacheを使用
+@login_required
 def sale_detail_view(request, pk):
     if pk > Sale.objects.latest('id').id:
         return render(request, 'store/test3_error.html')
