@@ -41,7 +41,7 @@ services:
       PMA_PORT: 3306
       MYSQL_ROOT_PASSWORD: o-hara2023
     ports:
-      - "8080:443"
+      - "8080:80"
     depends_on:
       - db
 
