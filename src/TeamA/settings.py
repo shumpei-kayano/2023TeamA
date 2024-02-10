@@ -121,6 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ja'
 
+# DB登録はUTCで行うが、テンプレート表示は日本時間にする
 TIME_ZONE = 'Asia/Tokyo'
 
 USE_I18N = True

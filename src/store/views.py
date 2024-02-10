@@ -7,7 +7,7 @@ from accounts.forms import MelimitStoreLoginForm
 from django.contrib.auth import authenticate, login
 from .models import Product, Sale, Threshold
 from user.models import OrderHistory
-from accounts.models import MelimitStore
+from accounts.models import MelimitStore, CustomUser
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import View
 from django.http import HttpResponseBadRequest
@@ -280,19 +280,27 @@ def store_info_edit_view(request):
 # 実際のページに適用済み
 @login_required
 def product_manage_view(request):
+    # キャストの様な処理(検証用)
+    # if isinstance(request.user, CustomUser):
+    #     melimit_store = MelimitStore.objects.get(customuser_ptr=request.user)
+    # print(f"user : {isinstance(melimit_store, MelimitStore)}")
+    # print(f"user.melimitstore : {request.user.melimitstore}")
     mixin = MelimitModelMixin()
     mixin.request = request
     user = mixin.get_melimitmodel_user()
+    # print(f"instanceはcustomuser: {isinstance(user, CustomUser)}")
+    # print(f"instanceはmelimitstore: {isinstance(user, MelimitStore)}")
+    # print(f"user.melimitstore : {user.product_set.all()}") # 出力結果は同じ。mixin後のuserはmelimitstoreを持っているから。
     # productモデルの一覧表示
     products = user.melimitstore.product_set.all()
-    print(f"products : {products}")
-    for product in products:
-        print(product.__dict__)
+    # print(f"products : {products}")
+    # for product in products:
+    #     print(product.__dict__)
     # saleモデルの一覧表示
     sales = user.melimitstore.sale_set.all()
-    print(f"sales : {sales}")
-    for sale in sales:
-        print(sale.__dict__)
+    # print(f"sales : {sales}")
+    # for sale in sales:
+    #     print(sale.__dict__)
     return render(request, 'store/product-manage.html', {'products': products, 'sales': sales, 'user': user,})
     # return render(request, 'store/product-manage.html')
 
