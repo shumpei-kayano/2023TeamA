@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-9@wxshh*ph4og5afn_-r-uqjto5&^x16x&uk%pl(l0b(rg55+x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['3.227.170.53', '107.20.9.122', 'teama.o-hara-oita.click', 'teama-sub.o-hara-oita.click']
 
