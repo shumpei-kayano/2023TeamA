@@ -92,7 +92,8 @@ DATABASES = {
         'USER': 'admin',
         'PASSWORD': 'o-hara2023', # RDS作成時のパスワード
         # DB_HOSTにはRDSのエンドポイントを指定
-        'HOST': os.environ.get('DB_HOST'),  # 環境変数からHOSTを読み込む
+        # 'HOST': os.environ.get('DB_HOST'),  # 環境変数からHOSTを読み込む
+        'HOST': 'teamaa-rds.czm4eswsq0yn.us-east-1.rds.amazonaws.com',  # 環境変数からHOSTを読み込む
         'PORT': '3306',
     }
 }
