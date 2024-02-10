@@ -1,4 +1,5 @@
 from pathlib import Path
+from dotenv import load_dotenv
 import os
 
 from django.conf import settings  # 追加
@@ -6,6 +7,9 @@ from django.conf import settings  # 追加
 # debug_toolbarの設定
 import mimetypes
 mimetypes.add_type("application/javascript", ".js", True)
+
+# .envファイルを読み込む
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -89,11 +93,11 @@ DATABASES = {
     'default': {
 				'ENGINE': 'django.db.backends.mysql',
         'NAME': 'o-hara_db',
-        'USER': 'admin',
-        'PASSWORD': 'o-hara2023', # RDS作成時のパスワード
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASS'), # RDS作成時のパスワード
         # DB_HOSTにはRDSのエンドポイントを指定
-        # 'HOST': os.environ.get('DB_HOST'),  # 環境変数からHOSTを読み込む
-        'HOST': 'teamaa-rds.czm4eswsq0yn.us-east-1.rds.amazonaws.com',  # 環境変数からHOSTを読み込む
+        'HOST': os.getenv('DB_HOST'),  # envからHOSTを読み込む
+        # 'HOST': 'teamaa-rds.czm4eswsq0yn.us-east-1.rds.amazonaws.com',  # 環境変数からHOSTを読み込む
         'PORT': '3306',
     }
 }
