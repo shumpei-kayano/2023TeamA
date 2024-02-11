@@ -137,8 +137,10 @@
                   </div>
                   <div class="image-box-input" style="height: 200px;">
                       <!-- 現在の画像を表示 -->
-                      <img src="{{ product.product_image.url }}" alt="{{ product.product_name }}" style="height: auto; width: 200px;" id="currentImage">
                       {{ product_form.product_image }}
+                      {% if product.product_image %}
+                        <img src="{{ product.product_image.url }}" alt="{{ product.product_name }}" style="max-height: 170px;" id="currentImage">
+                      {% endif %}
                       <!-- 新しい画像をプレビュー -->
                       <div id="preview"></div> <!-- js用id -->
                   </div>
@@ -273,8 +275,9 @@
             const img = document.createElement("img"); // img要素を作成
             img.src = imageUrl; // 画像のURLをimg要素にセット
             img.alt = "New Image"; // 新しい画像の代替テキスト
-            img.style.height = "auto"; // 新しい画像の高さ
-            img.style.width = "200px"; // 新しい画像の幅
+            // img.style.height = "auto"; // 新しい画像の高さ
+            img.style.maxHeight = '170px'; // 最大高さを設定
+            // img.style.width = "200px"; // 新しい画像の幅
             preview.appendChild(img); // #previewの中に追加
         }
 
@@ -339,7 +342,12 @@
           const shipping = document.querySelector('.shipping-box-input input').value.trim();
           const weight = document.querySelector('.weight-box-input input').value.trim();
           const expiration = document.querySelector('.expiration-box-input input').value.trim();
-          const image = document.querySelector('.image-box-input input').value.trim();
+          let image = document.querySelector('.image-box-input input').value.trim();
+          if(!image){
+            let imageSrc = document.getElementById('currentImage').getAttribute('src');
+            image = 'C:\\fakepath\\' + imageSrc.split('/').pop();
+          }
+          // console.log(image);
           const description = document.querySelector('.description-box-input textarea').value.trim();
 
           // 未入力項目の確認
@@ -372,9 +380,9 @@
           if (expiration === '') {
             emptyFields.push('賞味期限');
           }
-          if (image === '') {
-            emptyFields.push('画像');
-          }
+          //if (image === '') {
+          //  emptyFields.push('画像');
+          //}
           if (description === '') {
             emptyFields.push('商品説明');
           }

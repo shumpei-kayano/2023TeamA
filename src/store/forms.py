@@ -23,11 +23,11 @@ class ProductForm(forms.ModelForm):
                 'placeholder': '重量をg（グラム）で入力してください（※半角数字）', 
                 'required': 'required'
             }),
-            'product_image': forms.ClearableFileInput(attrs={
+            'product_image': forms.FileInput(attrs={
                 'id': 'example',
                 'class': 'input-active', 
                 'placeholder': '画像を選択してください',
-                'required': 'required',
+                # 'required': 'required',
                 'multiple': False,
                 'accept': 'image/*',
                 'label': '画像を変更',
