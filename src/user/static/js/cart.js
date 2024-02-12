@@ -99,10 +99,11 @@ $(".increase-quantity, .decrease-quantity").click(function() {
     console.log('Button clicked');  // デバッグ：ボタンがクリックされたときにログを出力
     var pk = $(this).data('pk');
     var quantity = $(this).hasClass('increase-quantity') ? 1 : -1;
+    var stock = $('input[data-pk="' + pk + '"]').data('stock');  // 在庫数を取得
 
     if ($(this).hasClass('increase-quantity')) {
         var currentQuantity = $('input[data-pk="' + pk + '"]').val();
-        if (currentQuantity >= 10) {
+        if (currentQuantity >= Math.min(10, stock)) {  // 在庫数と10のうち小さい方を上限とする
             console.log('Cannot increase quantity above 10');  // デバッグ：数量を10以上にする操作を防ぐ
             return;  // 数量が10以上になる場合は、操作を中止
         }

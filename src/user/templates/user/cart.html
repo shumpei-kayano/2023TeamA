@@ -40,7 +40,7 @@
                 </td>
                 <td>
                   <button type="button" class="decrease-quantity btn" data-pk="{{ cart_item.pk }}">-</button>
-                  <input type="number" class="cnt" min="1" max="10" step="1" value={{ cart_item.quantity }} name="quantity" id="quantity" data-pk="{{ cart_item.pk }}">
+                  <input type="number" class="cnt" min="1" max="10" step="1" value={{ cart_item.quantity }} name="quantity" id="quantity" data-pk="{{ cart_item.pk }}" data-stock="{{ cart_item.stock }}">
                   <button type="button" class="increase-quantity btn" data-pk="{{ cart_item.pk }}">+</button>
                     {% comment %} {{ item.quantity }} {% endcomment %}
                 </td>

@@ -457,6 +457,7 @@ def cart(request):
                 'sale_price':sale.sale_price,
                 'quantity': quantity,
                 'total_price': sale.sale_price * quantity,
+                'stock':sale.stock,
             })
         all_price_100 = all_price + 100
         print('100:',all_price_100)
