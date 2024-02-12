@@ -13,6 +13,7 @@ from django.shortcuts import get_object_or_404
 from .models import OrderHistory,Favorite
 from .utils import melmit_product_detail
 from django.utils import timezone
+from django.db import transaction
 # Create your views here.
 # @login_required
 def index(request):
@@ -535,8 +536,8 @@ def cash_register(request):
             #MelimitUserオブジェクトにtasteが入っている
         user = MelimitUser.objects.get(id=user_id)
         #氏名 電話番号 住所 情報 郵便番号 都道府県 市区町村 番地 建物名
-    #ログインしていなかったらログインするように促す
-    #ログインしていたら下の処理をする
+        #ログインしていなかったらログインするように促す
+        #ログインしていたら下の処理をする
         cart = request.session['cart']
         cart_items = []
         all_price = 0
@@ -970,17 +971,22 @@ def confirm_order(request, product_id):
     return render(request, 'user/03_kakuninn_test.html', context)
 
 # テスト/購入
+@transaction.atomic
 def order_product(request):
     print('テスト/購入のビュー')
     cart = request.session['cart']
-    # cart_items = []
     buy_mels = []
     for pk, quantitys in cart.items():
         print(type(pk))
         # sale = get_object_or_404(Sale, id=pk)
         product = get_object_or_404(Product, id=pk)
         # if request.method == 'POST':
-        sale = Sale.objects.get(product_id=pk)
+        #select_for_updateをつけ、トランザクションが終了するまでロックをかける
+        sale = Sale.objects.select_for_update().get(product_id=pk)
+        #在庫数を超える購入数か確認
+        if sale.stock < quantitys:
+            #在庫がないため購入できない旨を伝える文章
+            return redirect('user:error_stock')
         if sale.sale_type == 'general_sales':
             user = MelimitUser.objects.get(customuser_ptr_id=request.user.id)
             store = product.store  # ProductモデルからMelimitStoreモデルのインスタンスを取得
@@ -992,6 +998,7 @@ def order_product(request):
             weight = product.weight * quantity 
             order = OrderHistory(sale=sale, product=product, orderhistory_store=store,orderhistory_user=user, amount=amount, quantity=quantity,)
             order.save()
+            #在庫を更新する処理
             print('更新前：',sale.stock)
             print(quantitys)
             sale.stock -= quantitys
@@ -1122,3 +1129,6 @@ def remove_from_favorites(request, pk):
     return redirect('user:favorite')
     # return render(request, 'user/favorite.html')
     # return redirect('product_detail', product_id=pk)
+    
+def error_stock(request):
+    return render(request, 'user/error_stock.html')

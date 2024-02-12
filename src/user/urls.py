@@ -55,4 +55,5 @@ urlpatterns = [
     path('error/', views.error_view, name='error'),
     path('favorite/add/<int:pk>',views.add_to_favorites,name='add_to_favorites'),
     path('favorite/delete/<int:pk>',views.remove_from_favorites,name='remove_from_favorites'),
+    path('error_stock/',views.error_stock,name='error_stock'),
 ]
