@@ -492,6 +492,7 @@ def history(request):
     order_history = OrderHistory.objects.filter(orderhistory_user=users)
     for i in order_history:
         print('order:',i,vars(i))
+        print('amount:',i.amount)
     return render(request, 'user/history.html',{'users':users,'order_history':order_history})
 #注文完了
 def order_completed(request):
@@ -983,6 +984,7 @@ def order_product(request):
                 # quantity = int(request.POST.get('quantity'))  # 送信された数量を取得
             quantity = quantitys
             amount = sale.sale_price * quantity
+            print('amount:',amount)
             weight = product.weight * quantity 
             order = OrderHistory(sale=sale, product=product, orderhistory_store=store,orderhistory_user=user, amount=amount, quantity=quantity,)
             order.save()
@@ -1011,14 +1013,14 @@ def order_product(request):
                     #閾値をクリアした同じ商品の商品チェックのレコード数分forループ
                     for i in check.thresholds()[1]:
                         print('i:',i)
-                        amount = check.thresholds()[0]
-                        print(amount)
+                        final_price = check.thresholds()[0]
+                        print(final_price)
                         #check.thresholdsからsale,product,store,user,amount,quantitysを取り出す
                         sale = i.sale
                         product = i.sale.product
                         store =i.sale.store
                         user = i.user
-                        # amount =
+                        amount = final_price * quantitys
                         quantitys = i.count
                     #この状態だとクリアした商品が来るたびに注文履歴に行く、同じ履歴が何度も並ぶことになる
                         # order = OrderHistory(sale=sale, product=product, orderhistory_store=store,orderhistory_user=user, amount=amount, quantity=quantitys,)

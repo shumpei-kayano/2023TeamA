@@ -130,6 +130,7 @@ class Sale(models.Model):
         if self.expiration_date < self.sale_end:
             raise ValidationError("賞味期限は現在以降かつ販売終了日時以降でなければなりません。")
 
+
 # しきい値model
 class Threshold(models.Model):
     # 割引率(%表示)
@@ -197,7 +198,7 @@ class ThresholdCheck(models.Model):
         print('閾値用個数：',self.threshold.threshold)
         # return total_count
         #閾値クリア時
-        if total_count > self.threshold.threshold:
+        if total_count >= self.threshold.threshold:
             print('total_count:',total_count)
             print('閾値用個数：',self.threshold.threshold)
             final_price = self.sale.sale_price - self.threshold.discount_amount()
