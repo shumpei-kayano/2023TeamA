@@ -33,12 +33,16 @@
                 </div>
         </div>
         <div class="detail1__right--center">
-            {% comment %} 在庫があるかどうかでカートに追加ボタンを表示したり消したり {% endcomment %}
+            {% comment %} 在庫があるかどうかでカートに追加ボタンを表示したり消したり。普段はmax10。在庫が10未満ならmax=stock {% endcomment %}
             {% if sale.stock > 0 %}
                 <form class="detail1__form1" action="{% url 'user:add_to_cart' sale.pk %}" method="post">
                     {% csrf_token %}
                     <label for="quantity" class="detail1__text-bd">数量</label>
-                    <input type="number" class="cnt" min="1" max="10" step="1" value="1" name="quantity" id="quantity">
+                    {% if sale.stock >= 10 %}
+                        <input type="number" class="cnt" min="1" max="10" step="1" value="1" name="quantity" id="quantity">
+                    {% else %}
+                        <input type="number" class="cnt" min="1" max="{{ sale.stock }}" step="1" value="1" name="quantity" id="quantity">
+                    {% endif %}
                     <input type="hidden" name="product_id" value="{{ sale.pk }}">
                     <button type="submit" class="btn--beige btn">カートに入れる</button>
                 </form>

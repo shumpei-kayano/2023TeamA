@@ -512,11 +512,13 @@ def favorite(request):
         sale_id = i.sale.id
         print('sale_id:',sale_id)
         sale = Sale.objects.filter(id=sale_id)
-        for random in sale:
-                print('random:',random)
-                detail = melmit_product_detail(random)
+        for item in sale:
+                print('item:',item)
+                detail = melmit_product_detail(item)
                 fav_sales.append(detail)
     print('fav:',fav_sales)
+    for fav in fav_sales:
+        print('stock:',fav['stock'])
     return render(request, 'user/favorite.html', {'favorites': fav_sales})
 
 # パスワード設定用メール送信完了
