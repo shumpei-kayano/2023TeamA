@@ -199,8 +199,8 @@ class ThresholdCheck(models.Model):
         # return total_count
         #閾値クリア時
         if total_count >= self.threshold.threshold:
-            print('total_count:',total_count)
-            print('閾値用個数：',self.threshold.threshold)
+            print('閾値クリア時のtotal_count:',total_count)
+            print('閾値クリア時の閾値用個数：',self.threshold.threshold)
             final_price = self.sale.sale_price - self.threshold.discount_amount()
             #リロードで画面から消えるか要検証
             th_ob = ThresholdCheck.objects.filter(sale=self.sale)

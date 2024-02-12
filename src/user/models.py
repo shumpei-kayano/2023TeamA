@@ -32,8 +32,8 @@ class OrderHistory(models.Model):
     is_shipped = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
-        self.sale.stock -= self.quantity
-        self.sale.save()
+        # self.sale.stock -= self.quantity
+        # self.sale.save()
         # 注文の数量を考慮したco2の計算
         self.co2 = round(self.product.weight * 0.4 * self.quantity)  # 結果を整数にするため四捨五入
         super().save(*args, **kwargs)

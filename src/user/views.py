@@ -12,6 +12,7 @@ from django.shortcuts import get_object_or_404
 # orderhistoryをimportする
 from .models import OrderHistory,Favorite
 from .utils import melmit_product_detail
+from django.utils import timezone
 # Create your views here.
 # @login_required
 def index(request):
@@ -988,6 +989,11 @@ def order_product(request):
             weight = product.weight * quantity 
             order = OrderHistory(sale=sale, product=product, orderhistory_store=store,orderhistory_user=user, amount=amount, quantity=quantity,)
             order.save()
+            print('更新前：',sale.stock)
+            print(quantitys)
+            sale.stock -= quantitys
+            sale.save()
+            print('更新後：',sale.stock)
             # del cart[pk]
             #商品ごとにorder.saveを行う
             #リダイレクト先について聞く　必要な情報、タイミング、order_completeと02の違い
@@ -1000,6 +1006,11 @@ def order_product(request):
             #index out of range error発生
             thresholds[sale.pk] = list(sale.threshold_set.all())
             print('melの閾値:',thresholds[sale.pk])
+            print('クリア時更新前：',sale.stock)
+            print(quantitys)
+            sale.stock -= quantitys
+            sale.save()
+            print('クリア時更新後：',sale.stock)
             #閾値を出す 閾値が一つなのでループは一回
             for i in thresholds[sale.pk]:
                 print('mel:',i.threshold)
@@ -1014,7 +1025,7 @@ def order_product(request):
                     for i in check.thresholds()[1]:
                         print('i:',i)
                         final_price = check.thresholds()[0]
-                        print(final_price)
+                        print('final_price:',final_price)
                         #check.thresholdsからsale,product,store,user,amount,quantitysを取り出す
                         sale = i.sale
                         product = i.sale.product
@@ -1022,16 +1033,34 @@ def order_product(request):
                         user = i.user
                         amount = final_price * quantitys
                         quantitys = i.count
-                    #この状態だとクリアした商品が来るたびに注文履歴に行く、同じ履歴が何度も並ぶことになる
+                        #この状態だとクリアした商品が来るたびに注文履歴に行く、同じ履歴が何度も並ぶことになる
                         # order = OrderHistory(sale=sale, product=product, orderhistory_store=store,orderhistory_user=user, amount=amount, quantity=quantitys,)
                         # order.save()
-                        existing_order = OrderHistory.objects.filter(sale=sale, product=product, orderhistory_store=store, orderhistory_user=user, amount=amount, quantity=quantitys).first()
+                        #同じレコードは作りたくないが、どうやって判断するか　過去に５個買ったときのレコードと今回５個買うレコードが違う判定にしたい
+                        # order_date = models.DateTimeField(default=timezone.now)
+                        print('更新前？：',sale.stock)
+                        print('時間：',timezone.now)
+                        print(type(timezone.now))
+                        now = timezone.now()
+                        existing_order = OrderHistory.objects.filter(sale=sale, product=product, orderhistory_store=store, orderhistory_user=user, amount=amount, quantity=quantitys, order_date=now).first()
+                        print('怪しい点：',sale.stock)
                         # すでに存在するレコードがない場合のみ、新しいレコードを作成
                         if not existing_order:
                             order = OrderHistory(sale=sale, product=product, orderhistory_store=store, orderhistory_user=user, amount=amount, quantity=quantitys,)
                             order.save()
+                            print('更新後？：',sale.stock)
+                            # print('クリア時更新前：',sale.stock)
+                            # print(quantitys)
+                            # sale.stock -= quantitys
+                            # sale.save()
+                            # print('クリア時更新後：',sale.stock)
                 else:
                     print('Noneだよ')
+                    # print('更新前：',sale.stock)
+                    # print(quantitys)
+                    # sale.stock -= quantitys
+                    # sale.save()
+                    # print('更新後：',sale.stock)
             buy_mel = {
                 'pk':pk,
                 'quantity': quantitys,
