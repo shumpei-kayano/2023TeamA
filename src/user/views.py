@@ -438,31 +438,95 @@ def cart(request):
         print('cart',cart)
         cart_items = []
         all_price = 0
+        sales = []
+        total = 0
+        total_100 = 0
+        total_price = 0
+        thresholds = {}
         #カートの各商品ごとにidと数量をループ
         for pk, quantity in cart.items():
             sale = get_object_or_404(Sale, id=pk)
-            #sale.pk商品の主キー(プライマリーキー)
             print('sale.pk:',sale.pk)
             if sale.sale_type == 'general_sales':
                 sale_type = '一般商品'
+                detail = {
+                    'pk':sale.pk,
+                    'sale_image': sale.product.product_image,
+                    'rate': sale.discount_rate(),
+                    'sale': sale.product.product_name,
+                    'sale_price': sale.sale_price,
+                    'jp_sale_type': sale_type,
+                    'product_category': sale.product.product_category,
+                    'stock':sale.stock,
+                    'sale_type': sale.sale_type,
+                    'quantity': quantity,
+                    'total_price': sale.sale_price * quantity,
+                }
             else:
                 sale_type = '共同販売商品'
-            
-            all_price += sale.sale_price * quantity
-            #商品の商品名、種別(一般or共同)、一つ当たりの価格、数量、合計価格をリストに追加
-            cart_items.append({
-                'pk':sale.pk,
-                'sale_image': sale.product.product_image,
-                'sale': sale.product.product_name,
-                'sale_type':sale_type,
-                'sale_price':sale.sale_price,
-                'quantity': quantity,
-                'total_price': sale.sale_price * quantity,
-                'stock':sale.stock,
-            })
+                count = 0
+                for threshold in sale.threshold_set.all():
+                    threshold_checks = threshold.thresholdcheck_set.all()
+                    if not threshold_checks:
+                        #空の時、個数を０で判断するように
+                        count = 0
+                        print("No threshold checks found, meow!")
+                    else:
+                        for check in threshold_checks:
+                            #中身があるとき、個数を取り出して合計して判断 sale.pkで閾値チェックモデル化からsumで数量を取得
+                            count = check.sum_count()
+                            print('check:',check)
+                            print('count:',count)
+                    at_count = threshold.threshold - count
+                    discounted_price = round(sale.sale_price * (100 - threshold.discount_rate) / 100)
+                    productprice_thresholdprice = sale.discount_rate() + threshold.discount_rate
+                    ratio = round(count / threshold.threshold * 100)
+                    thresholds[sale.pk] = list(sale.threshold_set.all())
+                    for i in thresholds[sale.pk]:
+                        check = ThresholdCheck(sale=sale,threshold=i)
+                        #閾値クリア時
+                        if check.thresholds()[0] != None:
+                            total_price = discounted_price * quantity
+                            sale_price = discounted_price
+                        #クリアしていない時
+                        else:
+                            total_price = sale.sale_price * quantity
+                            sale_price = sale.sale_price
+                    detail = {
+                        'pk':sale.pk,
+                        'sale_image': sale.product.product_image,
+                        'rate': sale.discount_rate(),
+                        'sale': sale.product.product_name,
+                        'sale_price': sale_price,
+                        'threshold_rate': threshold.discount_rate,
+                        'clear_price': discounted_price,
+                        'threshold': threshold.threshold,
+                        'threshold_now': count,
+                        'sale_type': sale.sale_type,
+                        'at_count': at_count,
+                        'product_category': sale.product.product_category,
+                        'final_rate':productprice_thresholdprice,
+                        'ratio':ratio,
+                        'treshold_rate':threshold.discount_rate,
+                        'stock':sale.stock,
+                        'store':sale.store,
+                        'sale_end':sale.sale_end,
+                        'description':sale.description,
+                        'store_name':sale.product.store.username,
+                        'email':sale.product.store.email,
+                        'store_url':sale.store.site_url,
+                        'quantity': quantity,
+                        'jp_sale_type': sale_type,
+                        'total_price': total_price,
+                    }
+            #共同の時閾値をクリアしているとクリアの額、していない場合に定価をall_priceに足す
+            all_price += detail['total_price']
+            cart_items.append(detail)
         all_price_100 = all_price + 100
         print('100:',all_price_100)
-    return render(request, 'user/cart.html', {'cart_items': cart_items,'all_price':all_price,'all_price_100':all_price_100})
+        # total_100 = total + 100
+        # print(total_100)
+    return render(request, 'user/cart.html', {'cart_items': cart_items,'all_price':all_price,'all_price_100':all_price_100,})
     # return render(request, 'user/cart.html')
 
 #お知らせ詳細
