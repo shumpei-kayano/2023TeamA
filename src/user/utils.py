@@ -73,5 +73,6 @@ def melmit_product_detail(sale):
                 'store_name':sale.product.store.username,
                 'email':sale.product.store.email,
                 'store_url':sale.store.site_url,
+                'product_price':sale.product.product_price,
             }
         return detail

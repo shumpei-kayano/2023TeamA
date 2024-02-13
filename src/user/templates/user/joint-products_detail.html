@@ -35,10 +35,10 @@
                     <p class="detail1__discount--text">{{ sale.treshold_rate }}%OFF</p>
                     {% comment %} if 閾値をクリアしていないなら下を表示 {% endcomment %}
                     {% else %}
-                    <h3 class="detail1__discount">￥{{ sale.price }} 税込）</h3>
+                    <h3 class="detail1__discount">￥{{ sale.price }} （税込）</h3>
                     <p class="detail1__discount--text">定価から{{ sale.rate }}%OFF</p>
                     {% endif %}
-                    <p class="detail1__price">￥{{ sales.sale_price }}（税込）</p>
+                    <p class="detail1__price">￥{{ sale.product_price }}（税込）</p>
                     </div>
             </div>
             <div class="detail1__right--center">
