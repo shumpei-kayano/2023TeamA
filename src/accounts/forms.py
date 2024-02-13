@@ -181,7 +181,7 @@ class MelimitUserRegistrationForm(forms.ModelForm):
             }),
             'password': forms.PasswordInput(attrs={
                 'class': 'user-create-input-active',
-                'placeholder': 'パスワードを入力してください（半角英数字）',
+                'placeholder': '（半角英字と数字を1文字以上含み、8文字以上24文字以内）',
                 'required': True,
                 'pattern': '^(?=.*?[a-z])(?=.*?\d)[a-z\d]{8,24}$',
                 'name': 'password',
@@ -230,7 +230,7 @@ class MelimitUserRegistrationForm(forms.ModelForm):
                 'placeholder': 'パスワードを再入力してください（半角英数字）',
                 'name': 'password_confirm',
             }),
-            label='Confirm password'
+            label='パスワード再入力'
         )
         if self.instance and self.instance.pk:
             # 編集のときはパスワードフィールドを削除

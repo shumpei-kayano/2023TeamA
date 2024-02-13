@@ -69,7 +69,7 @@
                         </p>
                     </li>
                 </ul>
-                <input type="hidden" id="confirm-checkbox">
+                {% comment %} <input type="hidden" id="confirm-checkbox"> {% endcomment %}
             </div>
         
         {% endif %}
@@ -141,7 +141,7 @@
         {% endfor %} {% endcomment %}
             <p class="register__caution">※共同購入商品は目標個数に達しなかった場合、最終割引は適用されません。（定価からの割引は適用されます。）</p>
             <p class="register__caution">また、発送日時も前後する場合があります。</p>
-            <p class="register__caution">必ず<a href="#">melimitご利用ガイド</a>をご一読ください。</p>
+            <p class="register__caution">ご注意ください。</p>
             <div class="register__confirm">
                 <input type="checkbox" id="confirm-checkbox">
                 <label for="confirm-checkbox">確認しました</label>
@@ -234,10 +234,10 @@
     var cartItemMelLength = {{ cart_item_mel|length }};
     var cartItemGenLength = {{ cart_item_gen|length }};
     document.getElementById('submit-button').addEventListener('click', function(event) {
-        if (document.getElementById('confirm-checkbox').checked) {
+        if (cartItemMelLength === 0 && cartItemGenLength > 0){
             window.location.href = "{% url 'user:order_completed' %}";
         } else {
-        if (cartItemMelLength === 0 && cartItemGenLength > 0){
+            if (document.getElementById('confirm-checkbox').checked) {
                 window.location.href = "{% url 'user:order_completed' %}";
             } else {
                 event.preventDefault();
@@ -251,53 +251,54 @@
         document.getElementById('submit-button').addEventListener('click', function(event) {
             window.location.href = "{% url 'user:order_completed' %}";
         });{% endcomment %}
-    <script>
-        /// クレジットカード情報のバリデーション
-        function validateInput() {
-            var cardNumberPattern = /^\d{4}-?\d{4}-?\d{4}-?\d{4}$/;
-            var securityCodePattern = /^\d{3,4}$/;
-            var expirationDatePattern = /^\d{2}\/?\d{2}$/;
-        
-            var cardNumber = document.getElementById('card_number').value;
-            var securityCode = document.getElementById('security_code').value;
-            var expirationDate = document.getElementById('expiration_date').value;
-        
-            var isValidCardNumber = cardNumberPattern.test(cardNumber);
-            var isValidSecurityCode = securityCodePattern.test(securityCode);
-            var isValidExpirationDate = expirationDatePattern.test(expirationDate);
-        
-            var submitButton = document.getElementById('submit-button');
-            if (isValidCardNumber && isValidSecurityCode && isValidExpirationDate) {
-                submitButton.disabled = false;
-            } else {
-                submitButton.disabled = true;
-            }
+<script>
+    /// クレジットカード情報のバリデーション
+    function validateInput() {
+        var cardNumberPattern = /^\d{4}-\d{4}-\d{4}-\d{4}$/; // 16桁（4-4-4-4の形式）
+        var securityCodePattern = /^\d{3,4}$/;
+        var expirationDatePattern = /^(0[1-9]|1[0-2])\/?\d{2}$/; // MM/YYの形式
+
+        var cardNumber = document.getElementById('card_number').value;
+        var securityCode = document.getElementById('security_code').value;
+        var expirationDate = document.getElementById('expiration_date').value;
+
+        var isValidCardNumber = cardNumberPattern.test(cardNumber);
+        var isValidSecurityCode = securityCodePattern.test(securityCode);
+        var isValidExpirationDate = expirationDatePattern.test(expirationDate);
+
+        var submitButton = document.getElementById('submit-button');
+        if (isValidCardNumber && isValidSecurityCode && isValidExpirationDate) {
+            submitButton.disabled = false;
+        } else {
+            submitButton.disabled = true;
         }
-        
-        document.getElementById('card_number').addEventListener('blur', function (e) {
-            var pattern = /^\d{4}-?\d{4}-?\d{4}-?\d{4}$/;
-            var errorMessage = document.getElementById('card_number_error');
-            if (!pattern.test(e.target.value)) {
-                errorMessage.textContent = '無効なカード番号です。';
-            } else {
-                errorMessage.textContent = '';
-            }
-            validateInput();
-        });
-        
-        document.getElementById('security_code').addEventListener('blur', function (e) {
-            var pattern = /^\d{3,4}$/;
-            var errorMessage = document.getElementById('security_code_error');
-            if (!pattern.test(e.target.value)) {
-                errorMessage.textContent = '無効なセキュリティコードです。';
-            } else {
-                errorMessage.textContent = '';
-            }
-            validateInput();
-        });
-        
-        document.getElementById('expiration_date').addEventListener('blur', function (e) {
-            var pattern = /^\d{2}\/?\d{2}$/;
+    }
+
+    document.getElementById('card_number').addEventListener('blur', function (e) {
+        var pattern = /^\d{4}-\d{4}-\d{4}-\d{4}$/; // 16桁（4-4-4-4の形式）
+        var errorMessage = document.getElementById('card_number_error');
+        if (!pattern.test(e.target.value)) {
+            errorMessage.textContent = '無効なカード番号です。';
+        } else {
+            errorMessage.textContent = '';
+        }
+        validateInput();
+    });
+
+    document.getElementById('security_code').addEventListener('blur', function (e) {
+        var pattern = /^\d{3,4}$/;
+        var errorMessage = document.getElementById('security_code_error');
+        if (!pattern.test(e.target.value)) {
+            errorMessage.textContent = '無効なセキュリティコードです。';
+        } else {
+            errorMessage.textContent = '';
+        }
+        validateInput();
+    });
+
+    document.getElementById('expiration_date').addEventListener('input', function (e) {
+        if (e.target.value.length === 5) {
+            var pattern = /^(0[1-9]|1[0-2])\/?\d{2}$/; // MM/YYの形式
             var errorMessage = document.getElementById('expiration_date_error');
             if (!pattern.test(e.target.value)) {
                 errorMessage.textContent = '無効な有効期限です。';
@@ -305,9 +306,10 @@
                 errorMessage.textContent = '';
             }
             validateInput();
-        });
-        
-        // 初期状態ではボタンを無効化
-        document.getElementById('submit-button').disabled = true;    
-    </script>
+        }
+    });
+
+    // 初期状態ではボタンを無効化
+    document.getElementById('submit-button').disabled = true;    
+</script>
 {% endblock %}

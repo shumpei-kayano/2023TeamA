@@ -1,1 +1,12 @@
-<h1>ユーザー側から店舗がログインしようとしたときのビュー</h1>
+{% extends 'user/base.html' %}
+{% block title %}エラー{% endblock %}
+{% block content %}
+{% comment %} ユーザー側から店舗がログインしようとしたときのビュー {% endcomment %}
+<section class="error-section">
+  <h2>エラー！買い手の方向けのページで、売り手の方がログインされました。</h2>
+    <p>買い手の方向けのページには、買い手の方のみログインできます。</p>
+    <p>売り手の方は、売り手の方向けのページにログインしてください。</p>
+    <p><a class="btn btn--beige" href="{% url 'account_login_kkkk' %}">ログイン画面へ</a></p>
+    <p><a class="btn btn--white" href="{% url 'user:index' %}">トップページへ</a></p>
+</section>
+{% endblock %}

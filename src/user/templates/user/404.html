@@ -1,0 +1,14 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}ページが見つかりません{% endblock title %}
+{% block content %}
+<section class="section">
+  <h2>ページが見つかりません</h2>
+  <p>お探しのページが見つかりませんでした。</p>
+  <p>URLが間違っているか、ページが移動または削除された可能性があります。</p>
+  <p>お手数ですが、もう一度お試しください。</p>
+  <p><a href="{% url 'user:index' %}" class="btn btn--beige">ホームに戻る</a></p>
+</section>
+{% endblock content %}
+```

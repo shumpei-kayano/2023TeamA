@@ -518,6 +518,11 @@ textarea,
   flex-wrap: wrap;
   justify-content: center;
 }
+@media screen and (max-width: 768px) {
+  .login-form {
+    width: 100%;
+  }
+}
 .login-form input {
   width: 100%;
   margin: 10px 0;
@@ -619,7 +624,6 @@ textarea,
 }
 .signup__form-group {
   margin-bottom: 50px;
-  position: relative;
 }
 .signup__form-group .required {
   text-align: center;

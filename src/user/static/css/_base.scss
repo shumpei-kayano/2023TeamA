@@ -125,12 +125,9 @@ header {
     display: inline-block;
     padding: 0.5rem 1rem;
   }
-  &__search {
+  .header_search {
+    height: 2.5em;
     margin: 1rem 0;
-  }
-  &__search-input {
-    height: 2.2rem;
-    padding: 0.5rem 0 0.5rem 1rem;
     border-radius: 5px;
   }
   button {
@@ -153,6 +150,9 @@ footer {
   justify-content: left;
   &__info {
     padding-left: 0;
+    p {
+      font-weight: normal;
+    }
   }
 }
 
@@ -247,4 +247,13 @@ transition: 0.3s;
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+::-webkit-scrollbar {
+  background: $melimit_gray;
+  border-radius: 5px;
+  width: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: $main_color;
+  border-radius: 5px;
 }

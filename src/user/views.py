@@ -10,7 +10,7 @@ from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 # orderhistoryをimportする
-from .models import OrderHistory
+from .models import OrderHistory,Favorite
 from .utils import melmit_product_detail
 # Create your views here.
 # @login_required
@@ -43,6 +43,10 @@ def index(request):
                 random_sales.append(detail)
             for detail in random_sales:
                 print('detail',detail)
+                if detail['sale_type'] == 'melimit_sales':
+                    print('ratio:',detail['ratio'])
+                    print('threshold_now:',detail['threshold_now'])
+                    print('threshold:',detail['threshold'])
             # matching_sales = Sale.objects.filter(product__product_category=user_taste)  # ユーザーの好みに合った商品を取得
             # random_sale = random.choice(matching_sales)  # ランダムに1つの商品を選択
             categories = Product.TASTE_CHOICES #商品をカテゴリーごとに取得
@@ -178,11 +182,17 @@ def all_products_general(request):
 
 # 共同購入商品一覧
 def all_products_joint(request):
+    mel_sales = []
     sales_by_choices = {}
     for choice, _ in Sale.SALE_CHOICES:
         sales_by_choices[choice] = Sale.objects.filter(sale_type=choice)
         #sales melimit商品すべて 辞書でkeyを指定し、valueを取り出す
     sales = sales_by_choices['melimit_sales']
+    print('sales',sales)
+    for sale in sales:
+        print('sale',sale)
+        mel_sale = melmit_product_detail(sale)
+        mel_sales.append(mel_sale)
     #for文の最後のみ入っている すべてが入るように
     #thresholdsを辞書のままテンプレートに送るとめんどくさいのでリスト型にしたい
     thresholds = {}
@@ -260,7 +270,7 @@ def all_products_joint(request):
             print(threshold.threshold)
     #しきい値を取得できた thresholdの一つ目の引数=sale.pkのthreshold.threshold
     atai = 75
-    return render(request, 'user/joint-products.html', {'sales': sales, 'thresholds':thresholds, 'sale_infos':sale_infos,'mel_product':mel_product,'atai':atai})
+    return render(request, 'user/joint-products.html', {'sales': sales, 'thresholds':thresholds, 'sale_infos':sale_infos,'mel_product':mel_product,'atai':atai,'mel_sales':mel_sales})
 
 # 一般商品詳細
 def general_products_detail(request,pk):
@@ -348,71 +358,79 @@ def joint_products_detail(request,pk):
             logout(request)
     #id=pkにより、１商品に固定されるはず
     sale = Sale.objects.get(id=pk)
+    detail = melmit_product_detail(sale)
     print(sale)
-    print(sale.threshold_set.all())
-    thresholds = {}
-    #商品情報と閾値情報、割引後の値段等を一括りにするsale_infos
-    sale_infos = []
-    thresholds[sale.pk] = list(sale.threshold_set.all())
-    print(thresholds[sale.pk])
-        #閾値を出す 閾値が一つなのでループは一回
-    for i in thresholds[sale.pk]:
-        print(i.threshold)
-        print(sale.sale_price)
-        print(i.discount_rate)
-        #discount_amount 割引額
-        print(i.discount_amount())
-        #割引額を計算する
-        discounted_amount = i.discount_amount
-        #割引後の値段を計算
-        discounted_price = sale.sale_price *(100-i.discount_rate)/100
-        sale_info = {
-            'sale_pk':sale.pk,
-            'product_name':sale.product.product_name,
-            'product_price':sale.product.product_price,
-            'weight':sale.product.weight,
-            'product_image':sale.product.product_image,
-            'product_category':sale.product.product_category,
-            'sale_price':sale.sale_price,
-            'sale_start':sale.sale_start,
-            'sale_end':sale.sale_end,
-            'stock':sale.stock,
-            'expiration_date':sale.expiration_date,
-            'description':sale.description,
-            'sale_type':sale.sale_type,
-            'discount_rate':i.discount_rate,
-            'threshold':i.threshold,
-            'discounted_amount':discounted_amount,
-            'discounted_price':discounted_price,
-            'store_image':sale.product.store.store_image,
-            'site_url':sale.product.store.site_url,
-            'email':sale.product.store.email,
-            'store_name':sale.product.store.username,
-            'postal_code':sale.product.store.postal_code,
-            'prefecture':sale.product.store.prefecture,
-            'city':sale.product.store.city,
-            'address':sale.product.store.address,
-            'phone_number':sale.product.store.phone_number,
-        }
-    sale_infos.append(sale_info)
-    #辞書型の一つ目に全部入っている感じ jisyo[0][~]みたいな
-    for sale_info in sale_infos:
-        print(sale_info)
-    print(sale_infos[0]['sale_pk'])
+    # print(sale.threshold_set.all())
+    # thresholds = {}
+    # #商品情報と閾値情報、割引後の値段等を一括りにするsale_infos
+    # sale_infos = []
+    # thresholds[sale.pk] = list(sale.threshold_set.all())
+    # print(thresholds[sale.pk])
+    #     #閾値を出す 閾値が一つなのでループは一回
+    # for i in thresholds[sale.pk]:
+    #     print(i.threshold)
+    #     print(sale.sale_price)
+    #     print(i.discount_rate)
+    #     #discount_amount 割引額
+    #     print(i.discount_amount())
+    #     #割引額を計算する
+    #     discounted_amount = i.discount_amount
+    #     #割引後の値段を計算
+    #     discounted_price = sale.sale_price *(100-i.discount_rate)/100
+    #     sale_info = {
+    #         'sale_pk':sale.pk,
+    #         'product_name':sale.product.product_name,
+    #         'product_price':sale.product.product_price,
+    #         'weight':sale.product.weight,
+    #         'product_image':sale.product.product_image,
+    #         'product_category':sale.product.product_category,
+    #         'sale_price':sale.sale_price,
+    #         'sale_start':sale.sale_start,
+    #         'sale_end':sale.sale_end,
+    #         'stock':sale.stock,
+    #         'expiration_date':sale.expiration_date,
+    #         'description':sale.description,
+    #         'sale_type':sale.sale_type,
+    #         'discount_rate':i.discount_rate,
+    #         'threshold':i.threshold,
+    #         'discounted_amount':discounted_amount,
+    #         'discounted_price':discounted_price,
+    #         'store_image':sale.product.store.store_image,
+    #         'site_url':sale.product.store.site_url,
+    #         'email':sale.product.store.email,
+    #         'store_name':sale.product.store.username,
+    #         'postal_code':sale.product.store.postal_code,
+    #         'prefecture':sale.product.store.prefecture,
+    #         'city':sale.product.store.city,
+    #         'address':sale.product.store.address,
+    #         'phone_number':sale.product.store.phone_number,
+    #     }
+    # sale_infos.append(sale_info)
+    # #辞書型の一つ目に全部入っている感じ jisyo[0][~]みたいな
+    # for sale_info in sale_infos:
+    #     print(sale_info)
+    # print(sale_infos[0]['sale_pk'])
     #sale_infosの関連商品をrelated_saleとする。条件はcategoryが同じ、またはstore_nameが同じ
     # related_sales = Sale.objects.filter(Q(product__store=sale_infos[0]['sale_pk']) | Q(product__product_category=sale_infos[0]['product_category'])).order_by('?')[:3]
     # print(related_sales)
     #sale_infosはオブジェクトではないのでproduct__storeと比較できない
     # related_sales = Sale.objects.filter(Q(product__store=sale.product.store) | Q(product__product_category=sale_infos[0]['product_category'])).order_by('?')[:3]
-    related_sales = Sale.objects.filter((Q(product__store=sale.product.store) | Q(product__product_category=sale_infos[0]['product_category'])) & ~Q(product__product_name=sale_infos[0]['product_name'])).order_by('?')[:3]
+    related_sales = Sale.objects.filter((Q(product__store=detail['store']) | Q(product__product_category=detail['product_category'])) & ~Q(product__product_name=detail['product_name'])).order_by('?')[:3]
     print(related_sales)
+    related_list = []
+    #この段階だとmelは閾値を取得できないのでutilsを使用する
+    for i in related_sales:
+        print(i)
+        product = melmit_product_detail(i)
+        related_list.append(product)
+    print(related_list)
     #sale.product.storeはオブジェクトが格納されるので文字列と比較しようとしてエラーが発生した。
     #sale_infos[0]['store_name']は文字列なのでint型と比較できない
     #オブジェクトの中身、メソッド、属性の名前を出力できる
     # print(dir(sale.product.store))
     #閾値の現在の個数を取得する
-    # check = ThresholdCheck(sale=sale,user=user,threshold=i,count=quantitys)
-    return render(request, 'user/joint-products_detail.html', {'sale': sale,'sale_infos':sale_infos,'related_sales':related_sales})
+    # check = ThresholdCheck(sale=sale,user=user,threshold=i,count=quantitys)'sale_infos':sale_infos,
+    return render(request, 'user/joint-products_detail.html', {'sale': detail,'related_sales':related_sales,'related_list':related_list})
 
 # カート
 #セッションからカートを取得し、詳細情報をデータベースから取得する
@@ -486,9 +504,24 @@ def order_completed(request):
     return render(request, 'user/order-completed.html')
     
 
+
 # お気に入り
 def favorite(request):
-    return render(request, 'user/favorite.html')
+    user_id = request.user.id
+    user = MelimitUser.objects.get(id=user_id)
+    favorites = Favorite.objects.filter(user=user)
+    print('ふぁぼりて:',favorites)
+    fav_sales = []
+    for i in favorites:
+        sale_id = i.sale.id
+        print('sale_id:',sale_id)
+        sale = Sale.objects.filter(id=sale_id)
+        for random in sale:
+                print('random:',random)
+                detail = melmit_product_detail(random)
+                fav_sales.append(detail)
+    print('fav:',fav_sales)
+    return render(request, 'user/favorite.html', {'favorites': fav_sales})
 
 # パスワード設定用メール送信完了
 def pass_mail(request):
@@ -576,12 +609,13 @@ def signup_choice(request):
 
 def add_to_cart(request, pk):
     sale = get_object_or_404(Sale, id=pk)
+    cart = request.session.get('cart', {})
     #カート全体
     # cart = request.session['cart']
     #カート全体から商品すべてをループして該当のpkがあるか探す
-    
-    cart = request.session.get('cart', {})
-    quantity = int(request.POST.get('quantity'))
+    # if 'quantity' not in request.session:
+    #     request.session['quantity'] = 1
+    quantity = int(request.POST.get('quantity', 1))
     print('cart:',cart.items())
     #該当するpkなら個数を追加して更新 違うとき？ cart[pk]が空の時であって、cart[pk]が存在していないといけない
     for item_pk, quantitys in cart.items():
@@ -1026,3 +1060,37 @@ def error_view(request):
 # 共同購入商品確認
 def joint_cfm(request):
     return render(request, 'user/joint-cfm.html')
+
+#お気に入りに追加するビュー
+def add_to_favorites(request, pk):
+    if request.user.is_authenticated:
+        # product = get_object_or_404(Product, pk=product_id)
+        sale = Sale.objects.get(id=pk)
+        user_id = request.user.id
+        user = MelimitUser.objects.get(id=user_id)
+        Favorite.objects.get_or_create(user=user, sale=sale)
+        # リダイレクト先はお気に入り？商品ページ？　商品ページなら if 一般、共同
+        # return redirect('product_detail', product_id=pk)
+        favorites = Favorite.objects.filter(user=request.user)
+        return redirect('user:favorite')
+        # return render(request, 'user/favorite.html', {'favorites':favorites})
+    else:
+        return render(request, 'user/login.html')
+    # return render(request, 'user/joint-products_detail.html', {'sale': sale,'sale_infos':sale_infos,'related_sales':related_sales})
+    # return render(request, 'user/general-products_detail.html', {'sale': sale, 'related_sales':related_sales})
+
+#お気に入りから削除するビュー
+def remove_from_favorites(request, pk):
+    # product = get_object_or_404(Product, pk=product_id)
+    sale = Sale.objects.get(id=pk)
+    print('sale:',sale)
+    user_id = request.user.id
+    user = MelimitUser.objects.get(id=user_id)
+    print('user:',user)
+    print('aaaaaaaaaaaaaaaaaaaaaaaa')
+    fav = Favorite.objects.filter(user=user, sale=sale).delete()
+    print('favvvvvvvvvvv:',fav)
+    #リダイレクト先はお気に入りページにしよう
+    return redirect('user:favorite')
+    # return render(request, 'user/favorite.html')
+    # return redirect('product_detail', product_id=pk)
