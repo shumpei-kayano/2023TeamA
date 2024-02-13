@@ -62,7 +62,7 @@
                             <div class="dropdown-tenpo" id="dropdownTenpoContainer">
                                 <div class="dropdown-text">
                                     <div class="accordion-item">
-                                        <a href="{% url 'store:store-info' %}">
+                                        <a href="{% url 'store:mel-store-info' %}">
                                             <h3 class="accordion-title js-accordion-title">
                                                 <span>店舗情報設定</span>
                                                 <img class="keyboardarrowright-icon" alt="" src="{% static 'store/img/keyboardarrowright.png' %}" />
@@ -111,7 +111,7 @@
                                 <div class="header-icon">
                                 <img class="user-icon" alt="" src="{% static 'store/img/user.png' %}" />
                                 </div>
-                                <a href="store-info" class="user-text">管理者様</a>
+                                <a href={% url 'store:mel-store-info' %} class="user-text">管理者様</a>
                             </div>
                             <!--/.header-migiue-->
                         </div>

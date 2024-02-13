@@ -40,7 +40,7 @@ urlpatterns = [
     # パスワード再設定用のメール送信ページ
     path('pass-mail', views.pass_mail_view, name='pass_mail'),
     # 店舗情報設定ページ
-    path('store-info', views.store_info_view, name='store-info'),
+    path('mel-store-info', views.store_info_view, name='mel-store-info'),
     # 店舗情報設定ページの編集
     path('store-info-edit', views.store_info_edit_view, name='store-info-edit'),
     # 店舗の新規登録ページ

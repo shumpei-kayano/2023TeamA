@@ -246,7 +246,7 @@ def store_info_view(request):
     user = mixin.get_melimitmodel_user()
     # print(f"店舗情報設定ページのuser : {user.__dict__}")
     # print(f"url : {user.site_url}")
-    return render(request, 'store/store-info.html', {'user': user,})
+    return render(request, 'store/mel-store-info.html', {'user': user,})
 
 # 店舗情報設定ページの編集
 @login_required
@@ -262,7 +262,7 @@ def store_info_edit_view(request):
         print(f"form : {form}")
         if form.is_valid():
             form.save()
-            return render(request, 'store/store-info.html', {'form': form, 'user': user,})
+            return render(request, 'store/mel-store-info.html', {'form': form, 'user': user,})
         else:
             print('失敗')
             print(form.errors)
