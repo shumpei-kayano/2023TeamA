@@ -193,7 +193,10 @@ class ThresholdCheck(models.Model):
         #販売IDの数for文
         #今のDB内の個数
         sub_count = ThresholdCheck.objects.filter(sale=self.sale).aggregate(Sum('count'))['count__sum']
-        total_count = sub_count
+        if sub_count is None:
+            total_count = 0
+        else:
+            total_count = sub_count
         print('total_count:',total_count)
         print('閾値用個数：',self.threshold.threshold)
         # return total_count
