@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount', # 追加
     'store',
     'apscheduler', # 追加
-    'axes',
 ]
 
 MIDDLEWARE = [
@@ -221,7 +220,3 @@ CSRF_COOKIE_SECURE = True
 CSRF_TRUSTED_ORIGINS = [
     'https://*.o-hara-oita.click',
 ]
-
-AXES_FAILURE_LIMIT = 5  # ロックアウトするまでの失敗回数
-AXES_COOLOFF_TIME = 1  # ロックアウト時間（時間）
-AXES_LOCKOUT_TEMPLATE = 'user:your_lockout.html'  # ロックアウト時に表示するテンプレート
