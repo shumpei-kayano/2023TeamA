@@ -15,6 +15,10 @@
 <section class="section1 mgt-10">
     <div class="section1__left">
         {% comment %} <a href="{% url 'user:guide' %}" class="btn--beige btn--big">ご利用ガイド</a> {% endcomment %}
+        <div class="section1__left__img">
+            <image src="{% static 'assets/img/メリ光雄.png' %}" alt="メリ光雄" class="section1__left__img__img">
+            <image src="{% static 'assets/img/メリ光子.png' %}" alt="メリ光子" class="section1__left__img__img">
+        </div>
         <a href="{% url 'user:sdgs' %}" class="btn--beige btn--big mgt-10">MelimitとSDGs</a>
         <a href="{% url 'user:sdgs' %}#sdgs-head2" class="btn--beige btn--big mgt-10">食品ロスとは</a>
     </div>

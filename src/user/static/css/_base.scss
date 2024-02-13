@@ -150,6 +150,9 @@ footer {
   justify-content: left;
   &__info {
     padding-left: 0;
+    p {
+      font-weight: normal;
+    }
   }
 }
 

@@ -1,28 +1,53 @@
+.explain-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5rem;
+    @media screen and (max-width: 767px) {
+        margin-bottom: 3rem;  // 下にマージンを追加する
+    }
+    h2 {
+        margin-top: 3rem;
+        margin-bottom: 2rem;
+        font-family: cursive;  // カーシブ体にする
+        @media screen {
+            margin-bottom: 5rem;  // 下にマージンを追加する
+        }
+    }
+}
 
+.explain-top__section_img {
+    aspect-ratio: 1/1;
+    width: 10%;
+    margin: 0 auto;
+    @media screen and (max-width: 767px) {
+        width: 50%;  // 画像の幅を50%にする
+    }
+}
 
 .explain-top__section1 {
+    margin-top: 2rem;
     display: flex;
     flex-direction: row;
-    margin: 134px 0;  // 上下にマージンを追加する
+    justify-content: space-between;
     @media screen and (max-width: 767px) {
         display: block;
         margin:  0;  // 上にマージンを追加する
     }
     &_left {
-        flex: 1;
+        width: 45%;
         display: flex;
         flex-direction: column;
         align-items: center;
         font-size: 1.2em;  // 文字を大きくする
-        margin-top: 20px;  // 上にマージンを追加する
-        // transform: translateX(-29px);  // 左に50px移動する
         @media screen and (max-width: 767px) {
+            width: 100%;
             flex: none;
         }
         .merit {
-            font-size: 2.4em;  // 文字を大きくする
+        font-size: 2.4em;  // 文字を大きくする
         transform: translateX(-34px);  // 左に50px移動する
-    }
+        }
         .limit {
             font-size: 2.4em;  // 文字を大きくする
             transform: translateX(27px);  // 左に50px移動する
@@ -32,9 +57,11 @@
         }
     }
     &_right {
-        flex: 1;
+        width: 45%;
         line-height: 2.5;  // 行間を1.5に設定する
+        font-weight: bold;  // フォントを太字にする
         @media screen and (max-width: 767px) {
+            width: 100%;
             flex: none;
         }
     }
@@ -44,52 +71,56 @@
 .explain-top__section2 {
     display: flex;
     flex-direction: row-reverse;
-    margin: 134px 0;  // 上下にマージンを追加する
+    justify-content: space-between;
     @media screen and (max-width: 767px) {
         display: block;
         margin: 1rem 0;  // 上にマージンを追加する
     }
     &_left {
-        flex: 1;
+        width: 45%;
         font-size: 3em;  // 文字を大きくする
-        margin-top: 119px;  // 上にマージンを追加する
-        text-align: center;  // 文字を中央に配置する
+        display: flex;
+        align-items: center;
+        justify-content: center;
         @media screen and (max-width: 767px) {
-            margin-top: 0;
+            width: 100%;
             flex: none;
         }
     }
     &_right {
-        flex: 1;
+        width: 45%;
         line-height: 2.5;  // 行間を1.5に設定する
+        font-weight: bold;  // フォントを太字にする
         @media screen and (max-width: 767px) {
+            width: 100%;
             flex: none;
         }
     }
 }
 
 .explain-top__section3 {
-    margin: 134px 0;  // 上下にマージンを追加する
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     @media screen and (max-width: 767px) {
         display: block;
         margin: 1rem 0;  // 上にマージンを追加する
     }
     &_left {
-        flex: 1;
+        width: 45%;
         font-size: 3em;  // 文字を大きくする
-        margin-top: 40px;  // 上にマージンを追加する
         text-align: center;
         @media screen and (max-width: 767px) {
-            margin-top: 0;
+            width: 100%;
             flex: none;
         }
     }
     &_right {
-        flex: 1;
+        width: 45%;
         line-height: 2.5;  // 行間を1.5に設定する
+        font-weight: bold;  // フォントを太字にする
         @media screen and (max-width: 767px) {
+            width: 100%;
             flex: none;
         }
     }
