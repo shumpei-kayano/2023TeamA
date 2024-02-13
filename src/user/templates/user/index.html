@@ -264,7 +264,7 @@
                                                                 <div class="progress-bar__completed" style="width: {{ random_sale.ratio }}%;"></div>
                                                             </div>
                                                             <p class="card--text">あと{{ random_sale.at_count }}個達成で</p>
-                                                            <p class="card--price">{{ random_sale.price|to_currency }}（税込）</p>
+                                                            <p class="card--price">￥{{ random_sale.price|to_currency }}（税込）</p>
                                                             <h4 class="card--discount">￥{{ random_sale.clear_price|to_currency }}（税込）</h4>
                                                         </div>
                                                     {% else %}
@@ -276,7 +276,7 @@
                                                                 <div class="progress-bar__completed" style="width: {{ random_sale.ratio }}%;"></div>
                                                             </div>
                                                             <p class="card--text">達成しました！</p>
-                                                            <p class="card--price">{{ random_sale.price|to_currency }}（税込）</p>
+                                                            <p class="card--price">￥{{ random_sale.price|to_currency }}（税込）</p>
                                                             <h4 class="card--discount">￥{{ random_sale.clear_price|to_currency }}（税込）</h4>
                                                         </div>
                                                     {% endif %}
