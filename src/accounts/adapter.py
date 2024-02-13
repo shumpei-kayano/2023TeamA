@@ -51,7 +51,7 @@ class MelimitAccountAdapter(DefaultAccountAdapter):
                     return '/ana_ana/'
                 else:
                     print('___melimit_user')
-                    return '/omae_store_kokoha_useryou/'
+                    return '/userlogin_storeerror/'
             # 店舗側からログイン (改修前)
             elif request.session['backend'] == 'accounts.backends.MelimitStoreModelBackend':
             # elif user.__class__.__name__ == 'MelimitStore':
