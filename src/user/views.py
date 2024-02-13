@@ -276,6 +276,7 @@ def all_products_joint(request):
 
 # 一般商品詳細
 def general_products_detail(request,pk):
+    sale_list = []
     # 店舗管理画面の「実際の商品画面を見る」ボタンから遷移した場合、ログアウトする
     if isinstance(request.user, CustomUser):
         if request.user.user_type == 'melimit_store':
@@ -305,6 +306,11 @@ def general_products_detail(request,pk):
     # related_sales = Sale.objects.filter(Q(product__store=sale.product.store) | Q(product__category=sale.product.product_category))
     # related_sales = Sale.objects.filter(Q(product__store=sale.product.store) | Q(product__product_category=sale.product.product_category)).order_by('?')[:3]
     related_sales = Sale.objects.filter((Q(product__store=sale.product.store) | Q(product__product_category=sale.product.product_category)) & ~Q(product__product_name=sale.product.product_name)).order_by('?')[:3]
+    #saleで３つ取得したのでそれをutilsに入れて一般、共同を取得する
+    for i in related_sales:
+        
+        relate = melmit_product_detail(i)
+        sale_list.append(relate)
     print(related_sales)
     print(related_sales)
     #関連商品のsale_typeを判断
@@ -334,7 +340,7 @@ def general_products_detail(request,pk):
             #閾値とクリア後の値段、現在の数
     print(sale.product.product_name)
 
-    return render(request, 'user/general-products_detail.html', {'sale': sale, 'related_sales':related_sales})
+    return render(request, 'user/general-products_detail.html', {'sale': sale, 'related_sales':related_sales,'sale_list':sale_list,})
 
 # def sale_detail_view(request, pk):
     
@@ -354,6 +360,7 @@ def general_products_detail(request,pk):
 
 # 共同購入商品詳細
 def joint_products_detail(request,pk):
+    sale_list = []
     # 店舗管理画面の「実際の商品画面を見る」ボタンから遷移した場合、ログアウトする
     if isinstance(request.user, CustomUser):
         if request.user.user_type == 'melimit_store':
@@ -419,20 +426,18 @@ def joint_products_detail(request,pk):
     # related_sales = Sale.objects.filter(Q(product__store=sale.product.store) | Q(product__product_category=sale_infos[0]['product_category'])).order_by('?')[:3]
     related_sales = Sale.objects.filter((Q(product__store=detail['store']) | Q(product__product_category=detail['product_category'])) & ~Q(product__product_name=detail['product_name'])).order_by('?')[:3]
     print(related_sales)
-    related_list = []
-    #この段階だとmelは閾値を取得できないのでutilsを使用する
     for i in related_sales:
-        print(i)
-        product = melmit_product_detail(i)
-        related_list.append(product)
-    print(related_list)
+        
+        relate = melmit_product_detail(i)
+        sale_list.append(relate)
+    #この段階だとmelは閾値を取得できないのでutilsを使用する
     #sale.product.storeはオブジェクトが格納されるので文字列と比較しようとしてエラーが発生した。
     #sale_infos[0]['store_name']は文字列なのでint型と比較できない
     #オブジェクトの中身、メソッド、属性の名前を出力できる
     # print(dir(sale.product.store))
     #閾値の現在の個数を取得する
     # check = ThresholdCheck(sale=sale,user=user,threshold=i,count=quantitys)'sale_infos':sale_infos,
-    return render(request, 'user/joint-products_detail.html', {'sale': detail,'related_sales':related_sales,'related_list':related_list})
+    return render(request, 'user/joint-products_detail.html', {'sale': detail,'related_sales':related_sales,'sale_list':sale_list})
 
 # カート
 #セッションからカートを取得し、詳細情報をデータベースから取得する
@@ -1005,6 +1010,7 @@ def category_products(request):
                         at_count = threshold.threshold -count
                         print('at_count:',at_count)
                         discounted_price = round(sale.sale_price * (100 - threshold.discount_rate) / 100)
+                        ratio = round(count / threshold.threshold * 100)
                         #saleモデルからcheckモデルの内容を取得しよう
                         detail = {
                             #pk
@@ -1029,6 +1035,7 @@ def category_products(request):
                             'threshold_now':count,
                             'sale_type':sale.sale_type,
                             'at_count':at_count,
+                            'ratio':ratio,
                         }
             product_detail.append(detail)
             print('product_detail:',product_detail)
@@ -1113,6 +1120,7 @@ def category_products(request):
                     at_count = threshold.threshold -count
                     print('at_count:',at_count)
                     discounted_price = round(sale.sale_price * (100 - threshold.discount_rate) / 100)
+                    ratio = round(count / threshold.threshold * 100)
                     #saleモデルからcheckモデルの内容を取得しよう
                     detail = {
                         #pk
@@ -1137,6 +1145,7 @@ def category_products(request):
                         'threshold_now':count,
                         'sale_type':sale.sale_type,
                         'at_count':at_count,
+                        'ratio':ratio,
                     }
         product_detail.append(detail)
         print(product_detail)
