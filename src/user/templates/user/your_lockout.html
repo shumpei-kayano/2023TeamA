@@ -1,0 +1,14 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}パスワードを一定回数失敗したため{% endblock title %}
+{% block content %}
+<h2>
+    パスワードを一定回数失敗したため、アカウントがロックされました。
+    <br>
+    しばらくしてから再度お試しください。
+</h2>
+<div class="contact-cmp-btn">
+    <a class="btn btn--white" href="{% url "user:index" %}">トップページに戻る</a>
+</div>
+{% endblock content %}
