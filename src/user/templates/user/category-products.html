@@ -53,7 +53,7 @@
                         <div class="card--pk" style="display: none;">{{ product.pk }}</div>
                         <a href="{% url 'user:general_products_detail' pk=product.pk %}">
                             <img src="{{ product.image.url }}" alt="{{ product.product_name }}" class="card--img">
-                            <p class="discount">{{ product.rate }}%OFF!</p>
+                            <p class="discount">{{ product.threshold_rate }}%OFF!</p>
                             <div class="card--content">
                                 <h3 class="card--title">{{ product.product_name }}</h3>
                                 <h4 class="card--discount">￥{{ product.price|to_currency }}（税込）</h4>
@@ -65,14 +65,14 @@
                         <div class="card--pk" style="display: none;">{{ product.pk }}</div>
                         <a href="{% url 'user:joint_products_detail' pk=product.pk %}">
                             <img src="{{ product.image.url }}" alt="{{ product.product_name }}" class="card--img">
-                            <p class="discount">{{ product.rate }}%OFF!</p>
+                            <p class="discount">{{ product.threshold_rate }}%OFF!</p>
                             <div class="card--content">
                                 <h3 class="card--title">{{ product.product_name }}</h3>
                                 {% if product.threshold_now < product.threshold %}
                                 <div class="progress-bar">
                                     <div class="progress-bar__completed" style="width: 50%;"></div>
                                 </div>
-                                <p class="card--text">あと{{ product.at_count}}人達成で</p>
+                                <p class="card--text">あと{{ product.at_count}}個達成で</p>
                                 <p class="card--price">￥{{ product.price }}（税込）</p>
                                 <h4 class="card--discount">￥{{ product.clear_price|to_currency }}（税込）</h4>
                                 {% else %}

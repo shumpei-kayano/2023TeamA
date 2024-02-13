@@ -7,6 +7,10 @@
     color: $melimit_black;
     font-size: 1rem;
     font-family: 'Noto Sans JP', sans-serif;
+    width: 20%;
+    @media screen and (max-width: 768px) {
+        width: 100%;
+    }
     option{
         text-align: center;
         background: $melimit_white;

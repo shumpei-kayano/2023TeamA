@@ -62,7 +62,6 @@
                 justify-content: center;
             }
             button{
-                padding: 0.5rem 1rem;
                 margin: 0.5rem 0;
                 @media screen and (max-width: 768px){
                         width: 100%;
@@ -127,6 +126,14 @@
         background-color: $melimit_red;
         border-radius: 0.3125rem;
     }
+    &__stock{
+        padding: 0.5rem 2rem;
+        text-align: center;
+        font-weight: bold;
+        color: $melimit_white;
+        background-color: $melimit_blue2;
+        border-radius: 0.3125rem;
+    }
     &__text{
         @media screen and (max-width: 768px){
             width: 100%;
@@ -139,6 +146,9 @@
     &__form {
         &1,&2 {
             width: 50%;
+            @media screen and (max-width: 768px){
+                width: 100%;
+            }
             .btn {
                 width: 100%;
             }
