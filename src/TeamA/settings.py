@@ -70,7 +70,7 @@ ROOT_URLCONF = 'TeamA.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ BASE_DIR / 'user/templates', BASE_DIR / 'accounts/templates'],
+        'DIRS': [ BASE_DIR / 'user/templates', BASE_DIR / 'accounts/templates', BASE_DIR / 'store/templates', ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
