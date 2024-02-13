@@ -33,7 +33,7 @@
                             </div>
                             <p class="card--text">あと{{ sale.at_count}}個達成で</p>
                             <p class="card--price">￥{{ sale.price|to_currency }}（税込）</p>
-                            <h4 class="card--discount">￥{{ sale.clear_price|to_currency }}</h4>
+                            <h4 class="card--discount">￥{{ sale.clear_price|to_currency }}（税込）</h4>
                         </div>
                     {% else %}
                         <p class="discount">{{ sale.threshold_rate }}%OFF!</p>
@@ -44,7 +44,7 @@
                             </div>
                             <p class="card--text">達成しました！</p>
                             <p class="card--price">￥{{ sale.price|to_currency }}（税込）</p>
-                            <h4 class="card--discount">￥{{ sale.clear_price|to_currency }}</h4>
+                            <h4 class="card--discount">￥{{ sale.clear_price|to_currency }}（税込）</h4>
                         </div>
                     {% endif %}
                 </a>
