@@ -6,16 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/style.css' %}">
     <title>Melimit:店舗管理者ログイン</title>
+    <style>
+        ul.errorlist {
+            list-style-type: none;
+        }
+    </style>
 </head>
 <body>
 <div class="store-login">
     <h1 class="store-login__title">店舗管理画面ログイン</h1>
-    {% if form.error %}
-        {{ form.error }}
-    {% endif %}
     <form class="store-login__form" method="POST" action="{% url 'store:store_login' %}">
         {% csrf_token %}
-        {{ form.as_p }}
+        {% comment %} {{ form.as_p }} {% endcomment %}
+        {% if form.errors %}
+            <ul class="errorlist">
+                {% for field,errors in form.errors.items %}
+                    {% for error in errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {{ form.email }}
+        {{ form.password }}
         <p class="to-forgot-pass"><a href="{% url 'accounts:password_reset' %}">パスワードを忘れた場合</a></p>
         <button class="store-login__btn" type="submit">ログイン</button>
         <h2>会員登録がまだの方はこちら</h2>

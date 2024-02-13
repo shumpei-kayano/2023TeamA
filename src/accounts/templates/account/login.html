@@ -8,7 +8,7 @@
 
 <form class="login-form" method="POST" action="{% url 'account_login_kkkk' %}">
   {% csrf_token %}
-    {{ form.as_p }}
+    {{ form }}
   <!-- パスワードを忘れた場合 -->
   <p class="to-forgot-pass"><a href="{% url 'accounts:password_reset' %}">パスワードを忘れた場合</a></p>
 

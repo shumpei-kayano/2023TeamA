@@ -8,14 +8,14 @@
                 <h3>注文履歴</h3>
                 <p>注文履歴を確認します。</p>
         </a>
-        <a href="#" class="mypage__container">
+        {% comment %} <a href="{% url 'user:joint_cfm' %}" class="mypage__container">
                 <h3>共同購入商品の確認</h3>
                 <p>注文した共同購入商品の現在価格・人数などを確認します。</p>
-        </a>
-        <a href="#" class="mypage__container">
+        </a> {% endcomment %}
+        {% comment %} <a href="#" class="mypage__container">
                 <h3>お支払い方法の変更</h3>
                 <p>登録しているお支払い方法を変更します。</p>
-        </a>
+        </a> {% endcomment %}
         <a href="{% url 'accounts:user_edit' %}" class="mypage__container">
                 <h3>お客様情報の変更</h3>
                 <p>氏名・メールアドレス・パスワードなど登録しているお客様情報を変更します。</p>

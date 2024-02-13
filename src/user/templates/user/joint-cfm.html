@@ -1,2 +1,46 @@
 {% extends 'user/base.html' %}
 {% load static %}
+{% block title %}共同購入商品確認{% endblock %}
+{% block content %}
+<h2 class="cart__title">共同購入商品確認</h2>
+    <table class="cart__shopping-table">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">商品</th>
+            <th scope="col">個数</th>
+            <th scope="col">定価</th>
+            <th scope="col">クリア前価格</th>
+            <th scope="col">クリア後価格</th>
+            <th scope="col">達成状況</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+                <img src="{% static 'assets/img/メリ光雄.png' %}" alt="野菜"/>
+            </td>
+            <td>
+                トマト
+            </td>
+            <td>
+                10個
+            </td>
+            <td>
+                10000円
+            </td>
+            <td>
+                1000円
+            </td>
+            <td>
+                500円
+            </td>
+            <td>
+                10個/100個
+            <td>
+                <a class="btn btn--beige" href="#">詳細</a>
+            </td>
+        </tr>
+    </table>
+{% endblock %}

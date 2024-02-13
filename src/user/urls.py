@@ -8,7 +8,7 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('explain/', views.explain_view, name='explain'),
     path('ana_ana/', views.anai, name='ana_ana'),
-    path('omae_store_kokoha_useryou/', views.omae_store, name='omae_store'),
+    path('userlogin_storeerror/', views.omae_store, name='omae_store'),
     path('omae_user_kokoha_storeyou/', views.omae_user, name='omae_user'),
     path('sinki/', views.sinki, name='sinki'),
     path('what-melimit/', views.what_melimit, name='what_melimit'),
@@ -38,6 +38,7 @@ urlpatterns = [
     path('update_cart/',views.update_cart,name='update_cart'),
     path('delete_item/',views.delete_cart, name='delete_cart'),
     path('category-products/', views.category_products, name='category_products'),
+    path('joint-cfm/', views.joint_cfm, name='joint_cfm'),
     # テスト用
     # 一覧表示
     path('products/', views.product_list, name='product_list'),
@@ -52,4 +53,7 @@ urlpatterns = [
     path('complete/', views.order_complete, name='order_complete'),
     # エラー
     path('error/', views.error_view, name='error'),
+    path('favorite/add/<int:pk>',views.add_to_favorites,name='add_to_favorites'),
+    path('favorite/delete/<int:pk>',views.remove_from_favorites,name='remove_from_favorites'),
+    path('error_stock/',views.error_stock,name='error_stock'),
 ]

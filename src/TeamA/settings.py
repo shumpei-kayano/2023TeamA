@@ -126,6 +126,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ja'
 
+# DB登録はUTCで行うが、テンプレート表示は日本時間にする
 TIME_ZONE = 'Asia/Tokyo'
 
 USE_I18N = True
@@ -167,6 +168,10 @@ SITE_ID = 1
 # django-allauthの設定
 # AUTHENTICATION_BACKENDSとは、認証バックエンドを指定する設定
 # デフォルトでは、django.contrib.auth.backends.ModelBackendが指定されている
+# authenticateメソッドで、backend引数を設定しない場合ここに設定しているバックエンドを順番に試し、
+# 最初に成功したバックエンドを使う(成功後は次のバックエンドは試さない)
+# つまり、all-authが使用されることはない？？
+# ※backend引数を指定しても、全部動いてそう…なぜ…？
 AUTHENTICATION_BACKENDS = (
     # MelimitUserModelBackendを使う
     'accounts.backends.MelimitUserModelBackend',  # 追加

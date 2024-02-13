@@ -28,7 +28,7 @@
                 </div>
             </div>
 
-            <div class="store-info-box">
+            {% comment %} <div class="store-info-box">
                 <div class="store-info-box-title">
                     <div class="store-title-text">店舗責任者名</div>
                 </div>
@@ -44,7 +44,7 @@
                 <div class="store-info-box-input">
                     <span>店舗責任者名（フリガナ）が入っています</span>
                 </div>
-            </div>
+            </div> {% endcomment %}
 
             <div class="store-info-box">
                 <div class="store-info-box-title">
@@ -97,18 +97,18 @@
                     <div class="store-title-text">メールアドレス</div>
                 </div>
                 <div class="store-info-box-input">
-                    <span>{{ user.site_url }}</span>
+                    <span>{{ user.email}}</span>
                 </div>
             </div>
 
-            <div class="store-info-box">
+            {% comment %} <div class="store-info-box">
                 <div class="store-info-box-title">
                     <div class="store-title-text">パスワード</div>
                 </div>
                 <div class="store-info-box-input">
                     <span>{{user.password }}</span>
                 </div>
-            </div>
+            </div> {% endcomment %}
 
             <div class="store-info-box">
                 <div class="store-info-box-title">

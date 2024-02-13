@@ -2,6 +2,8 @@
 
 {% load static %}
 
+{% load priceslice_filters %}
+
 {% block title %}一般購入商品の詳細{% endblock %}
 
 {% block contents %}
@@ -50,7 +52,7 @@
               <div class="title-text">販売価格</div>
           </div>
           <div class="price-box-input">
-              <span>{{ sale.sale_price }} 円</span>
+              <span>{{ sale.sale_price|to_currency }} 円</span>
           </div>
           </div>
 
@@ -60,7 +62,7 @@
               <div class="title-text">定価</div>
           </div>
           <div class="listprice-box-input">
-              <span>{{ sale.product.product_price }} 円</span>
+              <span>{{ sale.product.product_price|to_currency }} 円</span>
           </div>
           </div>
 
@@ -70,7 +72,7 @@
               <div class="title-text">表示期間</div>
           </div>
           <div class="period-box-input">
-              <span>開始：{{ sale.sale_end }} ～ 終了：{{ sale.sale_end }}</span>
+              <span>開始：{{ sale.sale_start }} ～ 終了：{{ sale.sale_end }}</span>
           </div>
           </div>
 
@@ -80,7 +82,7 @@
               <div class="title-text">在庫数</div>
           </div>
           <div class="stock-box-input">
-              <span>{{ sale.stock }} 個</span>
+              <span>{{ sale.stock|to_currency }} 個</span>
           </div>
           </div>
 
@@ -100,7 +102,7 @@
               <div class="title-text">重量</div>
           </div>
           <div class="weight-box-input">
-              <span>{{ sale.product.weight }} g(グラム)</span>
+              <span>{{ sale.product.weight|to_currency }} g(グラム)</span>
           </div>
           </div>
 
@@ -129,14 +131,14 @@
           <div class="category-box-title">
               <div class="title-text">商品説明</div>
           </div>
-          <div class="description-box-input" style="height: 200px;">
+          <div class="description-box-input" style="height: 200px; overflow: overlay;">
               <span>{{ sale.description }}</span>
           </div>
           </div>
 
           <!-- リンク3種類 -->
           <div class="general-product-button">
-              <a href="#!" class="btn-product" style="color: #fff">実際の商品ページを見る</a>
+              <a href="{% url 'user:general_products_detail' pk=sale.pk %}" class="btn-product" style="color: #fff">実際の商品ページを見る(ログアウトされます)</a>
           </div>
 
           <div class="product-delete-button">
@@ -200,13 +202,13 @@
           // 入力値を取得
           const productName = document.querySelector('.product-name-box-input span').textContent;
           const category = document.querySelector('.category-box-input span').textContent;
-          const price = document.querySelector('.price-box-input span').textContent + '円';
-          const listprice = document.querySelector('.listprice-box-input span').textContent + '円';
+          const price = document.querySelector('.price-box-input span').textContent;
+          const listprice = document.querySelector('.listprice-box-input span').textContent;
           // 開始と終了の入力値を取得
           const startDateTime = document.querySelector('.period-box-input span').textContent;
-          const stock = document.querySelector('.stock-box-input span').textContent + '個';
-          const shipping = document.querySelector('.shipping-box-input span').textContent + '円';
-          const weight = document.querySelector('.weight-box-input span').textContent + 'g(グラム)';
+          const stock = document.querySelector('.stock-box-input span').textContent;
+          const shipping = document.querySelector('.shipping-box-input span').textContent;
+          const weight = document.querySelector('.weight-box-input span').textContent;
           const expiration = document.querySelector('.expiration-box-input span').textContent;
           const image = document.querySelector('.image-box-input img').src;
           const description = document.querySelector('.description-box-input span').textContent;
