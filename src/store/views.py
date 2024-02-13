@@ -7,7 +7,7 @@ from accounts.forms import MelimitStoreLoginForm
 from django.contrib.auth import authenticate, login
 from .models import Product, Sale, Threshold
 from user.models import OrderHistory
-from accounts.models import MelimitStore
+from accounts.models import MelimitStore, CustomUser
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import View
 from django.http import HttpResponseBadRequest
@@ -16,8 +16,11 @@ from django.db.models.functions import TruncYear, TruncMonth, TruncDay, ExtractY
 from datetime import datetime, timedelta
 from django.utils import timezone
 from dateutil.relativedelta import relativedelta
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import never_cache
 
 # Create your views here.
+@login_required
 def index(request):
     # ログインしているユーザーを取得する
     mixin = MelimitModelMixin()
@@ -181,6 +184,7 @@ def index(request):
     return render(request, 'store/index.html', {'user': user, 'context_co2_amount': context_co2_amount, 'context_total_data': context_total_data, })
 
 # 発送済み注文履歴(modelは注文履歴モデル、発送済みフラグtrueのものを表示)
+@login_required
 def order_history_view(request):
     # ログインしているユーザーの注文履歴を取得する
     mixin = MelimitModelMixin()
@@ -193,12 +197,14 @@ def order_history_view(request):
     return render(request, 'store/order-history.html', {'order_histories': order_histories,})
 
 # 発送済み注文履歴ページの中身
+@login_required
 def order_history_content_view(request, order_id):
     # URLから注文IDを取得し、そのIDに対応するOrderHistoryのインスタンスを取得する
     order_history = get_object_or_404(OrderHistory, id=order_id)
     return render(request, 'store/order-history-content.html', {'order_history': order_history,})
 
 # 未発送注文一覧ページ(modelは注文履歴モデル、発送済みフラグfalseのものを表示)
+@login_required
 def order_not_shipped_view(request):
     # ログインしているユーザーの注文履歴を取得する
     mixin = MelimitModelMixin()
@@ -211,12 +217,14 @@ def order_not_shipped_view(request):
     return render(request, 'store/order-not-shipped.html', {'order_histories': order_histories,})
 
 # 未発送注文一覧ページの中身
+@login_required
 def order_not_shipped_content_view(request, order_id):
     # URLから注文IDを取得し、そのIDに対応するOrderHistoryのインスタンスを取得する
     order_history = get_object_or_404(OrderHistory, id=order_id)
     return render(request, 'store/order-not-shipped-content.html', {'order_history': order_history,})
 
 # 注文履歴を未発送から発送済みに変更する
+@login_required
 def order_not_shipped_to_shipped_view(request, order_id):
     # URLから注文IDを取得し、そのIDに対応するOrderHistoryのインスタンスを取得する
     order_history = get_object_or_404(OrderHistory, id=order_id)
@@ -228,7 +236,9 @@ def order_not_shipped_to_shipped_view(request, order_id):
 # パスワード再設定用のメール送信ページ
 def pass_mail_view(request):
     return render(request, 'store/pass-mail.html')
+
 # 店舗情報設定ページ(閲覧)
+@login_required
 def store_info_view(request):
     # print(f"mixin前のuser : {request.__dict__}")
     mixin = MelimitModelMixin()
@@ -239,6 +249,7 @@ def store_info_view(request):
     return render(request, 'store/store-info.html', {'user': user,})
 
 # 店舗情報設定ページの編集
+@login_required
 def store_info_edit_view(request):
     mixin = MelimitModelMixin()
     mixin.request = request
@@ -262,32 +273,42 @@ def store_info_edit_view(request):
     return render(request, 'store/store-info-edit.html', {'form': form, 'user': user,})
 
 # 店舗の新規登録ページ
-def store_create_view(request):
-    return render(request, 'store/store-create.html')
-
+# def store_create_view(request):
+#     return render(request, 'store/store-create.html')
 
 # 商品管理一覧ページ
-# 検証用(render先が仮)
 # 実際のページに適用済み
+@login_required
 def product_manage_view(request):
+    # キャストの様な処理(検証用)
+    # if isinstance(request.user, CustomUser):
+    #     melimit_store = MelimitStore.objects.get(customuser_ptr=request.user)
+    # print(f"user : {isinstance(melimit_store, MelimitStore)}")
+    # print(f"user.melimitstore : {request.user.melimitstore}")
     mixin = MelimitModelMixin()
     mixin.request = request
     user = mixin.get_melimitmodel_user()
+    # print(f"instanceはcustomuser: {isinstance(user, CustomUser)}")
+    # print(f"instanceはmelimitstore: {isinstance(user, MelimitStore)}")
+    # print(f"user.melimitstore : {user.product_set.all()}") # 出力結果は同じ。mixin後のuserはmelimitstoreを持っているから。
     # productモデルの一覧表示
     products = user.melimitstore.product_set.all()
-    print(f"products : {products}")
-    for product in products:
-        print(product.__dict__)
+    # print(f"products : {products}")
+    # for product in products:
+    #     print(product.__dict__)
     # saleモデルの一覧表示
     sales = user.melimitstore.sale_set.all()
-    print(f"sales : {sales}")
-    for sale in sales:
-        print(sale.__dict__)
+    # print(f"sales : {sales}")
+    # for sale in sales:
+    #     print(sale.__dict__)
     return render(request, 'store/product-manage.html', {'products': products, 'sales': sales, 'user': user,})
     # return render(request, 'store/product-manage.html')
 
 # 商品詳細ページ
 # 検証用
+@never_cache
+#「実際の商品ページを見る」⇒ログアウト⇒ブラウザバックさせないためにnever_cacheを使用
+@login_required
 def sale_detail_view(request, pk):
     if pk > Sale.objects.latest('id').id:
         return render(request, 'store/test3_error.html')
@@ -321,6 +342,7 @@ def sale_detail_view(request, pk):
         return render(request, 'store/test3_error.html')
 
 # 一般新規登録
+@login_required
 def create_general_purchase_view(request):
     print('view:create_general_purchase_view')
     mixin = MelimitModelMixin()
@@ -355,6 +377,7 @@ def create_general_purchase_view(request):
     return render(request, 'store/create-general-purchase.html', {'product_form': product_form, 'sale_form': sale_form, 'user': user, })
 
 # 詳細ページから遷移した商品編集ページ(一般)
+@login_required
 def detail_general_edit_view(request, product_id):
     mixin = MelimitModelMixin()
     mixin.request = request
@@ -389,6 +412,7 @@ def detail_general_edit_view(request, product_id):
 
 
 # 共同購入新規登録
+@login_required
 def create_group_purchase_view(request):
     mixin = MelimitModelMixin()
     mixin.request = request
@@ -436,6 +460,7 @@ def create_group_purchase_view(request):
     return render(request, 'store/create-group-purchase.html', {'product_form': product_form, 'sale_form': sale_form, 'user': user, })
 
 # 詳細ページから遷移した商品編集ページ(共同)
+@login_required
 def detail_group_edit_view(request, product_id):
     print(f"共同product_id: {product_id}")
     mixin = MelimitModelMixin()
@@ -483,11 +508,11 @@ def detail_group_edit_view(request, product_id):
     return render(request, 'store/detail-group-edit.html', {'product_form': product_form, 'sale_form': sale_form, 'threshold_form': threshold_form,'product': product,'user': user})
 
 # 商品詳細ページ(一般)
-def detail_general_view(request):
-    return render(request, 'store/detail-general.html')
+# def detail_general_view(request):
+#     return render(request, 'store/detail-general.html')
 # 商品詳細ページ(共同)
-def detail_group_view(request):
-    return render(request, 'store/detail-group.html')
+# def detail_group_view(request):
+#     return render(request, 'store/detail-group.html')
 # 詳細ページから遷移した商品編集ページ(共同)
 # def detail_group_edit_view(request):
 #     return render(request, 'store/detail-group-edit.html')
@@ -615,6 +640,7 @@ def create_product_and_sale(request):
 
 # productモデルとsaleモデルの一覧表示
 # 検証用
+# 未使用
 def product_and_sale_list(request):
     mixin = MelimitModelMixin()
     mixin.request = request
@@ -654,6 +680,7 @@ def product_and_sale_delete_view(request, pk):
         return HttpResponseBadRequest()
 
 # 商品複数一括削除
+# 未使用
 class ProductAndSaleDeleteView(View):
     def get(self, request, *args, **kwargs):
         product_ids = request.GET.getlist('product_ids')  # 選択した商品のIDを取得

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, authenticate, login
 from accounts.forms import MelimitStoreLoginForm
-from accounts.models import MelimitStore, MelimitUser
+from accounts.models import MelimitStore, MelimitUser, CustomUser
 from accounts.mixins import MelimitModelMixin
 from store.models import Sale, Product,ThresholdCheck
 import random
@@ -276,6 +276,10 @@ def all_products_joint(request):
 
 # 一般商品詳細
 def general_products_detail(request,pk):
+    # 店舗管理画面の「実際の商品画面を見る」ボタンから遷移した場合、ログアウトする
+    if isinstance(request.user, CustomUser):
+        if request.user.user_type == 'melimit_store':
+            logout(request)
     #detailに必要なデータをここで取得する
     #名前
     #値段
@@ -350,7 +354,10 @@ def general_products_detail(request,pk):
 
 # 共同購入商品詳細
 def joint_products_detail(request,pk):
-    #共同商品をutilsを使い情報を取得、関連商品も共同ならutilを使う
+    # 店舗管理画面の「実際の商品画面を見る」ボタンから遷移した場合、ログアウトする
+    if isinstance(request.user, CustomUser):
+        if request.user.user_type == 'melimit_store':
+            logout(request)
     #id=pkにより、１商品に固定されるはず
     sale = Sale.objects.get(id=pk)
     detail = melmit_product_detail(sale)

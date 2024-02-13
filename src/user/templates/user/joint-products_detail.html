@@ -21,9 +21,9 @@
                 <div class="detail1__right--upper1">
                     <p class="detail1__genre joint">共同購入商品</p>
                     {% if sale.stock > 0 %}
-                    <p class="detail1__soldout">在庫あり</p>
+                    <p class="detail1__stock">在庫あり</p>
                     {% else %}
-                    {% comment %} <p class="detail1__soldout">在庫なし</p>えｘ {% endcomment %}
+                    <p class="detail1__soldout">在庫なし</p>
                     {% endif %}
                 </div>
                 <div class="detail1__right--upper2">
@@ -35,10 +35,10 @@
                     <p class="detail1__discount--text">{{ sale.treshold_rate }}%OFF</p>
                     {% comment %} if 閾値をクリアしていないなら下を表示 {% endcomment %}
                     {% else %}
-                    <h3 class="detail1__discount">￥{{ sale.price }} 税込）</h3>
+                    <h3 class="detail1__discount">￥{{ sale.price }} （税込）</h3>
                     <p class="detail1__discount--text">定価から{{ sale.rate }}%OFF</p>
                     {% endif %}
-                    <p class="detail1__price">￥{{ sales.sale_price }}（税込）</p>
+                    <p class="detail1__price">￥{{ sale.product_price }}（税込）</p>
                     </div>
             </div>
             <div class="detail1__right--center">
@@ -66,27 +66,27 @@
                         <label for="quantity" class="detail1__text-bd">数量</label>
                         <input type="number" class="cnt" min="1" max="10" step="1" value="1" name="quantity" id="quantity">
                         <input type="hidden" name="product_id" value="{{ sales.pk }}">
-                        <button type="submit" class="btn--beige btn--middle">カートに入れる</button>
+                        <button type="submit" class="btn--beige btn">カートに入れる</button>
                     </form>
                     {% if user.is_authenticated %}
                         <form class="detail1__form2" action="{% url 'user:add_to_favorites' sale.pk %}" method="post">
                             {% csrf_token %}
                             <input type="hidden" name="product_id" value="{{ sale.pk }}" >
-                            <button type="submit" class="btn--white btn--middle">お気に入りに追加</button>
+                            <button type="submit" class="btn--white btn">お気に入りに追加</button>
                         </form>
                     {% else %}
-                    <a href="{% url 'account_login_kkkk' %}" class="btn--beige btn">お気に入りに追加するにはログインしてください</a>
+                    <a href="{% url 'account_login_kkkk' %}" class="btn--white btn">お気に入りに追加するにはログインしてください</a>
                     {% endif %}
                 {% else %}
                 {% comment %} 在庫がないとき。お気に入りボタンのみ。なくなる可能性あり {% endcomment %}
                     {% if user.is_authenticated %}
-                        <form action="{% url 'user:add_to_favorites' sale.pk %}" method="post">
+                        <form class="detail1__form2" action="{% url 'user:add_to_favorites' sale.pk %}" method="post">
                             {% csrf_token %}
                             <input type="hidden" name="product_id" value="{{ sale.pk }}" >
                             <button type="submit" class="btn--white btn">お気に入りに追加</button>
                         </form>
                     {% else %}
-                        <a href="{% url 'account_login_kkkk' %}" class="btn--beige btn">お気に入りに追加するにはログインしてください</a>
+                        <a href="{% url 'account_login_kkkk' %}" class="btn--white btn">お気に入りに追加するにはログインしてください</a>
                     {% endif %}
                 {% endif %}
             </div>

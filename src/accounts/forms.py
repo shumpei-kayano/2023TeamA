@@ -6,8 +6,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 class MelimitStoreLoginForm(forms.Form):
-    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'placeholder': 'メールアドレスを入力してください'}))
-    password = forms.CharField(widget=forms.PasswordInput)
+    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'placeholder': 'メールアドレス'}), )
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'パスワード'}), )
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)

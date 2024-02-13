@@ -15,6 +15,10 @@
 <section class="section1 mgt-10">
     <div class="section1__left">
         {% comment %} <a href="{% url 'user:guide' %}" class="btn--beige btn--big">ご利用ガイド</a> {% endcomment %}
+        <div class="section1__left__img">
+            <image src="{% static 'assets/img/メリ光雄.png' %}" alt="メリ光雄" class="section1__left__img__img">
+            <image src="{% static 'assets/img/メリ光子.png' %}" alt="メリ光子" class="section1__left__img__img">
+        </div>
         <a href="{% url 'user:sdgs' %}" class="btn--beige btn--big mgt-10">MelimitとSDGs</a>
         <a href="{% url 'user:sdgs' %}#sdgs-head2" class="btn--beige btn--big mgt-10">食品ロスとは</a>
     </div>
@@ -143,7 +147,7 @@
                                             <div class="card--content">
                                                 <h3 class="card--title">{{ random_sale.product.product_name }}</h3>
                                                 <meter low="69" high="80" max="100" value="84">B</meter>
-                                                <p class="card--text">あと00人達成で</p>
+                                                <p class="card--text">あと00個達成で</p>
                                                 <p class="card--price">{{ random_sale.sale_price }}（税込）</p>
                                                 <h4 class="card--discount">￥100,000（税込）</h4>
                                             </div>
@@ -169,7 +173,7 @@
                                                     <div class="card--content">
                                                         <h3 class="card--title">{{ random_sale.product.product_name }}</h3>
                                                         <meter low="69" high="80" max="100" value="84">B</meter> それぞれの値を商品チェックモデルから参照する　フロントに確認
-                                                        <p class="card--text">あと00人達成で</p> 商品チェックモデルから総量を算出
+                                                        <p class="card--text">あと00個達成で</p> 商品チェックモデルから総量を算出
                                                         <p class="card--price">{{ random_sale.sale_price }}（税込）</p>
                                                         <h4 class="card--discount">￥100,000（税込）</h4>　割引額はモデルにあるのでprice-割引額を算出
                                                     </div>
@@ -206,7 +210,7 @@
                                             <div class="card--content">
                                                 <h3 class="card--title">大原製菓</h3>
                                                 <meter low="69" high="80" max="100" value="84">B</meter>
-                                                <p class="card--text">あと00人達成で</p>
+                                                <p class="card--text">あと00個達成で</p>
                                                 <p class="card--price">￥100,000（税込）</p>
                                                 <h4 class="card--discount">￥100,000（税込）</h4>
                                             </div>
@@ -550,7 +554,7 @@
             <a href="{% url "user:notice_detail1" %}">
                 <img src="{% static 'assets/img/one.jpg' %}" alt="Image" class="card--img">
                 <div class="card--content">
-                    <p><span class="card--date-category">2024/2/1</span><span class="card--date-category">カテゴリー</span></p>
+                    <p><span class="card--date-category">2024/2/1</span></p>
                     <h5 class="card--title">Melimit設立から1ヶ月</h5>
                     <p class="card--text">皆様へ、私たちはこの度、ECサイトの設立から1ヶ月が経過しましたので、進捗報告をさせていただきます。</p>
                 </div>
@@ -560,7 +564,7 @@
             <a href="{% url "user:notice_detail2" %}">
                 <img src="{% static 'assets/img/burokkori-s.jpg' %}" alt="Image" class="card--img">
                 <div class="card--content">
-                    <p><span class="card--date-category">2024/1/29</span><span class="card--date-category">カテゴリー</span></p>
+                    <p><span class="card--date-category">2024/1/29</span></p>
                     <h5 class="card--title">ブロッコリー大量入荷のお知らせ</h5>
                     <p class="card--text">この度、大量の新鮮なブロッコリーが入荷いたしましたことをお知らせいたします。</p>
                 </div>
@@ -570,7 +574,7 @@
             <a href="{% url "user:notice_detail3" %}">
                 <img src="{% static 'assets/img/urite.jpg' %}" alt="Image" class="card--img">
                 <div class="card--content">
-                    <p><span class="card--date-category">2024/1/10</span><span class="card--date-category">カテゴリー</span></p>
+                    <p><span class="card--date-category">2024/1/10</span></p>
                     <h5 class="card--title">Melimitに売り手として参加しませんか？</h5>
                     <p class="card--text">Melimitは、新たな売り手を募集しております!</p>
                 </div>

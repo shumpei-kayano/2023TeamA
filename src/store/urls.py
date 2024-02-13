@@ -46,7 +46,7 @@ urlpatterns = [
     # 店舗の新規登録ページ
     # path('store-create', views.StoreCreateView, name='store-create'),
     # 穴井さんテスト用
-    path('test/', views.create_product_and_sale, name='test'), # 商品登録
-    path('test2/', views.product_and_sale_list, name='test2'), # 商品一覧
-    path('product_and_sale_delete/', ProductAndSaleDeleteView.as_view(), name='product_and_sale_delete'), # 商品複数削除
+    # path('test/', views.create_product_and_sale, name='test'), # 商品登録
+    # path('test2/', views.product_and_sale_list, name='test2'), # 商品一覧
+    # path('product_and_sale_delete/', ProductAndSaleDeleteView.as_view(), name='product_and_sale_delete'), # 商品複数削除
 ]

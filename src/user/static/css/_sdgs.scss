@@ -1,5 +1,8 @@
 .section {
     &-sdgs, &-sdgs2{
+        margin-bottom: 1rem;
+        border: solid 2px $main_color;
+        border-radius:5px;
         @media screen and (max-width: 1024px) {
         background-size: 100%;
         }
@@ -9,37 +12,27 @@
 
 
 .sdgs {
-    &-head1,&-head2,&-text1,&-text2 {
+    &-head,&-text {
         text-align: center;
     }
-    &-head1 {
-        font-size: 2.5rem;
-    }
-    &-head2 {
-        font-size: 2.5rem;
-    }
-    &-text1 {
-        font-size: 1.1rem;
-        letter-spacing: 0.6em;
-        line-height: 5.5;
-        width: 50%;
-        margin: 0 auto;
-
-        @media screen and (max-width: 1024px){
-            line-height: 2;
-            width: 90%;
+    &-head {
+        font-size: 2rem;
+        @media screen and (max-width: 1024px) {
+            font-size: 1.5rem;
         }
     }
-    &-text2 {
+    &-text {
         font-size: 1.1rem;
-        letter-spacing: 0.6em;
-        line-height: 5.8;
-        width: 50%;
+        letter-spacing: 0.5em;
+        line-height: 8;
+        width: 90%;
         margin: 0 auto;
+        font-weight: bold;
 
         @media screen and (max-width: 1024px){
-            line-height: 2;
-            width: 90%;
+            font-size: 0.75rem;
+            letter-spacing: 0.25em;
+            line-height: 5;
         }
     }
     &-text3 {
@@ -55,7 +48,7 @@
 
 .section {
     &-sdgs, &-sdgs2{
-        background-color:rgba(255, 255, 255, 0.8);
+        background-color:rgba(255, 255, 255, 0.95);
         background-blend-mode: lighten;
     }
 }

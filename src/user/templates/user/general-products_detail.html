@@ -20,7 +20,7 @@
                 <p class="detail1__genre general">一般購入商品</p>
                 {% comment %} 在庫があるかどうか {% endcomment %}
                 {% if sale.stock > 0 %}
-                <p class="detail1__soldout">在庫あり</p>
+                <p class="detail1__stock">在庫あり</p>
                 {% else %}
                 <p class="detail1__soldout">在庫なし</p>
                 {% endif %}
@@ -64,7 +64,7 @@
                     <button type="submit" class="btn--white btn">お気に入りに追加</button>
                 </form>
                 {% else %}
-                    <a href="{% url 'account_login_kkkk' %}" class="btn--beige btn">お気に入りに追加するにはログインしてください</a>
+                    <a href="{% url 'account_login_kkkk' %}" class="btn--white btn">お気に入りに追加するにはログインしてください</a>
                 {% endif %}
             {% endif %}
 
@@ -136,7 +136,7 @@
                                     <div class="progress-bar">
                                         <div class="progress-bar__completed" style="width: 50%;"></div>
                                     </div>
-                                    <p class="card--text">あと00人達成で</p>
+                                    <p class="card--text">あと00個達成で</p>
                                     <p class="card--price">￥{{ related_sale.sale_price }}（税込）</p>
                                     <h4 class="card--discount">￥100,000（税込）</h4>
                                 </div>
