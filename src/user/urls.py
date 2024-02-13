@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 app_name = 'user'
@@ -56,4 +56,5 @@ urlpatterns = [
     path('favorite/add/<int:pk>',views.add_to_favorites,name='add_to_favorites'),
     path('favorite/delete/<int:pk>',views.remove_from_favorites,name='remove_from_favorites'),
     path('error_stock/',views.error_stock,name='error_stock'),
+    path('error_login/',include('axes.urls')),
 ]
