@@ -602,69 +602,209 @@ def cash_register(request):
         #氏名 電話番号 住所 情報 郵便番号 都道府県 市区町村 番地 建物名
         #ログインしていなかったらログインするように促す
         #ログインしていたら下の処理をする
+        #カートセッションから商品IDと個数を取得
         cart = request.session['cart']
         cart_items = []
         all_price = 0
+        item_list = []
+        mel = []
+        mel_price = 0
+        mel_price100 = 0
+        gen = []
+        gen_price = 0
+        gen_price100 = 0
+        all_prices = 0
+        thresholds = {}
+        rej_list = []
         #カートの各商品ごとにidと数量をループ
         for pk, quantity in cart.items():
             sale = get_object_or_404(Sale, id=pk)
-            #sale.pk商品の主キー(プライマリーキー)
-            print(sale.pk)
             if sale.sale_type == 'general_sales':
                 sale_type = '一般商品'
+                detail = {
+                    'pk':sale.pk,
+                    'sale_image': sale.product.product_image,
+                    'rate': sale.discount_rate(),
+                    'sale': sale.product.product_name,
+                    'sale_price': sale.sale_price,
+                    'jp_sale_type': sale_type,
+                    'product_category': sale.product.product_category,
+                    'stock':sale.stock,
+                    'sale_type': sale.sale_type,
+                    'quantity': quantity,
+                    'total_price': sale.sale_price * quantity,
+                }
+                gen_price += detail['total_price']
+                
             else:
                 sale_type = '共同販売商品'
-            
-            all_price += sale.sale_price * quantity
-            #商品の商品名、種別(一般or共同)、一つ当たりの価格、数量、合計価格をリストに追加
-            cart_items.append({
-                'pk':sale.pk,
-                'sale_image': sale.product.product_image,
-                'sale': sale.product.product_name,
-                'sale_type':sale_type,
-                'sale_price':sale.sale_price,
-                'quantity': quantity,
-                'total_price': sale.sale_price * quantity,
-            })
-        #cart_itemsはカートの全商品
-        print(cart_items)
-        cart_item_gen = []
-        cart_item_mel = []
-        for i in cart_items:
-            print(i['sale_type'])
-            if i['sale_type'] == '一般商品':
-                cart_item_gen.append(i)
+                count = 0
+                for threshold in sale.threshold_set.all():
+                    threshold_checks = threshold.thresholdcheck_set.all()
+                    if not threshold_checks:
+                        #空の時、個数を０で判断するように
+                        count = 0
+                        print("No threshold checks found, meow!")
+                    else:
+                        for check in threshold_checks:
+                            #中身があるとき、個数を取り出して合計して判断 sale.pkで閾値チェックモデル化からsumで数量を取得
+                            count = check.sum_count()
+                            print('check:',check)
+                            print('count:',count)
+                    at_count = threshold.threshold - count
+                    discounted_price = round(sale.sale_price * (100 - threshold.discount_rate) / 100)
+                    productprice_thresholdprice = sale.discount_rate() + threshold.discount_rate
+                    ratio = round(count / threshold.threshold * 100)
+                    thresholds[sale.pk] = list(sale.threshold_set.all())
+                    for i in thresholds[sale.pk]:
+                        check = ThresholdCheck(sale=sale,threshold=i)
+                        #閾値クリア時
+                        if check.thresholds()[0] != None:
+                            total_price = discounted_price * quantity
+                            sale_price = discounted_price
+                        #クリアしていない時
+                        else:
+                            total_price = sale.sale_price * quantity
+                            sale_price = sale.sale_price
+                    detail = {
+                        'pk':sale.pk,
+                        'sale_image': sale.product.product_image,
+                        'rate': sale.discount_rate(),
+                        'sale': sale.product.product_name,
+                        'sale_price': sale_price,
+                        'threshold_rate': threshold.discount_rate,
+                        'clear_price': discounted_price,
+                        'threshold': threshold.threshold,
+                        'threshold_now': count,
+                        'sale_type': sale.sale_type,
+                        'at_count': at_count,
+                        'product_category': sale.product.product_category,
+                        'final_rate':productprice_thresholdprice,
+                        'ratio':ratio,
+                        'treshold_rate':threshold.discount_rate,
+                        'stock':sale.stock,
+                        'store':sale.store,
+                        'sale_end':sale.sale_end,
+                        'description':sale.description,
+                        'store_name':sale.product.store.username,
+                        'email':sale.product.store.email,
+                        'store_url':sale.store.site_url,
+                        'quantity': quantity,
+                        'jp_sale_type': sale_type,
+                        'total_price': total_price,
+                    }
+                    mel_price += detail['total_price']
+            rej_list.append(detail)
+            if detail['sale_type'] == 'general_sales':
+                gen.append(detail)
             else:
-                cart_item_mel.append(i)
-        print('一般商品',cart_item_gen)
-        print('共同商品',cart_item_mel)
-        # sale_typeごとに分ける？
-        total_gen = 0
-        total_gen = sum(item['total_price'] for item in cart_item_gen)
-        total_gen_100 = sum(item['total_price'] for item in cart_item_gen) + 100
-        total_mel = 0
-        total_mel = sum(item['total_price'] for item in cart_item_mel)
-        total_mel_100 = sum(item['total_price'] for item in cart_item_mel) + 100
-        #total_gen が空の場合
-        all_total = 0
+                mel.append(detail)
+        mel_price100 = mel_price + 100
+        gen_price100 = gen_price + 100
+        all_prices = mel_price + gen_price + 100
+                    
+                    
+                    
+        #     all_price += detail['total_price']
+        #     print('random:',sale)
+        #     detail = melmit_product_detail(sale)
+        #     item_list.append(detail)
+        #     for j in item_list:
+        #         if j['sale_type'] == 'general_sales':
+        #             gen.append(j)
+        #         else:
+        #             mel.append(j)
+        #     total_gens = 0
+        #     total_gens = sum(item['price']*quantity for item in gen)
+        #     total_gens_100 = sum(item['price']*quantity for item in gen) + 100
+        #     total_mels = 0
+        #     total_mels_100 = 0
+        #     #閾値クリア時に割引後の値段で計算。クリアしていないときは定価で計算
+        #     for m in mel:
+                
+        #         if m['threshold'] > m['threshold_now']:
+        #         #クリア前
+        #             total_mels = sum(m['price']*quantity)
+        #             total_mels_100 = sum(m['price']*quantity) + 100
+        #         else:
+        #         #クリア後
+        #             total_mels = sum(m['clear_price']*quantity)
+        #             total_mels_100 = sum(m['clear_price']*quantity) + 100
+        #     # total_mels = sum(item['total_price'] for item in mel)
+        #     # total_mels_100 = sum(item['total_price'] for item in mel) + 100
+        #     all_totals = 0
+        #     if total_gens == 0:
+        #         # total_gens total_gens_100 total_mels total_mels_100 all_totals
+        #         print(1)
+        #         all_totals = total_mels_100
+        #     #total_melが空の場合
+        #     elif total_mels == 0:
+        #         print(2)
+        #         all_totals = total_gens_100
+        #     else:
+        #         print(3)
+        #         all_totals = total_gens + total_mels + 100
+        #     print(all_totals)
+            
+            
+            
+        #     #sale.pk商品の主キー(プライマリーキー)
+        #     print(sale.pk)
+        #     if sale.sale_type == 'general_sales':
+        #         sale_type = '一般商品'
+        #     else:
+        #         sale_type = '共同販売商品'
+            
+        #     all_price += sale.sale_price * quantity
+        #     #商品の商品名、種別(一般or共同)、一つ当たりの価格、数量、合計価格をリストに追加
+        #     cart_items.append({
+        #         'pk':sale.pk,
+        #         'sale_image': sale.product.product_image,
+        #         'sale': sale.product.product_name,
+        #         'sale_type':sale_type,
+        #         'sale_price':sale.sale_price,
+        #         'quantity': quantity,
+        #         'total_price': sale.sale_price * quantity,
+        #     })
+        # #cart_itemsはカートの全商品
+        # print(cart_items)
+        # cart_item_gen = []
+        # cart_item_mel = []
+        # for i in cart_items:
+        #     print(i['sale_type'])
+        #     if i['sale_type'] == '一般商品':
+        #         cart_item_gen.append(i)
+        #     else:
+        #         cart_item_mel.append(i)
+        # print('一般商品',cart_item_gen)
+        # print('共同商品',cart_item_mel)
+        # # sale_typeごとに分ける？
+        # total_gen = 0
+        # total_gen = sum(item['total_price'] for item in cart_item_gen)
+        # total_gen_100 = sum(item['total_price'] for item in cart_item_gen) + 100
+        # total_mel = 0
+        # total_mel = sum(item['total_price'] for item in cart_item_mel)
+        # total_mel_100 = sum(item['total_price'] for item in cart_item_mel) + 100
+        # #total_gen が空の場合
+        # all_total = 0
         
-        if total_gen == 0:
-            print(1)
-            all_total = total_mel_100
-        #total_melが空の場合
-        elif total_mel == 0:
-            print(2)
-            all_total = total_gen_100
-        else:
-            print(3)
-            all_total = total_gen_100 + total_mel_100 - 100
-        print(all_total)
-        print(request.session)
-        #sessionの中身を全部表示
-        print(request.session['cart'].items())
-        print('gen:',cart_item_gen)
-        print('mel:',cart_item_mel)
-        return render(request, 'user/cash-register.html',{'cart_items':cart_items,'cart_item_gen':cart_item_gen,'cart_item_mel':cart_item_mel,'total_gen':total_gen,'total_mel':total_mel,'total_gen_100':total_gen_100,'total_mel_100':total_mel_100,'user':user,'all_total':all_total})
+        # if total_gen == 0:
+        #     print(1)
+        #     all_total = total_mel_100
+        # #total_melが空の場合
+        # elif total_mel == 0:
+        #     print(2)
+        #     all_total = total_gen_100
+        # else:
+        #     print(3)
+        #     all_total = total_gen_100 + total_mel_100 - 100
+        # print(all_total)
+        # print(request.session)
+        # #sessionの中身を全部表示
+        # print(request.session['cart'].items())
+        # print('gen:',cart_item_gen)
+        # print('mel:',cart_item_mel)
+        return render(request, 'user/cash-register.html',{'rej_list':rej_list,'cart_items':cart_items,'user':user,'gen':gen,'mel':mel,'all_prices':all_prices,'gen_price100':gen_price100,'mel_price100':mel_price100,'mel_price':mel_price,'gen_price':gen_price,})#     all_totals
     else:
         return render(request,)
 #新規登録

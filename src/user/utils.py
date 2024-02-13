@@ -32,6 +32,7 @@ def melmit_product_detail(sale):
             'product_category': sale.product.product_category,
             'stock':sale.stock,
             'sale_type': sale.sale_type,
+            'sale':sale,
         }
         return detail
     else:
