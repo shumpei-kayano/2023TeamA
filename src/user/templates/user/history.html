@@ -2,6 +2,7 @@
 {% block title %}注文履歴{% endblock %}
 {% load static %}
 {% block content %}
+{% load priceslice_filters %}
 <h2 class="cart__title">注文履歴</h2>
 
 <table class="cart__shopping-table">
@@ -41,7 +42,7 @@
                         {% comment %} {{ item.product.category }} {% endcomment %}
                     </td>
                     <td>
-                        {{ order.amount|floatformat:"0" }}円
+                        {{ order.amount|floatformat:"0"|to_currency }}円
                         {% comment %} {{ item.product.price }} {% endcomment %}
                         {% comment %} <span class="definition">確定</span> {% endcomment %}
                     </td>
