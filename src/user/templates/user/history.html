@@ -42,7 +42,8 @@
                         {% comment %} {{ item.product.category }} {% endcomment %}
                     </td>
                     <td>
-                        {{ order.amount|floatformat:"0"|to_currency }}円
+                        {% comment %} {{ order.amount|floatformat:"0"|to_currency }}円 {% endcomment %}
+                        {{ order.amount|int|to_currency }}円
                         {% comment %} {{ item.product.price }} {% endcomment %}
                         {% comment %} <span class="definition">確定</span> {% endcomment %}
                     </td>
