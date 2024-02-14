@@ -33,6 +33,7 @@ def melmit_product_detail(sale):
             'stock':sale.stock,
             'sale_type': sale.sale_type,
             'sale':sale,
+            'jp_sale_type':'一般商品',
         }
         return detail
     else:
@@ -78,5 +79,6 @@ def melmit_product_detail(sale):
                 'store_url':sale.store.site_url,
                 'product_price':sale.product.product_price,
                 'sale_type': sale.sale_type,
+                'jp_sale_type':'共同商品',
             }
         return detail
