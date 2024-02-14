@@ -20,6 +20,7 @@ register = template.Library()
 def to_currency(value):
     try:
         # value = float(value)
+        value = int(value)
         return "{:,}".format(value)
     except ValueError:
         return value
