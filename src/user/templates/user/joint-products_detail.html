@@ -31,11 +31,11 @@
                     {% comment %} 閾値クリア前に表示の金額は何。その時のdetail_priceはどうする 閾値をクリアしているかのif文を設置？ {% endcomment %}
                     {% comment %} 現在の商品チェックモデルの商品ごとの個数が出せないので仮置きの stock {% endcomment %}
                     {% if sale.threshold_now >= sale.threshold %}
-                    <h3 class="detail1__discount">￥{{ sale.clear_price }}（税込）</h3>
+                    <h3 class="detail1__discount">￥{{ sale.clear_price|to_currency }}（税込）</h3>
                     <p class="detail1__discount--text">{{ sale.treshold_rate }}%OFF</p>
                     {% comment %} if 閾値をクリアしていないなら下を表示 {% endcomment %}
                     {% else %}
-                    <h3 class="detail1__discount">￥{{ sale.price }} （税込）</h3>
+                    <h3 class="detail1__discount">￥{{ sale.price|to_currency }} （税込）</h3>
                     <p class="detail1__discount--text">定価から{{ sale.rate }}%OFF</p>
                     {% endif %}
                     <p class="detail1__price">￥{{ sale.product_price }}（税込）</p>
