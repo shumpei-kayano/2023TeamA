@@ -231,8 +231,8 @@
 
 <script>
     /// 共同購入商品の注意事項の確認
-    var cartItemMelLength = {{ cart_item_mel|length }};
-    var cartItemGenLength = {{ cart_item_gen|length }};
+    var cartItemMelLength = {{ mel|length }};
+    var cartItemGenLength = {{ gen|length }};
     document.getElementById('submit-button').addEventListener('click', function(event) {
         if (cartItemMelLength === 0 && cartItemGenLength > 0){
             window.location.href = "{% url 'user:order_completed' %}";
