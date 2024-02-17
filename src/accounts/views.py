@@ -349,6 +349,7 @@ def TourokuConfirm(request):
         else:
             print(form.errors)
             print('登録失敗')
-            return render(request, 'account/user_touroku.html', {'form': form})
+            form_errors = form.errors
+            return render(request, 'account/user_touroku.html', {'form': form,'form_errors':form_errors})
     else:
         return redirect('accounts:user_touroku')

@@ -1,6 +1,9 @@
 {% extends 'user/base.html' %}
 {% block title %}新規登録フォーム{% endblock title %}
 {% block content %}
+{%if form_errors%}
+    {{ form_errors }}
+{%endif%}
 <h2 class="signup-title">新規登録</h2>
 <div class="signup-container">
     <form method="POST" class="signup">
